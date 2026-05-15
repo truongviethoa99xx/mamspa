@@ -1,7 +1,9 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { MapPin, Phone, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
+import { Seo } from '@/Components/Seo';
+import { localBusinessSchema, breadcrumbSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
 
@@ -34,7 +36,17 @@ export default function AboutUs({ branch }: Props) {
     const name = tr(branch.name, locale);
     return (
         <PublicLayout>
-            <Head title={name} />
+            <Seo
+                title={name}
+                description={`${name} — ${branch.address}. ${branch.open_hours}`}
+                schema={[
+                    localBusinessSchema({ name, address: branch.address, phone: branch.phone, url: window.location.href, lat: branch.lat, lng: branch.lng }),
+                    breadcrumbSchema([
+                        { name: 'Maha Spa', url: window.location.origin },
+                        { name, url: window.location.href },
+                    ]),
+                ]}
+            />
             <section className="bg-maha-50 py-16">
                 <div className="mx-auto max-w-5xl px-4">
                     <h1 className="font-serif text-4xl text-maha-700">{name}</h1>

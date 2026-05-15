@@ -4,33 +4,116 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="robots" content="index, follow">
 
     <title inertia>{{ config('app.name', 'Maha Spa') }}</title>
-    <meta name="description" content="Maha Spa Đà Nẵng — Hành trình cân bằng Thân Tâm Trí. Đặt lịch online dễ dàng tại 2 chi nhánh Heritage và Signature.">
+
+    @php
+        $path = request()->path() === '/' ? '' : '/' . request()->path();
+        $canonicalBase = config('app.url') . ($path ? $path : '/');
+        $currentLocale = app()->getLocale();
+        $localeMap = ['vi' => 'vi', 'en' => 'en', 'ja' => 'ja', 'ko' => 'ko', 'zh' => 'zh-Hans'];
+        $available = config('app.available_locales', ['vi', 'en']);
+    @endphp
+
+    <link rel="canonical" href="{{ $canonicalBase }}">
+    @foreach($available as $loc)
+        <link rel="alternate" hreflang="{{ $localeMap[$loc] ?? $loc }}" href="{{ $canonicalBase }}?lang={{ $loc }}">
+    @endforeach
+    <link rel="alternate" hreflang="x-default" href="{{ $canonicalBase }}">
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Maha Spa">
-    <meta property="og:locale" content="{{ str_replace('-', '_', app()->getLocale() === 'vi' ? 'vi_VN' : 'en_US') }}">
+    <meta property="og:url" content="{{ request()->url() }}">
+    <meta property="og:locale" content="{{ $currentLocale === 'vi' ? 'vi_VN' : ($currentLocale === 'en' ? 'en_US' : ($currentLocale === 'ja' ? 'ja_JP' : ($currentLocale === 'ko' ? 'ko_KR' : 'zh_CN'))) }}">
+    <meta property="og:image" content="{{ config('app.url') }}/images/og-default.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mahaspa_danang">
+    <meta name="twitter:image" content="{{ config('app.url') }}/images/og-default.jpg">
 
     <link rel="icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700|playfair-display:400,600,700&display=swap" rel="stylesheet" />
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Maha Spa",
-        "description": "Spa truyền thống Việt tại Đà Nẵng",
-        "url": "{{ config('app.url') }}",
-        "telephone": "+84934743026",
-        "address": [
-            {"@type": "PostalAddress", "streetAddress": "26 Nguyễn Văn Thoại", "addressLocality": "Đà Nẵng", "addressCountry": "VN"},
-            {"@type": "PostalAddress", "streetAddress": "185 Hồ Nghinh", "addressLocality": "Đà Nẵng", "addressCountry": "VN"}
+    <script type="application/ld+json">{!! json_encode([
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'Organization',
+                '@id' => config('app.url') . '/#organization',
+                'name' => 'Maha Spa',
+                'url' => config('app.url'),
+                'logo' => config('app.url') . '/images/logo.png',
+                'sameAs' => [
+                    'https://www.facebook.com/mahaSpa.danang',
+                    'https://www.instagram.com/mahaspa.danang',
+                ],
+                'contactPoint' => [
+                    ['@type' => 'ContactPoint', 'telephone' => '+84934743026', 'contactType' => 'customer service'],
+                    ['@type' => 'ContactPoint', 'telephone' => '+84978456185', 'contactType' => 'customer service'],
+                ],
+            ],
+            [
+                '@type' => 'WebSite',
+                '@id' => config('app.url') . '/#website',
+                'url' => config('app.url'),
+                'name' => 'Maha Spa',
+                'publisher' => ['@id' => config('app.url') . '/#organization'],
+                'potentialAction' => [
+                    '@type' => 'SearchAction',
+                    'target' => ['@type' => 'EntryPoint', 'urlTemplate' => config('app.url') . '/services?category={search_term_string}'],
+                    'query-input' => 'required name=search_term_string',
+                ],
+            ],
+            [
+                '@type' => ['HealthAndBeautyBusiness', 'DaySpa'],
+                '@id' => config('app.url') . '/#heritage',
+                'name' => 'Maha Heritage Spa',
+                'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'streetAddress' => '26 Nguyễn Văn Thoại',
+                    'addressLocality' => 'Đà Nẵng',
+                    'addressRegion' => 'Đà Nẵng',
+                    'addressCountry' => 'VN',
+                ],
+                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 16.0685, 'longitude' => 108.2127],
+                'telephone' => '+84934743026',
+                'url' => config('app.url') . '/about-us/heritage',
+                'openingHoursSpecification' => [
+                    ['@type' => 'OpeningHoursSpecification', 'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens' => '09:00', 'closes' => '21:00'],
+                ],
+                'priceRange' => '$$',
+                'currenciesAccepted' => 'VND',
+                'paymentAccepted' => 'Cash, Credit Card',
+            ],
+            [
+                '@type' => ['HealthAndBeautyBusiness', 'DaySpa'],
+                '@id' => config('app.url') . '/#signature',
+                'name' => 'Maha Signature Spa',
+                'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
+                'address' => [
+                    '@type' => 'PostalAddress',
+                    'streetAddress' => '185 Hồ Nghinh',
+                    'addressLocality' => 'Đà Nẵng',
+                    'addressRegion' => 'Đà Nẵng',
+                    'addressCountry' => 'VN',
+                ],
+                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 16.0743, 'longitude' => 108.2208],
+                'telephone' => '+84978456185',
+                'url' => config('app.url') . '/about-us/signature',
+                'openingHoursSpecification' => [
+                    ['@type' => 'OpeningHoursSpecification', 'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens' => '09:00', 'closes' => '21:00'],
+                ],
+                'priceRange' => '$$',
+                'currenciesAccepted' => 'VND',
+                'paymentAccepted' => 'Cash, Credit Card',
+            ],
         ],
-        "openingHours": "Mo-Su 09:00-21:00",
-        "priceRange": "$$"
-    }
-    </script>
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
 
     @if(config('services.gtm.id'))
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

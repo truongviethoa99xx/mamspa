@@ -1,4 +1,5 @@
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
+import { Seo } from '@/Components/Seo';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
@@ -18,7 +19,10 @@ export default function Contact() {
 
     return (
         <PublicLayout>
-            <Head title={t('nav.contact')} />
+            <Seo
+                title={t('nav.contact')}
+                description="Liên hệ Maha Spa Đà Nẵng. 2 chi nhánh: 26 Nguyễn Văn Thoại (Heritage) và 185 Hồ Nghinh (Signature)."
+            />
             <section className="bg-maha-50 py-12">
                 <div className="mx-auto max-w-5xl px-4">
                     <h1 className="font-serif text-4xl text-maha-700">{t('nav.contact')}</h1>

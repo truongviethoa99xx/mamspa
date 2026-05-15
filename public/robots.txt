@@ -1,8 +1,12 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /admin/*
 Disallow: /login
 Disallow: /register
 Disallow: /my-bookings
+Disallow: /checkout
+Disallow: /payment/*
+Disallow: /_ignition
 
 Sitemap: https://mahaspa.vn/sitemap.xml

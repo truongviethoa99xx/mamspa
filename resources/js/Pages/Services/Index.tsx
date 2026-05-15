@@ -1,8 +1,10 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
+import { Seo } from '@/Components/Seo';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
+import { itemListSchema } from '@/Lib/buildSchema';
 
 interface ServiceItem {
     id: number;
@@ -37,7 +39,14 @@ export default function ServicesIndex({ filters, services, branches }: Props) {
 
     return (
         <PublicLayout>
-            <Head title={t('nav.services')} />
+            <Seo
+                title={t('nav.services')}
+                description="Khám phá các dịch vụ massage, facial, head spa, foot spa tại Maha Spa Đà Nẵng."
+                schema={itemListSchema(services.map(s => ({
+                    name: tr(s.name, locale),
+                    url: window.location.origin + '/services/' + s.slug,
+                })))}
+            />
             <section className="bg-maha-50 py-12">
                 <div className="mx-auto max-w-7xl px-4">
                     <h1 className="font-serif text-4xl text-maha-700">{t('nav.services')}</h1>
