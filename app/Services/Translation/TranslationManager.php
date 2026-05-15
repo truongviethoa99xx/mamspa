@@ -14,6 +14,7 @@ class TranslationManager
             'google' => app(GoogleTranslator::class),
             'deepl' => app(DeepLTranslator::class),
             'openai' => app(OpenAITranslator::class),
+            'gemini' => app(GeminiTranslator::class),
             'null', null => app(NullTranslator::class),
             default => throw new InvalidArgumentException("Unknown translator: {$name}"),
         };

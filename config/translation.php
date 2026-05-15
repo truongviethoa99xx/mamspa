@@ -23,5 +23,10 @@ return [
         'endpoint' => 'https://api.openai.com/v1/chat/completions',
     ],
 
+    'gemini' => [
+        'key' => env('GEMINI_KEY'),
+        'endpoint' => 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+    ],
+
     'cache_ttl' => 60 * 60 * 24 * 7, // 7 ngày
 ];
