@@ -1,17 +1,23 @@
-import { useTranslation } from 'react-i18next';
+import { Head } from '@inertiajs/react';
+import PublicLayout from '@/Layouts/PublicLayout';
+import { BlockRenderer } from '@/Components/Blocks/BlockRenderer';
+import type { Block, Page } from '@/types';
 
-export default function Home() {
-    const { t } = useTranslation();
+interface Props {
+    page: Pick<Page, 'slug' | 'title' | 'seo_meta'>;
+    blocks: Block[];
+}
+
+export default function Home({ page, blocks }: Props) {
+    const title = typeof page.title === 'string' ? page.title : (page.title as any)?.vi ?? 'Maha Spa';
     return (
-        <main className="flex min-h-screen items-center justify-center bg-maha-50 p-8">
-            <div className="text-center">
-                <h1 className="font-serif text-4xl text-maha-700 md:text-6xl">
-                    {t('home.hero.title')}
-                </h1>
-                <p className="mt-4 text-lg text-maha-900/80">
-                    {t('home.hero.subtitle')}
-                </p>
-            </div>
-        </main>
+        <PublicLayout>
+            <Head title={title}>
+                {page.seo_meta?.description && (
+                    <meta name="description" content={page.seo_meta.description} />
+                )}
+            </Head>
+            <BlockRenderer blocks={blocks} />
+        </PublicLayout>
     );
 }
