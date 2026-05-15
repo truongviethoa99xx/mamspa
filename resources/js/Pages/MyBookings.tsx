@@ -17,10 +17,6 @@ interface Booking {
     service: { slug: string; name: any; duration: number };
 }
 
-const STATUS_LABEL: Record<string, string> = {
-    pending: 'Chờ xác nhận', confirmed: 'Đã xác nhận',
-    completed: 'Hoàn thành', cancelled: 'Đã huỷ',
-};
 const STATUS_COLOR: Record<string, string> = {
     pending: 'bg-yellow-100 text-yellow-700',
     confirmed: 'bg-green-100 text-green-700',
@@ -34,7 +30,7 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
     const { props } = usePage<SharedProps>();
 
     const cancel = (b: Booking) => {
-        if (!confirm(`Huỷ booking ${b.code}?`)) return;
+        if (!confirm(t('myBookings.confirmCancel', { code: b.code }))) return;
         router.post(`/my-bookings/${b.id}/cancel`);
     };
 
@@ -52,8 +48,8 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
                     {props.flash?.error && <p className="mb-4 rounded bg-red-50 p-3 text-sm text-red-700">{props.flash.error}</p>}
                     {bookings.length === 0 && (
                         <div className="rounded-xl border border-maha-100 bg-white p-10 text-center text-gray-500">
-                            Bạn chưa có booking nào.
-                            <Link href="/booking" className="mt-3 block text-maha-700 underline">Đặt lịch ngay</Link>
+                            {t('myBookings.empty')}
+                            <Link href="/booking" className="mt-3 block text-maha-700 underline">{t('myBookings.bookOne')}</Link>
                         </div>
                     )}
                     <ul className="space-y-3">
@@ -64,12 +60,12 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
                                         <p className="text-xs uppercase text-gray-500">{b.code}</p>
                                         <h3 className="font-serif text-xl text-maha-700">{tr(b.service.name, locale)}</h3>
                                         <p className="text-sm text-gray-600">
-                                            {b.date} · {b.time_slot} · {b.service.duration} min · {tr(b.branch.name, locale)}
+                                            {b.date} · {b.time_slot} · {b.service.duration} {t('common.minute')} · {tr(b.branch.name, locale)}
                                         </p>
                                     </div>
                                     <div className="text-right">
                                         <span className={`rounded-full px-3 py-1 text-xs ${STATUS_COLOR[b.status]}`}>
-                                            {STATUS_LABEL[b.status]}
+                                            {t(`myBookings.status.${b.status}`)}
                                         </span>
                                         <p className="mt-2 font-semibold text-maha-700">{formatVND(b.total_price)}</p>
                                     </div>
@@ -78,7 +74,7 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
                                     {b.payment_status === 'unpaid' && b.status !== 'cancelled' && (
                                         <Link href={`/payment/vnpay/${b.id}`}
                                             className="rounded-full bg-maha-700 px-4 py-1 text-white">
-                                            Thanh toán VNPay
+                                            {t('myBookings.payVnpay')}
                                         </Link>
                                     )}
                                     {['pending', 'confirmed'].includes(b.status) && (

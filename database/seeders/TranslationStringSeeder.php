@@ -9,42 +9,41 @@ class TranslationStringSeeder extends Seeder
 {
     public function run(): void
     {
-        $rows = [
-            ['nav', 'home', ['vi' => 'Trang chủ', 'en' => 'Home']],
-            ['nav', 'about', ['vi' => 'Giới thiệu', 'en' => 'About']],
-            ['nav', 'services', ['vi' => 'Dịch vụ', 'en' => 'Services']],
-            ['nav', 'booking', ['vi' => 'Đặt lịch', 'en' => 'Book Now']],
-            ['nav', 'voucher', ['vi' => 'Voucher', 'en' => 'Voucher']],
-            ['nav', 'gallery', ['vi' => 'Thư viện', 'en' => 'Gallery']],
-            ['nav', 'promotions', ['vi' => 'Khuyến mãi', 'en' => 'Promotions']],
-            ['nav', 'blog', ['vi' => 'Tin tức', 'en' => 'Blog']],
-            ['nav', 'contact', ['vi' => 'Liên hệ', 'en' => 'Contact']],
-            ['nav', 'myBookings', ['vi' => 'Lịch của tôi', 'en' => 'My Bookings']],
-            ['nav', 'login', ['vi' => 'Đăng nhập', 'en' => 'Sign In']],
-            ['nav', 'register', ['vi' => 'Đăng ký', 'en' => 'Sign Up']],
-            ['nav', 'logout', ['vi' => 'Đăng xuất', 'en' => 'Sign Out']],
-            ['common', 'loading', ['vi' => 'Đang tải...', 'en' => 'Loading...']],
-            ['common', 'submit', ['vi' => 'Gửi', 'en' => 'Submit']],
-            ['common', 'cancel', ['vi' => 'Huỷ', 'en' => 'Cancel']],
-            ['common', 'save', ['vi' => 'Lưu', 'en' => 'Save']],
-            ['common', 'back', ['vi' => 'Quay lại', 'en' => 'Back']],
-            ['common', 'next', ['vi' => 'Tiếp tục', 'en' => 'Next']],
-            ['common', 'bookNow', ['vi' => 'Đặt lịch ngay', 'en' => 'Book now']],
-            ['common', 'readMore', ['vi' => 'Đọc thêm', 'en' => 'Read more']],
-            ['home.hero', 'title', ['vi' => 'Hành trình cân bằng Thân - Tâm - Trí', 'en' => 'The Journey to Balance Body - Mind - Spirit']],
-            ['home.hero', 'subtitle', ['vi' => 'Maha Spa — Trải nghiệm spa truyền thống Việt giữa lòng Đà Nẵng', 'en' => 'Maha Spa — Traditional Vietnamese spa experience in Da Nang']],
-            ['footer', 'tagline', ['vi' => 'The Beginning of the Journey to Balance Body - Mind - Spirit', 'en' => 'The Beginning of the Journey to Balance Body - Mind - Spirit']],
-            ['footer', 'branches', ['vi' => 'Chi nhánh', 'en' => 'Branches']],
-            ['footer', 'contact', ['vi' => 'Liên hệ', 'en' => 'Contact']],
-            ['footer', 'follow', ['vi' => 'Theo dõi chúng tôi', 'en' => 'Follow us']],
-            ['footer', 'rights', ['vi' => '© {{year}} Maha Spa. All rights reserved.', 'en' => '© {{year}} Maha Spa. All rights reserved.']],
-        ];
+        $vi = json_decode(file_get_contents(resource_path('js/i18n/vi.json')), true) ?? [];
+        $en = json_decode(file_get_contents(resource_path('js/i18n/en.json')), true) ?? [];
 
-        foreach ($rows as [$group, $key, $values]) {
+        $flatVi = $this->flatten($vi);
+        $flatEn = $this->flatten($en);
+
+        $keys = array_unique(array_merge(array_keys($flatVi), array_keys($flatEn)));
+        sort($keys);
+
+        foreach ($keys as $full) {
+            $parts = explode('.', $full);
+            $key = array_pop($parts);
+            $group = implode('.', $parts);
+
             TranslationString::updateOrCreate(
                 ['group' => $group, 'key' => $key],
-                ['values' => $values, 'is_auto_translated' => false]
+                ['values' => [
+                    'vi' => $flatVi[$full] ?? '',
+                    'en' => $flatEn[$full] ?? '',
+                ], 'is_auto_translated' => false]
             );
         }
+    }
+
+    protected function flatten(array $items, string $prefix = ''): array
+    {
+        $out = [];
+        foreach ($items as $k => $v) {
+            $key = $prefix === '' ? $k : "{$prefix}.{$k}";
+            if (is_array($v)) {
+                $out += $this->flatten($v, $key);
+            } else {
+                $out[$key] = (string) $v;
+            }
+        }
+        return $out;
     }
 }

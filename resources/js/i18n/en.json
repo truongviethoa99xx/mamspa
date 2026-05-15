@@ -12,7 +12,8 @@
         "myBookings": "My Bookings",
         "login": "Sign In",
         "register": "Sign Up",
-        "logout": "Sign Out"
+        "logout": "Sign Out",
+        "toggleMenu": "Toggle menu"
     },
     "common": {
         "loading": "Loading...",
@@ -23,7 +24,13 @@
         "next": "Next",
         "viewMore": "View more",
         "bookNow": "Book now",
-        "readMore": "Read more"
+        "readMore": "Read more",
+        "all": "All",
+        "processing": "Processing...",
+        "minute": "min",
+        "closeBanner": "Close banner",
+        "chat": "Chat",
+        "apply": "Apply"
     },
     "home": {
         "hero": {
@@ -37,5 +44,110 @@
         "contact": "Contact",
         "follow": "Follow us",
         "rights": "© {{year}} Maha Spa. All rights reserved."
+    },
+    "services": {
+        "category": {
+            "all": "All",
+            "massage": "Body Massage",
+            "facial": "Facial",
+            "head-spa": "Head Spa",
+            "foot-spa": "Foot Spa",
+            "combo": "Combo"
+        },
+        "allBranches": "All branches",
+        "empty": "No matching services.",
+        "ingredients": "Ingredients"
+    },
+    "about": {
+        "servicesAtBranch": "Services at this branch"
+    },
+    "booking": {
+        "steps": {
+            "branch": "Branch",
+            "service": "Service",
+            "datetime": "Date & time",
+            "info": "Your info",
+            "confirm": "Confirm"
+        },
+        "selectBranch": "Select a branch",
+        "selectService": "Select a service",
+        "selectDateTime": "Pick date & time",
+        "contactInfo": "Contact information",
+        "confirmTitle": "Confirm your booking",
+        "field": {
+            "name": "Full name",
+            "phone": "Phone number",
+            "email": "Email",
+            "note": "Note",
+            "voucher": "Voucher",
+            "paymentMethod": "Payment method"
+        },
+        "voucher": {
+            "apply": "Apply",
+            "discount": "Discount {{amount}}"
+        },
+        "payment": {
+            "cash": "Pay at the spa",
+            "vnpay": "VNPay",
+            "momo": "MoMo",
+            "card": "Visa/Master card"
+        },
+        "summary": {
+            "branch": "Branch",
+            "service": "Service",
+            "date": "Date",
+            "time": "Time",
+            "guest": "Guest",
+            "total": "Total"
+        },
+        "confirm": "Confirm booking",
+        "slotsAvailable": "{{available}}/{{capacity}} available"
+    },
+    "bookingSuccess": {
+        "title": "Booking successful!",
+        "code": "Booking code",
+        "emailSent": "A confirmation email has been sent.",
+        "backHome": "Back to home"
+    },
+    "myBookings": {
+        "empty": "You have no bookings yet.",
+        "bookOne": "Book now",
+        "confirmCancel": "Cancel booking {{code}}?",
+        "payVnpay": "Pay with VNPay",
+        "status": {
+            "pending": "Pending",
+            "confirmed": "Confirmed",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+        }
+    },
+    "auth": {
+        "login": "Sign In",
+        "register": "Sign Up",
+        "email": "Email",
+        "password": "Password",
+        "passwordConfirm": "Confirm password",
+        "name": "Name",
+        "phone": "Phone",
+        "remember": "Remember me",
+        "noAccount": "No account yet?",
+        "haveAccount": "Already have an account?"
+    },
+    "contact": {
+        "form": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "subject": "Subject",
+            "message": "Message"
+        }
+    },
+    "promotions": {
+        "endsAt": "Ends: {{date}}"
+    },
+    "blocks": {
+        "branches": {
+            "title": "Branches"
+        }
     }
 }

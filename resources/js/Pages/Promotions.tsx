@@ -36,7 +36,7 @@ export default function Promotions({ promotions }: { promotions: Promo[] }) {
                                 <p className="mt-2 text-sm text-gray-600">{tr(p.description, locale)}</p>
                                 {p.ends_at && (
                                     <p className="mt-3 text-xs text-red-500">
-                                        Đến: {new Date(p.ends_at).toLocaleDateString()}
+                                        {t('promotions.endsAt', { date: new Date(p.ends_at).toLocaleDateString(locale === 'en' ? 'en-US' : 'vi-VN') })}
                                     </p>
                                 )}
                             </div>

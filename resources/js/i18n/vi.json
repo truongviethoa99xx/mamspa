@@ -12,7 +12,8 @@
         "myBookings": "Lịch của tôi",
         "login": "Đăng nhập",
         "register": "Đăng ký",
-        "logout": "Đăng xuất"
+        "logout": "Đăng xuất",
+        "toggleMenu": "Mở menu"
     },
     "common": {
         "loading": "Đang tải...",
@@ -23,7 +24,13 @@
         "next": "Tiếp tục",
         "viewMore": "Xem thêm",
         "bookNow": "Đặt lịch ngay",
-        "readMore": "Đọc thêm"
+        "readMore": "Đọc thêm",
+        "all": "Tất cả",
+        "processing": "Đang xử lý...",
+        "minute": "phút",
+        "closeBanner": "Đóng banner",
+        "chat": "Chat",
+        "apply": "Áp dụng"
     },
     "home": {
         "hero": {
@@ -37,5 +44,110 @@
         "contact": "Liên hệ",
         "follow": "Theo dõi chúng tôi",
         "rights": "© {{year}} Maha Spa. All rights reserved."
+    },
+    "services": {
+        "category": {
+            "all": "Tất cả",
+            "massage": "Body Massage",
+            "facial": "Facial",
+            "head-spa": "Head Spa",
+            "foot-spa": "Foot Spa",
+            "combo": "Combo"
+        },
+        "allBranches": "Tất cả chi nhánh",
+        "empty": "Không có dịch vụ phù hợp.",
+        "ingredients": "Nguyên liệu"
+    },
+    "about": {
+        "servicesAtBranch": "Dịch vụ tại chi nhánh"
+    },
+    "booking": {
+        "steps": {
+            "branch": "Chi nhánh",
+            "service": "Dịch vụ",
+            "datetime": "Ngày giờ",
+            "info": "Thông tin",
+            "confirm": "Xác nhận"
+        },
+        "selectBranch": "Chọn chi nhánh",
+        "selectService": "Chọn dịch vụ",
+        "selectDateTime": "Chọn ngày & khung giờ",
+        "contactInfo": "Thông tin liên hệ",
+        "confirmTitle": "Xác nhận booking",
+        "field": {
+            "name": "Họ và tên",
+            "phone": "Số điện thoại",
+            "email": "Email",
+            "note": "Ghi chú",
+            "voucher": "Voucher",
+            "paymentMethod": "Phương thức thanh toán"
+        },
+        "voucher": {
+            "apply": "Áp dụng",
+            "discount": "Giảm {{amount}}"
+        },
+        "payment": {
+            "cash": "Thanh toán tại spa",
+            "vnpay": "VNPay",
+            "momo": "MoMo",
+            "card": "Thẻ Visa/Master"
+        },
+        "summary": {
+            "branch": "Chi nhánh",
+            "service": "Dịch vụ",
+            "date": "Ngày",
+            "time": "Giờ",
+            "guest": "Khách",
+            "total": "Tổng cộng"
+        },
+        "confirm": "Xác nhận đặt lịch",
+        "slotsAvailable": "{{available}}/{{capacity}} còn trống"
+    },
+    "bookingSuccess": {
+        "title": "Đặt lịch thành công!",
+        "code": "Mã booking",
+        "emailSent": "Chúng tôi đã gửi email xác nhận cho bạn.",
+        "backHome": "Về trang chủ"
+    },
+    "myBookings": {
+        "empty": "Bạn chưa có booking nào.",
+        "bookOne": "Đặt lịch ngay",
+        "confirmCancel": "Huỷ booking {{code}}?",
+        "payVnpay": "Thanh toán VNPay",
+        "status": {
+            "pending": "Chờ xác nhận",
+            "confirmed": "Đã xác nhận",
+            "completed": "Hoàn thành",
+            "cancelled": "Đã huỷ"
+        }
+    },
+    "auth": {
+        "login": "Đăng nhập",
+        "register": "Đăng ký",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "passwordConfirm": "Nhập lại mật khẩu",
+        "name": "Họ tên",
+        "phone": "Số điện thoại",
+        "remember": "Ghi nhớ đăng nhập",
+        "noAccount": "Chưa có tài khoản?",
+        "haveAccount": "Đã có tài khoản?"
+    },
+    "contact": {
+        "form": {
+            "name": "Họ tên",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "subject": "Chủ đề",
+            "message": "Nội dung"
+        }
+    },
+    "promotions": {
+        "endsAt": "Đến: {{date}}"
+    },
+    "blocks": {
+        "branches": {
+            "title": "Chi nhánh"
+        }
     }
 }

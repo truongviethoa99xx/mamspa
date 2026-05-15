@@ -364,12 +364,15 @@ protected $translatable = ['title'];
 - **UI strings (FE labels):** lưu trong DB table `translation_strings`, admin sửa qua Filament. JSON tĩnh `resources/js/i18n/{vi,en}.json` chỉ là fallback khi API fail. FE tự fetch `/i18n/{lang}` và merge vào i18next.
 - **Laravel translations (validation, mail):** `resources/lang/{vi,en}.json`
 
-### 🤖 Auto-translate
+### 🤖 Auto-translate (100% văn bản đều tuỳ biến từ dashboard)
 - **Provider:** chọn qua `TRANSLATE_PROVIDER` (`null` | `google` | `deepl` | `openai`)
 - **`TranslationManager::translate()`** có cache 7 ngày → tránh gọi API trùng
 - **Trên mọi Filament Resource có field translatable** (Branch, Service, Promotion, BlogPost, Page): mỗi cặp field VI/EN có nút "Dịch tự động từ VI →" qua helper `TranslatableField::group()`
 - **UI strings:** Filament Translation Manager (`/admin/translation-strings`) → bulk action "Auto-translate EN còn trống"
-- **CLI:** `php artisan translate:missing --target=en` để dịch hàng loạt tất cả model + UI strings còn thiếu EN
+- **CLI:**
+  - `php artisan translate:scan` quét toàn bộ `.tsx`/`.ts` tìm `t('group.key')` chưa có trong DB → tự insert (kèm `--auto-translate` để dịch luôn VI→EN). Dev thêm chuỗi mới chỉ cần dùng `t('foo.bar')` → chạy scan → admin chỉnh trong dashboard.
+  - `php artisan translate:missing --target=en` dịch hàng loạt mọi model + UI strings còn thiếu EN.
+- **Convention:** mọi chuỗi hiển thị trên FE đều phải dùng `t('group.key')` thay vì hardcode. Admin sửa text bất kỳ tại `/admin/translation-strings` mà không cần deploy code.
 - **Usage React:**
   ```tsx
   const { t } = useTranslation();

@@ -38,31 +38,28 @@ export default function Contact() {
                             <p className="flex items-center gap-2 text-sm"><Phone className="h-4 w-4" /> (+84) 978 456 185</p>
                         </div>
                         <p className="flex items-center gap-2 text-sm"><Mail className="h-4 w-4" /> hello@mahaspa.vn</p>
-                        <iframe
-                            title="Maha Spa map"
-                            className="h-64 w-full rounded-lg border"
+                        <iframe title="Maha Spa map" className="h-64 w-full rounded-lg border"
                             src="https://www.google.com/maps/embed/v1/place?key=AIza_PLACEHOLDER&q=Maha+Spa+Da+Nang"
-                            loading="lazy"
-                        />
+                            loading="lazy" />
                     </div>
                     <form onSubmit={submit} className="space-y-3 rounded-xl border border-maha-100 bg-white p-6">
                         {props.flash?.success && (
                             <p className="rounded bg-green-50 p-3 text-sm text-green-700">{props.flash.success}</p>
                         )}
-                        <input className="w-full rounded-lg border px-4 py-2" placeholder="Họ tên *"
+                        <input className="w-full rounded-lg border px-4 py-2" placeholder={t('contact.form.name') + ' *'}
                             value={data.name} onChange={(e) => setData('name', e.target.value)} />
                         {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
-                        <input className="w-full rounded-lg border px-4 py-2" placeholder="Email *"
+                        <input className="w-full rounded-lg border px-4 py-2" placeholder={t('contact.form.email') + ' *'}
                             value={data.email} onChange={(e) => setData('email', e.target.value)} />
                         {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
-                        <input className="w-full rounded-lg border px-4 py-2" placeholder="Số điện thoại"
+                        <input className="w-full rounded-lg border px-4 py-2" placeholder={t('contact.form.phone')}
                             value={data.phone} onChange={(e) => setData('phone', e.target.value)} />
-                        <input className="w-full rounded-lg border px-4 py-2" placeholder="Chủ đề *"
+                        <input className="w-full rounded-lg border px-4 py-2" placeholder={t('contact.form.subject') + ' *'}
                             value={data.subject} onChange={(e) => setData('subject', e.target.value)} />
-                        <textarea className="w-full rounded-lg border px-4 py-2" rows={5} placeholder="Nội dung *"
+                        <textarea className="w-full rounded-lg border px-4 py-2" rows={5} placeholder={t('contact.form.message') + ' *'}
                             value={data.message} onChange={(e) => setData('message', e.target.value)} />
                         <button disabled={processing} className="rounded-full bg-maha-700 px-8 py-2 text-white disabled:bg-gray-300">
-                            {processing ? '...' : t('common.submit')}
+                            {processing ? t('common.processing') : t('common.submit')}
                         </button>
                     </form>
                 </div>

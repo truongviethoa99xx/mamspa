@@ -35,25 +35,21 @@ export default function ServiceShow({ service }: Props) {
                         <h1 className="mt-2 font-serif text-4xl text-maha-700">{name}</h1>
                         <p className="mt-4 text-gray-700">{tr(service.description, locale)}</p>
                         <div className="mt-6 flex gap-6 text-sm text-gray-600">
-                            <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> {service.duration} min</span>
+                            <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> {service.duration} {t('common.minute')}</span>
                             <span className="flex items-center gap-1"><Tag className="h-4 w-4" /> {formatVND(service.price)}</span>
                         </div>
                         {service.ingredients.length > 0 && (
                             <div className="mt-6">
-                                <h3 className="text-sm font-semibold text-maha-700">Nguyên liệu</h3>
+                                <h3 className="text-sm font-semibold text-maha-700">{t('services.ingredients')}</h3>
                                 <ul className="mt-2 flex flex-wrap gap-2">
                                     {service.ingredients.map((i, idx) => (
-                                        <li key={idx} className="rounded-full bg-white px-3 py-1 text-xs text-maha-700">
-                                            {i}
-                                        </li>
+                                        <li key={idx} className="rounded-full bg-white px-3 py-1 text-xs text-maha-700">{i}</li>
                                     ))}
                                 </ul>
                             </div>
                         )}
-                        <Link
-                            href={`/booking?service=${service.slug}`}
-                            className="mt-8 inline-block rounded-full bg-maha-700 px-8 py-3 font-semibold text-white hover:bg-maha-800"
-                        >
+                        <Link href={`/booking?service=${service.slug}`}
+                            className="mt-8 inline-block rounded-full bg-maha-700 px-8 py-3 font-semibold text-white hover:bg-maha-800">
                             {t('common.bookNow')}
                         </Link>
                     </div>
