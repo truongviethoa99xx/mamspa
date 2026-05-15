@@ -1,5 +1,6 @@
 import { router } from '@inertiajs/react';
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocale } from '@/Hooks/useLocale';
 import type { Locale } from '@/types';
 
@@ -13,6 +14,7 @@ const LANGUAGES: { code: Locale; label: string; flag: string }[] = [
 
 export function LanguageSwitcher() {
     const locale = useLocale();
+    const { i18n } = useTranslation();
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -20,6 +22,7 @@ export function LanguageSwitcher() {
 
     const switchTo = (lang: Locale) => {
         setOpen(false);
+        void i18n.changeLanguage(lang);
         const url = new URL(window.location.href);
         url.searchParams.set('lang', lang);
         router.visit(url.pathname + url.search, { preserveScroll: true });
