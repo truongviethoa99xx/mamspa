@@ -28,7 +28,7 @@ class Branch extends Model implements HasMedia
 
     public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(Service::class, 'service_branch');
     }
 
     public function slots(): HasMany

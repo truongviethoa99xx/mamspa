@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 
 class SitemapController extends Controller
 {
-    public function index(): Response
+    public function __invoke(): Response
     {
         $base = config('app.url');
         $urls = [

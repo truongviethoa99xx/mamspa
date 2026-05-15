@@ -30,7 +30,7 @@ class Service extends Model implements HasMedia
 
     public function branches(): BelongsToMany
     {
-        return $this->belongsToMany(Branch::class);
+        return $this->belongsToMany(Branch::class, 'service_branch');
     }
 
     public function scopeActive($q)
