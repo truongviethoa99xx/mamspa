@@ -1,0 +1,41 @@
+{
+    "nav": {
+        "home": "Trang chủ",
+        "about": "Giới thiệu",
+        "services": "Dịch vụ",
+        "booking": "Đặt lịch",
+        "voucher": "Voucher",
+        "gallery": "Thư viện",
+        "promotions": "Khuyến mãi",
+        "blog": "Tin tức",
+        "contact": "Liên hệ",
+        "myBookings": "Lịch của tôi",
+        "login": "Đăng nhập",
+        "register": "Đăng ký",
+        "logout": "Đăng xuất"
+    },
+    "common": {
+        "loading": "Đang tải...",
+        "submit": "Gửi",
+        "cancel": "Huỷ",
+        "save": "Lưu",
+        "back": "Quay lại",
+        "next": "Tiếp tục",
+        "viewMore": "Xem thêm",
+        "bookNow": "Đặt lịch ngay",
+        "readMore": "Đọc thêm"
+    },
+    "home": {
+        "hero": {
+            "title": "Hành trình cân bằng Thân - Tâm - Trí",
+            "subtitle": "Maha Spa — Trải nghiệm spa truyền thống Việt giữa lòng Đà Nẵng"
+        }
+    },
+    "footer": {
+        "tagline": "The Beginning of the Journey to Balance Body - Mind - Spirit",
+        "branches": "Chi nhánh",
+        "contact": "Liên hệ",
+        "follow": "Theo dõi chúng tôi",
+        "rights": "© {{year}} Maha Spa. All rights reserved."
+    }
+}

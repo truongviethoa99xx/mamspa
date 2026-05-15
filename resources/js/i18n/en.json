@@ -1,0 +1,41 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "booking": "Book Now",
+        "voucher": "Voucher",
+        "gallery": "Gallery",
+        "promotions": "Promotions",
+        "blog": "Blog",
+        "contact": "Contact",
+        "myBookings": "My Bookings",
+        "login": "Sign In",
+        "register": "Sign Up",
+        "logout": "Sign Out"
+    },
+    "common": {
+        "loading": "Loading...",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "save": "Save",
+        "back": "Back",
+        "next": "Next",
+        "viewMore": "View more",
+        "bookNow": "Book now",
+        "readMore": "Read more"
+    },
+    "home": {
+        "hero": {
+            "title": "The Journey to Balance Body - Mind - Spirit",
+            "subtitle": "Maha Spa — Traditional Vietnamese spa experience in Da Nang"
+        }
+    },
+    "footer": {
+        "tagline": "The Beginning of the Journey to Balance Body - Mind - Spirit",
+        "branches": "Branches",
+        "contact": "Contact",
+        "follow": "Follow us",
+        "rights": "© {{year}} Maha Spa. All rights reserved."
+    }
+}
