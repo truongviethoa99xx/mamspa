@@ -1,0 +1,153 @@
+{
+    "nav": {
+        "home": "首页",
+        "about": "关于我们",
+        "services": "服务项目",
+        "booking": "立即预约",
+        "voucher": "优惠券",
+        "gallery": "图片展示",
+        "promotions": "优惠活动",
+        "blog": "博客",
+        "contact": "联系我们",
+        "myBookings": "我的预约",
+        "login": "登录",
+        "register": "注册",
+        "logout": "退出登录",
+        "toggleMenu": "菜单"
+    },
+    "common": {
+        "loading": "加载中...",
+        "submit": "提交",
+        "cancel": "取消",
+        "save": "保存",
+        "back": "返回",
+        "next": "下一步",
+        "viewMore": "查看更多",
+        "bookNow": "立即预约",
+        "readMore": "阅读更多",
+        "all": "全部",
+        "processing": "处理中...",
+        "minute": "分钟",
+        "closeBanner": "关闭",
+        "chat": "聊天",
+        "apply": "应用"
+    },
+    "home": {
+        "hero": {
+            "title": "开启身心灵平衡的旅程",
+            "subtitle": "Maha Spa — 在岘港体验越南传统水疗"
+        }
+    },
+    "footer": {
+        "tagline": "开启身心灵平衡旅程的起点",
+        "branches": "门店",
+        "contact": "联系我们",
+        "follow": "关注我们",
+        "rights": "© {{year}} Maha Spa. 版权所有。"
+    },
+    "services": {
+        "category": {
+            "all": "全部",
+            "massage": "全身按摩",
+            "facial": "面部护理",
+            "head-spa": "头部水疗",
+            "foot-spa": "足部水疗",
+            "combo": "套餐组合"
+        },
+        "allBranches": "全部门店",
+        "empty": "暂无相关服务。",
+        "ingredients": "使用原料"
+    },
+    "about": {
+        "servicesAtBranch": "该门店的服务项目"
+    },
+    "booking": {
+        "steps": {
+            "branch": "选择门店",
+            "service": "选择服务",
+            "datetime": "选择时间",
+            "info": "填写信息",
+            "confirm": "确认预约"
+        },
+        "selectBranch": "请选择门店",
+        "selectService": "请选择服务",
+        "selectDateTime": "请选择日期和时间",
+        "contactInfo": "联系方式",
+        "confirmTitle": "确认您的预约",
+        "field": {
+            "name": "姓名",
+            "phone": "手机号码",
+            "email": "电子邮件",
+            "note": "备注",
+            "voucher": "优惠券",
+            "paymentMethod": "支付方式"
+        },
+        "voucher": {
+            "apply": "使用",
+            "discount": "优惠 {{amount}}"
+        },
+        "payment": {
+            "cash": "到店付款",
+            "vnpay": "VNPay",
+            "momo": "MoMo",
+            "card": "Visa/万事达卡"
+        },
+        "summary": {
+            "branch": "门店",
+            "service": "服务",
+            "date": "日期",
+            "time": "时间",
+            "guest": "客户",
+            "total": "总计"
+        },
+        "confirm": "确认预约",
+        "slotsAvailable": "剩余 {{available}}/{{capacity}}"
+    },
+    "bookingSuccess": {
+        "title": "预约成功！",
+        "code": "预约编号",
+        "emailSent": "确认邮件已发送至您的邮箱。",
+        "backHome": "返回首页"
+    },
+    "myBookings": {
+        "empty": "暂无预约记录。",
+        "bookOne": "立即预约",
+        "confirmCancel": "确定取消预约 {{code}}？",
+        "payVnpay": "使用VNPay支付",
+        "status": {
+            "pending": "待确认",
+            "confirmed": "已确认",
+            "completed": "已完成",
+            "cancelled": "已取消"
+        }
+    },
+    "auth": {
+        "login": "登录",
+        "register": "注册",
+        "email": "电子邮件",
+        "password": "密码",
+        "passwordConfirm": "确认密码",
+        "name": "姓名",
+        "phone": "手机号码",
+        "remember": "记住我",
+        "noAccount": "还没有账号？",
+        "haveAccount": "已有账号？"
+    },
+    "contact": {
+        "form": {
+            "name": "姓名",
+            "email": "电子邮件",
+            "phone": "手机号码",
+            "subject": "主题",
+            "message": "留言内容"
+        }
+    },
+    "promotions": {
+        "endsAt": "截止日期: {{date}}"
+    },
+    "blocks": {
+        "branches": {
+            "title": "门店"
+        }
+    }
+}

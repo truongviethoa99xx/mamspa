@@ -4,6 +4,9 @@ import { initReactI18next } from 'react-i18next';
 
 import vi from './vi.json';
 import en from './en.json';
+import ja from './ja.json';
+import ko from './ko.json';
+import zh from './zh.json';
 
 function unflatten(obj: Record<string, string>): Record<string, unknown> {
     const out: Record<string, any> = {};
@@ -25,9 +28,12 @@ i18n.use(LanguageDetector)
         resources: {
             vi: { translation: vi },
             en: { translation: en },
+            ja: { translation: ja },
+            ko: { translation: ko },
+            zh: { translation: zh },
         },
         fallbackLng: 'vi',
-        supportedLngs: ['vi', 'en'],
+        supportedLngs: ['vi', 'en', 'ja', 'ko', 'zh'],
         interpolation: { escapeValue: false },
         detection: {
             order: ['querystring', 'localStorage', 'navigator'],
@@ -40,7 +46,7 @@ i18n.use(LanguageDetector)
  * Tải translations từ DB qua API và merge vào i18next.
  * Strings JSON tĩnh hoạt động như fallback nếu API fail.
  */
-export async function loadRemoteTranslations(lang: 'vi' | 'en'): Promise<void> {
+export async function loadRemoteTranslations(lang: 'vi' | 'en' | 'ja' | 'ko' | 'zh'): Promise<void> {
     try {
         const res = await fetch(`/i18n/${lang}`, { headers: { Accept: 'application/json' } });
         if (!res.ok) return;
@@ -54,6 +60,9 @@ export async function loadRemoteTranslations(lang: 'vi' | 'en'): Promise<void> {
 if (typeof window !== 'undefined') {
     void loadRemoteTranslations('vi');
     void loadRemoteTranslations('en');
+    void loadRemoteTranslations('ja');
+    void loadRemoteTranslations('ko');
+    void loadRemoteTranslations('zh');
 }
 
 export default i18n;

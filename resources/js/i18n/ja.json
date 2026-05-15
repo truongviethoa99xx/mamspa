@@ -1,0 +1,153 @@
+{
+    "nav": {
+        "home": "ホーム",
+        "about": "について",
+        "services": "サービス",
+        "booking": "予約する",
+        "voucher": "バウチャー",
+        "gallery": "ギャラリー",
+        "promotions": "キャンペーン",
+        "blog": "ブログ",
+        "contact": "お問い合わせ",
+        "myBookings": "予約履歴",
+        "login": "ログイン",
+        "register": "新規登録",
+        "logout": "ログアウト",
+        "toggleMenu": "メニュー"
+    },
+    "common": {
+        "loading": "読み込み中...",
+        "submit": "送信",
+        "cancel": "キャンセル",
+        "save": "保存",
+        "back": "戻る",
+        "next": "次へ",
+        "viewMore": "もっと見る",
+        "bookNow": "今すぐ予約",
+        "readMore": "続きを読む",
+        "all": "すべて",
+        "processing": "処理中...",
+        "minute": "分",
+        "closeBanner": "閉じる",
+        "chat": "チャット",
+        "apply": "適用"
+    },
+    "home": {
+        "hero": {
+            "title": "身体・心・精神のバランスへの旅",
+            "subtitle": "マハスパ — ダナンで体験するベトナム伝統スパ"
+        }
+    },
+    "footer": {
+        "tagline": "身体・心・精神のバランスへの旅の始まり",
+        "branches": "店舗",
+        "contact": "お問い合わせ",
+        "follow": "フォローする",
+        "rights": "© {{year}} Maha Spa. 無断転載禁止。"
+    },
+    "services": {
+        "category": {
+            "all": "すべて",
+            "massage": "ボディマッサージ",
+            "facial": "フェイシャル",
+            "head-spa": "ヘッドスパ",
+            "foot-spa": "フットスパ",
+            "combo": "コンボ"
+        },
+        "allBranches": "全店舗",
+        "empty": "該当するサービスがありません。",
+        "ingredients": "使用素材"
+    },
+    "about": {
+        "servicesAtBranch": "この店舗のサービス"
+    },
+    "booking": {
+        "steps": {
+            "branch": "店舗",
+            "service": "サービス",
+            "datetime": "日時",
+            "info": "お客様情報",
+            "confirm": "確認"
+        },
+        "selectBranch": "店舗を選択",
+        "selectService": "サービスを選択",
+        "selectDateTime": "日時を選択",
+        "contactInfo": "連絡先情報",
+        "confirmTitle": "予約内容の確認",
+        "field": {
+            "name": "お名前",
+            "phone": "電話番号",
+            "email": "メールアドレス",
+            "note": "備考",
+            "voucher": "バウチャー",
+            "paymentMethod": "支払い方法"
+        },
+        "voucher": {
+            "apply": "適用",
+            "discount": "割引 {{amount}}"
+        },
+        "payment": {
+            "cash": "店舗でのお支払い",
+            "vnpay": "VNPay",
+            "momo": "MoMo",
+            "card": "Visa/マスターカード"
+        },
+        "summary": {
+            "branch": "店舗",
+            "service": "サービス",
+            "date": "日付",
+            "time": "時間",
+            "guest": "お客様",
+            "total": "合計"
+        },
+        "confirm": "予約を確定する",
+        "slotsAvailable": "{{available}}/{{capacity}} 空き"
+    },
+    "bookingSuccess": {
+        "title": "予約が完了しました！",
+        "code": "予約コード",
+        "emailSent": "確認メールを送信しました。",
+        "backHome": "ホームに戻る"
+    },
+    "myBookings": {
+        "empty": "予約履歴がありません。",
+        "bookOne": "今すぐ予約",
+        "confirmCancel": "予約 {{code}} をキャンセルしますか？",
+        "payVnpay": "VNPayで支払う",
+        "status": {
+            "pending": "保留中",
+            "confirmed": "確認済み",
+            "completed": "完了",
+            "cancelled": "キャンセル済み"
+        }
+    },
+    "auth": {
+        "login": "ログイン",
+        "register": "新規登録",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "passwordConfirm": "パスワード確認",
+        "name": "お名前",
+        "phone": "電話番号",
+        "remember": "ログイン状態を保持",
+        "noAccount": "アカウントをお持ちでない方",
+        "haveAccount": "すでにアカウントをお持ちの方"
+    },
+    "contact": {
+        "form": {
+            "name": "お名前",
+            "email": "メールアドレス",
+            "phone": "電話番号",
+            "subject": "件名",
+            "message": "メッセージ"
+        }
+    },
+    "promotions": {
+        "endsAt": "終了: {{date}}"
+    },
+    "blocks": {
+        "branches": {
+            "title": "店舗"
+        }
+    }
+}

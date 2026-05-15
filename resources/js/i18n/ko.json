@@ -1,0 +1,153 @@
+{
+    "nav": {
+        "home": "홈",
+        "about": "소개",
+        "services": "서비스",
+        "booking": "예약하기",
+        "voucher": "바우처",
+        "gallery": "갤러리",
+        "promotions": "프로모션",
+        "blog": "블로그",
+        "contact": "문의",
+        "myBookings": "예약 내역",
+        "login": "로그인",
+        "register": "회원가입",
+        "logout": "로그아웃",
+        "toggleMenu": "메뉴"
+    },
+    "common": {
+        "loading": "로딩 중...",
+        "submit": "제출",
+        "cancel": "취소",
+        "save": "저장",
+        "back": "뒤로",
+        "next": "다음",
+        "viewMore": "더 보기",
+        "bookNow": "지금 예약",
+        "readMore": "더 읽기",
+        "all": "전체",
+        "processing": "처리 중...",
+        "minute": "분",
+        "closeBanner": "닫기",
+        "chat": "채팅",
+        "apply": "적용"
+    },
+    "home": {
+        "hero": {
+            "title": "몸·마음·정신의 균형을 찾는 여정",
+            "subtitle": "마하 스파 — 다낭에서 경험하는 베트남 전통 스파"
+        }
+    },
+    "footer": {
+        "tagline": "몸·마음·정신의 균형을 찾는 여정의 시작",
+        "branches": "지점",
+        "contact": "문의",
+        "follow": "팔로우",
+        "rights": "© {{year}} Maha Spa. 모든 권리 보유."
+    },
+    "services": {
+        "category": {
+            "all": "전체",
+            "massage": "바디 마사지",
+            "facial": "페이셜",
+            "head-spa": "헤드 스파",
+            "foot-spa": "풋 스파",
+            "combo": "콤보"
+        },
+        "allBranches": "전체 지점",
+        "empty": "해당 서비스가 없습니다.",
+        "ingredients": "재료"
+    },
+    "about": {
+        "servicesAtBranch": "이 지점의 서비스"
+    },
+    "booking": {
+        "steps": {
+            "branch": "지점",
+            "service": "서비스",
+            "datetime": "날짜 및 시간",
+            "info": "고객 정보",
+            "confirm": "확인"
+        },
+        "selectBranch": "지점 선택",
+        "selectService": "서비스 선택",
+        "selectDateTime": "날짜 및 시간 선택",
+        "contactInfo": "연락처 정보",
+        "confirmTitle": "예약 확인",
+        "field": {
+            "name": "이름",
+            "phone": "전화번호",
+            "email": "이메일",
+            "note": "메모",
+            "voucher": "바우처",
+            "paymentMethod": "결제 방법"
+        },
+        "voucher": {
+            "apply": "적용",
+            "discount": "할인 {{amount}}"
+        },
+        "payment": {
+            "cash": "현장 결제",
+            "vnpay": "VNPay",
+            "momo": "MoMo",
+            "card": "Visa/마스터카드"
+        },
+        "summary": {
+            "branch": "지점",
+            "service": "서비스",
+            "date": "날짜",
+            "time": "시간",
+            "guest": "고객",
+            "total": "합계"
+        },
+        "confirm": "예약 확정",
+        "slotsAvailable": "{{available}}/{{capacity}} 가능"
+    },
+    "bookingSuccess": {
+        "title": "예약이 완료되었습니다!",
+        "code": "예약 코드",
+        "emailSent": "확인 이메일이 발송되었습니다.",
+        "backHome": "홈으로 돌아가기"
+    },
+    "myBookings": {
+        "empty": "예약 내역이 없습니다.",
+        "bookOne": "지금 예약하기",
+        "confirmCancel": "예약 {{code}}을 취소하시겠습니까?",
+        "payVnpay": "VNPay로 결제",
+        "status": {
+            "pending": "대기 중",
+            "confirmed": "확인됨",
+            "completed": "완료",
+            "cancelled": "취소됨"
+        }
+    },
+    "auth": {
+        "login": "로그인",
+        "register": "회원가입",
+        "email": "이메일",
+        "password": "비밀번호",
+        "passwordConfirm": "비밀번호 확인",
+        "name": "이름",
+        "phone": "전화번호",
+        "remember": "로그인 상태 유지",
+        "noAccount": "계정이 없으신가요?",
+        "haveAccount": "이미 계정이 있으신가요?"
+    },
+    "contact": {
+        "form": {
+            "name": "이름",
+            "email": "이메일",
+            "phone": "전화번호",
+            "subject": "제목",
+            "message": "메시지"
+        }
+    },
+    "promotions": {
+        "endsAt": "종료: {{date}}"
+    },
+    "blocks": {
+        "branches": {
+            "title": "지점"
+        }
+    }
+}
