@@ -13,7 +13,7 @@ class OpenAITranslator implements TranslatorContract
             return $text;
         }
 
-        $langs = ['vi' => 'Vietnamese', 'en' => 'English'];
+        $langs = ['vi' => 'Vietnamese', 'en' => 'English', 'ja' => 'Japanese', 'ko' => 'Korean', 'zh' => 'Chinese (Simplified)'];
         $fromName = $langs[$from] ?? $from;
         $toName = $langs[$to] ?? $to;
 
