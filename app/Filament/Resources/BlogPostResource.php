@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\BlogPostResource\Pages;
 use App\Models\BlogPost;
 use Filament\Forms;
@@ -24,18 +25,9 @@ class BlogPostResource extends Resource
             Forms\Components\FileUpload::make('cover_image')->image(),
             Forms\Components\Toggle::make('is_published'),
             Forms\Components\DateTimePicker::make('published_at'),
-            Forms\Components\Tabs::make('content')->tabs([
-                Forms\Components\Tabs\Tab::make('VI')->schema([
-                    Forms\Components\TextInput::make('title.vi')->required(),
-                    Forms\Components\Textarea::make('excerpt.vi')->rows(3),
-                    Forms\Components\RichEditor::make('body.vi')->required(),
-                ]),
-                Forms\Components\Tabs\Tab::make('EN')->schema([
-                    Forms\Components\TextInput::make('title.en'),
-                    Forms\Components\Textarea::make('excerpt.en')->rows(3),
-                    Forms\Components\RichEditor::make('body.en'),
-                ]),
-            ]),
+            TranslatableField::group('title', label: 'Tiêu đề', required: true),
+            TranslatableField::group('excerpt', as: 'textarea', label: 'Mô tả ngắn', rows: 3),
+            TranslatableField::group('body', as: 'rich', label: 'Nội dung'),
             Forms\Components\KeyValue::make('seo_meta')->keyLabel('Meta key')->valueLabel('Value'),
         ])->columns(2);
     }

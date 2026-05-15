@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\PageResource\Pages;
 use App\Models\Page;
 use Filament\Forms;
@@ -24,14 +25,7 @@ class PageResource extends Resource
         return $form->schema([
             Forms\Components\Section::make('Meta')->schema([
                 Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
-                Forms\Components\Tabs::make('title')->tabs([
-                    Forms\Components\Tabs\Tab::make('VI')->schema([
-                        Forms\Components\TextInput::make('title.vi')->label('Tiêu đề (VI)')->required(),
-                    ]),
-                    Forms\Components\Tabs\Tab::make('EN')->schema([
-                        Forms\Components\TextInput::make('title.en')->label('Title (EN)'),
-                    ]),
-                ]),
+                TranslatableField::group('title', label: 'Tiêu đề', required: true),
                 Forms\Components\Toggle::make('is_published'),
                 Forms\Components\KeyValue::make('seo_meta')
                     ->keyLabel('Meta key')

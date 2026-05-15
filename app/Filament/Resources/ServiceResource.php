@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
 use Filament\Forms;
@@ -34,16 +35,8 @@ class ServiceResource extends Resource
                 Forms\Components\Toggle::make('is_featured'),
                 Forms\Components\Toggle::make('is_active')->default(true),
             ])->columns(2),
-            Forms\Components\Tabs::make('translations')->tabs([
-                Forms\Components\Tabs\Tab::make('VI')->schema([
-                    Forms\Components\TextInput::make('name.vi')->label('Tên (VI)')->required(),
-                    Forms\Components\Textarea::make('description.vi')->label('Mô tả (VI)')->rows(4),
-                ]),
-                Forms\Components\Tabs\Tab::make('EN')->schema([
-                    Forms\Components\TextInput::make('name.en')->label('Name (EN)'),
-                    Forms\Components\Textarea::make('description.en')->label('Description (EN)')->rows(4),
-                ]),
-            ]),
+            TranslatableField::group('name', label: 'Tên dịch vụ', required: true),
+            TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 4),
             Forms\Components\TagsInput::make('ingredients')->label('Nguyên liệu'),
             Forms\Components\Select::make('branches')
                 ->relationship('branches', 'slug')

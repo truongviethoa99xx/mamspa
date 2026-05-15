@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\PromotionResource\Pages;
 use App\Models\Promotion;
 use Filament\Forms;
@@ -20,16 +21,8 @@ class PromotionResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
-            Forms\Components\Tabs::make('text')->tabs([
-                Forms\Components\Tabs\Tab::make('VI')->schema([
-                    Forms\Components\TextInput::make('title.vi')->required(),
-                    Forms\Components\Textarea::make('description.vi'),
-                ]),
-                Forms\Components\Tabs\Tab::make('EN')->schema([
-                    Forms\Components\TextInput::make('title.en'),
-                    Forms\Components\Textarea::make('description.en'),
-                ]),
-            ]),
+            TranslatableField::group('title', label: 'Tiêu đề', required: true),
+            TranslatableField::group('description', as: 'textarea', label: 'Mô tả'),
             Forms\Components\FileUpload::make('image')->image(),
             Forms\Components\TextInput::make('link'),
             Forms\Components\DateTimePicker::make('starts_at'),

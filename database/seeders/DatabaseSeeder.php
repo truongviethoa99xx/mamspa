@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PromotionSeeder::class,
             BlogPostSeeder::class,
             PageSeeder::class,
+            TranslationStringSeeder::class,
         ]);
     }
 }

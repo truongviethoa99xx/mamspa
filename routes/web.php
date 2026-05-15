@@ -9,9 +9,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/i18n/{lang}', [TranslationController::class, 'show'])->name('i18n.show');
 Route::get('/', HomeController::class)->name('home');
 Route::get('/about-us/{branch:slug}', [BranchController::class, 'show'])->name('about.branch');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\BranchResource\Pages;
 use App\Models\Branch;
 use Filament\Forms;
@@ -9,7 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Str;
 
 class BranchResource extends Resource
 {
@@ -25,14 +25,7 @@ class BranchResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()->unique(ignoreRecord: true)
                     ->live(onBlur: true),
-                Forms\Components\Tabs::make('name')->tabs([
-                    Forms\Components\Tabs\Tab::make('VI')->schema([
-                        Forms\Components\TextInput::make('name.vi')->label('Tên (VI)')->required(),
-                    ]),
-                    Forms\Components\Tabs\Tab::make('EN')->schema([
-                        Forms\Components\TextInput::make('name.en')->label('Name (EN)'),
-                    ]),
-                ]),
+                TranslatableField::group('name', label: 'Tên chi nhánh', required: true),
                 Forms\Components\Textarea::make('address')->required()->rows(2),
                 Forms\Components\TextInput::make('phone')->tel()->required(),
                 Forms\Components\TextInput::make('open_hours')->default('09:00 - 21:00'),
