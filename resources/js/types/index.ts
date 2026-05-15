@@ -6,11 +6,13 @@ export interface User {
 
 export interface SharedProps {
     auth: { user: User | null };
-    locale: 'vi' | 'en';
+    locale: 'vi' | 'en' | 'ja' | 'ko' | 'zh';
     availableLocales: string[];
     flash: { success?: string; error?: string };
     gtm: { id?: string };
 }
+
+export type Locale = 'vi' | 'en' | 'ja' | 'ko' | 'zh';
 
 export type Translatable = string | { vi: string; en: string };
 
