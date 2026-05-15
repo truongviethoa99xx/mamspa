@@ -185,10 +185,10 @@
 
 | Sprint | Trạng thái | Bắt đầu | Kết thúc |
 |--------|-----------|---------|----------|
-| 0 — Setup | ⬜ Chưa bắt đầu | — | — |
-| 1 — DB & Admin | ⬜ | — | — |
-| 2 — Public site | ⬜ | — | — |
-| 3 — Booking | ⬜ | — | — |
-| 4 — Content | ⬜ | — | — |
-| 5 — User & Payment | ⬜ | — | — |
-| 6 — Launch | ⬜ | — | — |
+| 0 — Setup | ✅ Hoàn thành | 2026-05-15 | 2026-05-15 |
+| 1 — DB & Admin | ✅ Hoàn thành | 2026-05-15 | 2026-05-15 |
+| 2 — Public site | ✅ Hoàn thành | 2026-05-15 | 2026-05-15 |
+| 3 — Booking | ✅ Hoàn thành | 2026-05-15 | 2026-05-15 |
+| 4 — Content | ✅ Hoàn thành | 2026-05-15 | 2026-05-15 |
+| 5 — User & Payment | ✅ Hoàn thành | 2026-05-15 | 2026-05-15 |
+| 6 — Launch | ✅ Hoàn thành | 2026-05-15 | 2026-05-15 |
