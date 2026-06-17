@@ -32,4 +32,12 @@ it('creates a booking when slot is available', function () {
     expect($booking->status)->toBe('pending')
         ->and($booking->code)->toStartWith('MS')
         ->and($booking->total_price)->toBe($service->price);
+
+    $this->assertDatabaseHas('customers', [
+        'name' => 'Test User',
+        'phone' => '+84900000000',
+        'preferred_lang' => 'vi',
+    ]);
+
+    expect($booking->customer)->not->toBeNull();
 });

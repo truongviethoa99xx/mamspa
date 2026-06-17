@@ -2,14 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    /* Shared text/textarea field style for forms (e.g. booking). */
+    .input-base {
+        @apply w-full rounded-xl border border-maha-200 bg-white px-4 py-3 text-ink shadow-sm transition-colors placeholder:text-maha-400 focus:border-[#6b7a4f] focus:outline-none;
+    }
+}
+
 @layer base {
     html {
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: 'Quicksand', system-ui, sans-serif;
     }
+    /* Body text — Quicksand, off-black / dark charcoal */
     body {
-        @apply bg-white text-gray-900 antialiased;
+        @apply bg-white text-ink antialiased;
+        font-weight: 500;
     }
-    h1, h2, h3, h4 {
+    /* Headings — Serif (Playfair Display) */
+    h1, h2, h3, h4, h5, h6 {
         @apply font-serif;
+    }
+    /* Main heading (largest) — dark green */
+    h1 {
+        @apply text-heading;
+    }
+    /* Sub-headings — brown / beige */
+    h2, h3, h4, h5, h6 {
+        @apply text-subheading;
+    }
+
+    /* Hide the browser's native date/time picker icon so it doesn't overlap
+       our custom icon. The indicator stays clickable (opacity 0) and covers
+       the right edge, so tapping our icon still opens the native picker. */
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 3rem;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        cursor: pointer;
     }
 }

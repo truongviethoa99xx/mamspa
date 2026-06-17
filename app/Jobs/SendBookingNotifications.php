@@ -31,7 +31,7 @@ class SendBookingNotifications implements ShouldQueue
 
         if ($booking->guest_phone) {
             $msg = sprintf(
-                'Maha Spa: Da nhan booking #%s, %s %s tai %s. Chung toi se goi xac nhan.',
+                'Mam Spa: Da nhan booking #%s, %s %s tai %s. Chung toi se goi xac nhan.',
                 $booking->code,
                 $booking->date->format('d/m'),
                 $booking->time_slot,

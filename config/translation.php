@@ -2,7 +2,7 @@
 
 return [
     /**
-     * Provider auto-translate: 'google', 'deepl', 'openai', 'null'
+     * Provider auto-translate: 'google', 'deepl', 'openai', 'gemini', 'null'
      * null = chỉ trả về string gốc, không gọi API ngoài.
      */
     'provider' => env('TRANSLATE_PROVIDER', 'null'),
@@ -25,7 +25,7 @@ return [
 
     'gemini' => [
         'key' => env('GEMINI_KEY'),
-        'endpoint' => 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+        'endpoint' => env('GEMINI_ENDPOINT', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent'),
     ],
 
     'cache_ttl' => 60 * 60 * 24 * 7, // 7 ngày

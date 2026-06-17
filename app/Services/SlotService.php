@@ -21,18 +21,12 @@ class SlotService
             ->orderBy('start_time')
             ->get();
 
-        $bookingsByTime = Booking::query()
-            ->where('branch_id', $branchId)
-            ->whereDate('date', $date)
-            ->whereIn('status', ['pending', 'confirmed'])
-            ->selectRaw('time_slot, COUNT(*) as cnt')
-            ->groupBy('time_slot')
-            ->pluck('cnt', 'time_slot')
-            ->toArray();
+        $bookingsByTime = $this->guestsByTimeSlot($branchId, $date);
 
         return $slots->map(function ($slot) use ($bookingsByTime) {
             $key = Carbon::parse($slot->start_time)->format('H:i');
             $used = (int) ($bookingsByTime[$key] ?? 0);
+
             return [
                 'start' => $key,
                 'end' => Carbon::parse($slot->end_time)->format('H:i'),
@@ -42,7 +36,7 @@ class SlotService
         })->toArray();
     }
 
-    public function isSlotAvailable(int $branchId, string $date, string $timeSlot): bool
+    public function isSlotAvailable(int $branchId, string $date, string $timeSlot, int $needed = 1): bool
     {
         $slot = Slot::where('branch_id', $branchId)
             ->where('start_time', $timeSlot)
@@ -53,12 +47,27 @@ class SlotService
             return false;
         }
 
-        $used = Booking::where('branch_id', $branchId)
-            ->whereDate('date', $date)
-            ->where('time_slot', $timeSlot)
-            ->whereIn('status', ['pending', 'confirmed'])
-            ->count();
+        $used = (int) ($this->guestsByTimeSlot($branchId, $date)[$timeSlot] ?? 0);
 
-        return $used < $slot->capacity;
+        return ($used + max(1, $needed)) <= $slot->capacity;
+    }
+
+    /**
+     * Number of booked guests per time slot, counting booking_items
+     * (legacy item-less bookings count as a single guest).
+     *
+     * @return array<string, int>
+     */
+    private function guestsByTimeSlot(int $branchId, string $date): array
+    {
+        return Booking::query()
+            ->where('branch_id', $branchId)
+            ->whereDate('date', $date)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->withCount('items')
+            ->get(['id', 'time_slot'])
+            ->groupBy('time_slot')
+            ->map(fn ($group) => $group->sum(fn ($b) => max(1, $b->items_count)))
+            ->toArray();
     }
 }

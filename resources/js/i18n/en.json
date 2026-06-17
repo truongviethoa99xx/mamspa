@@ -1,4 +1,65 @@
 {
+    "blog": {
+        "story": "Stories from nature",
+        "readArticle": "Read article",
+        "readMore": "Read more",
+        "loadMore": "Load more",
+        "loading": "Loading...",
+        "empty": "No posts yet.",
+        "author": "Mầm Spa Expert",
+        "minRead": "{{count}} min read",
+        "related": "Featured articles",
+        "ctaEyebrow": "Real experience",
+        "ctaTitle": "Head Spa Service",
+        "ctaDesc": "Awaken your hair's healthy shine with our in-depth herbal scalp treatment.",
+        "ctaButton": "Learn more"
+    },
+    "bookingForm": {
+        "eyebrow": "Reserve your moment of peace",
+        "title": "Book Your Experience",
+        "thankYou": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
+        "sectionLocation": "Choose Location & Services",
+        "sectionDatetime": "Choose Date & Time",
+        "sectionContact": "Contact Information",
+        "selectBranch": "Select a branch",
+        "guestCount": "Number of guests",
+        "guestTotal": "Total",
+        "people": "Guests",
+        "male": "Male",
+        "female": "Female",
+        "choosePerGuest": "Please choose a service for each guest:",
+        "guestMale": "Male guest",
+        "guestFemale": "Female guest",
+        "chooseService": "Choose a service",
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening",
+        "pickDate": "Please pick a date to see available times.",
+        "noSlots": "No available time slots for this date.",
+        "name": "Full name",
+        "namePlaceholder": "Enter your name",
+        "phone": "Phone number",
+        "phonePlaceholder": "Enter your phone number",
+        "email": "Email (Gmail)",
+        "emailPlaceholder": "Enter your Gmail",
+        "contactChannel": "Online contact method",
+        "contactValuePlaceholder": "Phone / Account ID",
+        "note": "Note for the spa (optional)",
+        "notePlaceholder": "Health conditions, therapist requests, pregnancy notes...",
+        "summaryTitle": "Booking summary",
+        "summaryPlace": "Location",
+        "summaryDatetime": "Time",
+        "summaryCustomers": "Customers",
+        "subtotal": "Subtotal",
+        "voucher": "Promotion / Voucher",
+        "total": "Total",
+        "confirm": "Confirm booking",
+        "processing": "Processing...",
+        "channelZalo": "Zalo",
+        "channelMessenger": "Messenger",
+        "channelWhatsapp": "WhatsApp",
+        "channelPhone": "Phone"
+    },
     "nav": {
         "home": "Home",
         "about": "About",
@@ -34,8 +95,12 @@
     },
     "home": {
         "hero": {
+            "eyebrow": "Rooted in Vietnamese Healing Traditions",
             "title": "The Journey to Balance Body - Mind - Spirit",
-            "subtitle": "Maha Spa — Traditional Vietnamese spa experience in Da Nang"
+            "heading": "A healing journey rooted in nature",
+            "body": "Set aside the rush of everyday life and step into a serene Indochine space to listen to your body and soothe your soul.",
+            "explore": "Explore",
+            "subtitle": "Mầm Spa — Traditional Vietnamese spa experience in Da Nang"
         }
     },
     "footer": {
@@ -43,7 +108,15 @@
         "branches": "Branches",
         "contact": "Contact",
         "follow": "Follow us",
-        "rights": "© {{year}} Maha Spa. All rights reserved."
+        "hotline": "Booking hotline",
+        "address": "Address",
+        "hours": "Opening hours",
+        "holiday": "(Open on holidays & Tet)",
+        "viewMap": "View directions",
+        "privacy": "Privacy policy",
+        "terms": "Terms of service",
+        "support": "Customer support",
+        "rights": "© {{year}} Mầm Spa. All rights reserved."
     },
     "services": {
         "category": {
@@ -59,7 +132,96 @@
         "ingredients": "Ingredients"
     },
     "about": {
-        "servicesAtBranch": "Services at this branch"
+        "servicesAtBranch": "Services at this branch",
+        "title": "A journey to balance",
+        "subtitle": "A small pause amid the rush of Saigon",
+        "features": {
+            "headSpa": "Deep relaxation, nourishing the scalp.",
+            "bodyMassage": "Relieve tension, restore energy.",
+            "herbal": "Natural herbs, balancing body & mind.",
+            "tea": "Warm herbal tea to end the relaxing journey."
+        },
+        "story": {
+            "eyebrow": "Mầm Spa — Brand story",
+            "heading": "The origin of a Body – Mind – Spirit healing journey",
+            "p1": "Born from a belief in the deep connection between people and nature, Mầm Spa was created as a \"small pause amid the rush of Saigon\" — a place where everyday worries dissolve into profound calm.",
+            "p2": "With two distinctive spaces — Lê Văn Sỹ echoing the rustic charm of old Saigon, and Lê Thị Riêng modern and private — Mầm promises a perfect restorative experience through every touchpoint, with dedication and finesse."
+        },
+        "vision": {
+            "title": "Vision & Mission",
+            "p1": "Born from the aspiration to create a true healing space in the heart of a bustling city, Mầm Spa strives to be an ideal \"small pause\" for those seeking calm and restoration.",
+            "p2": "We believe relaxation is not only about easing physical fatigue, but a journey of complete Body - Mind - Spirit care that returns you to your most natural balance. At Mầm, you are free to choose the healing mood that suits you:",
+            "b1": "Where the rustic charm of old Saigon meets — for those who love simplicity, warmth and connection.",
+            "b2": "A serene, modern space with deeply restorative, highly personalised experiences.",
+            "eyebrow": "Rooted in Vietnamese Healing Traditions"
+        },
+        "values": {
+            "title": "Core values",
+            "t1": "Dedication & Professionalism",
+            "d1": "Our therapists are rigorously trained, with deep knowledge of acupressure and traditional healing methods, giving you complete peace of mind.",
+            "t2": "Personalised experience",
+            "d2": "We always listen to your body. Every treatment is flexibly tailored to each guest's condition and unique recovery needs.",
+            "t3": "Refined in every touch",
+            "d3": "Care shows in every detail — from the warm welcome tea and subtle herbal scent to the serene space entirely apart from the noisy city.",
+            "eyebrow": "Rooted in Vietnamese Healing Traditions"
+        },
+        "team": {
+            "eyebrow": "The people who deliver serenity",
+            "title": "A dedicated care team",
+            "m1Role": "Lead Therapist",
+            "m1Desc": "Over 10 years of experience in traditional massage and deep-recovery therapies.",
+            "m2Role": "Herbal Specialist",
+            "m2Desc": "Devoted to researching and developing Mầm Spa's exclusive tea and herbal oil formulas.",
+            "m3Role": "Head Spa Specialist",
+            "m3Desc": "A deep understanding of scalp care and wellness hair-washing techniques for complete relaxation."
+        },
+        "reviews": {
+            "eyebrow": "Words from those we cherish",
+            "title": "What our guests say",
+            "videoCaption": "A healing experience at Mầm",
+            "quote": "A truly peaceful space in the heart of Saigon. The therapists are so dedicated — I had the best sleep after the massage and hair wash. Thank you, Mầm Spa!",
+            "author": "Ms. Vivian – Loyal customer",
+            "like": "Like"
+        },
+        "hero": {
+            "eyebrow": "A Vietnamese Healing Journey",
+            "retreat": "A retreat for body, mind & soul."
+        },
+        "featureTitles": {
+            "headSpa": "Head Spa Therapy",
+            "bodyMassage": "Body Massage",
+            "herbal": "Herbal Therapy",
+            "tea": "Tea Ritual"
+        }
+    },
+    "dichvu": {
+        "eyebrow": "A journey to balance your body, mind & soul",
+        "title": "Service Menu",
+        "searchPlaceholder": "Search a service (e.g. Herbal head spa, Neck & shoulder therapy...)",
+        "searchButton": "Search",
+        "combos": {
+            "eyebrow": "A complete care journey",
+            "title": "Mầm Combo packages",
+            "bestseller": "Best seller"
+        },
+        "massage": {
+            "title": "Therapeutic massage services",
+            "d1": "Effectively releases tension and relieves neck-and-shoulder pain.",
+            "d2": "Foot reflexology that stimulates circulation and restores vitality.",
+            "d3": "Deep full-body therapy that melts muscle fatigue and clears the mind."
+        },
+        "detail": {
+            "consult": "Get a consultation",
+            "getOffer": "Claim the offer",
+            "benefitsEyebrow": "Understand your body, choose the right therapy",
+            "benefitsTitle": "Benefits & who it's for",
+            "benefitsHeading": "Treatment benefits",
+            "idealHeading": "Especially recommended for:",
+            "faqEyebrow": "Mầm answers your questions",
+            "faqTitle": "Frequently asked questions",
+            "relatedEyebrow": "Continue your healing journey",
+            "relatedTitle": "Explore other services"
+        }
     },
     "booking": {
         "steps": {
@@ -146,8 +308,71 @@
         "endsAt": "Ends: {{date}}"
     },
     "blocks": {
+        "services": {
+            "eyebrow": "Healing in every detail"
+        },
+        "testimonial": {
+            "eyebrow": "Hear real experiences",
+            "title": "Customer reviews",
+            "ratingLabel": "Excellent",
+            "basedOn": "Based on {{count}} reviews",
+            "readMore": "Read more"
+        },
+        "bookingForm": {
+            "title": "Booking request",
+            "branch": "Mầm Spa branch",
+            "branchPlaceholder": "Select a branch",
+            "name": "Customer name",
+            "namePlaceholder": "Enter your name",
+            "phone": "Phone number",
+            "phonePlaceholder": "Enter phone number",
+            "email": "Email (Gmail)",
+            "emailPlaceholder": "example@gmail.com",
+            "channel": "Online contact channel",
+            "channelPlaceholder": "Phone / Account ID",
+            "date": "Date",
+            "time": "Time",
+            "guests": "Number of guests",
+            "total": "Total",
+            "people": "People",
+            "male": "Male",
+            "female": "Female",
+            "chooseService": "Choose a service for each guest",
+            "guestMale": "Male guest",
+            "guestFemale": "Female guest",
+            "servicePlaceholder": "Select a service",
+            "note": "Additional note (optional)",
+            "notePlaceholder": "Health conditions, therapist requests, or any notes...",
+            "submit": "Complete booking",
+            "success": {
+                "title": "Your request has been sent!",
+                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
+                "messageVi": "Cảm ơn quý khách. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của bạn.",
+                "codeLabel": "Your request code",
+                "home": "Back to home"
+            }
+        },
+        "menu": {
+            "title": "Service Menu",
+            "book": "Book now",
+            "minute": "Min",
+            "cat": {
+                "combo": "Signature Combo",
+                "massage": "Massage Therapies",
+                "head-spa": "Head Spa",
+                "facial": "Facial Treatments",
+                "foot-spa": "Others"
+            }
+        },
         "branches": {
-            "title": "Branches"
+            "title": "Explore the Mầm Spa spaces",
+            "eyebrow": "A retreat for body, mind & soul",
+            "subheading": "A healing space",
+            "heading": "The beauty of old Saigon.",
+            "p1": "Step into the Lê Văn Sỹ space and return to a rare moment of stillness. Here, the rustic charm of traditional architecture is preserved with warm wood, natural light and the faint scent of herbs.",
+            "p2": "An ideal destination to set aside the rush of life, relax deeply and reconnect with yourself.",
+            "cta": "Explore in detail",
+            "caption": "A peaceful corner at {{name}}"
         }
     }
 }

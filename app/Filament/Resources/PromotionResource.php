@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RestrictsFilamentAccess;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\PromotionResource\Pages;
 use App\Models\Promotion;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +15,18 @@ use Filament\Tables\Table;
 
 class PromotionResource extends Resource
 {
+    use RestrictsFilamentAccess;
+
     protected static ?string $model = Promotion::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
+
     protected static ?string $navigationGroup = 'Content';
+
+    protected static function allowedRoles(): array
+    {
+        return User::contentRoles();
+    }
 
     public static function form(Form $form): Form
     {
@@ -23,8 +34,11 @@ class PromotionResource extends Resource
             Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
             TranslatableField::group('title', label: 'Tiêu đề', required: true),
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả'),
-            Forms\Components\FileUpload::make('image')->image(),
-            Forms\Components\TextInput::make('link'),
+            Forms\Components\FileUpload::make('image')
+                ->image()
+                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                ->maxSize(5120),
+            Forms\Components\TextInput::make('link')->url(),
             Forms\Components\DateTimePicker::make('starts_at'),
             Forms\Components\DateTimePicker::make('ends_at'),
             Forms\Components\Toggle::make('is_active')->default(true),

@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RestrictsFilamentAccess;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,10 +15,20 @@ use Filament\Tables\Table;
 
 class ServiceResource extends Resource
 {
+    use RestrictsFilamentAccess;
+
     protected static ?string $model = Service::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
+
     protected static ?string $navigationGroup = 'Content';
+
     protected static ?int $navigationSort = 2;
+
+    protected static function allowedRoles(): array
+    {
+        return User::contentRoles();
+    }
 
     public static function form(Form $form): Form
     {
@@ -41,7 +53,11 @@ class ServiceResource extends Resource
             Forms\Components\Select::make('branches')
                 ->relationship('branches', 'slug')
                 ->multiple()->preload(),
-            Forms\Components\SpatieMediaLibraryFileUpload::make('images')->multiple()->image(),
+            Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                ->multiple()
+                ->image()
+                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                ->maxSize(5120),
         ]);
     }
 

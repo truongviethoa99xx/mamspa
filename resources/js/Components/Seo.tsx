@@ -10,7 +10,7 @@ interface SeoProps {
 }
 
 export function Seo({ title, description, image, type = 'website', schema, noIndex }: SeoProps) {
-  const fullTitle = title.includes('Maha Spa') ? title : `${title} | Maha Spa`
+  const fullTitle = title.includes('Mầm Spa') ? title : `${title} | Mầm Spa`
 
   return (
     <Head title={fullTitle}>

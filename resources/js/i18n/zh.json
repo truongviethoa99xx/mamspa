@@ -1,4 +1,65 @@
 {
+    "blog": {
+        "story": "来自自然的故事",
+        "readArticle": "阅读文章",
+        "readMore": "阅读更多",
+        "loadMore": "加载更多",
+        "loading": "加载中...",
+        "empty": "暂无文章。",
+        "author": "Mầm Spa 专家",
+        "minRead": "阅读约 {{count}} 分钟",
+        "related": "精选文章",
+        "ctaEyebrow": "真实体验",
+        "ctaTitle": "头部水疗服务",
+        "ctaDesc": "用深层草本头皮护理唤醒秀发的健康光泽。",
+        "ctaButton": "了解更多"
+    },
+    "bookingForm": {
+        "eyebrow": "Reserve your moment of peace",
+        "title": "预约体验",
+        "thankYou": "感谢您的预约请求。Mầm Spa 团队将尽快与您联系，确认预约并为您精心准备每一处体验细节。",
+        "sectionLocation": "选择门店与服务",
+        "sectionDatetime": "选择日期与时间",
+        "sectionContact": "联系信息",
+        "selectBranch": "选择门店",
+        "guestCount": "同行人数",
+        "guestTotal": "总计",
+        "people": "位",
+        "male": "男",
+        "female": "女",
+        "choosePerGuest": "请为每位客人选择相应的服务：",
+        "guestMale": "男宾",
+        "guestFemale": "女宾",
+        "chooseService": "选择服务",
+        "morning": "上午",
+        "afternoon": "下午",
+        "evening": "晚上",
+        "pickDate": "请选择日期以查看可预约时段。",
+        "noSlots": "该日期暂无可预约时段。",
+        "name": "姓名",
+        "namePlaceholder": "请输入您的姓名",
+        "phone": "电话号码",
+        "phonePlaceholder": "请输入电话号码",
+        "email": "邮箱 (Gmail)",
+        "emailPlaceholder": "请输入 Gmail",
+        "contactChannel": "在线联系方式",
+        "contactValuePlaceholder": "电话 / 账号 ID",
+        "note": "给水疗中心的备注（选填）",
+        "notePlaceholder": "健康状况、技师要求、孕期注意事项……",
+        "summaryTitle": "预约摘要",
+        "summaryPlace": "门店",
+        "summaryDatetime": "时间",
+        "summaryCustomers": "客户",
+        "subtotal": "小计",
+        "voucher": "优惠 / 代金券",
+        "total": "总计",
+        "confirm": "确认预约",
+        "processing": "处理中...",
+        "channelZalo": "Zalo",
+        "channelMessenger": "Messenger",
+        "channelWhatsapp": "WhatsApp",
+        "channelPhone": "电话"
+    },
     "nav": {
         "home": "首页",
         "about": "关于我们",
@@ -34,8 +95,12 @@
     },
     "home": {
         "hero": {
+            "eyebrow": "Rooted in Vietnamese Healing Traditions",
             "title": "开启身心灵平衡的旅程",
-            "subtitle": "Maha Spa — 在岘港体验越南传统水疗"
+            "heading": "源于自然的疗愈之旅",
+            "body": "放下匆忙的生活节奏，步入静谧的印支风情空间，聆听身体的声音，抚慰心灵。",
+            "explore": "探索",
+            "subtitle": "Mầm Spa — 在岘港体验越南传统水疗"
         }
     },
     "footer": {
@@ -43,7 +108,15 @@
         "branches": "门店",
         "contact": "联系我们",
         "follow": "关注我们",
-        "rights": "© {{year}} Maha Spa. 版权所有。"
+        "hotline": "预约热线",
+        "address": "地址",
+        "hours": "营业时间",
+        "holiday": "（节假日及春节照常营业）",
+        "viewMap": "查看路线",
+        "privacy": "隐私政策",
+        "terms": "服务条款",
+        "support": "客户支持",
+        "rights": "© {{year}} Mầm Spa. 版权所有。"
     },
     "services": {
         "category": {
@@ -59,7 +132,72 @@
         "ingredients": "使用原料"
     },
     "about": {
-        "servicesAtBranch": "该门店的服务项目"
+        "servicesAtBranch": "该门店的服务项目",
+        "title": "平衡之旅",
+        "subtitle": "繁忙西贡中的小憩",
+        "features": {
+            "headSpa": "深度放松，滋养头皮。",
+            "bodyMassage": "舒缓肌肉，恢复活力。",
+            "herbal": "天然草本，平衡身心。",
+            "tea": "温热草本茶，为放松之旅画上句点。"
+        },
+        "story": {
+            "eyebrow": "Mầm Spa — 品牌故事",
+            "heading": "身·心·灵疗愈之旅的起点",
+            "p1": "源于对人与自然深层联结的信念，Mầm Spa 应运而生，成为\"繁忙西贡中的小憩\"。在这里，日常烦忧消散，只余深沉的宁静。",
+            "p2": "两处各具特色的空间——黎文士店承载旧西贡的质朴气息，黎氏Riêng店现代而私密。Mầm 以用心与细致，在每一处触点呈现完美的修复体验。"
+        },
+        "vision": {
+            "title": "愿景与使命",
+            "p1": "源于在繁华都市中心打造一处真正疗愈空间的渴望，Mầm Spa 致力于成为追寻安宁与修复之人理想的\"小憩之所\"。",
+            "p2": "我们相信，放松不仅是缓解身体疲惫，更是身·心·灵全方位呵护的旅程，让你回归最自然的平衡。在 Mầm，你可以选择最适合自己的疗愈格调：",
+            "b1": "旧西贡质朴气息交汇之地，献给热爱朴素、温暖与联结的你。",
+            "b2": "静谧而现代的空间，带来深度且高度个性化的修复体验。"
+        },
+        "values": {
+            "title": "核心价值",
+            "t1": "用心与专业",
+            "d1": "技师团队经过系统培训，深谙穴位与传统疗法，让您体验时倍感安心。",
+            "t2": "个性化体验",
+            "d2": "我们始终聆听您的身体。每个疗程都灵活调整，契合每位客人的体质与独特的修复需求。",
+            "t3": "细致入微的体验",
+            "d3": "用心体现在每个细节：从迎客的暖茶、淡淡草本香，到完全远离都市喧嚣的静谧空间。"
+        },
+        "team": {
+            "eyebrow": "传递宁静的人",
+            "title": "用心呵护的团队",
+            "m1Role": "首席技师",
+            "m1Desc": "拥有十余年传统按摩与深度修复疗法经验。",
+            "m2Role": "草本专家",
+            "m2Desc": "潜心研发 Mầm Spa 独家的茶饮与草本精油配方。",
+            "m3Role": "头部SPA专家",
+            "m3Desc": "深谙头皮护理与养生洗护技法，助您彻底放松。"
+        },
+        "reviews": {
+            "eyebrow": "挚爱之人的分享",
+            "title": "顾客感言",
+            "videoCaption": "在 Mầm 的疗愈体验",
+            "quote": "西贡市中心难得的宁静空间。技师们非常用心，做完按摩和洗头后我睡得特别香。谢谢 Mầm Spa！",
+            "author": "Vivian 女士 – 忠实顾客",
+            "like": "喜欢"
+        }
+    },
+    "dichvu": {
+        "eyebrow": "A journey to balance your body, mind & soul",
+        "title": "服务菜单",
+        "searchPlaceholder": "搜索服务（例：草本头部SPA、颈肩理疗…）",
+        "searchButton": "搜索",
+        "combos": {
+            "eyebrow": "全方位呵护之旅",
+            "title": "Mầm 套餐组合",
+            "bestseller": "热销"
+        },
+        "massage": {
+            "title": "理疗按摩服务",
+            "d1": "有效缓解颈肩紧张与酸痛。",
+            "d2": "足底穴位按压，促进血液循环、恢复活力。",
+            "d3": "全身深度理疗，消除肌肉疲劳、净化身心。"
+        }
     },
     "booking": {
         "steps": {
@@ -146,8 +284,71 @@
         "endsAt": "截止日期: {{date}}"
     },
     "blocks": {
+        "services": {
+            "eyebrow": "Healing in every detail"
+        },
+        "testimonial": {
+            "eyebrow": "聆听真实体验",
+            "title": "客户评价",
+            "ratingLabel": "非常好",
+            "basedOn": "基于 {{count}} 条评价",
+            "readMore": "查看更多"
+        },
+        "bookingForm": {
+            "title": "预约申请",
+            "branch": "Mầm Spa 门店",
+            "branchPlaceholder": "选择门店",
+            "name": "客户姓名",
+            "namePlaceholder": "请输入您的姓名",
+            "phone": "电话号码",
+            "phonePlaceholder": "请输入电话号码",
+            "email": "邮箱 (Gmail)",
+            "emailPlaceholder": "example@gmail.com",
+            "channel": "在线联系方式",
+            "channelPlaceholder": "电话 / 账号 ID",
+            "date": "日期",
+            "time": "时间",
+            "guests": "同行人数",
+            "total": "合计",
+            "people": "人",
+            "male": "男",
+            "female": "女",
+            "chooseService": "为每位客户选择服务",
+            "guestMale": "男性客户",
+            "guestFemale": "女性客户",
+            "servicePlaceholder": "选择服务",
+            "note": "备注（选填）",
+            "notePlaceholder": "健康状况、技师要求或任何注意事项…",
+            "submit": "完成预约",
+            "success": {
+                "title": "申请已发送！",
+                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
+                "messageVi": "感谢您的预约。Mầm Spa 团队将尽快与您联系，确认预约并为您精心准备每一处体验细节。",
+                "codeLabel": "您的申请编号",
+                "home": "返回首页"
+            }
+        },
+        "menu": {
+            "title": "服务菜单",
+            "book": "预约",
+            "minute": "分钟",
+            "cat": {
+                "combo": "Signature Combo",
+                "massage": "Massage Therapies",
+                "head-spa": "Head Spa",
+                "facial": "Facial Treatments",
+                "foot-spa": "Others"
+            }
+        },
         "branches": {
-            "title": "门店"
+            "title": "探索 Mầm Spa 空间",
+            "eyebrow": "A retreat for body, mind & soul",
+            "subheading": "疗愈空间",
+            "heading": "旧西贡之美。",
+            "p1": "步入黎文士门店，仿佛回到难得的宁静天地。这里完整保留了传统建筑的质朴韵味，温润木材、自然光线与淡淡草本清香交织其间。",
+            "p2": "是暂别忙碌生活、深度放松、重新与自我连接的理想之地。",
+            "cta": "查看详情",
+            "caption": "{{name}} 的宁静一隅"
         }
     }
 }

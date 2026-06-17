@@ -62,6 +62,12 @@ class ServiceSeeder extends Seeder
                 'description' => ['vi' => 'Liệu trình ký tên: cân bằng Thân – Tâm – Trí 120 phút.', 'en' => 'Signature 120-min Body–Mind–Spirit balance.'],
                 'category' => 'combo', 'duration' => 120, 'price' => 1290000, 'is_featured' => true,
             ],
+            [
+                'slug' => 'serenity-retreat-combo',
+                'name' => ['vi' => 'Serenity Retreat', 'en' => 'Serenity Retreat'],
+                'description' => ['vi' => 'Massage toàn thân, chăm sóc da mặt và gội dưỡng sinh 150 phút.', 'en' => 'Full-body massage, facial care and herbal head spa, 150 min.'],
+                'category' => 'combo', 'duration' => 150, 'price' => 1490000, 'is_featured' => false,
+            ],
         ];
 
         $branches = Branch::pluck('id')->all();

@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Navbar } from '@/Components/Navbar';
 import { Footer } from '@/Components/Footer';
 import { ChatWidget } from '@/Components/ChatWidget';
+import { AdminEditBar } from '@/Components/AdminEditBar';
 import { useLocale } from '@/Hooks/useLocale';
 
 export default function PublicLayout({ children }: PropsWithChildren) {
@@ -11,6 +12,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
+            <AdminEditBar />
             <ChatWidget />
         </div>
     );

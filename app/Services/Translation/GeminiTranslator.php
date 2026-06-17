@@ -3,6 +3,7 @@
 namespace App\Services\Translation;
 
 use Illuminate\Support\Facades\Http;
+use RuntimeException;
 
 class GeminiTranslator implements TranslatorContract
 {
@@ -22,14 +23,14 @@ class GeminiTranslator implements TranslatorContract
         }
 
         $fromName = $this->langNames[$from] ?? $from;
-        $toName   = $this->langNames[$to] ?? $to;
+        $toName = $this->langNames[$to] ?? $to;
 
         $response = Http::withoutVerifying()
             ->timeout(30)
             ->post(config('translation.gemini.endpoint').'?key='.$key, [
                 'contents' => [[
                     'parts' => [[
-                        'text' => "Translate the following text from {$fromName} to {$toName}. Return ONLY the translated text, no explanations or quotes. Keep brand names like 'Maha Spa', 'Maha Heritage', 'Maha Signature' unchanged.\n\n{$text}",
+                        'text' => "Translate the following text from {$fromName} to {$toName}. Return ONLY the translated text, no explanations or quotes. Keep brand names like 'Mầm Spa', 'Maha Heritage', 'Maha Signature' unchanged.\n\n{$text}",
                     ]],
                 ]],
                 'generationConfig' => [
@@ -38,6 +39,17 @@ class GeminiTranslator implements TranslatorContract
                 ],
             ]);
 
-        return trim($response->json('candidates.0.content.parts.0.text') ?? $text);
+        if ($response->failed()) {
+            $message = $response->json('error.message') ?? 'Gemini translation request failed.';
+
+            throw new RuntimeException($message);
+        }
+
+        $translated = trim($response->json('candidates.0.content.parts.0.text') ?? '');
+        if ($translated === '') {
+            throw new RuntimeException('Gemini did not return translated text.');
+        }
+
+        return $translated;
     }
 }

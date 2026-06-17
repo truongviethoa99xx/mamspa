@@ -2,13 +2,14 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "mahaspa/mahaspa",
     "type": "project",
-    "description": "Maha Spa booking website with Laravel + Inertia + React + Filament CMS.",
+    "description": "Mầm Spa booking website with Laravel + Inertia + React + Filament CMS.",
     "keywords": ["spa", "booking", "laravel", "inertia", "react", "filament"],
     "license": "proprietary",
     "require": {
         "php": "^8.3",
         "ext-pdo": "*",
         "filament/filament": "^3.2",
+        "filament/spatie-laravel-media-library-plugin": "^3.2",
         "guzzlehttp/guzzle": "^7.8",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
@@ -60,6 +61,10 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -k -c \"#93c5fd,#fb7185\" \"php artisan serve\" \"npm run dev -- --port=4000\" --names=server,vite"
         ],
         "pint": "pint"
     },

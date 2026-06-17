@@ -30,7 +30,7 @@ export function serviceSchema(params: {
     url: params.url,
     provider: {
       '@type': 'DaySpa',
-      name: 'Maha Spa',
+      name: 'Mầm Spa',
       url: window.location.origin,
     },
     serviceType: params.category,
@@ -67,7 +67,7 @@ export function blogPostSchema(params: {
     url: params.url,
     publisher: {
       '@type': 'Organization',
-      name: 'Maha Spa',
+      name: 'Mầm Spa',
       logo: { '@type': 'ImageObject', url: window.location.origin + '/images/logo.png' },
     },
     ...(params.image && { image: params.image }),

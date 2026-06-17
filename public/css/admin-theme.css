@@ -1,0 +1,420 @@
+/* =============================================================
+   Maha Spa — Admin (Filament) theme  ·  "Trung tính ấm"
+   Tông kem/cát · chữ nâu-xám · terracotta dịu.
+   Cảm giác "cửa hàng" ấm áp, không phải dashboard kỹ thuật.
+   Nạp qua render hook — không cần build Vite.
+   ============================================================= */
+
+:root {
+    --warm-bg: #f4eee4;          /* nền cát */
+    --warm-bg-soft: #faf6ef;
+    --card: #fffdf9;             /* thẻ trắng ngà */
+    --line: #ece3d4;            /* viền mảnh ấm */
+    --line-soft: #f2ebde;
+
+    --terra: #c1664a;           /* terracotta — màu nhấn chính */
+    --terra-deep: #a8513a;
+    --terra-soft: #f5e2d8;      /* tint nền nhạt */
+    --terra-tint: #f0d8cc;
+
+    --text: #4a4138;            /* nâu-xám đậm (heading) */
+    --text-body: #6a5f53;
+    --text-muted: #9c8f80;
+
+    --green: #5f8c5a;
+    --green-soft: #e6efe1;
+    --amber: #c98a2e;
+    --amber-soft: #f6ead2;
+    --sand: #e9dcc4;
+
+    --shadow-sm: 0 1px 2px rgba(74, 65, 56, 0.05);
+    --shadow: 0 10px 30px -16px rgba(74, 65, 56, 0.22);
+    --shadow-lg: 0 30px 70px -30px rgba(74, 65, 56, 0.35);
+    --radius: 1.25rem;
+    --admin-header-height: 4.25rem;
+}
+
+/* ---------- Nền tổng thể ---------- */
+.fi-body {
+    background-color: var(--warm-bg);
+    color: var(--text-body);
+}
+
+.fi-main {
+    /* hơi sáng hơn nền để vùng nội dung "thở" */
+    background-image: radial-gradient(60rem 50rem at 100% -10%, rgba(193, 102, 74, 0.05), transparent 60%);
+}
+
+h1, h2, h3, h4, h5, h6,
+.fi-header-heading,
+.fi-section-header-heading,
+.fi-modal-heading {
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* ---------- Sidebar ---------- */
+.fi-sidebar {
+    background-color: #fffdfa;
+    border-right: 1px solid var(--line);
+}
+
+/* Header — logo lớn, căn giữa */
+.fi-sidebar-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--line-soft);
+    box-shadow: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: auto;
+    min-height: 10rem;
+    padding-block: 1.5rem;
+}
+.fi-sidebar-header .fi-logo {
+    margin-inline: auto;
+    height: auto;
+}
+.fi-sidebar-header .fi-logo img,
+.fi-sidebar-header img {
+    height: 7.5rem !important;
+    width: auto;
+    max-width: 100%;
+}
+
+/* Các nhóm menu gần nhau hơn (mặc định Filament cách rất xa) */
+.fi-sidebar-nav-groups {
+    gap: 0.35rem !important;
+    row-gap: 0.35rem !important;
+}
+.fi-sidebar-nav-groups > .fi-sidebar-group { margin: 0 !important; }
+
+.fi-sidebar-group-label {
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.fi-sidebar-item-button {
+    border-radius: 0.7rem;
+    color: var(--text-body);
+    font-weight: 600;
+    transition: background-color .18s ease, color .18s ease;
+}
+
+.fi-sidebar-item-button:hover {
+    background-color: var(--terra-soft);
+    color: var(--terra-deep);
+}
+
+.fi-sidebar-item-icon { color: var(--text-muted); }
+.fi-sidebar-item:hover .fi-sidebar-item-icon { color: var(--terra); }
+
+/* Mục đang chọn — terracotta */
+.fi-sidebar-item.fi-active .fi-sidebar-item-button {
+    background-color: var(--terra-soft);
+    color: var(--terra-deep);
+    font-weight: 700;
+}
+.fi-sidebar-item.fi-active .fi-sidebar-item-icon { color: var(--terra); }
+
+/* ---------- Topbar ---------- */
+.fi-topbar > nav {
+    background-color: rgba(255, 253, 250, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    box-shadow: none;
+    color: var(--text-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+    :root {
+        --admin-header-height: 4.25rem;
+    }
+
+    .fi-topbar > nav {
+        height: var(--admin-header-height);
+    }
+}
+
+@media (min-width: 1280px) {
+    :root {
+        --admin-header-height: 4.75rem;
+    }
+}
+
+@media (min-width: 1536px) {
+    :root {
+        --admin-header-height: 5.25rem;
+    }
+}
+
+.fi-topbar > nav a,
+.fi-topbar > nav button {
+    color: var(--text-body);
+}
+
+.fi-topbar > nav a:hover,
+.fi-topbar > nav button:hover {
+    color: var(--terra-deep);
+}
+
+/* Header trang: đưa tiêu đề lên cùng dải top nav trên desktop */
+.fi-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid rgba(236, 227, 212, 0.65);
+}
+
+@media (min-width: 640px) {
+    .fi-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 1024px) {
+    .fi-page > section {
+        padding-top: 0 !important;
+    }
+
+    .fi-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        min-height: var(--admin-header-height);
+        margin-top: calc(var(--admin-header-height) * -1);
+        padding-block: 0;
+        padding-inline-end: 5.75rem;
+        border-bottom: 0;
+    }
+
+    .fi-header > div:first-child {
+        min-width: 0;
+    }
+
+    .fi-header > div:last-child {
+        margin-top: 0 !important;
+    }
+
+    .fi-header .fi-breadcrumbs {
+        display: none !important;
+    }
+}
+
+.fi-header-heading {
+    color: var(--terra-deep);
+    font-size: clamp(1.35rem, 1.65vw, 2.05rem);
+    line-height: 1.12;
+    font-weight: 800;
+}
+
+.fi-breadcrumbs,
+.fi-breadcrumbs a,
+.fi-breadcrumbs-item,
+.fi-breadcrumbs-item-label {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.fi-breadcrumbs a:hover {
+    color: var(--terra-deep);
+}
+
+/* ---------- Thẻ / section / widget mặc định ---------- */
+.fi-section,
+.fi-wi-stats-overview-stat,
+.fi-ta-ctn,
+.fi-fo-card,
+.fi-modal-window,
+.fi-dropdown-panel {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    background-color: var(--card);
+}
+
+/* ---------- Nút ---------- */
+.fi-btn { border-radius: 9999px; font-weight: 700; }
+.fi-btn-color-primary {
+    box-shadow: 0 10px 22px -12px rgba(193, 102, 74, 0.8);
+}
+
+/* ---------- Form / input ---------- */
+.fi-input, .fi-select-input { border-radius: 0.75rem; }
+.fi-input-wrp:focus-within { --tw-ring-color: var(--terra); border-color: var(--terra); }
+.fi-fo-field-wrp-label { color: var(--text); font-weight: 600; }
+
+/* ---------- Badge / tab ---------- */
+.fi-badge { border-radius: 9999px; font-weight: 700; }
+.fi-tabs-item.fi-active { color: var(--terra-deep); }
+
+/* ---------- Bảng ---------- */
+.fi-ta-header-cell {
+    background-color: var(--warm-bg-soft);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+}
+.fi-ta-row:hover { background-color: rgba(245, 226, 216, 0.4); }
+
+/* ---------- Trang đăng nhập ---------- */
+.fi-simple-layout {
+    background-color: #2a221c;
+    background-image:
+        radial-gradient(70rem 70rem at 80% -20%, rgba(193, 102, 74, 0.5), transparent 55%),
+        radial-gradient(55rem 55rem at -10% 120%, rgba(233, 220, 196, 0.35), transparent 55%),
+        linear-gradient(160deg, #3a2c22 0%, #2a221c 60%, #1f1813 100%);
+    min-height: 100vh;
+}
+.fi-simple-main {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    background-color: rgba(255, 253, 249, 0.98);
+}
+
+/* ---------- Scrollbar ---------- */
+.fi-main::-webkit-scrollbar, .fi-sidebar-nav::-webkit-scrollbar { width: 8px; height: 8px; }
+.fi-main::-webkit-scrollbar-thumb, .fi-sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: var(--sand); border-radius: 9999px;
+}
+.fi-main::-webkit-scrollbar-thumb:hover, .fi-sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: var(--terra);
+}
+
+/* =============================================================
+   DASHBOARD tuỳ biến — "cửa hàng" ấm
+   (class riêng, không phụ thuộc Tailwind build của Filament)
+   ============================================================= */
+
+.maha-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* ----- Lời chào ----- */
+.maha-greeting { padding: 0.25rem 0.25rem 0; }
+.maha-greeting h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0;
+}
+.maha-greeting p {
+    margin: 0.35rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ----- Stat cards ----- */
+.maha-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+@media (max-width: 1024px) { .maha-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px)  { .maha-stats { grid-template-columns: 1fr; } }
+
+.maha-stat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.4rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+.maha-stat__icon {
+    width: 2.9rem; height: 2.9rem;
+    border-radius: 0.9rem;
+    display: grid; place-items: center;
+    color: var(--terra-deep);
+    background: var(--terra-soft);
+}
+.maha-stat__icon svg { width: 1.4rem; height: 1.4rem; }
+.maha-stat__icon--green { color: var(--green); background: var(--green-soft); }
+.maha-stat__icon--amber { color: var(--amber); background: var(--amber-soft); }
+.maha-stat__icon--sand  { color: #9a7b3d; background: #f3e9d2; }
+
+.maha-stat__label { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; }
+.maha-stat__value { color: var(--text); font-size: 1.9rem; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+.maha-stat__trend { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.82rem; font-weight: 700; }
+.maha-stat__trend svg { width: 0.95rem; height: 0.95rem; }
+.maha-stat__trend--up   { color: var(--green); }
+.maha-stat__trend--down { color: var(--terra); }
+.maha-stat__trend--warn { color: var(--amber); }
+.maha-stat__trend--flat { color: var(--text-muted); }
+
+/* ----- Panel lịch hẹn (bên phải biểu đồ) ----- */
+.maha-panel { padding: 1.5rem; height: 100%; }
+.maha-panel__title { font-size: 1.05rem; font-weight: 800; color: var(--text); margin: 0; }
+.maha-panel__sub { font-size: 0.82rem; color: var(--text-muted); margin: 0.2rem 0 1.1rem; }
+
+.maha-appt { display: flex; gap: 0.85rem; padding: 0.85rem 0; border-top: 1px solid var(--line-soft); }
+.maha-appt:first-of-type { border-top: 0; padding-top: 0; }
+.maha-appt__time {
+    flex-shrink: 0;
+    width: 3.9rem; height: 3.6rem;
+    border-radius: 0.85rem;
+    background: var(--terra-soft);
+    color: var(--terra-deep);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.15rem;
+    font-weight: 800; font-size: 0.95rem; line-height: 1;
+}
+.maha-appt__time small { font-size: 0.55rem; font-weight: 700; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.02em; }
+.maha-appt__body { min-width: 0; }
+.maha-appt__name { font-weight: 700; color: var(--text); font-size: 0.95rem; }
+.maha-appt__svc { color: var(--text-muted); font-size: 0.82rem; margin-top: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.maha-empty { color: var(--text-muted); font-size: 0.9rem; padding: 1.5rem 0; text-align: center; }
+
+/* ----- Bảng booking gần đây ----- */
+.maha-recent { padding: 1.5rem; }
+.maha-recent__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.maha-recent__title { font-size: 1.05rem; font-weight: 800; color: var(--text); margin: 0; }
+.maha-recent__link { color: var(--terra-deep); font-weight: 700; font-size: 0.85rem; text-decoration: none; }
+.maha-recent__link:hover { text-decoration: underline; }
+
+.maha-table { width: 100%; border-collapse: collapse; }
+.maha-table th {
+    text-align: left; padding: 0.6rem 0.75rem;
+    font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-muted); font-weight: 700;
+    border-bottom: 1px solid var(--line);
+}
+.maha-table td { padding: 0.85rem 0.75rem; border-bottom: 1px solid var(--line-soft); font-size: 0.9rem; color: var(--text-body); }
+.maha-table tr:last-child td { border-bottom: 0; }
+.maha-table__code { color: var(--terra-deep); font-weight: 800; }
+.maha-cust { display: flex; align-items: center; gap: 0.6rem; }
+.maha-avatar {
+    width: 2rem; height: 2rem; border-radius: 9999px;
+    display: grid; place-items: center;
+    color: #fff; font-weight: 700; font-size: 0.78rem; flex-shrink: 0;
+}
+.maha-cust__name { font-weight: 700; color: var(--text); }
+.maha-money { font-weight: 800; color: var(--text); white-space: nowrap; }
+
+.maha-status { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.82rem; white-space: nowrap; }
+.maha-status::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: currentColor; }
+.maha-status--pending   { color: var(--amber); }
+.maha-status--confirmed { color: var(--terra); }
+.maha-status--completed { color: var(--green); }
+.maha-status--cancelled { color: var(--text-muted); }
+
+.maha-tag { padding: 0.15rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.03em; }
+.maha-tag--branch { background: var(--sand); color: #7a6748; }

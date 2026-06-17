@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\BlogPost;
-use App\Models\Branch;
-use App\Models\Page;
 use App\Models\Service;
 use App\Models\TranslationString;
 use Illuminate\Database\Seeder;
@@ -19,7 +17,6 @@ class TranslationImportSeeder extends Seeder
     {
         $this->services();
         $this->blogPosts();
-        $this->pages();
         $this->uiStrings();
 
         $this->command->info('✓ Import bản dịch ja/ko/zh hoàn tất.');
@@ -131,7 +128,9 @@ class TranslationImportSeeder extends Seeder
 
         foreach ($data as $slug => $fields) {
             $service = Service::where('slug', $slug)->first();
-            if (! $service) continue;
+            if (! $service) {
+                continue;
+            }
             foreach ($fields as $field => $translations) {
                 foreach ($translations as $locale => $value) {
                     $service->setTranslation($field, $locale, $value);
@@ -164,7 +163,9 @@ class TranslationImportSeeder extends Seeder
 
         foreach ($data as $slug => $fields) {
             $post = BlogPost::where('slug', $slug)->first();
-            if (! $post) continue;
+            if (! $post) {
+                continue;
+            }
             foreach ($fields as $field => $translations) {
                 foreach ($translations as $locale => $value) {
                     $post->setTranslation($field, $locale, $value);
@@ -176,59 +177,31 @@ class TranslationImportSeeder extends Seeder
     }
 
     // ─────────────────────────────────────────────
-    // PAGES
-    // ─────────────────────────────────────────────
-    private function pages(): void
-    {
-        $data = [
-            'home' => [
-                'title' => [
-                    'ja' => 'ホーム',
-                    'ko' => '홈',
-                    'zh' => '首页',
-                ],
-            ],
-        ];
-
-        foreach ($data as $slug => $fields) {
-            $page = Page::where('slug', $slug)->first();
-            if (! $page) continue;
-            foreach ($fields as $field => $translations) {
-                foreach ($translations as $locale => $value) {
-                    $page->setTranslation($field, $locale, $value);
-                }
-            }
-            $page->saveQuietly();
-            $this->command->line("  Page: {$slug}");
-        }
-    }
-
-    // ─────────────────────────────────────────────
     // UI STRINGS (translation_strings table)
     // ─────────────────────────────────────────────
     private function uiStrings(): void
     {
         $strings = [
-            'nav.home'        => ['ja' => 'ホーム',         'ko' => '홈',       'zh' => '首页'],
-            'nav.about'       => ['ja' => 'について',        'ko' => '소개',      'zh' => '关于我们'],
-            'nav.services'    => ['ja' => 'サービス',        'ko' => '서비스',    'zh' => '服务项目'],
-            'nav.booking'     => ['ja' => '予約する',        'ko' => '예약하기',  'zh' => '立即预约'],
-            'nav.voucher'     => ['ja' => 'バウチャー',      'ko' => '바우처',    'zh' => '优惠券'],
-            'nav.gallery'     => ['ja' => 'ギャラリー',      'ko' => '갤러리',    'zh' => '图片展示'],
-            'nav.promotions'  => ['ja' => 'キャンペーン',    'ko' => '프로모션',  'zh' => '优惠活动'],
-            'nav.blog'        => ['ja' => 'ブログ',          'ko' => '블로그',    'zh' => '博客'],
-            'nav.contact'     => ['ja' => 'お問い合わせ',    'ko' => '문의',      'zh' => '联系我们'],
-            'nav.myBookings'  => ['ja' => '予約履歴',        'ko' => '예약 내역', 'zh' => '我的预约'],
-            'nav.login'       => ['ja' => 'ログイン',        'ko' => '로그인',    'zh' => '登录'],
-            'nav.register'    => ['ja' => '新規登録',        'ko' => '회원가입',  'zh' => '注册'],
-            'nav.logout'      => ['ja' => 'ログアウト',      'ko' => '로그아웃',  'zh' => '退出登录'],
-            'common.loading'  => ['ja' => '読み込み中...',   'ko' => '로딩 중...','zh' => '加载中...'],
-            'common.submit'   => ['ja' => '送信',            'ko' => '제출',      'zh' => '提交'],
-            'common.cancel'   => ['ja' => 'キャンセル',      'ko' => '취소',      'zh' => '取消'],
-            'common.save'     => ['ja' => '保存',            'ko' => '저장',      'zh' => '保存'],
-            'common.back'     => ['ja' => '戻る',            'ko' => '뒤로',      'zh' => '返回'],
-            'common.next'     => ['ja' => '次へ',            'ko' => '다음',      'zh' => '下一步'],
-            'common.bookNow'  => ['ja' => '今すぐ予約',      'ko' => '지금 예약', 'zh' => '立即预约'],
+            'nav.home' => ['ja' => 'ホーム',         'ko' => '홈',       'zh' => '首页'],
+            'nav.about' => ['ja' => 'について',        'ko' => '소개',      'zh' => '关于我们'],
+            'nav.services' => ['ja' => 'サービス',        'ko' => '서비스',    'zh' => '服务项目'],
+            'nav.booking' => ['ja' => '予約する',        'ko' => '예약하기',  'zh' => '立即预约'],
+            'nav.voucher' => ['ja' => 'バウチャー',      'ko' => '바우처',    'zh' => '优惠券'],
+            'nav.gallery' => ['ja' => 'ギャラリー',      'ko' => '갤러리',    'zh' => '图片展示'],
+            'nav.promotions' => ['ja' => 'キャンペーン',    'ko' => '프로모션',  'zh' => '优惠活动'],
+            'nav.blog' => ['ja' => 'ブログ',          'ko' => '블로그',    'zh' => '博客'],
+            'nav.contact' => ['ja' => 'お問い合わせ',    'ko' => '문의',      'zh' => '联系我们'],
+            'nav.myBookings' => ['ja' => '予約履歴',        'ko' => '예약 내역', 'zh' => '我的预约'],
+            'nav.login' => ['ja' => 'ログイン',        'ko' => '로그인',    'zh' => '登录'],
+            'nav.register' => ['ja' => '新規登録',        'ko' => '회원가입',  'zh' => '注册'],
+            'nav.logout' => ['ja' => 'ログアウト',      'ko' => '로그아웃',  'zh' => '退出登录'],
+            'common.loading' => ['ja' => '読み込み中...',   'ko' => '로딩 중...', 'zh' => '加载中...'],
+            'common.submit' => ['ja' => '送信',            'ko' => '제출',      'zh' => '提交'],
+            'common.cancel' => ['ja' => 'キャンセル',      'ko' => '취소',      'zh' => '取消'],
+            'common.save' => ['ja' => '保存',            'ko' => '저장',      'zh' => '保存'],
+            'common.back' => ['ja' => '戻る',            'ko' => '뒤로',      'zh' => '返回'],
+            'common.next' => ['ja' => '次へ',            'ko' => '다음',      'zh' => '下一步'],
+            'common.bookNow' => ['ja' => '今すぐ予約',      'ko' => '지금 예약', 'zh' => '立即预约'],
             'common.readMore' => ['ja' => '続きを読む',      'ko' => '더 읽기',   'zh' => '阅读更多'],
             'home.hero.title' => [
                 'ja' => '身体・心・精神のバランスへの旅',
@@ -236,9 +209,9 @@ class TranslationImportSeeder extends Seeder
                 'zh' => '开启身心灵平衡的旅程',
             ],
             'home.hero.subtitle' => [
-                'ja' => 'Maha Spa — ダナンで体験するベトナム伝統スパ',
-                'ko' => 'Maha Spa — 다낭에서 경험하는 베트남 전통 스파',
-                'zh' => 'Maha Spa — 在岘港体验越南传统水疗',
+                'ja' => 'Mầm Spa — ダナンで体験するベトナム伝統スパ',
+                'ko' => 'Mầm Spa — 다낭에서 경험하는 베트남 전통 스파',
+                'zh' => 'Mầm Spa — 在岘港体验越南传统水疗',
             ],
             'footer.tagline' => [
                 'ja' => '身体・心・精神のバランスへの旅の始まり',
@@ -246,19 +219,21 @@ class TranslationImportSeeder extends Seeder
                 'zh' => '开启身心灵平衡旅程的起点',
             ],
             'footer.branches' => ['ja' => '店舗',     'ko' => '지점',    'zh' => '门店'],
-            'footer.contact'  => ['ja' => 'お問い合わせ', 'ko' => '문의', 'zh' => '联系我们'],
-            'footer.follow'   => ['ja' => 'フォローする', 'ko' => '팔로우', 'zh' => '关注我们'],
-            'footer.rights'   => [
-                'ja' => '© {{year}} Maha Spa. 無断転載禁止。',
-                'ko' => '© {{year}} Maha Spa. 모든 권리 보유.',
-                'zh' => '© {{year}} Maha Spa. 版权所有。',
+            'footer.contact' => ['ja' => 'お問い合わせ', 'ko' => '문의', 'zh' => '联系我们'],
+            'footer.follow' => ['ja' => 'フォローする', 'ko' => '팔로우', 'zh' => '关注我们'],
+            'footer.rights' => [
+                'ja' => '© {{year}} Mầm Spa. 無断転載禁止。',
+                'ko' => '© {{year}} Mầm Spa. 모든 권리 보유.',
+                'zh' => '© {{year}} Mầm Spa. 版权所有。',
             ],
         ];
 
         foreach ($strings as $dotKey => $translations) {
             [$group, $key] = explode('.', $dotKey, 2);
             $row = TranslationString::where('group', $group)->where('key', $key)->first();
-            if (! $row) continue;
+            if (! $row) {
+                continue;
+            }
 
             $values = $row->values ?? [];
             foreach ($translations as $locale => $value) {

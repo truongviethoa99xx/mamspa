@@ -2,13 +2,48 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    roles?: string[];
+    can_manage_content?: boolean;
+    can_manage_site?: boolean;
+    can_manage_staff?: boolean;
+}
+
+export interface FooterBranch {
+    slug: string;
+    name: string;
+    address: string;
+    phone?: string;
+    open_hours: string;
+    lat: number | null;
+    lng: number | null;
+}
+
+export interface SiteSettings {
+    brand_name?: string | null;
+    tagline?: string | null;
+    hotline?: string | null;
+    email?: string | null;
+    chat_url?: string | null;
+    floating_contact_buttons?: {
+        enabled?: boolean;
+        label?: string;
+        type?: 'zalo' | 'map' | 'phone' | 'whatsapp' | 'kakao' | 'custom';
+        icon?: string | null;
+        href?: string;
+        background?: string;
+        color?: string;
+    }[];
+    social_links?: { label: string; href: string }[];
+    service_menu?: { label: string; href: string }[];
 }
 
 export interface SharedProps {
     auth: { user: User | null };
     locale: 'vi' | 'en' | 'ja' | 'ko' | 'zh';
     availableLocales: string[];
-    flash: { success?: string; error?: string };
+    flash: { success?: string; error?: string; booking_code?: string };
+    branches: FooterBranch[];
+    site?: SiteSettings;
     gtm: { id?: string };
 }
 
@@ -39,31 +74,4 @@ export interface Service {
     ingredients: string[];
     images: string[];
     branches?: Branch[];
-}
-
-export type BlockType =
-    | 'hero'
-    | 'service_list'
-    | 'gallery'
-    | 'testimonial'
-    | 'cta'
-    | 'text'
-    | 'branches'
-    | 'promo_banner';
-
-export interface Block {
-    id: number;
-    type: BlockType;
-    order: number;
-    data: Record<string, unknown>;
-    is_active: boolean;
-}
-
-export interface Page {
-    id: number;
-    slug: string;
-    title: string;
-    is_published: boolean;
-    seo_meta: { description?: string; keywords?: string } | null;
-    blocks: Block[];
 }

@@ -15,6 +15,8 @@ class Slot extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'capacity' => 'integer',
+        'start_time' => 'datetime:H:i',
+        'end_time' => 'datetime:H:i',
     ];
 
     public function branch(): BelongsTo

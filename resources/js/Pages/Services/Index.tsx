@@ -41,7 +41,7 @@ export default function ServicesIndex({ filters, services, branches }: Props) {
         <PublicLayout>
             <Seo
                 title={t('nav.services')}
-                description="Khám phá các dịch vụ massage, facial, head spa, foot spa tại Maha Spa Đà Nẵng."
+                description="Khám phá các dịch vụ massage, facial, head spa, foot spa tại Mầm Spa Đà Nẵng."
                 schema={itemListSchema(services.map(s => ({
                     name: tr(s.name, locale),
                     url: window.location.origin + '/services/' + s.slug,

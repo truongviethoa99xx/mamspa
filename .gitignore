@@ -2,8 +2,11 @@
 /public/build
 /public/hot
 /public/storage
+/bootstrap/ssr
+/storage/app/public
 /storage/*.key
 /storage/pail
+/storage/framework/cache/*.php
 /storage/framework/cache/data
 /storage/framework/sessions
 /storage/framework/views

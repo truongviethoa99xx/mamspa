@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: PropsWithChildren) {
     return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-maha-50 p-6">
             <Link href="/" className="mb-6 font-serif text-3xl text-maha-700">
-                Maha Spa
+                Mầm Spa
             </Link>
             <div className="w-full max-w-md rounded-xl border border-maha-100 bg-white p-8 shadow-sm">
                 {children}

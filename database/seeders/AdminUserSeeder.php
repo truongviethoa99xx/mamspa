@@ -21,5 +21,16 @@ class AdminUserSeeder extends Seeder
             ]
         );
         $admin->assignRole('admin');
+
+        $superAdmin = User::updateOrCreate(
+            ['email' => 'nhiphuong.work@gmail.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('superadmin@123'),
+                'preferred_lang' => 'vi',
+                'email_verified_at' => now(),
+            ]
+        );
+        $superAdmin->syncRoles(['superadmin']);
     }
 }

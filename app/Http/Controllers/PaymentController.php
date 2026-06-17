@@ -9,9 +9,12 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function vnpay(Booking $booking, VNPayService $svc): RedirectResponse
+    public function vnpay(Request $request, Booking $booking, VNPayService $svc): RedirectResponse
     {
+        abort_unless($booking->user_id === $request->user()?->id, 403);
+
         $url = $svc->createPaymentUrl($booking, config('services.vnpay.return_url'));
+
         return redirect()->away($url);
     }
 
@@ -29,6 +32,7 @@ class PaymentController extends Controller
 
         if (($params['vnp_ResponseCode'] ?? '') === '00') {
             $booking->update(['payment_status' => 'paid', 'status' => 'confirmed']);
+
             return redirect('/my-bookings')->with('success', 'Thanh toán thành công cho booking '.$booking->code);
         }
 

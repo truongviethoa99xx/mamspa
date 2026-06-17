@@ -1,70 +1,215 @@
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Menu, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { cn } from '@/Lib/utils';
+import { cn, tr } from '@/Lib/utils';
+import { useLocale } from '@/Hooks/useLocale';
 import type { SharedProps } from '@/types';
+
+interface MenuItem {
+    href: string;
+    label: string;
+}
+
+const SERVICE_MENU: MenuItem[] = [
+    { label: 'Mầm Combo', href: '/dich-vu?category=combo' },
+    { label: 'Traditional Massage', href: '/dich-vu?category=massage' },
+    { label: 'Head Spa', href: '/dich-vu?category=head-spa' },
+    { label: 'Facial Care', href: '/dich-vu?category=facial' },
+    { label: 'Mother Care', href: '/dich-vu?category=mother-care' },
+];
+
+function NavDropdown({ label, items, href }: { label: string; items: MenuItem[]; href?: string }) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) {
+                setOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
+
+    const triggerClass =
+        'flex items-center gap-1.5 text-base font-medium tracking-wide text-maha-900 transition-colors hover:text-maha-600';
+    const chevron = (
+        <ChevronDown className={cn('h-4 w-4 transition-transform duration-200', open && 'rotate-180')} />
+    );
+
+    return (
+        <div
+            ref={ref}
+            className="relative"
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+        >
+            {href ? (
+                <Link href={href} className={triggerClass} aria-haspopup="true" aria-expanded={open}>
+                    {label}
+                    {chevron}
+                </Link>
+            ) : (
+                <button
+                    onClick={() => setOpen((v) => !v)}
+                    className={triggerClass}
+                    aria-haspopup="true"
+                    aria-expanded={open}
+                >
+                    {label}
+                    {chevron}
+                </button>
+            )}
+
+            {open && (
+                <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3">
+                    <ul className="w-64 rounded-2xl border border-maha-100 bg-white p-2 shadow-xl shadow-maha-900/10">
+                        {items.map((item) => (
+                            <li key={item.href}>
+                                <Link
+                                    href={item.href}
+                                    onClick={() => setOpen(false)}
+                                    className="group/item flex items-center justify-between rounded-xl px-5 py-3 font-serif text-[15px] text-[#5e6b45] transition-colors hover:bg-maha-50 hover:font-bold hover:text-ink"
+                                >
+                                    {item.label}
+                                    <ChevronRight className="h-4 w-4 opacity-0 transition-opacity group-hover/item:opacity-100" />
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
+}
 
 export function Navbar() {
     const { t } = useTranslation();
+    const locale = useLocale();
     const { props } = usePage<SharedProps>();
     const [open, setOpen] = useState(false);
+    const serviceMenu = props.site?.service_menu && props.site.service_menu.length > 0 ? props.site.service_menu : SERVICE_MENU;
 
-    const links = [
-        { href: '/', label: t('nav.home') },
-        { href: '/services', label: t('nav.services') },
-        { href: '/booking', label: t('nav.booking') },
-        { href: '/promotions', label: t('nav.promotions') },
-        { href: '/gallery', label: t('nav.gallery') },
-        { href: '/blog', label: t('nav.blog') },
-        { href: '/contact', label: t('nav.contact') },
-    ];
+    const branchItems: MenuItem[] = (props.branches ?? []).map((b) => ({
+        href: `/chi-nhanh/${b.slug}`,
+        label: tr(b.name, locale),
+    }));
 
     return (
-        <header className="sticky top-0 z-40 w-full border-b border-maha-100 bg-white/90 backdrop-blur">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-                <Link href="/" className="font-serif text-2xl tracking-wide text-maha-700">
-                    Maha Spa
-                </Link>
-                <ul className="hidden gap-6 md:flex">
-                    {links.map((l) => (
-                        <li key={l.href}>
-                            <Link href={l.href} className="text-sm text-gray-700 hover:text-maha-700">
-                                {l.label}
-                            </Link>
-                        </li>
-                    ))}
+        <header className="relative z-40 w-full border-b border-maha-100 bg-maha-50/95 backdrop-blur">
+            <nav className="mx-auto grid h-20 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 sm:px-6 md:h-24 lg:h-[120px] 2xl:max-w-[1440px]">
+                {/* Left navigation */}
+                <ul className="hidden items-center gap-8 md:flex">
+                    <li>
+                        <Link
+                            href="/gioi-thieu"
+                            className="text-base font-medium tracking-wide text-maha-900 transition-colors hover:text-maha-600"
+                        >
+                            {t('nav.about')}
+                        </Link>
+                    </li>
+                    <li>
+                        <NavDropdown label={t('nav.services')} items={serviceMenu} href="/dich-vu" />
+                    </li>
+                    <li>
+                        <Link
+                            href="/tin-tuc"
+                            className="text-base font-medium tracking-wide text-maha-900 transition-colors hover:text-maha-600"
+                        >
+                            {t('nav.blog')}
+                        </Link>
+                    </li>
                 </ul>
-                <div className="hidden items-center gap-4 md:flex">
+
+                {/* Center logo */}
+                <Link href="/" className="flex items-center justify-center md:col-start-2">
+                    <img
+                        src="/images/logo.svg"
+                        alt="Mầm Spa"
+                        width={120}
+                        height={120}
+                        className="h-16 w-16 object-contain md:h-20 md:w-20 lg:h-[112px] lg:w-[112px]"
+                    />
+                </Link>
+
+                {/* Right actions */}
+                <div className="hidden items-center justify-end gap-7 md:flex">
+                    <NavDropdown label={t('footer.branches')} items={branchItems} />
                     <LanguageSwitcher />
                     {props.auth?.user ? (
-                        <Link href="/my-bookings" className="text-sm text-maha-700">
+                        <Link
+                            href="/my-bookings"
+                            className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
+                        >
                             {t('nav.myBookings')}
                         </Link>
                     ) : (
                         <Link
-                            href="/login"
-                            className="rounded-full border border-maha-700 px-4 py-1.5 text-sm text-maha-700 hover:bg-maha-700 hover:text-white"
+                            href="/dat-lich"
+                            className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
                         >
-                            {t('nav.login')}
+                            {t('common.bookNow')}
                         </Link>
                     )}
                 </div>
-                <button className="md:hidden" onClick={() => setOpen(!open)} aria-label={t('nav.toggleMenu')}>
+
+                {/* Mobile toggle */}
+                <button
+                    className="col-start-3 justify-self-end md:hidden"
+                    onClick={() => setOpen(!open)}
+                    aria-label={t('nav.toggleMenu')}
+                >
                     {open ? <X /> : <Menu />}
                 </button>
             </nav>
-            <div className={cn('md:hidden border-t border-maha-100 bg-white', open ? 'block' : 'hidden')}>
-                <ul className="flex flex-col gap-2 px-4 py-3">
-                    {links.map((l) => (
-                        <li key={l.href}>
-                            <Link href={l.href} className="block py-2 text-sm">
-                                {l.label}
+
+            {/* Mobile menu */}
+            <div className={cn('border-t border-maha-100 bg-maha-50 md:hidden', open ? 'block' : 'hidden')}>
+                <ul className="flex flex-col gap-1 px-6 py-4">
+                    <li>
+                        <Link href="/gioi-thieu" className="block py-2 text-base text-maha-900">
+                            {t('nav.about')}
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/dich-vu" className="block py-2 text-base text-maha-900">
+                            {t('nav.services')}
+                        </Link>
+                    </li>
+                    {serviceMenu.map((item) => (
+                        <li key={item.href}>
+                            <Link href={item.href} className="block py-2 pl-3 text-sm text-maha-800">
+                                {item.label}
                             </Link>
                         </li>
                     ))}
-                    <li className="border-t pt-2">
+                    <li>
+                        <Link href="/tin-tuc" className="block py-2 text-base text-maha-900">
+                            {t('nav.blog')}
+                        </Link>
+                    </li>
+                    <li className="pt-2 text-sm font-semibold uppercase tracking-wider text-maha-500">
+                        {t('footer.branches')}
+                    </li>
+                    {branchItems.map((item) => (
+                        <li key={item.href}>
+                            <Link href={item.href} className="block py-2 pl-3 text-sm text-maha-800">
+                                {item.label}
+                            </Link>
+                        </li>
+                    ))}
+                    <li className="mt-3">
+                        <Link
+                            href="/dat-lich"
+                            className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
+                        >
+                            {t('common.bookNow')}
+                        </Link>
+                    </li>
+                    <li className="border-t border-maha-100 pt-3">
                         <LanguageSwitcher />
                     </li>
                 </ul>

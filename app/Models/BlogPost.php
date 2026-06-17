@@ -12,7 +12,7 @@ class BlogPost extends Model
     use HasFactory, HasTranslations;
 
     protected $fillable = [
-        'slug', 'title', 'excerpt', 'body', 'cover_image',
+        'slug', 'category', 'title', 'excerpt', 'body', 'cover_image',
         'author_id', 'seo_meta', 'is_published', 'published_at',
     ];
 

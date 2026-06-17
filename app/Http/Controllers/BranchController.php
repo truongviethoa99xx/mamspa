@@ -24,6 +24,11 @@ class BranchController extends Controller
                 'open_hours' => $branch->open_hours,
                 'lat' => $branch->lat,
                 'lng' => $branch->lng,
+                'page_content' => $branch->page_content ?? [],
+                'images' => $branch->getMedia('images')->map(fn ($media) => [
+                    'url' => $media->getUrl(),
+                    'alt' => $media->name,
+                ])->all(),
                 'services' => $branch->services->map(fn ($s) => [
                     'id' => $s->id, 'slug' => $s->slug, 'name' => $s->name,
                     'category' => $s->category, 'price' => $s->price, 'duration' => $s->duration,

@@ -5,6 +5,13 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
 
+interface BookingItem {
+    name: Record<string, string> | string;
+    duration: number;
+    gender: 'male' | 'female' | null;
+    price: number;
+}
+
 interface Props {
     booking: {
         code: string;
@@ -13,6 +20,7 @@ interface Props {
         time_slot: string;
         branch: { name: any; address: string };
         service: { name: any; duration: number };
+        items: BookingItem[];
         total_price: number;
         status: string;
     };
@@ -36,7 +44,12 @@ export default function BookingSuccess({ booking }: Props) {
                     <dl className="mt-6 grid gap-2 rounded-lg bg-maha-50 p-4 text-left text-sm">
                         <div className="flex justify-between"><dt>{t('booking.summary.guest')}</dt><dd>{booking.guest_name}</dd></div>
                         <div className="flex justify-between"><dt>{t('booking.summary.branch')}</dt><dd>{tr(booking.branch.name, locale)}</dd></div>
-                        <div className="flex justify-between"><dt>{t('booking.summary.service')}</dt><dd>{tr(booking.service.name, locale)}</dd></div>
+                        {(booking.items?.length ? booking.items : [{ name: booking.service.name, duration: booking.service.duration, gender: null, price: booking.total_price }]).map((it, i) => (
+                            <div key={i} className="flex justify-between">
+                                <dt>{tr(it.name, locale)} ({it.duration} min){it.gender ? (it.gender === 'male' ? ' · Nam' : ' · Nữ') : ''}</dt>
+                                <dd>{formatVND(it.price)}</dd>
+                            </div>
+                        ))}
                         <div className="flex justify-between">
                             <dt>{t('booking.summary.date')} & {t('booking.summary.time')}</dt>
                             <dd>{booking.date} · {booking.time_slot}</dd>

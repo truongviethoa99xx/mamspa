@@ -10,6 +10,7 @@ class TranslationManager
     public function driver(?string $name = null): TranslatorContract
     {
         $name = $name ?? config('translation.provider', 'null');
+
         return match ($name) {
             'google' => app(GoogleTranslator::class),
             'deepl' => app(DeepLTranslator::class),
@@ -29,10 +30,11 @@ class TranslationManager
             return $text;
         }
 
-        $key = 'translate:'.$from.':'.$to.':'.md5($text);
+        $provider = config('translation.provider', 'null');
+        $key = 'translate:'.$provider.':'.$from.':'.$to.':'.md5($text);
 
-        return Cache::remember($key, config('translation.cache_ttl', 604800), function () use ($text, $to, $from) {
-            return $this->driver()->translate($text, $to, $from);
+        return Cache::remember($key, config('translation.cache_ttl', 604800), function () use ($text, $to, $from, $provider) {
+            return $this->driver($provider)->translate($text, $to, $from);
         });
     }
 }

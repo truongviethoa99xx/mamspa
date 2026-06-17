@@ -15,13 +15,14 @@ class Branch extends Model implements HasMedia
     use HasFactory, HasTranslations, InteractsWithMedia;
 
     protected $fillable = [
-        'slug', 'name', 'address', 'phone', 'open_hours', 'lat', 'lng', 'is_active',
+        'slug', 'name', 'address', 'phone', 'open_hours', 'lat', 'lng', 'is_active', 'page_content',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'lat' => 'float',
         'lng' => 'float',
+        'page_content' => 'array',
     ];
 
     public array $translatable = ['name'];

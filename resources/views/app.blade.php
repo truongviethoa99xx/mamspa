@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index, follow">
 
-    <title inertia>{{ config('app.name', 'Maha Spa') }}</title>
+    <title inertia>{{ config('app.name', 'Mầm Spa') }}</title>
 
     @php
         $path = request()->path() === '/' ? '' : '/' . request()->path();
@@ -23,7 +23,7 @@
     <link rel="alternate" hreflang="x-default" href="{{ $canonicalBase }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Maha Spa">
+    <meta property="og:site_name" content="Mầm Spa">
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:locale" content="{{ $currentLocale === 'vi' ? 'vi_VN' : ($currentLocale === 'en' ? 'en_US' : ($currentLocale === 'ja' ? 'ja_JP' : ($currentLocale === 'ko' ? 'ko_KR' : 'zh_CN'))) }}">
     <meta property="og:image" content="{{ config('app.url') }}/images/og-default.jpg">
@@ -36,7 +36,7 @@
 
     <link rel="icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700|playfair-display:400,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json">{!! json_encode([
         '@context' => 'https://schema.org',
@@ -44,7 +44,7 @@
             [
                 '@type' => 'Organization',
                 '@id' => config('app.url') . '/#organization',
-                'name' => 'Maha Spa',
+                'name' => 'Mầm Spa',
                 'url' => config('app.url'),
                 'logo' => config('app.url') . '/images/logo.png',
                 'sameAs' => [
@@ -60,7 +60,7 @@
                 '@type' => 'WebSite',
                 '@id' => config('app.url') . '/#website',
                 'url' => config('app.url'),
-                'name' => 'Maha Spa',
+                'name' => 'Mầm Spa',
                 'publisher' => ['@id' => config('app.url') . '/#organization'],
                 'potentialAction' => [
                     '@type' => 'SearchAction',

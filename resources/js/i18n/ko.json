@@ -1,4 +1,65 @@
 {
+    "blog": {
+        "story": "자연에서 온 이야기",
+        "readArticle": "기사 읽기",
+        "readMore": "더 읽기",
+        "loadMore": "더 보기",
+        "loading": "불러오는 중...",
+        "empty": "아직 게시물이 없습니다.",
+        "author": "Mầm Spa 전문가",
+        "minRead": "{{count}}분 분량",
+        "related": "주요 게시물",
+        "ctaEyebrow": "실제 경험",
+        "ctaTitle": "헤드 스파 서비스",
+        "ctaDesc": "심층 허브 두피 케어로 모발의 건강한 윤기를 깨워보세요.",
+        "ctaButton": "자세히 보기"
+    },
+    "bookingForm": {
+        "eyebrow": "Reserve your moment of peace",
+        "title": "예약하기",
+        "thankYou": "예약 요청해 주셔서 감사합니다. Mầm Spa 팀이 곧 연락드려 예약을 확인하고 최고의 경험을 위해 세심하게 준비하겠습니다.",
+        "sectionLocation": "지점 및 서비스 선택",
+        "sectionDatetime": "날짜 및 시간 선택",
+        "sectionContact": "연락처 정보",
+        "selectBranch": "지점 선택",
+        "guestCount": "방문 인원",
+        "guestTotal": "합계",
+        "people": "명",
+        "male": "남성",
+        "female": "여성",
+        "choosePerGuest": "각 고객의 서비스를 선택해 주세요:",
+        "guestMale": "남성 고객",
+        "guestFemale": "여성 고객",
+        "chooseService": "서비스 선택",
+        "morning": "오전",
+        "afternoon": "오후",
+        "evening": "저녁",
+        "pickDate": "날짜를 선택하면 가능한 시간이 표시됩니다.",
+        "noSlots": "이 날짜에는 예약 가능한 시간이 없습니다.",
+        "name": "성함",
+        "namePlaceholder": "이름을 입력하세요",
+        "phone": "전화번호",
+        "phonePlaceholder": "전화번호를 입력하세요",
+        "email": "이메일 (Gmail)",
+        "emailPlaceholder": "Gmail을 입력하세요",
+        "contactChannel": "온라인 연락 방법",
+        "contactValuePlaceholder": "전화 / 계정 ID",
+        "note": "스파 요청 사항 (선택)",
+        "notePlaceholder": "건강 상태, 테라피스트 요청, 임신 관련 사항 등...",
+        "summaryTitle": "예약 요약",
+        "summaryPlace": "지점",
+        "summaryDatetime": "시간",
+        "summaryCustomers": "고객",
+        "subtotal": "소계",
+        "voucher": "프로모션 / 바우처",
+        "total": "총액",
+        "confirm": "예약 확정",
+        "processing": "처리 중...",
+        "channelZalo": "Zalo",
+        "channelMessenger": "Messenger",
+        "channelWhatsapp": "WhatsApp",
+        "channelPhone": "전화"
+    },
     "nav": {
         "home": "홈",
         "about": "소개",
@@ -34,7 +95,11 @@
     },
     "home": {
         "hero": {
+            "eyebrow": "Rooted in Vietnamese Healing Traditions",
             "title": "몸·마음·정신의 균형을 찾는 여정",
+            "heading": "자연에서 시작되는 치유의 여정",
+            "body": "분주한 일상을 잠시 내려놓고, 고요한 인도차이나 공간에서 몸의 소리에 귀 기울이며 마음을 어루만지는 시간을 누려보세요.",
+            "explore": "둘러보기",
             "subtitle": "마하 스파 — 다낭에서 경험하는 베트남 전통 스파"
         }
     },
@@ -43,7 +108,15 @@
         "branches": "지점",
         "contact": "문의",
         "follow": "팔로우",
-        "rights": "© {{year}} Maha Spa. 모든 권리 보유."
+        "hotline": "예약 전화",
+        "address": "주소",
+        "hours": "영업 시간",
+        "holiday": "(공휴일·뗏 연휴 영업)",
+        "viewMap": "길찾기 보기",
+        "privacy": "개인정보 처리방침",
+        "terms": "이용약관",
+        "support": "고객 지원",
+        "rights": "© {{year}} Mầm Spa. 모든 권리 보유."
     },
     "services": {
         "category": {
@@ -59,7 +132,72 @@
         "ingredients": "재료"
     },
     "about": {
-        "servicesAtBranch": "이 지점의 서비스"
+        "servicesAtBranch": "이 지점의 서비스",
+        "title": "균형을 찾는 여정",
+        "subtitle": "분주한 사이공 속 작은 쉼표",
+        "features": {
+            "headSpa": "깊은 휴식, 두피 영양 케어.",
+            "bodyMassage": "근육 이완, 에너지 회복.",
+            "herbal": "천연 허브로 몸과 마음의 균형.",
+            "tea": "따뜻한 허브티로 마무리하는 힐링."
+        },
+        "story": {
+            "eyebrow": "Mầm Spa — 브랜드 스토리",
+            "heading": "몸·마음·정신을 치유하는 여정의 시작",
+            "p1": "사람과 자연의 깊은 연결에 대한 믿음에서 출발한 Mầm Spa는 '분주한 사이공 속 작은 쉼표'로 탄생했습니다. 일상의 근심이 사라지고 깊은 평온이 자리하는 공간입니다.",
+            "p2": "개성 있는 두 공간 — 옛 사이공의 소박함을 담은 레 반 시 지점과 모던하고 프라이빗한 레 티 리엥 지점. Mầm은 정성과 섬세함으로 모든 순간마다 완벽한 회복의 경험을 선사합니다."
+        },
+        "vision": {
+            "title": "비전과 미션",
+            "p1": "번화한 도심 속에 진정한 치유의 공간을 만들고자 하는 열망에서 출발하여, Mầm Spa는 평온과 회복을 찾는 이들을 위한 이상적인 '작은 쉼표'를 지향합니다.",
+            "p2": "휴식은 단순히 신체 피로를 푸는 것이 아니라, 몸·마음·정신을 온전히 돌보아 가장 자연스러운 균형으로 되돌리는 여정이라 믿습니다. Mầm에서는 자신에게 맞는 치유의 결을 선택할 수 있습니다:",
+            "b1": "옛 사이공의 소박함이 어우러진 곳. 소박함과 따뜻함, 연결을 사랑하는 분들을 위해.",
+            "b2": "고요하고 모던한 공간. 깊이 있고 고도로 개인화된 회복 경험을."
+        },
+        "values": {
+            "title": "핵심 가치",
+            "t1": "정성과 전문성",
+            "d1": "체계적으로 훈련된 테라피스트들이 경혈과 전통 치료법에 정통하여 안심하고 경험하실 수 있습니다.",
+            "t2": "맞춤형 경험",
+            "d2": "언제나 당신의 몸에 귀 기울입니다. 모든 트리트먼트는 각 고객의 컨디션과 회복 니즈에 맞춰 유연하게 조정됩니다.",
+            "t3": "디테일까지 섬세하게",
+            "d3": "따뜻한 환영 차, 은은한 허브 향, 도시의 소음에서 완전히 벗어난 고요한 공간까지 — 모든 디테일에 정성을 담았습니다."
+        },
+        "team": {
+            "eyebrow": "평온을 전하는 사람들",
+            "title": "정성을 다하는 케어 팀",
+            "m1Role": "수석 테라피스트",
+            "m1Desc": "전통 마사지와 심부 회복 요법에서 10년 이상의 경력.",
+            "m2Role": "허브 전문가",
+            "m2Desc": "Mầm Spa만의 차와 허브 오일 포뮬러를 연구·개발합니다.",
+            "m3Role": "헤드 스파 전문가",
+            "m3Desc": "두피 케어와 양생 샴푸 기법에 정통하여 완전한 휴식을 선사합니다."
+        },
+        "reviews": {
+            "eyebrow": "소중한 분들의 이야기",
+            "title": "고객의 후기",
+            "videoCaption": "Mầm에서의 힐링 경험",
+            "quote": "사이공 한복판이라고 믿기 힘든 정말 평온한 공간. 테라피스트분들이 정성스러워서 마사지와 헤드 스파 후 정말 깊이 잤어요. Mầm Spa 감사합니다!",
+            "author": "Vivian 님 – 단골 고객",
+            "like": "좋아요"
+        }
+    },
+    "dichvu": {
+        "eyebrow": "A journey to balance your body, mind & soul",
+        "title": "서비스 메뉴",
+        "searchPlaceholder": "서비스 검색 (예: 허브 헤드스파, 목·어깨 치료…)",
+        "searchButton": "검색",
+        "combos": {
+            "eyebrow": "완벽한 케어 여정",
+            "title": "Mầm 콤보 패키지",
+            "bestseller": "베스트셀러"
+        },
+        "massage": {
+            "title": "테라피 마사지 서비스",
+            "d1": "목·어깨의 긴장과 통증을 효과적으로 완화합니다.",
+            "d2": "발바닥 지압으로 혈액 순환을 촉진하고 활력을 회복합니다.",
+            "d3": "전신 심부 케어로 근육 피로를 풀고 마음을 맑게 합니다."
+        }
     },
     "booking": {
         "steps": {
@@ -146,8 +284,71 @@
         "endsAt": "종료: {{date}}"
     },
     "blocks": {
+        "services": {
+            "eyebrow": "Healing in every detail"
+        },
+        "testimonial": {
+            "eyebrow": "생생한 경험을 들어보세요",
+            "title": "고객 리뷰",
+            "ratingLabel": "매우 우수",
+            "basedOn": "{{count}}개의 리뷰 기준",
+            "readMore": "더 보기"
+        },
+        "bookingForm": {
+            "title": "예약 요청",
+            "branch": "Mầm Spa 지점",
+            "branchPlaceholder": "지점 선택",
+            "name": "고객 이름",
+            "namePlaceholder": "이름을 입력하세요",
+            "phone": "전화번호",
+            "phonePlaceholder": "전화번호를 입력하세요",
+            "email": "이메일 (Gmail)",
+            "emailPlaceholder": "example@gmail.com",
+            "channel": "온라인 연락 수단",
+            "channelPlaceholder": "전화번호 / 계정 ID",
+            "date": "날짜",
+            "time": "시간",
+            "guests": "동행 인원수",
+            "total": "총",
+            "people": "명",
+            "male": "남성",
+            "female": "여성",
+            "chooseService": "고객별 서비스 선택",
+            "guestMale": "남성 고객",
+            "guestFemale": "여성 고객",
+            "servicePlaceholder": "서비스 선택",
+            "note": "추가 메모 (선택 사항)",
+            "notePlaceholder": "건강 상태, 테라피스트 요청, 기타 참고 사항 등...",
+            "submit": "예약 완료",
+            "success": {
+                "title": "요청이 전송되었습니다!",
+                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
+                "messageVi": "감사합니다. Mầm Spa 팀이 예약 확인과 완벽한 경험 준비를 위해 곧 연락드리겠습니다.",
+                "codeLabel": "고객님의 요청 코드",
+                "home": "홈으로 돌아가기"
+            }
+        },
+        "menu": {
+            "title": "서비스 메뉴",
+            "book": "예약하기",
+            "minute": "분",
+            "cat": {
+                "combo": "Signature Combo",
+                "massage": "Massage Therapies",
+                "head-spa": "Head Spa",
+                "facial": "Facial Treatments",
+                "foot-spa": "Others"
+            }
+        },
         "branches": {
-            "title": "지점"
+            "title": "Mầm Spa 공간 둘러보기",
+            "eyebrow": "A retreat for body, mind & soul",
+            "subheading": "치유의 공간",
+            "heading": "옛 사이공의 아름다움.",
+            "p1": "레 반 시 지점에 들어서면 보기 드문 고요한 순간으로 돌아갑니다. 따뜻한 원목, 자연 채광, 은은한 허브 향이 전통 건축의 소박한 멋을 고스란히 간직하고 있습니다.",
+            "p2": "분주한 삶을 잠시 내려놓고 깊이 휴식하며 자신과 다시 연결되기에 이상적인 곳입니다.",
+            "cta": "자세히 보기",
+            "caption": "{{name}}의 평온한 한 켠"
         }
     }
 }

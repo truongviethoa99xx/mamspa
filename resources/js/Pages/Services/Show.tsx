@@ -31,7 +31,7 @@ export default function ServiceShow({ service }: Props) {
     const schema = [
         serviceSchema({ name, description, url, price: service.price, duration: service.duration, category: service.category }),
         breadcrumbSchema([
-            { name: 'Maha Spa', url: window.location.origin },
+            { name: 'Mầm Spa', url: window.location.origin },
             { name: t('nav.services'), url: window.location.origin + '/services' },
             { name, url },
         ]),
@@ -61,7 +61,7 @@ export default function ServiceShow({ service }: Props) {
                                 </ul>
                             </div>
                         )}
-                        <Link href={`/booking?service=${service.slug}`}
+                        <Link href={`/dat-lich?service=${service.slug}`}
                             className="mt-8 inline-block rounded-full bg-maha-700 px-8 py-3 font-semibold text-white hover:bg-maha-800">
                             {t('common.bookNow')}
                         </Link>

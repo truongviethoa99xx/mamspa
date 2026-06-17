@@ -49,7 +49,7 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
                     {bookings.length === 0 && (
                         <div className="rounded-xl border border-maha-100 bg-white p-10 text-center text-gray-500">
                             {t('myBookings.empty')}
-                            <Link href="/booking" className="mt-3 block text-maha-700 underline">{t('myBookings.bookOne')}</Link>
+                            <Link href="/dat-lich" className="mt-3 block text-maha-700 underline">{t('myBookings.bookOne')}</Link>
                         </div>
                     )}
                     <ul className="space-y-3">

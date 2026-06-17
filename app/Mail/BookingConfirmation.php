@@ -19,15 +19,15 @@ class BookingConfirmation extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Xác nhận đặt lịch — Maha Spa #'.$this->booking->code,
+            subject: 'Xác nhận đặt lịch — Mầm Spa #'.$this->booking->code,
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'mail.booking-confirmation',
-            with: ['booking' => $this->booking->load(['branch', 'service'])],
+            markdown: 'mail.booking-confirmation',
+            with: ['booking' => $this->booking->load(['branch', 'service', 'items.service'])],
         );
     }
 }

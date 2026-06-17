@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Concerns\RestrictsFilamentAccess;
 use App\Filament\Resources\VoucherResource\Pages;
+use App\Models\User;
 use App\Models\Voucher;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,9 +14,18 @@ use Filament\Tables\Table;
 
 class VoucherResource extends Resource
 {
+    use RestrictsFilamentAccess;
+
     protected static ?string $model = Voucher::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
+
     protected static ?string $navigationGroup = 'Commerce';
+
+    protected static function allowedRoles(): array
+    {
+        return User::adminRoles();
+    }
 
     public static function form(Form $form): Form
     {

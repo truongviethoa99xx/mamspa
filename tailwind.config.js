@@ -21,9 +21,13 @@ export default {
                     800: '#5e3e29',
                     900: '#4d3424',
                 },
+                // Semantic text tokens
+                heading: '#1f3a28',   // dark green — main heading (largest)
+                subheading: '#754e30', // brown/beige — sub-heading
+                ink: '#22251f',        // off-black / dark charcoal — body text
             },
             fontFamily: {
-                sans: ['Inter', 'system-ui', 'sans-serif'],
+                sans: ['Quicksand', 'system-ui', 'sans-serif'],
                 serif: ['"Playfair Display"', 'Georgia', 'serif'],
             },
         },

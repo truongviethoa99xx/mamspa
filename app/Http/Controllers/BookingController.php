@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\BookingException;
 use App\Http\Requests\StoreBookingRequest;
+use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\Service;
 use App\Services\BookingService;
@@ -44,6 +45,7 @@ class BookingController extends Controller
             'branch_id' => 'required|integer|exists:branches,id',
             'date' => 'required|date|after_or_equal:today',
         ]);
+
         return response()->json([
             'data' => $svc->availableSlots($data['branch_id'], $data['date']),
         ]);
@@ -63,6 +65,7 @@ class BookingController extends Controller
                 'message' => 'Mã voucher không hợp lệ hoặc đã hết hạn.',
             ], 422);
         }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -85,14 +88,28 @@ class BookingController extends Controller
             return back()->with('error', $e->getMessage())->withInput();
         }
 
+        // Inline forms (e.g. the home page block) show a success modal in place
+        // instead of redirecting to the dedicated success page.
+        if ($request->boolean('inline')) {
+            return back()->with('booking_code', $booking->code);
+        }
+
         return redirect()->route('booking.success', $booking->code)
-            ->with('success', 'Đặt lịch thành công! Mã: '.$booking->code);
+            ->with('success', 'Đặt lịch thành công! Mã: '.$booking->code)
+            ->with('booking_code', $booking->code);
     }
 
     public function success(string $code): Response
     {
-        $booking = \App\Models\Booking::with(['branch', 'service'])
+        $booking = Booking::with(['branch', 'service', 'items.service'])
             ->where('code', $code)->firstOrFail();
+
+        $user = request()->user();
+        abort_unless(
+            ($booking->user_id && $user && $booking->user_id === $user->id)
+                || session('booking_code') === $booking->code,
+            403
+        );
 
         return Inertia::render('BookingSuccess', [
             'booking' => [
@@ -102,6 +119,12 @@ class BookingController extends Controller
                 'time_slot' => $booking->time_slot,
                 'branch' => ['name' => $booking->branch->name, 'address' => $booking->branch->address],
                 'service' => ['name' => $booking->service->name, 'duration' => $booking->service->duration],
+                'items' => $booking->items->map(fn ($it) => [
+                    'name' => $it->service->name,
+                    'duration' => $it->service->duration,
+                    'gender' => $it->gender,
+                    'price' => $it->price,
+                ])->values(),
                 'total_price' => $booking->total_price,
                 'status' => $booking->status,
             ],

@@ -1,4 +1,65 @@
 {
+    "blog": {
+        "story": "Câu chuyện từ thiên nhiên",
+        "readArticle": "Đọc bài viết",
+        "readMore": "Đọc tiếp",
+        "loadMore": "Tải thêm",
+        "loading": "Đang tải...",
+        "empty": "Chưa có bài viết nào.",
+        "author": "Chuyên gia Mầm Spa",
+        "minRead": "{{count}} phút đọc",
+        "related": "Bài viết nổi bật",
+        "ctaEyebrow": "Trải nghiệm thực tế",
+        "ctaTitle": "Dịch vụ Head Spa",
+        "ctaDesc": "Đánh thức vẻ bóng khỏe của mái tóc với liệu trình gội thảo mộc chuyên sâu.",
+        "ctaButton": "Tìm hiểu thêm"
+    },
+    "bookingForm": {
+        "eyebrow": "Reserve your moment of peace",
+        "title": "Đặt lịch trải nghiệm",
+        "thankYou": "Cảm ơn quý khách đã gửi yêu cầu. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của quý khách.",
+        "sectionLocation": "Lựa chọn Địa điểm & Dịch vụ",
+        "sectionDatetime": "Chọn ngày & Giờ trải nghiệm",
+        "sectionContact": "Thông tin liên hệ",
+        "selectBranch": "Chọn chi nhánh",
+        "guestCount": "Số lượng khách đi cùng",
+        "guestTotal": "Tổng",
+        "people": "Người",
+        "male": "Nam",
+        "female": "Nữ",
+        "choosePerGuest": "Vui lòng chọn dịch vụ tương ứng cho từng khách:",
+        "guestMale": "Khách Nam",
+        "guestFemale": "Khách Nữ",
+        "chooseService": "Chọn dịch vụ",
+        "morning": "Buổi sáng",
+        "afternoon": "Buổi chiều",
+        "evening": "Buổi tối",
+        "pickDate": "Vui lòng chọn ngày để xem khung giờ.",
+        "noSlots": "Không có khung giờ trống cho ngày này.",
+        "name": "Họ và tên",
+        "namePlaceholder": "Nhập tên của bạn",
+        "phone": "Số điện thoại",
+        "phonePlaceholder": "Nhập số điện thoại",
+        "email": "Email (Gmail)",
+        "emailPlaceholder": "Nhập Gmail của bạn",
+        "contactChannel": "Kênh liên hệ trực tuyến (Contact Method)",
+        "contactValuePlaceholder": "SĐT / ID Tài khoản",
+        "note": "Ghi chú cho Spa (Không bắt buộc)",
+        "notePlaceholder": "Tình trạng sức khỏe, yêu cầu KTV, lưu ý thai kỳ...",
+        "summaryTitle": "Tóm tắt đặt lịch",
+        "summaryPlace": "Địa điểm",
+        "summaryDatetime": "Thời gian",
+        "summaryCustomers": "Khách hàng",
+        "subtotal": "Tạm tính",
+        "voucher": "Khuyến mãi / Voucher",
+        "total": "Tổng cộng",
+        "confirm": "Xác nhận đặt lịch",
+        "processing": "Đang xử lý...",
+        "channelZalo": "Zalo",
+        "channelMessenger": "Messenger",
+        "channelWhatsapp": "WhatsApp",
+        "channelPhone": "Điện thoại"
+    },
     "nav": {
         "home": "Trang chủ",
         "about": "Giới thiệu",
@@ -34,8 +95,12 @@
     },
     "home": {
         "hero": {
+            "eyebrow": "Rooted in Vietnamese Healing Traditions",
             "title": "Hành trình cân bằng Thân - Tâm - Trí",
-            "subtitle": "Maha Spa — Trải nghiệm spa truyền thống Việt giữa lòng Đà Nẵng"
+            "heading": "Hành trình chữa lành từ thiên nhiên",
+            "body": "Gác lại những bộn bề của nhịp sống hối hả, mời bạn bước vào không gian Indochine tĩnh lặng để lắng nghe cơ thể và vỗ về tâm hồn.",
+            "explore": "Khám phá",
+            "subtitle": "Mầm Spa — Trải nghiệm spa truyền thống Việt giữa lòng Đà Nẵng"
         }
     },
     "footer": {
@@ -43,7 +108,15 @@
         "branches": "Chi nhánh",
         "contact": "Liên hệ",
         "follow": "Theo dõi chúng tôi",
-        "rights": "© {{year}} Maha Spa. All rights reserved."
+        "hotline": "Tổng đài đặt lịch",
+        "address": "Địa chỉ",
+        "hours": "Giờ đón khách",
+        "holiday": "(Mở cửa cả Lễ, Tết)",
+        "viewMap": "Xem bản đồ đường đi",
+        "privacy": "Chính sách bảo mật",
+        "terms": "Điều khoản dịch vụ",
+        "support": "Hỗ trợ khách hàng",
+        "rights": "© {{year}} Mầm Spa. All rights reserved."
     },
     "services": {
         "category": {
@@ -59,7 +132,96 @@
         "ingredients": "Nguyên liệu"
     },
     "about": {
-        "servicesAtBranch": "Dịch vụ tại chi nhánh"
+        "servicesAtBranch": "Dịch vụ tại chi nhánh",
+        "title": "Hành trình cân bằng",
+        "subtitle": "Một khoảng nghỉ nhỏ giữa Sài Gòn vội vã",
+        "features": {
+            "headSpa": "Thư giãn sâu, nuôi dưỡng da đầu.",
+            "bodyMassage": "Giảm căng cơ, phục hồi năng lượng.",
+            "herbal": "Thảo mộc tự nhiên, cân bằng thân – tâm.",
+            "tea": "Trà thảo mộc ấm nóng, kết thúc hành trình thư giãn."
+        },
+        "story": {
+            "eyebrow": "Mầm Spa — Câu chuyện thương hiệu",
+            "heading": "Khởi nguồn hành trình chữa lành Thân – Tâm – Trí",
+            "p1": "Xuất phát từ niềm tin vào sự kết nối sâu sắc giữa con người và thiên nhiên, Mầm Spa ra đời như một \"khoảng nghỉ nhỏ giữa Sài Gòn vội vã\". Đây là nơi mọi lo toan thường nhật tan biến để nhường chỗ cho sự bình yên sâu lắng.",
+            "p2": "Với hai không gian mang đậm dấu ấn: Lê Văn Sỹ mang hơi thở Sài Gòn xưa mộc mạc và Lê Thị Riêng hiện đại, riêng tư. Bằng sự tận tâm và tinh tế, Mầm hứa hẹn mang đến trải nghiệm phục hồi hoàn hảo qua từng điểm chạm."
+        },
+        "vision": {
+            "title": "Tầm nhìn & Sứ mệnh",
+            "p1": "Đi từ khát vọng tạo ra một không gian chữa lành đích thực giữa lòng thành phố nhộn nhịp, Mầm Spa hướng đến việc trở thành một \"khoảng nghỉ nhỏ\" lý tưởng cho những ai kiếm tìm sự an yên và phục hồi.",
+            "p2": "Chúng tôi tin rằng thư giãn không chỉ là giải tỏa mệt mỏi thể chất, mà còn là hành trình chăm sóc vẹn tròn Thân - Tâm - Trí, đưa bạn về lại trạng thái cân bằng tự nhiên nhất. Đến với Mầm, bạn có quyền lựa chọn sắc thái chữa lành phù hợp với chính mình:",
+            "b1": "Nơi giao thoa của nét mộc mạc Sài Gòn xưa, dành cho những ai yêu sự bình dị, ấm áp và kết nối.",
+            "b2": "Không gian tĩnh lặng, hiện đại với những trải nghiệm phục hồi chuyên sâu và mang tính cá nhân hoá cao.",
+            "eyebrow": "Rooted in Vietnamese Healing Traditions"
+        },
+        "values": {
+            "title": "Giá trị cốt lõi",
+            "t1": "Tận tâm & Chuyên nghiệp",
+            "d1": "Đội ngũ kỹ thuật viên được đào tạo bài bản, am hiểu sâu sắc về huyệt đạo và các phương pháp trị liệu truyền thống, mang đến cho bạn sự an tâm tuyệt đối khi trải nghiệm.",
+            "t2": "Trải nghiệm Cá nhân hóa",
+            "d2": "Chúng tôi luôn lắng nghe cơ thể bạn. Mỗi liệu trình đều được tinh chỉnh linh hoạt để phù hợp với thể trạng và nhu cầu phục hồi riêng biệt của từng vị khách.",
+            "t3": "Tinh tế từng điểm chạm",
+            "d3": "Sự chỉn chu thể hiện qua từng chi tiết: từ tách trà ấm đón khách, hương thảo mộc thoang thoảng, cho đến không gian tĩnh lặng tách biệt hoàn toàn khỏi phố thị ồn ào.",
+            "eyebrow": "Rooted in Vietnamese Healing Traditions"
+        },
+        "team": {
+            "eyebrow": "Những người trao gửi sự bình yên",
+            "title": "Đội ngũ chăm sóc tận tâm",
+            "m1Role": "Kỹ thuật viên Trưởng",
+            "m1Desc": "Hơn 10 năm kinh nghiệm trong các liệu pháp massage truyền thống và phục hồi chuyên sâu.",
+            "m2Role": "Chuyên gia Thảo mộc",
+            "m2Desc": "Tận tâm nghiên cứu, phát triển các công thức trà và tinh dầu thảo dược độc quyền của Mầm Spa.",
+            "m3Role": "Chuyên viên Head Spa",
+            "m3Desc": "Thấu hiểu sâu sắc về chăm sóc da đầu và kỹ thuật gội dưỡng sinh giúp bạn thư giãn hoàn toàn."
+        },
+        "reviews": {
+            "eyebrow": "Chia sẻ từ những người thương",
+            "title": "Cảm nhận của khách hàng",
+            "videoCaption": "Trải nghiệm chữa lành tại Mầm",
+            "quote": "Một không gian thực sự bình yên giữa lòng Sài Gòn. Các bạn kỹ thuật viên làm rất có tâm, mình đã có một giấc ngủ thật ngon sau liệu trình massage và gội đầu. Cảm ơn Mầm Spa!",
+            "author": "Chị Vivian – Khách hàng thân thiết",
+            "like": "Yêu thích"
+        },
+        "hero": {
+            "eyebrow": "A Vietnamese Healing Journey",
+            "retreat": "A retreat for body, mind & soul."
+        },
+        "featureTitles": {
+            "headSpa": "Head Spa Therapy",
+            "bodyMassage": "Body Massage",
+            "herbal": "Herbal Therapy",
+            "tea": "Tea Ritual"
+        }
+    },
+    "dichvu": {
+        "eyebrow": "A journey to balance your body, mind & soul",
+        "title": "Menu dịch vụ",
+        "searchPlaceholder": "Tìm dịch vụ (VD: Gội đầu thảo mộc, Trị liệu cổ vai gáy...)",
+        "searchButton": "Tìm kiếm",
+        "combos": {
+            "eyebrow": "Hành trình chăm sóc vẹn tròn",
+            "title": "Các gói Mầm Combo",
+            "bestseller": "Bán chạy nhất"
+        },
+        "massage": {
+            "title": "Dịch vụ Massage trị liệu",
+            "d1": "Giải toả căng thẳng, giảm đau nhức vùng cổ vai gáy hiệu quả.",
+            "d2": "Ấn huyệt lòng bàn chân, kích thích tuần hoàn máu và phục hồi sinh lực.",
+            "d3": "Trị liệu toàn thân chuyên sâu, xua tan mệt mỏi cơ bắp và thanh lọc tâm trí."
+        },
+        "detail": {
+            "consult": "Nhận tư vấn",
+            "getOffer": "Nhận ưu đãi ngay",
+            "benefitsEyebrow": "Hiểu rõ cơ thể, chọn đúng liệu trình",
+            "benefitsTitle": "Lợi ích & đối tượng phù hợp",
+            "benefitsHeading": "Lợi ích liệu trình",
+            "idealHeading": "Đặc biệt khuyên dùng cho:",
+            "faqEyebrow": "Mầm giải đáp cùng bạn",
+            "faqTitle": "Câu hỏi thường gặp",
+            "relatedEyebrow": "Continue your healing journey",
+            "relatedTitle": "Tham khảo dịch vụ khác"
+        }
     },
     "booking": {
         "steps": {
@@ -146,8 +308,71 @@
         "endsAt": "Đến: {{date}}"
     },
     "blocks": {
+        "services": {
+            "eyebrow": "Healing in every detail"
+        },
+        "testimonial": {
+            "eyebrow": "Lắng nghe những trải nghiệm chân thực",
+            "title": "Đánh giá từ khách hàng",
+            "ratingLabel": "Xuất sắc",
+            "basedOn": "Dựa trên {{count}} đánh giá",
+            "readMore": "Xem thêm"
+        },
+        "bookingForm": {
+            "title": "Yêu cầu đặt lịch",
+            "branch": "Chi nhánh Mầm Spa",
+            "branchPlaceholder": "Chọn chi nhánh",
+            "name": "Tên khách hàng",
+            "namePlaceholder": "Nhập tên của bạn",
+            "phone": "Số điện thoại",
+            "phonePlaceholder": "Nhập số điện thoại",
+            "email": "Email (Gmail)",
+            "emailPlaceholder": "example@gmail.com",
+            "channel": "Kênh liên hệ trực tuyến",
+            "channelPlaceholder": "SĐT / ID Tài khoản",
+            "date": "Ngày",
+            "time": "Thời gian",
+            "guests": "Số lượng khách đi cùng",
+            "total": "Tổng",
+            "people": "Người",
+            "male": "Nam",
+            "female": "Nữ",
+            "chooseService": "Chọn dịch vụ cho từng khách",
+            "guestMale": "Khách Nam",
+            "guestFemale": "Khách Nữ",
+            "servicePlaceholder": "Chọn dịch vụ",
+            "note": "Ghi chú thêm (Không bắt buộc)",
+            "notePlaceholder": "Tình trạng sức khỏe, yêu cầu kỹ thuật viên, hoặc bất kỳ lưu ý nào...",
+            "submit": "Hoàn tất đặt lịch",
+            "success": {
+                "title": "Yêu cầu đã được gửi!",
+                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
+                "messageVi": "Cảm ơn quý khách. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của bạn.",
+                "codeLabel": "Mã yêu cầu của bạn",
+                "home": "Trở về trang chủ"
+            }
+        },
+        "menu": {
+            "title": "Menu dịch vụ",
+            "book": "Đặt lịch",
+            "minute": "Phút",
+            "cat": {
+                "combo": "Signature Combo",
+                "massage": "Massage Therapies",
+                "head-spa": "Head Spa",
+                "facial": "Facial Treatments",
+                "foot-spa": "Others"
+            }
+        },
         "branches": {
-            "title": "Chi nhánh"
+            "title": "Khám phá các không gian Mầm Spa",
+            "eyebrow": "A retreat for body, mind & soul",
+            "subheading": "Không gian chữa lành",
+            "heading": "Nét đẹp của Sài Gòn xưa.",
+            "p1": "Lạc bước vào không gian Lê Văn Sỹ như trở về một khoảng trời yên tĩnh hiếm hoi. Nơi đây giữ trọn nét mộc mạc của kiến trúc truyền thống với gỗ ấm, ánh sáng tự nhiên và hương thảo mộc phảng phất.",
+            "p2": "Một điểm đến lý tưởng để tạm gác lại nhịp sống hối hả, thư giãn sâu và kết nối lại với chính mình.",
+            "cta": "Khám phá chi tiết",
+            "caption": "Góc nhỏ bình yên tại {{name}}"
         }
     }
 }

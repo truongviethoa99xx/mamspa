@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\BlogPost;
 use App\Models\Branch;
-use App\Models\Page;
 use App\Models\Promotion;
 use App\Models\Service;
 use App\Observers\AutoTranslateObserver;
@@ -26,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
         Service::observe(AutoTranslateObserver::class);
         Promotion::observe(AutoTranslateObserver::class);
         BlogPost::observe(AutoTranslateObserver::class);
-        Page::observe(AutoTranslateObserver::class);
 
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
             $schedule->command('translate:missing --target=all')->dailyAt('03:00');

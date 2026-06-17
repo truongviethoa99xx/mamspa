@@ -26,7 +26,7 @@ class ContactMessage extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail.contact-message',
+            markdown: 'mail.contact-message',
             with: ['p' => $this->payload],
         );
     }

@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\BlogPost;
 use App\Models\Branch;
-use App\Models\Page;
 use App\Models\Promotion;
 use App\Models\Service;
 use App\Models\TranslationString;
@@ -21,17 +20,16 @@ class TranslateMissingCommand extends Command
     protected $description = 'Auto-translate tất cả translatable field đang còn rỗng ở ngôn ngữ đích.';
 
     private array $modelFields = [
-        Branch::class   => ['name'],
-        Service::class  => ['name', 'description'],
+        Branch::class => ['name'],
+        Service::class => ['name', 'description'],
         Promotion::class => ['title', 'description'],
         BlogPost::class => ['title', 'excerpt', 'body'],
-        Page::class     => ['title'],
     ];
 
     public function handle(TranslationManager $svc): int
     {
-        $source  = $this->option('source');
-        $dry     = (bool) $this->option('dry-run');
+        $source = $this->option('source');
+        $dry = (bool) $this->option('dry-run');
         $available = config('app.available_locales', ['vi', 'en']);
 
         $targets = $this->option('target') === 'all'
@@ -46,6 +44,7 @@ class TranslateMissingCommand extends Command
         }
 
         $this->info(($dry ? '[DRY-RUN] ' : '')."Tổng: {$total} mục đã xử lý.");
+
         return self::SUCCESS;
     }
 
@@ -57,9 +56,11 @@ class TranslateMissingCommand extends Command
                 $changed = false;
                 foreach ($fields as $field) {
                     $vals = $row->getTranslations($field);
-                    $src  = $vals[$source] ?? null;
-                    $tgt  = $vals[$target] ?? null;
-                    if (! $src || $tgt) continue;
+                    $src = $vals[$source] ?? null;
+                    $tgt = $vals[$target] ?? null;
+                    if (! $src || $tgt) {
+                        continue;
+                    }
                     $translated = $svc->translate($src, $target, $source);
                     $this->line('  '.class_basename($class)." #{$row->id} [{$field}]: ".mb_substr($translated, 0, 70));
                     if (! $dry) {
@@ -68,9 +69,12 @@ class TranslateMissingCommand extends Command
                     }
                     $count++;
                 }
-                if ($changed) $row->saveQuietly();
+                if ($changed) {
+                    $row->saveQuietly();
+                }
             }
         }
+
         return $count;
     }
 
@@ -79,7 +83,9 @@ class TranslateMissingCommand extends Command
         $count = 0;
         foreach (TranslationString::all() as $row) {
             $vals = $row->values ?? [];
-            if (empty($vals[$source]) || ! empty($vals[$target])) continue;
+            if (empty($vals[$source]) || ! empty($vals[$target])) {
+                continue;
+            }
             $translated = $svc->translate($vals[$source], $target, $source);
             $this->line("  UI [{$row->group}.{$row->key}]: ".mb_substr($translated, 0, 70));
             if (! $dry) {
@@ -88,6 +94,7 @@ class TranslateMissingCommand extends Command
             }
             $count++;
         }
+
         return $count;
     }
 }

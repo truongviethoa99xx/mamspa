@@ -1,0 +1,153 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Models\SiteSetting;
+use App\Models\User;
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Pages\Page;
+
+class SiteSettings extends Page implements HasForms
+{
+    use InteractsWithForms;
+    use RestrictsFilamentAccess;
+
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+
+    protected static ?string $navigationGroup = 'Content';
+
+    protected static ?string $title = 'Thiết lập chung';
+
+    protected static ?string $navigationLabel = 'Thiết lập chung';
+
+    protected static string $view = 'filament.pages.site-settings';
+
+    public ?array $data = [];
+
+    protected static function allowedRoles(): array
+    {
+        return User::adminRoles();
+    }
+
+    public function mount(): void
+    {
+        $this->form->fill(SiteSetting::current()->only([
+            'brand_name', 'tagline', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links', 'service_menu',
+        ]));
+    }
+
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\Section::make('Thông tin toàn site')
+                    ->schema([
+                        Forms\Components\TextInput::make('brand_name')->label('Tên thương hiệu'),
+                        Forms\Components\TextInput::make('tagline')->label('Tagline footer'),
+                        Forms\Components\TextInput::make('hotline')->label('Hotline')->tel(),
+                        Forms\Components\TextInput::make('email')->label('Email')->email()->rules(['not_regex:/[\r\n]/']),
+                        Forms\Components\TextInput::make('chat_url')->label('Link nút chat / Zalo')->url()->columnSpanFull(),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Mạng xã hội')
+                    ->schema([
+                        Forms\Components\Repeater::make('social_links')
+                            ->label('')
+                            ->schema([
+                                Forms\Components\TextInput::make('label')->label('Tên')->required(),
+                                Forms\Components\TextInput::make('href')->label('Link')->url()->required(),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
+                            ->addActionLabel('+ Thêm mạng xã hội'),
+                    ]),
+
+                Forms\Components\Section::make('Nút liên hệ nổi')
+                    ->description('Các nút tròn cố định bên phải website: Zalo, Google Maps, gọi điện, WhatsApp, KakaoTalk...')
+                    ->icon('heroicon-o-chat-bubble-left-right')
+                    ->schema([
+                        Forms\Components\Repeater::make('floating_contact_buttons')
+                            ->label('')
+                            ->schema([
+                                Forms\Components\Toggle::make('enabled')
+                                    ->label('Hiển thị')
+                                    ->default(true),
+                                Forms\Components\Select::make('type')
+                                    ->label('Icon mặc định')
+                                    ->options([
+                                        'zalo' => 'Zalo',
+                                        'map' => 'Google Maps',
+                                        'phone' => 'Điện thoại',
+                                        'whatsapp' => 'WhatsApp',
+                                        'kakao' => 'KakaoTalk',
+                                        'custom' => 'Custom',
+                                    ])
+                                    ->default('custom')
+                                    ->required(),
+                                Forms\Components\FileUpload::make('icon')
+                                    ->label('Icon tự tải lên')
+                                    ->helperText('Nếu có ảnh ở đây, website sẽ dùng ảnh này thay cho icon mặc định.')
+                                    ->image()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                    ->maxSize(2048)
+                                    ->disk('public')
+                                    ->directory('contact-icons')
+                                    ->imageEditor(),
+                                Forms\Components\TextInput::make('label')
+                                    ->label('Tên')
+                                    ->required(),
+                                Forms\Components\TextInput::make('href')
+                                    ->label('Link')
+                                    ->helperText('Ví dụ: https://zalo.me/0865806166, tel:0865806166, https://wa.me/84865806166')
+                                    ->rules(['regex:/\A(https?:\/\/|tel:|mailto:|sms:)/i'])
+                                    ->required(),
+                                Forms\Components\ColorPicker::make('background')
+                                    ->label('Màu nền')
+                                    ->default('#ffffff'),
+                                Forms\Components\ColorPicker::make('color')
+                                    ->label('Màu icon/chữ')
+                                    ->default('#0d8bff'),
+                            ])
+                            ->columns(3)
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
+                            ->addActionLabel('+ Thêm nút liên hệ'),
+                    ]),
+
+                Forms\Components\Section::make('Menu dịch vụ trên navbar')
+                    ->schema([
+                        Forms\Components\Repeater::make('service_menu')
+                            ->label('')
+                            ->schema([
+                                Forms\Components\TextInput::make('label')->label('Tên menu')->required(),
+                                Forms\Components\TextInput::make('href')->label('Đường dẫn')->required(),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
+                            ->addActionLabel('+ Thêm mục menu'),
+                    ]),
+            ])
+            ->statePath('data');
+    }
+
+    public function save(): void
+    {
+        SiteSetting::current()->update($this->form->getState());
+
+        Notification::make()->success()->title('Đã lưu thiết lập chung')->send();
+    }
+}

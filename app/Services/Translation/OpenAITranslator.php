@@ -23,7 +23,7 @@ class OpenAITranslator implements TranslatorContract
                 'model' => config('translation.openai.model'),
                 'temperature' => 0,
                 'messages' => [
-                    ['role' => 'system', 'content' => "Translate from {$fromName} to {$toName}. Return ONLY the translation, no quotes or commentary. Keep brand names like 'Maha Spa', 'Maha Heritage', 'Maha Signature' unchanged."],
+                    ['role' => 'system', 'content' => "Translate from {$fromName} to {$toName}. Return ONLY the translation, no quotes or commentary. Keep brand names like 'Mầm Spa', 'Maha Heritage', 'Maha Signature' unchanged."],
                     ['role' => 'user', 'content' => $text],
                 ],
             ]);
