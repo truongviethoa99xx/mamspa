@@ -37,7 +37,7 @@ export default function Booking({ preselect, branches, services }: Props) {
 
     const [branchId, setBranchId] = useState<number | null>(branches[0]?.id ?? null);
     const [maleCount, setMaleCount] = useState(1);
-    const [femaleCount, setFemaleCount] = useState(1);
+    const [femaleCount, setFemaleCount] = useState(0);
     const [serviceByKey, setServiceByKey] = useState<Record<string, number>>({});
     const [date, setDate] = useState<string>('');
     const [slots, setSlots] = useState<SlotOption[]>([]);

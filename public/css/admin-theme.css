@@ -123,6 +123,12 @@ h1, h2, h3, h4, h5, h6,
 .fi-sidebar-item.fi-active .fi-sidebar-item-icon { color: var(--terra); }
 
 /* ---------- Topbar ---------- */
+/* Nâng topbar lên trên .fi-header (sticky, z-index 30) để dropdown user-menu
+   (nút Đăng xuất) không bị header che khuất khi bấm avatar góc phải trên. */
+.fi-topbar {
+    z-index: 40;
+}
+
 .fi-topbar > nav {
     background-color: rgba(255, 253, 250, 0.85);
     backdrop-filter: blur(10px);
