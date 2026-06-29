@@ -4,7 +4,6 @@ use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\Service;
 use App\Models\Slot;
-use App\Models\Therapist;
 use App\Services\BookingService;
 use Database\Seeders\BranchSeeder;
 use Database\Seeders\ServiceSeeder;
@@ -79,28 +78,4 @@ it('creates a booking and customer from the public booking endpoint', function (
         'phone' => '+84 912345678',
         'email' => 'inline@example.test',
     ]);
-});
-
-it('can assign a booking to a technician profile', function () {
-    $branch = Branch::first();
-    $service = Service::first();
-    $slot = Slot::where('branch_id', $branch->id)->first();
-    $therapist = Therapist::create([
-        'name' => 'Ky thuat vien A',
-        'phone' => '0900000001',
-        'is_active' => true,
-    ]);
-
-    $booking = app(BookingService::class)->create([
-        'branch_id' => $branch->id,
-        'service_id' => $service->id,
-        'date' => now()->addDay()->format('Y-m-d'),
-        'time_slot' => $slot->start_time->format('H:i'),
-        'guest_name' => 'Assigned Guest',
-        'guest_phone' => '+84900000001',
-    ]);
-
-    $booking->update(['therapist_id' => $therapist->id]);
-
-    expect($booking->fresh()->therapist->is($therapist))->toBeTrue();
 });

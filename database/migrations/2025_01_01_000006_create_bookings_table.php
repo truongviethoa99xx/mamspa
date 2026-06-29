@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->foreignId('branch_id')->constrained()->restrictOnDelete();
             $table->foreignId('service_id')->constrained()->restrictOnDelete();
-            $table->foreignId('therapist_id')->nullable();
             $table->date('date');
             $table->string('time_slot', 5)->comment('HH:MM');
             $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])->default('pending')->index();

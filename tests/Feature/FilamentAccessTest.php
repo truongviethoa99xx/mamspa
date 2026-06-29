@@ -5,7 +5,6 @@ use App\Filament\Pages\SiteSettings;
 use App\Filament\Resources\BookingResource;
 use App\Filament\Resources\BranchResource;
 use App\Filament\Resources\CustomerResource;
-use App\Filament\Resources\TherapistResource;
 use App\Filament\Resources\UserResource;
 use App\Models\User;
 use Database\Seeders\RolePermissionSeeder;
@@ -37,7 +36,6 @@ it('allows superadmin to manage staff accounts', function () {
         ->and(UserResource::shouldRegisterNavigation())->toBeTrue()
         ->and(BookingResource::canViewAny())->toBeTrue()
         ->and(CustomerResource::canViewAny())->toBeTrue()
-        ->and(TherapistResource::canViewAny())->toBeTrue()
         ->and(BranchResource::canViewAny())->toBeTrue()
         ->and(SiteSettings::canAccess())->toBeTrue();
 });
@@ -48,7 +46,6 @@ it('allows admin to manage operations and content but not staff accounts', funct
     expect(UserResource::canViewAny())->toBeFalse()
         ->and(BookingResource::canViewAny())->toBeTrue()
         ->and(CustomerResource::canViewAny())->toBeTrue()
-        ->and(TherapistResource::canViewAny())->toBeTrue()
         ->and(BranchResource::canViewAny())->toBeTrue()
         ->and(SiteSettings::canAccess())->toBeTrue();
 });
@@ -59,7 +56,6 @@ it('allows editor to manage content only', function () {
     expect(UserResource::canViewAny())->toBeFalse()
         ->and(BookingResource::canViewAny())->toBeFalse()
         ->and(CustomerResource::canViewAny())->toBeFalse()
-        ->and(TherapistResource::canViewAny())->toBeFalse()
         ->and(BranchResource::canViewAny())->toBeTrue()
         ->and(HomePageSettings::canAccess())->toBeTrue()
         ->and(SiteSettings::canAccess())->toBeFalse();

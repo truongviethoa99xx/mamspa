@@ -11,7 +11,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class BookingResource extends Resource
 {
@@ -73,16 +72,6 @@ class BookingResource extends Resource
                         ->preload()
                         ->native(false)
                         ->required(),
-                    Forms\Components\Select::make('therapist_id')
-                        ->label('Kỹ thuật viên')
-                        ->relationship(
-                            'therapist',
-                            'name',
-                            modifyQueryUsing: fn (Builder $query) => $query->where('is_active', true),
-                        )
-                        ->searchable()
-                        ->preload()
-                        ->native(false),
                 ])
                 ->columns([
                     'default' => 1,
