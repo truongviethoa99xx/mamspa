@@ -3,7 +3,7 @@
         'name' => 'mahaspa/mahaspa',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd1449f466b20aef43abce1f05a6b77c4e6ca7631',
+        'reference' => 'c90ff1973a845548dd1f93e0edb8f1349ddfa44e',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -667,7 +667,7 @@
         'mahaspa/mahaspa' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd1449f466b20aef43abce1f05a6b77c4e6ca7631',
+            'reference' => 'c90ff1973a845548dd1f93e0edb8f1349ddfa44e',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Http\Middleware\NoIndex;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -44,7 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
                 fn (): string => sprintf(
-                    '<link rel="stylesheet" href="%s">',
+                    '<meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="%s">',
                     asset('css/admin-theme.css').'?v='.filemtime(public_path('css/admin-theme.css')),
                 ),
             )
@@ -64,6 +65,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                NoIndex::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
