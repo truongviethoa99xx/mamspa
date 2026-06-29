@@ -1,7 +1,7 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, LogOut, Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn, tr } from '@/Lib/utils';
 import { useLocale } from '@/Hooks/useLocale';
@@ -140,12 +140,22 @@ export function Navbar() {
                     <NavDropdown label={t('footer.branches')} items={branchItems} />
                     <LanguageSwitcher />
                     {props.auth?.user ? (
-                        <Link
-                            href="/my-bookings"
-                            className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
-                        >
-                            {t('nav.myBookings')}
-                        </Link>
+                        <>
+                            <Link
+                                href="/my-bookings"
+                                className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
+                            >
+                                {t('nav.myBookings')}
+                            </Link>
+                            <button
+                                onClick={() => router.post('/logout')}
+                                className="flex items-center gap-1.5 text-sm font-medium tracking-wide text-maha-700 transition-colors hover:text-maha-900"
+                                aria-label={t('nav.logout')}
+                            >
+                                <LogOut className="h-4 w-4" />
+                                {t('nav.logout')}
+                            </button>
+                        </>
                     ) : (
                         <Link
                             href="/dat-lich"
@@ -201,14 +211,36 @@ export function Navbar() {
                             </Link>
                         </li>
                     ))}
-                    <li className="mt-3">
-                        <Link
-                            href="/dat-lich"
-                            className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
-                        >
-                            {t('common.bookNow')}
-                        </Link>
-                    </li>
+                    {props.auth?.user ? (
+                        <>
+                            <li className="mt-3">
+                                <Link
+                                    href="/my-bookings"
+                                    className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
+                                >
+                                    {t('nav.myBookings')}
+                                </Link>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={() => router.post('/logout')}
+                                    className="flex w-full items-center justify-center gap-1.5 py-3 text-base text-maha-700"
+                                >
+                                    <LogOut className="h-4 w-4" />
+                                    {t('nav.logout')}
+                                </button>
+                            </li>
+                        </>
+                    ) : (
+                        <li className="mt-3">
+                            <Link
+                                href="/dat-lich"
+                                className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
+                            >
+                                {t('common.bookNow')}
+                            </Link>
+                        </li>
+                    )}
                     <li className="border-t border-maha-100 pt-3">
                         <LanguageSwitcher />
                     </li>
