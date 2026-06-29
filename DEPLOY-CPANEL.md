@@ -1,8 +1,14 @@
 # Deploy Maha Spa lên hosting cPanel (không Docker)
 
-> cPanel shared hosting **không build được Docker / Vite / Node nền**. Cách làm:
-> build sẵn mọi thứ ở máy local → upload artifact → cấu hình trên server.
+> cPanel shared hosting **không build được Docker / Vite / Node nền** và **thường
+> không có Composer**. Cách làm: build + cài dependency ở máy local, **commit cả
+> `vendor/` và `public/build/` vào git**, rồi trên cPanel chỉ cần `git pull`.
 > Project đã gỡ bỏ hoàn toàn Docker — chỉ chạy PHP/MySQL thuần.
+
+> ⚠️ **KHÔNG cần chạy `composer install` / `npm install` trên cPanel.** Vì `vendor/`
+> và `public/build/` đã nằm sẵn trong git, server chỉ pull về là đủ. Mọi lệnh
+> `composer`/`npm` chỉ chạy ở **máy local** trước khi push (xem mục 2).
+> Nếu thật sự cần Composer trên server: xem mục 9 (tải `composer.phar`).
 
 ---
 
@@ -97,6 +103,10 @@ sẽ tự route request vào `public/` và chặn truy cập file nhạy cảm.
 ---
 
 ## 6. Chạy lệnh artisan trên server
+
+> 🚫 **Không cần Composer ở bước này.** `vendor/` đã pull về cùng git nên artisan
+> chạy được ngay — các lệnh dưới chỉ cần **PHP CLI**.
+> Nếu host thiếu cả PHP CLI: xem mục 6.4. Nếu thật sự cần Composer: mục 9.
 
 ### Có SSH
 
@@ -200,14 +210,49 @@ cPanel chạy PHP dưới user của bạn nên `755/644` là đủ (đừng dù
 | **Admin `/admin` lỗi** | Chưa `php artisan filament:optimize` hoặc chưa tạo user. |
 | **Đổi `.env` không ăn** | Đang cache config. Chạy `php artisan config:clear` rồi `config:cache`. |
 | **Mail không gửi** | Sai `MAIL_*`. Shared hosting thường chặn SMTP ngoài — ưu tiên SMTP nội bộ host (port 465/ssl) hoặc Mailgun/SendGrid API. |
+| **`composer: command not found`** | **Bình thường — không cần Composer trên cPanel.** `vendor/` đã có sẵn qua `git pull`. Đừng chạy `composer install`. Nếu thật sự cần, dùng `composer.phar` (ngay dưới). |
+| **Class mới (vừa thêm ở local) báo "not found" trên server** | Quên build lại autoloader trước khi push. Ở **local** chạy `composer dump-autoload --no-dev --optimize` rồi commit `vendor/composer/*` + push. |
+
+### 9.1. Nếu thật sự cần Composer trên cPanel
+
+Hầu như không cần (vendor đã commit). Nhưng nếu muốn có, tải `composer.phar` về home:
+
+```bash
+cd ~
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+# Gọi qua PHP (không có lệnh `composer` global):
+php ~/composer.phar install --no-dev --optimize-autoloader
+```
 
 ---
 
-## 10. Quy trình cho lần deploy SAU
+## 10. Quy trình cho lần deploy SAU (Git pull)
 
-1. Local: `bash scripts/deploy/build-cpanel.sh`
-2. Upload + giải nén đè (giữ nguyên `.env`, `storage/`, `public/storage`).
-3. Server: `php artisan migrate --force` (nếu có migration mới) →
-   `php artisan optimize:clear` → `config:cache route:cache view:cache filament:optimize`.
+**Ở máy LOCAL** — build lại artifact rồi commit (vì `vendor/` + `public/build/` là
+source được track):
+
+```bash
+composer install --no-dev --optimize-autoloader   # cập nhật vendor/
+npm install --include=dev && npm run build         # cập nhật public/build/
+rm -f public/hot
+git add -A && git commit -m "deploy: rebuild vendor + assets" && git push origin main
+```
+
+**Trên cPanel** — chỉ pull + làm mới cache (KHÔNG composer/npm):
+
+```bash
+cd ~/repositories/mamspa
+git pull origin main
+php artisan migrate --force            # nếu có migration mới
+php artisan optimize:clear
+php artisan config:cache && php artisan route:cache && php artisan view:cache
+php artisan filament:optimize
+```
+
+> Cách đóng gói zip (`scripts/deploy/build-cpanel.sh`) vẫn dùng được nếu host
+> không bật Git Version Control — xem nhánh "zip" ở mục 2–4. Còn nếu dùng Git pull
+> thì bỏ qua bước zip.
 
 Không seed lại — `db:seed` chỉ chạy đúng một lần ở mục 6.
