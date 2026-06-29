@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
 {
     use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
@@ -50,6 +52,44 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->name ?: $this->email;
+    }
+
+    /**
+     * Avatar SVG data-URI tự sinh (chữ cái đầu + màu thương hiệu) —
+     * không phụ thuộc dịch vụ ngoài như ui-avatars.com, tránh vỡ ảnh trên server bị chặn outbound.
+     */
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $svg = sprintf(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">'
+            .'<rect width="96" height="96" rx="48" fill="#c1664a"/>'
+            .'<text x="48" y="48" dy="0.35em" text-anchor="middle" '
+            .'font-family="Quicksand, ui-sans-serif, sans-serif" font-size="40" font-weight="700" '
+            .'fill="#fffdfa">%s</text></svg>',
+            htmlspecialchars($this->avatarInitials(), ENT_QUOTES, 'UTF-8'),
+        );
+
+        return 'data:image/svg+xml;base64,'.base64_encode($svg);
+    }
+
+    private function avatarInitials(): string
+    {
+        $source = trim((string) ($this->name ?: $this->email));
+
+        if ($source === '') {
+            return '?';
+        }
+
+        $words = preg_split('/\s+/u', $source, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        $first = mb_substr($words[0] ?? '', 0, 1);
+        $second = count($words) > 1 ? mb_substr($words[count($words) - 1], 0, 1) : '';
+
+        return mb_strtoupper($first.$second);
     }
 
     public function canAccessPanel(Panel $panel): bool
