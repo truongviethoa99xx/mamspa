@@ -341,13 +341,15 @@
             "guestMale": "Khách Nam",
             "guestFemale": "Khách Nữ",
             "servicePlaceholder": "Chọn dịch vụ",
+            "serviceSearchPlaceholder": "Tìm dịch vụ...",
+            "serviceEmpty": "Không tìm thấy dịch vụ",
+            "serviceRequired": "Vui lòng chọn dịch vụ cho từng khách.",
             "note": "Ghi chú thêm (Không bắt buộc)",
             "notePlaceholder": "Tình trạng sức khỏe, yêu cầu kỹ thuật viên, hoặc bất kỳ lưu ý nào...",
             "submit": "Hoàn tất đặt lịch",
             "success": {
                 "title": "Yêu cầu đã được gửi!",
-                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
-                "messageVi": "Cảm ơn quý khách. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của bạn.",
+                "message": "Cảm ơn quý khách. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của bạn.",
                 "codeLabel": "Mã yêu cầu của bạn",
                 "home": "Trở về trang chủ"
             }

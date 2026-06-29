@@ -21,7 +21,13 @@ class ServiceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
+
+    protected static ?string $navigationLabel = 'Dịch vụ';
+
+    protected static ?string $modelLabel = 'Dịch vụ';
+
+    protected static ?string $pluralModelLabel = 'Dịch vụ';
 
     protected static ?int $navigationSort = 2;
 
@@ -34,8 +40,8 @@ class ServiceResource extends Resource
     {
         return $form->schema([
             Forms\Components\Section::make('Cơ bản')->schema([
-                Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
-                Forms\Components\Select::make('category')->options([
+                Forms\Components\TextInput::make('slug')->label('Slug')->required()->unique(ignoreRecord: true),
+                Forms\Components\Select::make('category')->label('Danh mục')->options([
                     'massage' => 'Body Massage',
                     'facial' => 'Facial / Da mặt',
                     'head-spa' => 'Head Spa',
@@ -44,16 +50,18 @@ class ServiceResource extends Resource
                 ])->required(),
                 Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required(),
                 Forms\Components\TextInput::make('price')->label('Giá (VND)')->numeric()->required(),
-                Forms\Components\Toggle::make('is_featured'),
-                Forms\Components\Toggle::make('is_active')->default(true),
+                Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
+                Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
             TranslatableField::group('name', label: 'Tên dịch vụ', required: true),
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 4),
             Forms\Components\TagsInput::make('ingredients')->label('Nguyên liệu'),
             Forms\Components\Select::make('branches')
+                ->label('Chi nhánh')
                 ->relationship('branches', 'slug')
                 ->multiple()->preload(),
             Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                ->label('Hình ảnh')
                 ->multiple()
                 ->image()
                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
@@ -64,15 +72,15 @@ class ServiceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('slug')->searchable()->sortable(),
-            Tables\Columns\TextColumn::make('name')->searchable(),
-            Tables\Columns\TextColumn::make('category')->badge(),
-            Tables\Columns\TextColumn::make('duration')->suffix(' phút'),
-            Tables\Columns\TextColumn::make('price')->money('VND'),
-            Tables\Columns\IconColumn::make('is_featured')->boolean(),
-            Tables\Columns\IconColumn::make('is_active')->boolean(),
+            Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('name')->label('Tên dịch vụ')->searchable(),
+            Tables\Columns\TextColumn::make('category')->label('Danh mục')->badge(),
+            Tables\Columns\TextColumn::make('duration')->label('Thời lượng')->suffix(' phút'),
+            Tables\Columns\TextColumn::make('price')->label('Giá')->money('VND'),
+            Tables\Columns\IconColumn::make('is_featured')->label('Nổi bật')->boolean(),
+            Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
         ])->filters([
-            Tables\Filters\SelectFilter::make('category')->options([
+            Tables\Filters\SelectFilter::make('category')->label('Danh mục')->options([
                 'massage' => 'Massage', 'facial' => 'Facial',
                 'head-spa' => 'Head Spa', 'foot-spa' => 'Foot Spa', 'combo' => 'Combo',
             ]),

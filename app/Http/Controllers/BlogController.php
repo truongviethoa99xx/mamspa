@@ -70,6 +70,7 @@ class BlogController extends Controller
                 'seo_meta' => $post->seo_meta,
                 'author' => $post->author?->name,
                 'published_at' => $post->published_at?->toIso8601String(),
+                'updated_at' => $post->updated_at?->toIso8601String(),
             ],
             'related' => $related,
         ]);

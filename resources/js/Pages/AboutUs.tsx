@@ -161,7 +161,7 @@ export default function AboutUs({ branch }: Props) {
                 title={name}
                 description={`${name} — ${branch.address}. ${branch.open_hours}`}
                 schema={[
-                    localBusinessSchema({ name, address: branch.address, phone: branch.phone, url: window.location.href, lat: branch.lat, lng: branch.lng }),
+                    localBusinessSchema({ name, address: branch.address, phone: branch.phone, url: window.location.href, lat: branch.lat, lng: branch.lng, id: branch.slug }),
                     breadcrumbSchema([
                         { name: 'Mầm Spa', url: window.location.origin },
                         { name, url: window.location.href },
@@ -409,7 +409,7 @@ export default function AboutUs({ branch }: Props) {
                     <ul className="grid gap-3 md:grid-cols-2">
                         {branch.services.map((s) => (
                             <li key={s.id}>
-                                <Link href={`/services/${s.slug}`}
+                                <Link href={`/dich-vu/${s.slug}`}
                                     className="flex items-center justify-between rounded-lg border border-maha-100 p-4 hover:bg-maha-50">
                                     <div>
                                         <p className="font-semibold text-maha-700">{tr(s.name, locale)}</p>

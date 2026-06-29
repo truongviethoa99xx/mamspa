@@ -20,7 +20,7 @@ class HomePageSettings extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-home';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
 
     protected static ?string $title = 'Nội dung trang chủ';
 

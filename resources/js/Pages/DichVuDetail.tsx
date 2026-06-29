@@ -4,6 +4,7 @@ import { Check, ChevronRight, Clock3, Minus, Plus, Sparkles, Tag } from 'lucide-
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
+import { breadcrumbSchema, faqSchema, serviceSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
 
@@ -55,9 +56,28 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
     const bookHref = `/dat-lich?service=${service.slug}`;
     const heroImage = service.images?.[0];
 
+    const serviceUrl = `${window.location.origin}/dich-vu/${service.slug}`;
+    const schema = [
+        serviceSchema({
+            name,
+            description,
+            url: serviceUrl,
+            price: service.price,
+            duration: service.duration,
+            category: service.category,
+            image: heroImage,
+        }),
+        breadcrumbSchema([
+            { name: t('nav.home'), url: window.location.origin },
+            { name: t('nav.services'), url: window.location.origin + '/dich-vu' },
+            { name, url: serviceUrl },
+        ]),
+        ...(faqs.length > 0 ? [faqSchema(faqs)] : []),
+    ];
+
     return (
         <PublicLayout>
-            <Seo title={`${name} | Mầm Spa`} description={description} />
+            <Seo title={`${name} | Mầm Spa`} description={description} image={heroImage} schema={schema} />
 
             <section className="bg-maha-50 py-12 md:py-16">
                 <div className="mx-auto max-w-5xl px-5 sm:px-6">

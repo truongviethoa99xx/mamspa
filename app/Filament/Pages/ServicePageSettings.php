@@ -19,7 +19,7 @@ class ServicePageSettings extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
 
     protected static ?string $title = 'Nội dung trang chi tiết dịch vụ';
 

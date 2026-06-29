@@ -9,8 +9,11 @@ interface SeoProps {
   noIndex?: boolean
 }
 
+const BRAND_SUFFIX = ' | Mầm Spa'
+
 export function Seo({ title, description, image, type = 'website', schema, noIndex }: SeoProps) {
-  const fullTitle = title.includes('Mầm Spa') ? title : `${title} | Mầm Spa`
+  const fullTitle = title.endsWith(BRAND_SUFFIX) ? title : `${title}${BRAND_SUFFIX}`
+  const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : []
 
   return (
     <Head title={fullTitle}>
@@ -26,11 +29,11 @@ export function Seo({ title, description, image, type = 'website', schema, noInd
       {description && <meta name="twitter:description" content={description} />}
       {image && <meta name="twitter:image" content={image} />}
 
-      {schema && (
-        <script type="application/ld+json">
-          {JSON.stringify(Array.isArray(schema) ? schema : schema)}
+      {schemas.map((s, i) => (
+        <script key={i} type="application/ld+json">
+          {JSON.stringify(s)}
         </script>
-      )}
+      ))}
     </Head>
   )
 }

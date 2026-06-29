@@ -1,4 +1,5 @@
-import { Head, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
+import { Seo } from '@/Components/Seo';
 import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -152,7 +153,10 @@ export default function Booking({ preselect, branches, services }: Props) {
 
     return (
         <PublicLayout>
-            <Head title={t('bookingForm.title')} />
+            <Seo
+                title={t('bookingForm.title')}
+                description={t('bookingForm.metaDescription', 'Đặt lịch trị liệu online tại Mầm Spa Đà Nẵng — chọn chi nhánh, dịch vụ và khung giờ phù hợp chỉ trong vài bước.')}
+            />
 
             <section className="bg-maha-50">
                 <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">

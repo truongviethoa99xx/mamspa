@@ -21,7 +21,13 @@ class BranchResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
+
+    protected static ?string $navigationLabel = 'Chi nhánh';
+
+    protected static ?string $modelLabel = 'Chi nhánh';
+
+    protected static ?string $pluralModelLabel = 'Chi nhánh';
 
     protected static ?int $navigationSort = 1;
 
@@ -46,25 +52,29 @@ class BranchResource extends Resource
                                 TranslatableField::group('name', label: 'Tên chi nhánh', required: true)
                                     ->columnSpanFull(),
                                 Forms\Components\TextInput::make('slug')
+                                    ->label('Slug')
                                     ->required()
                                     ->unique(ignoreRecord: true)
                                     ->live(onBlur: true),
                                 Forms\Components\TextInput::make('phone')
+                                    ->label('Số điện thoại')
                                     ->tel()
                                     ->required(),
                                 Forms\Components\Textarea::make('address')
+                                    ->label('Địa chỉ')
                                     ->required()
                                     ->rows(2)
                                     ->columnSpanFull(),
                                 Forms\Components\TextInput::make('open_hours')
+                                    ->label('Giờ mở cửa')
                                     ->default('09:00 - 21:00'),
                                 Forms\Components\Fieldset::make('Tọa độ bản đồ')
                                     ->schema([
                                         Forms\Components\TextInput::make('lat')
-                                            ->label('Latitude')
+                                            ->label('Vĩ độ')
                                             ->numeric(),
                                         Forms\Components\TextInput::make('lng')
-                                            ->label('Longitude')
+                                            ->label('Kinh độ')
                                             ->numeric(),
                                     ])
                                     ->columns(2)
@@ -180,10 +190,10 @@ class BranchResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('slug')->searchable()->sortable(),
-            Tables\Columns\TextColumn::make('name')->searchable(),
-            Tables\Columns\TextColumn::make('phone'),
-            Tables\Columns\IconColumn::make('is_active')->boolean(),
+            Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('name')->label('Tên chi nhánh')->searchable(),
+            Tables\Columns\TextColumn::make('phone')->label('Số điện thoại'),
+            Tables\Columns\IconColumn::make('is_active')->label('Hiển thị')->boolean(),
         ])->actions([
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make(),

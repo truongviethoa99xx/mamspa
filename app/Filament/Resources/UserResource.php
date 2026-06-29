@@ -47,6 +47,7 @@ class UserResource extends Resource
                         ->label('Họ tên')
                         ->required(),
                     Forms\Components\TextInput::make('email')
+                        ->label('Email')
                         ->email()
                         ->rules(['not_regex:/[\r\n]/'])
                         ->required()
@@ -90,10 +91,10 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('name')->searchable(),
-            Tables\Columns\TextColumn::make('email')->searchable(),
-            Tables\Columns\TextColumn::make('roles.name')->badge(),
-            Tables\Columns\TextColumn::make('created_at')->dateTime(),
+            Tables\Columns\TextColumn::make('name')->label('Họ tên')->searchable(),
+            Tables\Columns\TextColumn::make('email')->label('Email')->searchable(),
+            Tables\Columns\TextColumn::make('roles.name')->label('Quyền')->badge(),
+            Tables\Columns\TextColumn::make('created_at')->label('Ngày tạo')->dateTime(),
         ])->actions([
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make()

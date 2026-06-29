@@ -1,0 +1,20 @@
+# ─────────────────────────────────────────────────────────────────────────
+# .htaccess ở THƯ MỤC GỐC Laravel.
+#
+# CHỈ cần file này khi bạn KHÔNG đổi được document root sang /public
+# (vd: host khoá document root = public_html và bạn upload nguyên project
+#  vào trong public_html).
+#
+# Nếu bạn đã trỏ được document root của domain thẳng vào thư mục /public
+# thì XOÁ file này đi — không cần tới nó.
+# ─────────────────────────────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Chặn truy cập trực tiếp các file/thư mục nhạy cảm
+    RewriteRule ^(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json|artisan|storage|bootstrap|vendor|app|config|database|routes|resources|tests)(/.*)?$ - [F,L]
+
+    # Đẩy mọi request vào thư mục public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

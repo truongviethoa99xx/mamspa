@@ -26,6 +26,7 @@ interface Props {
         seo_meta: { description?: string } | null
         author: string | null
         published_at: string | null
+        updated_at: string | null
     }
     related: RelatedPost[]
 }
@@ -82,7 +83,15 @@ export default function BlogShow({ post, related }: Props) {
     const minutes = readingMinutes(bodyHtml, locale)
 
     const schema = [
-        blogPostSchema({ title, description, url, image: post.cover_image, publishedAt: post.published_at }),
+        blogPostSchema({
+            title,
+            description,
+            url,
+            image: post.cover_image,
+            publishedAt: post.published_at,
+            modifiedAt: post.updated_at,
+            author,
+        }),
         breadcrumbSchema([
             { name: 'Mầm Spa', url: window.location.origin },
             { name: t('nav.blog'), url: window.location.origin + '/tin-tuc' },

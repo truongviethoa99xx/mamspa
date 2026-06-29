@@ -1,8 +1,9 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight } from 'lucide-react';
 import PublicLayout from '@/Layouts/PublicLayout';
+import { Seo } from '@/Components/Seo';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
 
@@ -73,7 +74,10 @@ export default function BlogIndex({ featured, posts }: BlogIndexProps) {
 
     return (
         <PublicLayout>
-            <Head title={t('nav.blog')} />
+            <Seo
+                title={t('nav.blog')}
+                description={t('blog.metaDescription', 'Cẩm nang chăm sóc sức khoẻ, wellness và trải nghiệm thư giãn tại Mầm Spa Đà Nẵng.')}
+            />
 
             <section className="bg-maha-50">
                 <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
@@ -133,7 +137,10 @@ function FeaturedCard({ post, locale, cta }: { post: Post; locale: string; cta: 
                 {post.cover_image && (
                     <img
                         src={post.cover_image}
-                        alt=""
+                        alt={tr(post.title, locale)}
+                        width={800}
+                        height={600}
+                        loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                 )}
@@ -170,7 +177,10 @@ function PostCard({ post, locale, readMore }: { post: Post; locale: string; read
                 {post.cover_image && (
                     <img
                         src={post.cover_image}
-                        alt=""
+                        alt={tr(post.title, locale)}
+                        width={800}
+                        height={600}
+                        loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                 )}

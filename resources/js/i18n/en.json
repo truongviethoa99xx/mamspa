@@ -341,13 +341,15 @@
             "guestMale": "Male guest",
             "guestFemale": "Female guest",
             "servicePlaceholder": "Select a service",
+            "serviceSearchPlaceholder": "Search services...",
+            "serviceEmpty": "No services found",
+            "serviceRequired": "Please choose a service for each guest.",
             "note": "Additional note (optional)",
             "notePlaceholder": "Health conditions, therapist requests, or any notes...",
             "submit": "Complete booking",
             "success": {
                 "title": "Your request has been sent!",
-                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
-                "messageVi": "Cảm ơn quý khách. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của bạn.",
+                "message": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
                 "codeLabel": "Your request code",
                 "home": "Back to home"
             }

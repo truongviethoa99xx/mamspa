@@ -1,6 +1,7 @@
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
+import { Seo } from '@/Components/Seo';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
 import type { SharedProps } from '@/types';
@@ -36,7 +37,7 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
 
     return (
         <PublicLayout>
-            <Head title={t('nav.myBookings')} />
+            <Seo title={t('nav.myBookings')} noIndex />
             <section className="bg-maha-50 py-12">
                 <div className="mx-auto max-w-5xl px-4">
                     <h1 className="font-serif text-4xl text-maha-700">{t('nav.myBookings')}</h1>

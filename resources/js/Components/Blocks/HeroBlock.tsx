@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 import { tr } from '@/Lib/utils';
@@ -24,6 +24,12 @@ export function HeroBlock({ data }: { data: HeroData }) {
     const ctaLink = data.cta_link || '/dat-lich';
 
     return (
+        <>
+        {data.image && (
+            <Head>
+                <link rel="preload" as="image" href={data.image} fetchPriority="high" />
+            </Head>
+        )}
         <section
             className="relative isolate flex h-[520px] max-h-[78svh] min-h-[440px] flex-col overflow-hidden bg-[#474c3c] bg-cover bg-center sm:h-[72vh] sm:min-h-[500px] md:h-[78vh] lg:h-[88vh] lg:min-h-[560px] lg:max-h-[940px]"
             style={data.image ? { backgroundImage: `linear-gradient(rgba(45, 51, 39, 0.58), rgba(45, 51, 39, 0.58)), url(${data.image})` } : undefined}
@@ -70,5 +76,6 @@ export function HeroBlock({ data }: { data: HeroData }) {
                 {ctaText}
             </Link>
         </section>
+        </>
     );
 }

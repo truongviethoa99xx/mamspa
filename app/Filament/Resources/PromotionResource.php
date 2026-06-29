@@ -21,7 +21,13 @@ class PromotionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
+
+    protected static ?string $navigationLabel = 'Khuyến mãi';
+
+    protected static ?string $modelLabel = 'Khuyến mãi';
+
+    protected static ?string $pluralModelLabel = 'Khuyến mãi';
 
     protected static function allowedRoles(): array
     {
@@ -31,27 +37,28 @@ class PromotionResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make('slug')->required()->unique(ignoreRecord: true),
+            Forms\Components\TextInput::make('slug')->label('Slug')->required()->unique(ignoreRecord: true),
             TranslatableField::group('title', label: 'Tiêu đề', required: true),
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả'),
             Forms\Components\FileUpload::make('image')
+                ->label('Hình ảnh')
                 ->image()
                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                 ->maxSize(5120),
-            Forms\Components\TextInput::make('link')->url(),
-            Forms\Components\DateTimePicker::make('starts_at'),
-            Forms\Components\DateTimePicker::make('ends_at'),
-            Forms\Components\Toggle::make('is_active')->default(true),
+            Forms\Components\TextInput::make('link')->label('Đường dẫn')->url(),
+            Forms\Components\DateTimePicker::make('starts_at')->label('Bắt đầu'),
+            Forms\Components\DateTimePicker::make('ends_at')->label('Kết thúc'),
+            Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
         ])->columns(2);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('slug')->searchable(),
-            Tables\Columns\TextColumn::make('title'),
-            Tables\Columns\TextColumn::make('ends_at')->dateTime(),
-            Tables\Columns\IconColumn::make('is_active')->boolean(),
+            Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable(),
+            Tables\Columns\TextColumn::make('title')->label('Tiêu đề'),
+            Tables\Columns\TextColumn::make('ends_at')->label('Kết thúc')->dateTime(),
+            Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
         ])->actions([Tables\Actions\EditAction::make()]);
     }
 

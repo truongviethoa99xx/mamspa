@@ -317,13 +317,15 @@
             "guestMale": "男性のお客様",
             "guestFemale": "女性のお客様",
             "servicePlaceholder": "サービスを選択",
+            "serviceSearchPlaceholder": "サービスを検索...",
+            "serviceEmpty": "サービスが見つかりません",
+            "serviceRequired": "各お客様のサービスを選択してください。",
             "note": "備考（任意）",
             "notePlaceholder": "健康状態、セラピストのご希望、その他ご要望など...",
             "submit": "予約を完了する",
             "success": {
                 "title": "リクエストを送信しました！",
-                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
-                "messageVi": "ありがとうございます。Mầm Spa のスタッフが、ご予約の確認と最高の体験のご準備のため、まもなくご連絡いたします。",
+                "message": "ありがとうございます。Mầm Spa のスタッフが、ご予約の確認と最高の体験のご準備のため、まもなくご連絡いたします。",
                 "codeLabel": "お客様のリクエストコード",
                 "home": "ホームに戻る"
             }

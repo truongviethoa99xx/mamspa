@@ -19,7 +19,7 @@ class SiteSettings extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
 
     protected static ?string $title = 'Thiết lập chung';
 

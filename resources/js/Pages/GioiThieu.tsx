@@ -69,7 +69,18 @@ export default function GioiThieu({ content }: Props) {
 
     return (
         <PublicLayout>
-            <Seo title={`${t('nav.about')} | Mầm Spa`} />
+            <Seo
+                title={`${t('nav.about')} | Mầm Spa`}
+                description={t('about.metaDescription', 'Câu chuyện thương hiệu Mầm Spa — không gian Indochine, đội ngũ trị liệu tận tâm, hành trình cân bằng Thân Tâm Trí tại Đà Nẵng.')}
+                schema={{
+                    '@context': 'https://schema.org',
+                    '@type': 'AboutPage',
+                    name: t('nav.about'),
+                    url: window.location.href,
+                    mainEntityOfPage: { '@type': 'WebPage', '@id': window.location.href },
+                    about: { '@type': 'Organization', '@id': window.location.origin + '/#organization' },
+                }}
+            />
 
             <section className="relative overflow-hidden bg-[#f3ece0]">
                 <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:py-24 2xl:max-w-[1440px]">

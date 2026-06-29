@@ -1,6 +1,6 @@
-import { Head } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
+import { Seo } from '@/Components/Seo';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
 
@@ -19,7 +19,10 @@ export default function Promotions({ promotions }: { promotions: Promo[] }) {
     const { t } = useTranslation();
     return (
         <PublicLayout>
-            <Head title={t('nav.promotions')} />
+            <Seo
+                title={t('nav.promotions')}
+                description={t('promotions.metaDescription', 'Ưu đãi và khuyến mãi mới nhất tại Mầm Spa Đà Nẵng — chương trình theo mùa, lễ Tết và gói combo trị liệu.')}
+            />
             <section className="bg-maha-50 py-12">
                 <div className="mx-auto max-w-5xl px-4">
                     <h1 className="font-serif text-4xl text-maha-700">{t('nav.promotions')}</h1>
@@ -30,7 +33,7 @@ export default function Promotions({ promotions }: { promotions: Promo[] }) {
                     {promotions.map((p) => (
                         <a key={p.id} href={p.link ?? '#'}
                             className="overflow-hidden rounded-xl border border-maha-100 bg-white hover:shadow-lg">
-                            {p.image && <img src={p.image} alt="" className="w-full" />}
+                            {p.image && <img src={p.image} alt={tr(p.title, locale)} loading="lazy" className="w-full" />}
                             <div className="p-6">
                                 <h3 className="font-serif text-xl text-maha-700">{tr(p.title, locale)}</h3>
                                 <p className="mt-2 text-sm text-gray-600">{tr(p.description, locale)}</p>

@@ -19,7 +19,7 @@ class AboutPageSettings extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-identification';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
 
     protected static ?string $title = 'Nội dung trang Giới thiệu';
 

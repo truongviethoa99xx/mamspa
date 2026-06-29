@@ -55,7 +55,7 @@ class Booking extends Model
 
     public function therapist(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'therapist_id');
+        return $this->belongsTo(Therapist::class);
     }
 
     public function items(): HasMany

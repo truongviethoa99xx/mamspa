@@ -1,6 +1,7 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Seo } from '@/Components/Seo';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
@@ -31,7 +32,7 @@ export default function BookingSuccess({ booking }: Props) {
     const { t } = useTranslation();
     return (
         <PublicLayout>
-            <Head title={`Booking #${booking.code}`} />
+            <Seo title={`Booking #${booking.code}`} noIndex />
             <section className="py-16">
                 <div className="mx-auto max-w-xl rounded-xl border border-maha-100 bg-white p-8 text-center shadow">
                     <CheckCircle2 className="mx-auto h-14 w-14 text-green-500" />

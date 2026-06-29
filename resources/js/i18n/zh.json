@@ -317,13 +317,15 @@
             "guestMale": "男性客户",
             "guestFemale": "女性客户",
             "servicePlaceholder": "选择服务",
+            "serviceSearchPlaceholder": "搜索服务...",
+            "serviceEmpty": "未找到服务",
+            "serviceRequired": "请为每位客人选择服务。",
             "note": "备注（选填）",
             "notePlaceholder": "健康状况、技师要求或任何注意事项…",
             "submit": "完成预约",
             "success": {
                 "title": "申请已发送！",
-                "messageEn": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
-                "messageVi": "感谢您的预约。Mầm Spa 团队将尽快与您联系，确认预约并为您精心准备每一处体验细节。",
+                "message": "感谢您的预约。Mầm Spa 团队将尽快与您联系，确认预约并为您精心准备每一处体验细节。",
                 "codeLabel": "您的申请编号",
                 "home": "返回首页"
             }

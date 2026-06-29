@@ -56,6 +56,14 @@ export default function Contact({ content, branches = [] }: Props) {
             <Seo
                 title={t('nav.contact')}
                 description={seoDescription}
+                schema={{
+                    '@context': 'https://schema.org',
+                    '@type': 'ContactPage',
+                    name: t('nav.contact'),
+                    url: window.location.href,
+                    mainEntityOfPage: { '@type': 'WebPage', '@id': window.location.href },
+                    about: { '@type': 'Organization', '@id': window.location.origin + '/#organization' },
+                }}
             />
             <section className="bg-maha-50 py-12">
                 <div className="mx-auto max-w-5xl px-4">

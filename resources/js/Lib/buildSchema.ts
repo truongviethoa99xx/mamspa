@@ -42,12 +42,27 @@ export function serviceSchema(params: {
       url: params.url,
     },
     ...(params.duration && {
-      hoursAvailable: {
-        '@type': 'OpeningHoursSpecification',
-        duration: `PT${params.duration}M`,
-      },
+      // ISO 8601 duration — how long the service takes.
+      timeRequired: `PT${params.duration}M`,
     }),
     ...(params.image && { image: params.image }),
+  }
+}
+
+export interface FaqItem {
+  question: string
+  answer: string
+}
+
+export function faqSchema(faqs: FaqItem[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
   }
 }
 
@@ -57,7 +72,8 @@ export function blogPostSchema(params: {
   url: string
   image?: string | null
   publishedAt?: string | null
-  modifiedAt?: string
+  modifiedAt?: string | null
+  author?: string | null
 }) {
   return {
     '@context': 'https://schema.org',
@@ -65,11 +81,13 @@ export function blogPostSchema(params: {
     headline: params.title,
     description: params.description,
     url: params.url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': params.url },
     publisher: {
       '@type': 'Organization',
       name: 'Mầm Spa',
-      logo: { '@type': 'ImageObject', url: window.location.origin + '/images/logo.png' },
+      logo: { '@type': 'ImageObject', url: window.location.origin + '/images/logo.svg' },
     },
+    ...(params.author && { author: { '@type': 'Person', name: params.author } }),
     ...(params.image && { image: params.image }),
     ...(params.publishedAt && { datePublished: params.publishedAt }),
     ...(params.modifiedAt && { dateModified: params.modifiedAt }),
@@ -83,11 +101,20 @@ export function localBusinessSchema(params: {
   url: string
   lat?: number | null
   lng?: number | null
+  id?: string | null
 }) {
   return {
     '@context': 'https://schema.org',
     '@type': ['HealthAndBeautyBusiness', 'DaySpa'],
+    // Reuse the global @graph node id (#heritage / #signature) so Google
+    // consolidates this page's entity with the site-wide Organization graph.
+    ...(params.id && { '@id': window.location.origin + '/#' + params.id }),
     name: params.name,
+    image: window.location.origin + '/images/banner.png',
+    sameAs: [
+      'https://www.facebook.com/mahaSpa.danang',
+      'https://www.instagram.com/mahaspa.danang',
+    ],
     address: {
       '@type': 'PostalAddress',
       streetAddress: params.address,

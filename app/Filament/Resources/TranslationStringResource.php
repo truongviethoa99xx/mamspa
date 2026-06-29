@@ -25,11 +25,13 @@ class TranslationStringResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-language';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
 
-    protected static ?string $modelLabel = 'Translation';
+    protected static ?string $navigationLabel = 'Chuỗi giao diện';
 
-    protected static ?string $pluralModelLabel = 'UI Translations';
+    protected static ?string $modelLabel = 'Chuỗi dịch';
+
+    protected static ?string $pluralModelLabel = 'Chuỗi giao diện';
 
     protected static ?int $navigationSort = 10;
 
@@ -42,10 +44,10 @@ class TranslationStringResource extends Resource
     {
         return $form->schema([
             Forms\Components\Section::make('Khoá dịch')->schema([
-                Forms\Components\TextInput::make('group')->required()
+                Forms\Components\TextInput::make('group')->label('Nhóm')->required()
                     ->placeholder('nav, home, footer, common, ...')
                     ->helperText('Nhóm key, ví dụ: nav.home → group=nav, key=home'),
-                Forms\Components\TextInput::make('key')->required()
+                Forms\Components\TextInput::make('key')->label('Khoá')->required()
                     ->placeholder('vd: hero.title'),
                 Forms\Components\Toggle::make('is_auto_translated')
                     ->label('Tự động dịch')
@@ -103,8 +105,8 @@ class TranslationStringResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('group')->sortable()->searchable(),
-            Tables\Columns\TextColumn::make('key')->sortable()->searchable(),
+            Tables\Columns\TextColumn::make('group')->label('Nhóm')->sortable()->searchable(),
+            Tables\Columns\TextColumn::make('key')->label('Khoá')->sortable()->searchable(),
             ...collect(self::locales())->map(
                 fn (string $locale) => Tables\Columns\TextColumn::make("values.{$locale}")
                     ->label(self::localeLabel($locale))
@@ -113,19 +115,20 @@ class TranslationStringResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: ! in_array($locale, ['vi', 'en'], true))
             )->all(),
-            Tables\Columns\IconColumn::make('is_auto_translated')->boolean()->label('Auto'),
-            Tables\Columns\TextColumn::make('updated_at')->since(),
+            Tables\Columns\IconColumn::make('is_auto_translated')->boolean()->label('Tự động'),
+            Tables\Columns\TextColumn::make('updated_at')->label('Cập nhật')->since(),
         ])
             ->defaultSort('group')
             ->filters([
                 Tables\Filters\SelectFilter::make('group')
+                    ->label('Nhóm')
                     ->options(fn () => TranslationString::query()->distinct()->pluck('group', 'group')->toArray()),
-                Tables\Filters\TernaryFilter::make('is_auto_translated')->label('Đã auto-translate'),
+                Tables\Filters\TernaryFilter::make('is_auto_translated')->label('Đã dịch tự động'),
             ])
             ->actions([Tables\Actions\EditAction::make()])
             ->bulkActions([
                 Tables\Actions\BulkAction::make('autoTranslateMissingLocales')
-                    ->label('Auto-translate ngôn ngữ còn trống')
+                    ->label('Dịch tự động ngôn ngữ còn trống')
                     ->icon('heroicon-o-language')
                     ->action(function ($records) {
                         $svc = app(TranslationManager::class);

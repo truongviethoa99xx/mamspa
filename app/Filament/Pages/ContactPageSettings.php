@@ -20,7 +20,7 @@ class ContactPageSettings extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Nội dung';
 
     protected static ?string $title = 'Nội dung trang Liên hệ';
 
