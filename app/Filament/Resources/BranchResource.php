@@ -49,7 +49,7 @@ class BranchResource extends Resource
                             ->icon('heroicon-o-building-storefront')
                             ->description('Thông tin chính dùng cho trang chi nhánh, liên hệ và dữ liệu bản đồ.')
                             ->schema([
-                                TranslatableField::group('name', label: 'Tên chi nhánh', required: true)
+                                TranslatableField::group('name', label: 'Tên chi nhánh', required: true, example: 'Mầm Spa Lê Văn Sỹ')
                                     ->columnSpanFull(),
                                 Forms\Components\TextInput::make('slug')
                                     ->label('Slug')
@@ -71,87 +71,24 @@ class BranchResource extends Resource
                                 Forms\Components\Fieldset::make('Tọa độ bản đồ')
                                     ->schema([
                                         Forms\Components\TextInput::make('lat')
-                                            ->label('Vĩ độ')
-                                            ->numeric(),
+                                            ->label('Vĩ độ (Latitude)')
+                                            ->helperText('Số nhỏ ~ 8–23 cho Việt Nam (vd. 10.7938). Lấy từ Google Maps: số ĐẦU trong "10.7938, 106.6677".')
+                                            ->placeholder('10.7938')
+                                            ->numeric()
+                                            ->minValue(-90)
+                                            ->maxValue(90),
                                         Forms\Components\TextInput::make('lng')
-                                            ->label('Kinh độ')
-                                            ->numeric(),
+                                            ->label('Kinh độ (Longitude)')
+                                            ->helperText('Số lớn ~ 102–110 cho Việt Nam (vd. 106.6677). Lấy từ Google Maps: số SAU trong "10.7938, 106.6677".')
+                                            ->placeholder('106.6677')
+                                            ->numeric()
+                                            ->minValue(-180)
+                                            ->maxValue(180),
                                     ])
                                     ->columns(2)
                                     ->columnSpanFull(),
                             ])
                             ->columns(2),
-                        Forms\Components\Section::make('Phần đầu trang chi nhánh')
-                            ->icon('heroicon-o-sparkles')
-                            ->description('Phần mở đầu của trang /chi-nhanh/{slug}. Để trống sẽ dùng nội dung mặc định.')
-                            ->schema([
-                                TranslatableField::group('page_content.hero_eyebrow', label: 'Dòng giới thiệu'),
-                                TranslatableField::group('page_content.hero_heading', label: 'Tiêu đề'),
-                                TranslatableField::group('page_content.hero_body_1', as: 'textarea', label: 'Đoạn 1', rows: 3),
-                                TranslatableField::group('page_content.hero_body_2', as: 'textarea', label: 'Đoạn 2', rows: 3),
-                                TranslatableField::group('page_content.hero_cta_label', label: 'Nút CTA'),
-                            ])
-                            ->columns(2)
-                            ->collapsible(),
-                        Forms\Components\Section::make('Không gian chi nhánh')
-                            ->icon('heroicon-o-photo')
-                            ->description('Tiêu đề và nhãn ảnh cho cụm hình ảnh giới thiệu không gian.')
-                            ->schema([
-                                TranslatableField::group('page_content.space_eyebrow', label: 'Dòng giới thiệu'),
-                                TranslatableField::group('page_content.space_heading', label: 'Tiêu đề'),
-                                TranslatableField::group('page_content.space_image_1_label', label: 'Nhãn ảnh lớn'),
-                                TranslatableField::group('page_content.space_image_2_label', label: 'Nhãn ảnh phụ 1'),
-                                TranslatableField::group('page_content.space_image_3_label', label: 'Nhãn ảnh phụ 2'),
-                            ])
-                            ->columns(2)
-                            ->collapsible()
-                            ->collapsed(),
-                        Forms\Components\Section::make('Đánh giá khách quốc tế')
-                            ->icon('heroicon-o-chat-bubble-left-right')
-                            ->description('Các đánh giá hiển thị trong trang chi nhánh.')
-                            ->schema([
-                                TranslatableField::group('page_content.reviews_eyebrow', label: 'Dòng giới thiệu'),
-                                TranslatableField::group('page_content.reviews_heading', label: 'Tiêu đề'),
-                                Forms\Components\Repeater::make('page_content.reviews')
-                                    ->label('Danh sách đánh giá')
-                                    ->schema([
-                                        Forms\Components\TextInput::make('country')->label('Quốc gia')->required(),
-                                        Forms\Components\TextInput::make('flag')->label('Emoji cờ')->maxLength(8),
-                                        TranslatableField::group('title', label: 'Tiêu đề đánh giá')
-                                            ->columnSpanFull(),
-                                        TranslatableField::group('content', as: 'textarea', label: 'Nội dung', rows: 3)
-                                            ->columnSpanFull(),
-                                    ])
-                                    ->columns(2)
-                                    ->defaultItems(0)
-                                    ->reorderable()
-                                    ->collapsible()
-                                    ->itemLabel(fn (array $state): ?string => $state['country'] ?? null)
-                                    ->addActionLabel('+ Thêm đánh giá')
-                                    ->columnSpanFull(),
-                            ])
-                            ->columns(2)
-                            ->collapsible()
-                            ->collapsed(),
-                        Forms\Components\Section::make('Liên hệ & bản đồ')
-                            ->icon('heroicon-o-map-pin')
-                            ->description('Nội dung khối liên hệ, bản đồ minh họa và danh sách dịch vụ trên trang chi nhánh.')
-                            ->schema([
-                                TranslatableField::group('page_content.contact_eyebrow', label: 'Dòng giới thiệu'),
-                                TranslatableField::group('page_content.contact_heading', label: 'Tiêu đề'),
-                                TranslatableField::group('page_content.address_heading', label: 'Tiêu đề địa chỉ'),
-                                TranslatableField::group('page_content.phone_heading', label: 'Tiêu đề hotline'),
-                                TranslatableField::group('page_content.phone_note', label: 'Ghi chú hotline'),
-                                TranslatableField::group('page_content.hours_heading', label: 'Tiêu đề giờ mở cửa'),
-                                TranslatableField::group('page_content.hours_note', label: 'Ghi chú giờ mở cửa'),
-                                TranslatableField::group('page_content.map_road_label', label: 'Tên đường trên bản đồ minh họa'),
-                                TranslatableField::group('page_content.map_pin_label', label: 'Nhãn pin bản đồ'),
-                                TranslatableField::group('page_content.map_cta_label', label: 'Nút xem bản đồ'),
-                                TranslatableField::group('page_content.services_heading', label: 'Tiêu đề danh sách dịch vụ'),
-                            ])
-                            ->columns(2)
-                            ->collapsible()
-                            ->collapsed(),
                     ])
                     ->columnSpan([
                         'lg' => 2,
@@ -172,18 +109,113 @@ class BranchResource extends Resource
                             ->schema([
                                 Forms\Components\SpatieMediaLibraryFileUpload::make('images')
                                     ->label('Thư viện ảnh')
+                                    ->collection('images')
                                     ->multiple()
                                     ->image()
                                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                     ->maxSize(5120)
                                     ->reorderable()
+                                    ->panelLayout('grid')
                                     ->columnSpanFull(),
                             ]),
                     ])
                     ->columnSpan([
                         'lg' => 1,
-                    ]),
+                    ])
+                    ->extraAttributes(['style' => 'position: sticky; top: 6rem; align-self: start;']),
             ]),
+
+            Forms\Components\Section::make('Phần đầu trang chi nhánh')
+                ->icon('heroicon-o-sparkles')
+                ->description('Phần mở đầu của trang /chi-nhanh/{slug}. Để trống sẽ dùng nội dung mặc định.')
+                ->schema([
+                    TranslatableField::group('page_content.hero_eyebrow', label: 'Dòng giới thiệu', example: 'Một góc Sài Gòn xưa giữa lòng thành phố'),
+                    TranslatableField::group('page_content.hero_heading', label: 'Tiêu đề', example: 'Mầm Spa Lê Văn Sỹ'),
+                    TranslatableField::group('page_content.hero_body_1', as: 'textarea', label: 'Đoạn 1', rows: 3, example: 'Lạc bước vào không gian Lê Văn Sỹ như trở về một khoảng trời yên tĩnh hiếm hoi.'),
+                    TranslatableField::group('page_content.hero_body_2', as: 'textarea', label: 'Đoạn 2', rows: 3, example: 'Một điểm đến lý tưởng để tạm gác lại nhịp sống hối hả và thư giãn sâu.'),
+                    TranslatableField::group('page_content.hero_cta_label', label: 'Nút CTA', example: 'Đặt lịch tại chi nhánh'),
+                ])
+                ->columns(2)
+                ->collapsible(),
+            Forms\Components\Section::make('Khối không gian trên trang chủ')
+                ->icon('heroicon-o-home-modern')
+                ->description('Nội dung của chi nhánh này trong khối “Khám phá các không gian Mầm Spa” ở trang chủ. Mỗi chi nhánh có nội dung riêng; bấm tab chi nhánh trên trang chủ sẽ đổi theo. Để trống sẽ dùng nội dung mặc định.')
+                ->schema([
+                    TranslatableField::group('page_content.home_intro_title', label: 'Tiêu đề khối (hiển thị trên cùng)', example: 'Khám phá các không gian Mầm Spa'),
+                    TranslatableField::group('page_content.home_intro_eyebrow', label: 'Dòng giới thiệu', example: 'A retreat for body, mind & soul'),
+                    TranslatableField::group('page_content.home_intro_subheading', label: 'Tiêu đề phụ', example: 'Không gian chữa lành'),
+                    TranslatableField::group('page_content.home_intro_heading', label: 'Tiêu đề lớn', example: 'Nét đẹp của Sài Gòn xưa.'),
+                    TranslatableField::group('page_content.home_intro_body_1', as: 'textarea', label: 'Đoạn mô tả 1', rows: 3, example: 'Lạc bước vào không gian Lê Văn Sỹ như trở về một khoảng trời yên tĩnh hiếm hoi.'),
+                    TranslatableField::group('page_content.home_intro_body_2', as: 'textarea', label: 'Đoạn mô tả 2', rows: 3, example: 'Một điểm đến lý tưởng để tạm gác lại nhịp sống hối hả và kết nối lại với chính mình.'),
+                    TranslatableField::group('page_content.home_intro_cta', label: 'Nút xem chi tiết', example: 'Khám phá chi tiết'),
+                    TranslatableField::group('page_content.home_intro_caption', label: 'Chú thích ảnh nhỏ', example: 'Góc nhỏ bình yên tại Mầm Spa Lê Văn Sỹ'),
+                ])
+                ->columns(2)
+                ->collapsible(),
+            Forms\Components\Section::make('Không gian chi nhánh')
+                ->icon('heroicon-o-photo')
+                ->description('Tiêu đề và nhãn ảnh cho cụm hình ảnh giới thiệu không gian.')
+                ->schema([
+                    TranslatableField::group('page_content.space_eyebrow', label: 'Dòng giới thiệu', example: 'Không gian kiến trúc Indochine'),
+                    TranslatableField::group('page_content.space_heading', label: 'Tiêu đề', example: 'Đắm mình trong vẻ đẹp Đông Dương'),
+                    TranslatableField::group('page_content.space_image_1_label', label: 'Nhãn ảnh lớn', example: 'Khu vực tiếp đón'),
+                    TranslatableField::group('page_content.space_image_2_label', label: 'Nhãn ảnh phụ 1', example: 'Phòng trị liệu riêng tư'),
+                    TranslatableField::group('page_content.space_image_3_label', label: 'Nhãn ảnh phụ 2', example: 'Góc thư giãn trà thảo mộc'),
+                ])
+                ->columns(2)
+                ->collapsible()
+                ->collapsed(),
+            Forms\Components\Section::make('Đánh giá khách quốc tế')
+                ->icon('heroicon-o-chat-bubble-left-right')
+                ->description('Các đánh giá hiển thị trong trang chi nhánh.')
+                ->schema([
+                    Forms\Components\Textarea::make('page_content.review_widget')
+                        ->label('Widget đánh giá (Elfsight / Google)')
+                        ->helperText('Dán Share Link URL (vd. https://xxxx.elf.site) HOẶC toàn bộ mã nhúng (Embed Code, gồm thẻ <script>). Hiển thị ở mục "Đánh giá khách hàng" trên trang chủ và trang chi tiết chi nhánh. Để trống thì không hiện widget.')
+                        ->rows(4)
+                        ->columnSpanFull(),
+                    TranslatableField::group('page_content.reviews_eyebrow', label: 'Dòng giới thiệu', example: 'Cảm nhận của khách hàng'),
+                    TranslatableField::group('page_content.reviews_heading', label: 'Tiêu đề', example: 'Được yêu thích bởi khách quốc tế'),
+                    Forms\Components\Repeater::make('page_content.reviews')
+                        ->label('Danh sách đánh giá')
+                        ->schema([
+                            Forms\Components\TextInput::make('country')->label('Quốc gia')->required()->placeholder('VD: Hàn Quốc'),
+                            Forms\Components\TextInput::make('flag')->label('Emoji cờ')->maxLength(8)->placeholder('VD: 🇰🇷'),
+                            TranslatableField::group('title', label: 'Tiêu đề đánh giá', example: 'Trải nghiệm tuyệt vời')
+                                ->columnSpanFull(),
+                            TranslatableField::group('content', as: 'textarea', label: 'Nội dung', rows: 3, example: 'Nhân viên thân thiện, không gian yên tĩnh, trị liệu rất chuyên nghiệp.')
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(2)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => $state['country'] ?? null)
+                        ->addActionLabel('+ Thêm đánh giá')
+                        ->columnSpanFull(),
+                ])
+                ->columns(2)
+                ->collapsible()
+                ->collapsed(),
+            Forms\Components\Section::make('Liên hệ & bản đồ')
+                ->icon('heroicon-o-map-pin')
+                ->description('Nội dung khối liên hệ, bản đồ minh họa và danh sách dịch vụ trên trang chi nhánh.')
+                ->schema([
+                    TranslatableField::group('page_content.contact_eyebrow', label: 'Dòng giới thiệu', example: 'Ghé thăm chúng tôi'),
+                    TranslatableField::group('page_content.contact_heading', label: 'Tiêu đề', example: 'Liên hệ & đặt lịch'),
+                    TranslatableField::group('page_content.address_heading', label: 'Tiêu đề địa chỉ', example: 'Địa chỉ'),
+                    TranslatableField::group('page_content.phone_heading', label: 'Tiêu đề hotline', example: 'Hotline'),
+                    TranslatableField::group('page_content.phone_note', label: 'Ghi chú hotline', example: 'Gọi để được tư vấn và đặt lịch'),
+                    TranslatableField::group('page_content.hours_heading', label: 'Tiêu đề giờ mở cửa', example: 'Giờ mở cửa'),
+                    TranslatableField::group('page_content.hours_note', label: 'Ghi chú giờ mở cửa', example: 'Mở cửa tất cả các ngày trong tuần'),
+                    TranslatableField::group('page_content.map_road_label', label: 'Tên đường trên bản đồ minh họa', example: 'Đường Lê Văn Sỹ'),
+                    TranslatableField::group('page_content.map_pin_label', label: 'Nhãn pin bản đồ', example: 'Mầm Spa'),
+                    TranslatableField::group('page_content.map_cta_label', label: 'Nút xem bản đồ', example: 'Xem trên Google Maps'),
+                    TranslatableField::group('page_content.services_heading', label: 'Tiêu đề danh sách dịch vụ', example: 'Dịch vụ tại chi nhánh'),
+                ])
+                ->columns(2)
+                ->collapsible()
+                ->collapsed(),
         ]);
     }
 

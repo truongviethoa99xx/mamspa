@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\SiteSetting;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -14,6 +15,12 @@ class BranchController extends Controller
 
         $branch->load('services');
 
+        // Chi nhánh chưa có widget đánh giá riêng thì dùng widget chung của site.
+        $pageContent = $branch->page_content ?? [];
+        if (empty($pageContent['review_widget'])) {
+            $pageContent['review_widget'] = SiteSetting::current()->review_widget;
+        }
+
         return Inertia::render('AboutUs', [
             'branch' => [
                 'id' => $branch->id,
@@ -24,7 +31,7 @@ class BranchController extends Controller
                 'open_hours' => $branch->open_hours,
                 'lat' => $branch->lat,
                 'lng' => $branch->lng,
-                'page_content' => $branch->page_content ?? [],
+                'page_content' => $pageContent,
                 'images' => $branch->getMedia('images')->map(fn ($media) => [
                     'url' => $media->getUrl(),
                     'alt' => $media->name,

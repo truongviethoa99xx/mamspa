@@ -22,12 +22,17 @@ class TranslatableField
     /**
      * @param  string  $field  tên field translatable, vd. 'name', 'description'
      * @param  string  $as  'text' | 'textarea' | 'rich'
+     * @param  string|null  $example  văn bản ví dụ hiển thị trong placeholder (vd. "Khám phá chi tiết")
      */
-    public static function group(string $field, string $as = 'text', ?string $label = null, int $rows = 3, bool $required = false): Forms\Components\Tabs
+    public static function group(string $field, string $as = 'text', ?string $label = null, int $rows = 3, bool $required = false, ?string $example = null): Forms\Components\Tabs
     {
         $locales = self::availableLocales();
-        $makeInput = function (string $lang) use ($field, $as, $rows, $required) {
+        $fieldLabel = $label ?? ucfirst($field);
+        $makeInput = function (string $lang) use ($field, $as, $rows, $required, $fieldLabel, $example) {
             $name = "{$field}.{$lang}";
+            $placeholder = $example !== null
+                ? "VD: {$example}"
+                : "{$fieldLabel} (".self::localeLabel($lang).')';
             $input = match ($as) {
                 'textarea' => Forms\Components\Textarea::make($name)->rows($rows),
                 'rich' => Forms\Components\RichEditor::make($name),
@@ -37,11 +42,18 @@ class TranslatableField
                 $input = $input->required();
             }
 
-            return $input->label(self::localeLabel($lang));
+            $input = $input->label($fieldLabel);
+
+            if ($as !== 'rich') {
+                $input = $input->placeholder($placeholder);
+            }
+
+            return $input;
         };
 
         return Forms\Components\Tabs::make($field)
             ->label($label ?? ucfirst($field))
+            ->columnSpanFull()
             ->tabs(collect($locales)
                 ->map(function (string $locale) use ($field, $makeInput, $locales) {
                     $schema = [$makeInput($locale)];

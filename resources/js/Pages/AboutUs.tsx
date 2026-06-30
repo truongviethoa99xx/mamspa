@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Clock, MapPin, Navigation, Phone } from 'luc
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
+import { ReviewEmbed } from '@/Components/ReviewEmbed';
 import { localBusinessSchema, breadcrumbSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
@@ -40,6 +41,7 @@ interface BranchPageContent {
     reviews_eyebrow?: TranslatableText;
     reviews_heading?: TranslatableText;
     reviews?: BranchReview[];
+    review_widget?: string;
     contact_eyebrow?: TranslatableText;
     contact_heading?: TranslatableText;
     address_heading?: TranslatableText;
@@ -104,6 +106,12 @@ const INTERNATIONAL_REVIEWS = [
 function mapUrl(branch: Props['branch']): string {
     const query = branch.lat && branch.lng ? `${branch.lat},${branch.lng}` : branch.address;
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+/** Google Maps embed không cần API key (?output=embed). */
+function mapEmbedUrl(branch: Props['branch']): string {
+    const query = branch.lat && branch.lng ? `${branch.lat},${branch.lng}` : branch.address;
+    return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=16&hl=vi&output=embed`;
 }
 
 function branchLabel(name: string): string {
@@ -314,6 +322,10 @@ export default function AboutUs({ branch }: Props) {
                             </article>
                         ))}
                     </div>
+
+                    {content.review_widget && (
+                        <ReviewEmbed html={content.review_widget} className="mt-10" />
+                    )}
                 </div>
             </section>
             <section className="bg-maha-50 pb-14 md:pb-20">
@@ -374,27 +386,19 @@ export default function AboutUs({ branch }: Props) {
                         </div>
 
                         <div className="relative min-h-[330px] overflow-hidden rounded-3xl bg-[#eadcc7] md:min-h-[390px]">
-                            <div className="absolute left-1/2 top-0 h-full w-6 -translate-x-1/2 bg-white" />
-                            <div className="absolute left-0 top-1/2 h-7 w-full -translate-y-1/2 bg-white" />
-                            <div className="absolute left-[58%] top-0 h-[115%] w-6 origin-top rotate-[34deg] bg-white" />
-                            <span className="absolute left-[55%] top-[47%] origin-left rotate-[-56deg] font-serif text-xs font-bold uppercase tracking-wide text-[#9a8c77]">
-                                {text(content.map_road_label, 'Đường Lê Văn Sỹ')}
-                            </span>
-                            <div className="absolute left-[45%] top-[38%] flex items-center gap-3">
-                                <span className="relative flex h-20 w-14 items-start justify-center rounded-t-full bg-ink pt-4 text-maha-50 after:absolute after:bottom-[-12px] after:left-1/2 after:h-0 after:w-0 after:-translate-x-1/2 after:border-x-[14px] after:border-t-[18px] after:border-x-transparent after:border-t-ink">
-                                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-maha-50 text-ink">
-                                        <span className="h-3 w-2 rounded-full bg-ink" />
-                                    </span>
-                                </span>
-                                <span className="rounded-lg bg-ink px-5 py-3 font-serif text-sm font-bold text-maha-50">
-                                    {text(content.map_pin_label, 'Mầm Spa 🌿')}
-                                </span>
-                            </div>
+                            <iframe
+                                title={`Bản đồ ${branchLabel(tr(branch.name, locale))}`}
+                                src={mapEmbedUrl(branch)}
+                                className="absolute inset-0 h-full w-full border-0"
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                allowFullScreen
+                            />
                             <a
                                 href={mapUrl(branch)}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="absolute bottom-8 left-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 font-serif text-sm font-bold text-ink shadow-sm"
+                                className="absolute bottom-8 left-8 z-10 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 font-serif text-sm font-bold text-ink shadow-lg transition-transform hover:-translate-y-0.5"
                             >
                                 <Navigation className="h-4 w-4" />
                                 {text(content.map_cta_label, 'Xem bản đồ lớn')}

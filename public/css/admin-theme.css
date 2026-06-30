@@ -196,12 +196,21 @@ h1, h2, h3, h4, h5, h6,
     .fi-header {
         position: sticky;
         top: 0;
-        z-index: 30;
+        /* Trên topbar (z-40) để tiêu đề + nút (vd "Tạo") không bị nền mờ của
+           topbar phủ che. */
+        z-index: 41;
         min-height: var(--admin-header-height);
         margin-top: calc(var(--admin-header-height) * -1);
         padding-block: 0;
         padding-inline-end: 5.75rem;
         border-bottom: 0;
+        /* Vùng trống của header cho click xuyên qua tới avatar/menu của topbar;
+           chỉ tiêu đề & nút (các con trực tiếp) mới bắt sự kiện. */
+        pointer-events: none;
+    }
+
+    .fi-header > * {
+        pointer-events: auto;
     }
 
     .fi-header > div:first-child {

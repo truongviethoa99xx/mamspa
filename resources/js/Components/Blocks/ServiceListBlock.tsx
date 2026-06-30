@@ -16,6 +16,11 @@ export function ServiceListBlock({ data }: { data: { title?: unknown; services?:
     const { t } = useTranslation();
     const services: ServiceItem[] = (data.services ?? []).slice(0, 4);
 
+    // Không có dịch vụ thì ẩn cả khối thay vì hiện tiêu đề + lưới rỗng.
+    if (services.length === 0) {
+        return null;
+    }
+
     return (
         <section className="bg-[#f8f3ea] py-10 sm:py-14 md:py-16 lg:py-20">
             <div className="mx-auto flex w-full max-w-7xl flex-col px-5 sm:px-6 2xl:max-w-[1440px]">

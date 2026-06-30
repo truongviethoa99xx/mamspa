@@ -3,6 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { BadgeCheck, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
+import { ReviewEmbed } from '@/Components/ReviewEmbed';
+
+interface ReviewWidget {
+    name?: unknown;
+    html: string;
+}
 
 interface ReviewItem {
     name: string;
@@ -15,6 +21,7 @@ interface TestimonialData {
     rating?: number;
     review_count?: number;
     items?: ReviewItem[];
+    widgets?: ReviewWidget[];
 }
 
 const AVATAR_COLORS = ['#3b6f5e', '#1f6f8b', '#9a6b3f', '#7d8b5a', '#8b5e83', '#b0623a'];
@@ -53,6 +60,7 @@ export function TestimonialBlock({ data }: { data: TestimonialData }) {
     const items = data.items ?? [];
     const overall = data.rating ?? 5;
     const count = data.review_count ?? items.length;
+    const widgets = (data.widgets ?? []).filter((w) => w.html);
     const scroller = useRef<HTMLDivElement>(null);
 
     const scrollBy = (dir: number) => {
@@ -61,6 +69,11 @@ export function TestimonialBlock({ data }: { data: TestimonialData }) {
         // Advance by one full page (the visible width = 3 cards on desktop).
         el.scrollBy({ left: dir * el.clientWidth, behavior: 'smooth' });
     };
+
+    // Không có review thủ công lẫn widget thì ẩn cả khối.
+    if (items.length === 0 && widgets.length === 0) {
+        return null;
+    }
 
     return (
         <section className="bg-maha-50 py-10 sm:py-16 md:py-24">
@@ -73,6 +86,7 @@ export function TestimonialBlock({ data }: { data: TestimonialData }) {
                     {t('blocks.testimonial.title')}
                 </h2>
 
+                {items.length > 0 && (
                 <div className="mt-8 grid items-center gap-7 sm:mt-12 sm:gap-10 lg:grid-cols-[220px_minmax(0,1fr)]">
                     {/* Rating summary */}
                     <div className="text-center lg:text-left">
@@ -169,6 +183,26 @@ export function TestimonialBlock({ data }: { data: TestimonialData }) {
                         </button>
                     </div>
                 </div>
+                )}
+
+                {/* Widget đánh giá Google (Elfsight...) theo từng chi nhánh */}
+                {widgets.length > 0 && (
+                    <div className="mt-12 space-y-10 sm:mt-16">
+                        {widgets.map((w, i) => {
+                            const name = tr(w.name, locale);
+                            return (
+                                <div key={i}>
+                                    {widgets.length > 1 && name && (
+                                        <h3 className="mb-5 text-center font-serif text-xl uppercase tracking-wide text-ink sm:text-2xl">
+                                            {name}
+                                        </h3>
+                                    )}
+                                    <ReviewEmbed html={w.html} />
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </section>
     );

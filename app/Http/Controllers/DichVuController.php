@@ -24,9 +24,18 @@ class DichVuController extends Controller
             'price' => $s->price,
             'is_featured' => $s->is_featured,
             'ingredients' => $s->ingredients ?? [],
-            'images' => $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all(),
+            'images' => $this->serviceImages($s),
             'branches' => $s->branches->pluck('slug'),
         ];
+    }
+
+    /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
+    private function serviceImages(Service $s): array
+    {
+        $thumbnail = $s->getMedia('thumbnail')->first()?->getUrl();
+        $gallery = $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all();
+
+        return array_values(array_filter([$thumbnail, ...$gallery]));
     }
 
     public function index(Request $request): Response

@@ -28,6 +28,12 @@ class Service extends Model implements HasMedia
 
     public array $translatable = ['name', 'description'];
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('thumbnail')->singleFile();
+        $this->addMediaCollection('images');
+    }
+
     public function branches(): BelongsToMany
     {
         return $this->belongsToMany(Branch::class, 'service_branch');

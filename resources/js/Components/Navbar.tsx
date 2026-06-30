@@ -12,14 +12,6 @@ interface MenuItem {
     label: string;
 }
 
-const SERVICE_MENU: MenuItem[] = [
-    { label: 'Mầm Combo', href: '/dich-vu?category=combo' },
-    { label: 'Traditional Massage', href: '/dich-vu?category=massage' },
-    { label: 'Head Spa', href: '/dich-vu?category=head-spa' },
-    { label: 'Facial Care', href: '/dich-vu?category=facial' },
-    { label: 'Mother Care', href: '/dich-vu?category=mother-care' },
-];
-
 function NavDropdown({ label, items, href }: { label: string; items: MenuItem[]; href?: string }) {
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
@@ -91,7 +83,7 @@ export function Navbar() {
     const locale = useLocale();
     const { props } = usePage<SharedProps>();
     const [open, setOpen] = useState(false);
-    const serviceMenu = props.site?.service_menu && props.site.service_menu.length > 0 ? props.site.service_menu : SERVICE_MENU;
+    const serviceMenu: MenuItem[] = props.site?.service_menu ?? [];
 
     const branchItems: MenuItem[] = (props.branches ?? []).map((b) => ({
         href: `/chi-nhanh/${b.slug}`,

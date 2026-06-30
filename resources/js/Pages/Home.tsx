@@ -33,10 +33,7 @@ interface BranchItem {
     address?: string
     phone?: string
     open_hours?: unknown
-}
-
-interface BranchIntro {
-    title?: Translatable
+    intro_title?: Translatable
     eyebrow?: Translatable
     subheading?: Translatable
     heading?: Translatable
@@ -65,13 +62,13 @@ interface Testimonials {
     review_count: number
     source: string
     items: { name: string; time?: string; rating?: number; content: string }[]
+    widgets?: { name?: Translatable; html: string }[]
 }
 
 interface Props {
     hero: HeroContent
     featuredServices: ServiceItem[]
     menuServices: ServiceItem[]
-    branchIntro: BranchIntro
     branches: BranchItem[]
     bookingBranches: BookingBranch[]
     bookingServices: BookingService[]
@@ -86,7 +83,6 @@ export default function Home({
     hero,
     featuredServices,
     menuServices,
-    branchIntro,
     branches,
     bookingBranches,
     bookingServices,
@@ -100,7 +96,7 @@ export default function Home({
             />
 
             <HeroBlock data={hero} />
-            <BranchesBlock data={{ branches, content: branchIntro }} />
+            <BranchesBlock data={{ branches }} />
             <ServiceListBlock data={{ title: hero.service_list_title, services: featuredServices }} />
             <ServiceMenuBlock data={{ services: menuServices }} />
             <BookingFormBlock data={{ branches: bookingBranches, services: bookingServices }} />

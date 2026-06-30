@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\HomePageContent;
 use App\Models\Service;
+use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,7 +23,6 @@ class HomeController extends Controller
             'hero' => $this->hero(),
             'featuredServices' => $this->featuredServices(),
             'menuServices' => $this->menuServices(),
-            'branchIntro' => $this->branchIntro(),
             'branches' => $this->branches(),
             'bookingBranches' => $this->bookingBranches(),
             'bookingServices' => $this->bookingServices(),
@@ -58,7 +58,7 @@ class HomeController extends Controller
                 'category' => $s->category,
                 'duration' => $s->duration,
                 'price' => $s->price,
-                'images' => $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all(),
+                'images' => $this->serviceImages($s),
             ])->all();
     }
 
@@ -73,40 +73,38 @@ class HomeController extends Controller
                 'description' => $s->description,
                 'category' => $s->category,
                 'duration' => $s->duration,
-                'images' => $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all(),
+                'images' => $this->serviceImages($s),
             ])->all();
     }
 
-    /** Nội dung khối giới thiệu không gian chi nhánh trên trang chủ. */
-    protected function branchIntro(): array
-    {
-        $content = HomePageContent::current();
-
-        return [
-            'title' => $content->branch_intro_title,
-            'eyebrow' => $content->branch_intro_eyebrow,
-            'subheading' => $content->branch_intro_subheading,
-            'heading' => $content->branch_intro_heading,
-            'body_1' => $content->branch_intro_body_1,
-            'body_2' => $content->branch_intro_body_2,
-            'cta' => $content->branch_intro_cta,
-            'caption' => $content->branch_intro_caption,
-        ];
-    }
-
-    /** Chi nhánh cho khối giới thiệu. */
+    /**
+     * Chi nhánh cho khối giới thiệu. Nội dung khối “Khám phá các không gian Mầm
+     * Spa” được cấu hình riêng cho từng chi nhánh trong cột `page_content`.
+     */
     protected function branches(): array
     {
         return Branch::where('is_active', true)->get()
-            ->map(fn (Branch $b) => [
-                'id' => $b->id,
-                'slug' => $b->slug,
-                'name' => $b->name,
-                'address' => $b->address,
-                'phone' => $b->phone,
-                'open_hours' => $b->open_hours,
-                'images' => $b->getMedia('images')->map(fn ($media) => $media->getUrl())->all(),
-            ])->all();
+            ->map(function (Branch $b) {
+                $pc = $b->page_content ?? [];
+
+                return [
+                    'id' => $b->id,
+                    'slug' => $b->slug,
+                    'name' => $b->name,
+                    'address' => $b->address,
+                    'phone' => $b->phone,
+                    'open_hours' => $b->open_hours,
+                    'intro_title' => $pc['home_intro_title'] ?? null,
+                    'eyebrow' => $pc['home_intro_eyebrow'] ?? null,
+                    'subheading' => $pc['home_intro_subheading'] ?? null,
+                    'heading' => $pc['home_intro_heading'] ?? null,
+                    'body_1' => $pc['home_intro_body_1'] ?? null,
+                    'body_2' => $pc['home_intro_body_2'] ?? null,
+                    'cta' => $pc['home_intro_cta'] ?? null,
+                    'caption' => $pc['home_intro_caption'] ?? null,
+                    'images' => $b->getMedia('images')->map(fn ($media) => $media->getUrl())->all(),
+                ];
+            })->all();
     }
 
     /** Chi nhánh rút gọn cho dropdown trong form đặt lịch. */
@@ -137,21 +135,49 @@ class HomeController extends Controller
     protected function testimonials(): array
     {
         $content = HomePageContent::current();
-        $items = $content->testimonials ?: [
-            ['name' => 'B H', 'time' => '8 months ago', 'rating' => 5, 'content' => 'Mầm Massage Therapy & Healing Spa ist ein Ort, bei dem man sich verwöhnen lassen sollte! Die Atmosphäre ist ruhig und entspannend, das Personal sehr aufmerksam.'],
-            ['name' => '2201_Nguyễn Phi Lân', 'time' => '8 months ago', 'rating' => 5, 'content' => 'Tối đi làm về thấy bảng hiệu nên ghé thử vì muốn massage cổ vai do phải ngồi lâu. Liệu trình làm khá dễ chịu, thấy hiệu quả rõ rệt, tuy chưa đặt lịch trước mà vẫn được phục vụ chu đáo.'],
-            ['name' => 'Oanh Hoang', 'time' => '8 months ago', 'rating' => 5, 'content' => 'Lần đầu đi massage hơi bỡ ngỡ xíu kkkk. Mấy bạn ở đây tư vấn nhiệt tình mà đúng với nhu cầu của mình, hông có bị upsale, chạy KPI. Kỹ thuật viên tay nghề tốt, sẽ quay lại.'],
-            ['name' => 'Trần Mỹ Linh', 'time' => '6 months ago', 'rating' => 5, 'content' => 'Không gian yên tĩnh, thơm mùi thảo mộc rất dễ chịu. Head spa 21 bước thư giãn đỉnh cao, ngủ quên luôn. Nhân viên nhẹ nhàng, chuyên nghiệp.'],
-            ['name' => 'James P.', 'time' => '5 months ago', 'rating' => 5, 'content' => 'A hidden gem in Da Nang. The foot spa and shoulder massage were exactly what I needed after a long flight. Will definitely come back.'],
-            ['name' => 'Phạm Thu Hà', 'time' => '4 months ago', 'rating' => 5, 'content' => 'Giá hợp lý, chất lượng vượt mong đợi. Combo gội + massage làm mình thư giãn hoàn toàn. Sẽ giới thiệu cho bạn bè.'],
-        ];
 
         return [
             'rating' => $content->testimonial_rating ?: 5,
-            'review_count' => $content->testimonial_review_count ?: 821,
+            'review_count' => $content->testimonial_review_count ?: 0,
             'source' => $content->testimonial_source ?: 'google',
-            'items' => $items,
+            'items' => $content->testimonials ?: [],
+            'widgets' => $this->branchReviewWidgets(),
         ];
+    }
+
+    /**
+     * Widget đánh giá hiển thị ở mục "Đánh giá khách hàng" trên trang chủ:
+     * ưu tiên widget riêng của từng chi nhánh; nếu không có thì dùng widget
+     * chung cấp site trong Thiết lập chung.
+     */
+    protected function branchReviewWidgets(): array
+    {
+        $widgets = Branch::where('is_active', true)->orderBy('id')->get()
+            ->map(fn (Branch $b) => [
+                'name' => $b->name,
+                'html' => $b->page_content['review_widget'] ?? null,
+            ])
+            ->filter(fn (array $w) => ! empty($w['html']))
+            ->values()
+            ->all();
+
+        if (empty($widgets)) {
+            $siteWidget = SiteSetting::current()->review_widget;
+            if (! empty($siteWidget)) {
+                $widgets = [['name' => null, 'html' => $siteWidget]];
+            }
+        }
+
+        return $widgets;
+    }
+
+    /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
+    private function serviceImages(Service $s): array
+    {
+        $thumbnail = $s->getMedia('thumbnail')->first()?->getUrl();
+        $gallery = $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all();
+
+        return array_values(array_filter([$thumbnail, ...$gallery]));
     }
 
     private function publicUrl(?string $path): ?string

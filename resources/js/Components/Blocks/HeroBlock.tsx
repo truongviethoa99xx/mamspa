@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import { useRef, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CalendarDays, ChevronDown } from 'lucide-react';
 import { tr } from '@/Lib/utils';
@@ -22,6 +23,13 @@ export function HeroBlock({ data }: { data: HeroData }) {
     const body = tr(data.subtitle, locale) || t('home.hero.body');
     const ctaText = tr(data.cta_text, locale) || t('common.bookNow');
     const ctaLink = data.cta_link || '/dat-lich';
+    const sectionRef = useRef<HTMLElement>(null);
+
+    const handleExplore = (e: MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        const target = document.getElementById('main') ?? sectionRef.current?.nextElementSibling;
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     return (
         <>
@@ -31,6 +39,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
             </Head>
         )}
         <section
+            ref={sectionRef}
             className="relative isolate flex h-[520px] max-h-[78svh] min-h-[440px] flex-col overflow-hidden bg-[#474c3c] bg-cover bg-center sm:h-[72vh] sm:min-h-[500px] md:h-[78vh] lg:h-[88vh] lg:min-h-[560px] lg:max-h-[940px]"
             style={data.image ? { backgroundImage: `linear-gradient(rgba(45, 51, 39, 0.58), rgba(45, 51, 39, 0.58)), url(${data.image})` } : undefined}
         >
@@ -47,10 +56,10 @@ export function HeroBlock({ data }: { data: HeroData }) {
                 <p className="font-serif text-sm italic tracking-wide text-maha-100/70 sm:text-lg md:text-xl">
                     {eyebrow}
                 </p>
-                <h1 className="mt-3 max-w-4xl font-serif text-[2rem] uppercase leading-[1.08] text-maha-50 sm:text-5xl md:mt-6 md:text-6xl lg:text-7xl 2xl:text-8xl">
+                <h1 className="mt-3 max-w-4xl whitespace-pre-line font-serif text-[2rem] uppercase leading-[1.08] text-maha-50 sm:text-5xl md:mt-6 md:text-6xl lg:text-7xl 2xl:text-8xl">
                     {heading}
                 </h1>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-maha-100/75 sm:text-base md:mt-8 md:text-lg">
+                <p className="mt-4 max-w-2xl whitespace-pre-line text-sm leading-relaxed text-maha-100/75 sm:text-base md:mt-8 md:text-lg">
                     {body}
                 </p>
             </div>
@@ -58,6 +67,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
             {/* Scroll-down indicator */}
             <a
                 href="#main"
+                onClick={handleExplore}
                 className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-3 text-maha-100/80 transition-colors hover:text-maha-50 sm:flex md:bottom-10"
                 aria-label={t('home.hero.explore')}
             >

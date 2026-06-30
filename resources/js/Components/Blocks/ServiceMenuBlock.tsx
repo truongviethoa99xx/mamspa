@@ -31,6 +31,11 @@ export function ServiceMenuBlock({ data }: { data: { services?: MenuService[] } 
         [services, active],
     );
 
+    // Chưa có dịch vụ nào thì ẩn cả khối menu.
+    if (services.length === 0) {
+        return null;
+    }
+
     return (
         <section className="bg-maha-50 py-10 sm:py-14 md:py-16 lg:h-[900px] lg:py-20">
             <div className="mx-auto grid h-full max-w-7xl grid-cols-1 gap-6 px-5 sm:px-6 lg:grid-cols-[280px_1fr] lg:gap-12 2xl:max-w-[1440px]">

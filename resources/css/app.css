@@ -47,3 +47,13 @@
         cursor: pointer;
     }
 }
+
+/* Ẩn badge quảng cáo "Free ... Widget" (branding gói miễn phí của Elfsight).
+   CHỈ có tác dụng khi widget nhúng bằng Embed Code (render trong DOM trang);
+   không áp dụng được cho iframe (Share Link) vì khác origin.
+   Dùng class ổn định của Elfsight; tránh hash styled-components đổi theo build. */
+.elfsight-app a[href*="elfsight.com"],
+[class*="WidgetBackground__ContentContainer"] > a,
+[class*="es-widget-background-content"] a[href*="elfsight"] {
+    display: none !important;
+}

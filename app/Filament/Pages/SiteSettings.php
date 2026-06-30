@@ -37,7 +37,7 @@ class SiteSettings extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill(SiteSetting::current()->only([
-            'brand_name', 'tagline', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links', 'service_menu',
+            'brand_name', 'tagline', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links', 'review_widget',
         ]));
     }
 
@@ -54,6 +54,16 @@ class SiteSettings extends Page implements HasForms
                         Forms\Components\TextInput::make('chat_url')->label('Link nút chat / Zalo')->url()->columnSpanFull(),
                     ])
                     ->columns(2),
+
+                Forms\Components\Section::make('Widget đánh giá khách hàng (Google / Elfsight)')
+                    ->description('Dán mã nhúng widget đánh giá dùng chung cho cả site. Hiển thị ở mục "Đánh giá khách hàng" trên trang chủ và trang chi nhánh (khi chi nhánh chưa có widget riêng). Để trống thì không hiện.')
+                    ->schema([
+                        Forms\Components\Textarea::make('review_widget')
+                            ->label('Widget đánh giá')
+                            ->helperText('Dán Share Link URL (vd. https://xxxx.elf.site) HOẶC mã nhúng đầy đủ từ tab "Embed Code". Cả hai đều chạy được.')
+                            ->rows(5)
+                            ->columnSpanFull(),
+                    ]),
 
                 Forms\Components\Section::make('Mạng xã hội')
                     ->schema([
@@ -126,19 +136,11 @@ class SiteSettings extends Page implements HasForms
                     ]),
 
                 Forms\Components\Section::make('Menu dịch vụ trên navbar')
+                    ->description('Menu dịch vụ tự động lấy từ các dịch vụ đang bật (is_active) trong mục Dịch vụ. Mỗi mục liên kết tới slug riêng của dịch vụ.')
                     ->schema([
-                        Forms\Components\Repeater::make('service_menu')
+                        Forms\Components\Placeholder::make('service_menu_note')
                             ->label('')
-                            ->schema([
-                                Forms\Components\TextInput::make('label')->label('Tên menu')->required(),
-                                Forms\Components\TextInput::make('href')->label('Đường dẫn')->required(),
-                            ])
-                            ->columns(2)
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
-                            ->addActionLabel('+ Thêm mục menu'),
+                            ->content('Để chỉnh sửa menu này, vào mục “Dịch vụ” → bật/tắt trạng thái hoạt động hoặc đổi slug của từng dịch vụ.'),
                     ]),
             ])
             ->statePath('data');

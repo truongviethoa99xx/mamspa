@@ -47,7 +47,7 @@ class ServiceResource extends Resource
                     'head-spa' => 'Head Spa',
                     'foot-spa' => 'Foot Spa',
                     'combo' => 'Combo',
-                ])->required(),
+                ])->native(false)->required(),
                 Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required(),
                 Forms\Components\TextInput::make('price')->label('Giá (VND)')->numeric()->required(),
                 Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
@@ -60,12 +60,27 @@ class ServiceResource extends Resource
                 ->label('Chi nhánh')
                 ->relationship('branches', 'slug')
                 ->multiple()->preload(),
-            Forms\Components\SpatieMediaLibraryFileUpload::make('images')
-                ->label('Hình ảnh')
-                ->multiple()
-                ->image()
-                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                ->maxSize(5120),
+            Forms\Components\Section::make('Hình ảnh')
+                ->schema([
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
+                        ->label('Ảnh đại diện')
+                        ->helperText('Ảnh chính hiển thị trên thẻ dịch vụ ở trang chủ & danh sách.')
+                        ->collection('thumbnail')
+                        ->image()
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(5120),
+                    Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                        ->label('Danh sách ảnh khác')
+                        ->helperText('Các ảnh phụ hiển thị trong trang chi tiết dịch vụ. Kéo thả để sắp xếp.')
+                        ->collection('images')
+                        ->multiple()
+                        ->reorderable()
+                        ->panelLayout('grid')
+                        ->image()
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(5120),
+                ])
+                ->columns(2),
         ]);
     }
 

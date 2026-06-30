@@ -40,8 +40,6 @@ class HomePageSettings extends Page implements HasForms
         $this->form->fill(HomePageContent::current()->only([
             'hero_title', 'hero_subtitle', 'hero_eyebrow', 'hero_cta_text', 'hero_cta_link',
             'hero_image', 'service_list_title', 'testimonial_rating', 'testimonial_review_count',
-            'branch_intro_title', 'branch_intro_eyebrow', 'branch_intro_subheading', 'branch_intro_heading',
-            'branch_intro_body_1', 'branch_intro_body_2', 'branch_intro_cta', 'branch_intro_caption',
             'testimonial_source', 'testimonials',
         ]));
     }
@@ -68,21 +66,6 @@ class HomePageSettings extends Page implements HasForms
                     ->schema([
                         TranslatableField::group('service_list_title', label: 'Tiêu đề khối'),
                     ]),
-
-                Forms\Components\Section::make('Khối không gian chi nhánh')
-                    ->description('Nội dung khối “Khám phá các không gian Mầm Spa” trên trang chủ.')
-                    ->schema([
-                        TranslatableField::group('branch_intro_title', label: 'Tiêu đề khối'),
-                        TranslatableField::group('branch_intro_eyebrow', label: 'Dòng giới thiệu'),
-                        TranslatableField::group('branch_intro_subheading', label: 'Tiêu đề phụ'),
-                        TranslatableField::group('branch_intro_heading', label: 'Tiêu đề lớn'),
-                        TranslatableField::group('branch_intro_body_1', as: 'textarea', label: 'Đoạn mô tả 1', rows: 3),
-                        TranslatableField::group('branch_intro_body_2', as: 'textarea', label: 'Đoạn mô tả 2', rows: 3),
-                        TranslatableField::group('branch_intro_cta', label: 'Nút xem chi tiết'),
-                        TranslatableField::group('branch_intro_caption', label: 'Chú thích ảnh nhỏ'),
-                    ])
-                    ->columns(2)
-                    ->collapsible(),
 
                 Forms\Components\Section::make('Đánh giá khách hàng')
                     ->schema([

@@ -15,6 +15,7 @@ class SiteSetting extends Model
         'floating_contact_buttons',
         'social_links',
         'service_menu',
+        'review_widget',
     ];
 
     protected $casts = [
