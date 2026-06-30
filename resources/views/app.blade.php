@@ -38,8 +38,8 @@
     <meta name="twitter:site" content="@mahaspa_danang">
     <meta name="twitter:image" content="{{ config('app.url') }}/images/banner.png">
 
-    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
-    <link rel="apple-touch-icon" href="/images/logo.svg">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/favicon.ico">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap" rel="stylesheet" />
 

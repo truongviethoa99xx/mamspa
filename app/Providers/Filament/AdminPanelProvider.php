@@ -36,6 +36,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight('7.5rem')
+            ->favicon(asset('images/favicon.ico'))
             ->sidebarWidth('15rem')
             // Luôn ở chế độ sáng cho giao diện ấm, thoáng.
             ->darkMode(false)
