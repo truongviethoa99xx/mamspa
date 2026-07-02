@@ -128,6 +128,10 @@ export function Footer() {
                         <Link href="/chinh-sach" className="transition-colors hover:text-maha-50">
                             {t('footer.support')}
                         </Link>
+                        <span>•</span>
+                        <Link href="/luu-y-dich-vu" className="transition-colors hover:text-maha-50">
+                            {t('footer.guidelines', 'Lưu ý dịch vụ')}
+                        </Link>
                     </nav>
                 </div>
             </div>

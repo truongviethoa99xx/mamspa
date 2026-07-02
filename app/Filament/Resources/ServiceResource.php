@@ -60,6 +60,84 @@ class ServiceResource extends Resource
                 ->label('Chi nhánh')
                 ->relationship('branches', 'slug')
                 ->multiple()->preload(),
+            Forms\Components\Section::make('Quy trình các bước')
+                ->description('Các bước trong liệu trình dịch vụ. Mỗi bước có tên, mô tả và thời gian. Kéo thả để sắp xếp thứ tự.')
+                ->schema([
+                    Forms\Components\Repeater::make('steps')
+                        ->label('')
+                        ->schema([
+                            TranslatableField::group('name', label: 'Tên bước', example: 'Làm sạch & tẩy tế bào chết')
+                                ->columnSpanFull(),
+                            TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2, example: 'Làm sạch sâu, loại bỏ bụi bẩn và tế bào chết.')
+                                ->columnSpanFull(),
+                            Forms\Components\TextInput::make('duration')
+                                ->label('Thời gian (phút)')
+                                ->numeric()
+                                ->minValue(0)
+                                ->placeholder('15'),
+                            Forms\Components\FileUpload::make('image')
+                                ->label('Ảnh của bước')
+                                ->image()
+                                ->disk('public')
+                                ->directory('services/steps')
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                ->maxSize(5120),
+                        ])
+                        ->columns(2)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->cloneable()
+                        ->itemLabel(fn (array $state): ?string => is_array($state['name'] ?? null) ? ($state['name']['vi'] ?? null) : ($state['name'] ?? null))
+                        ->addActionLabel('+ Thêm bước')
+                        ->columnSpanFull(),
+                ]),
+            Forms\Components\Section::make('Lợi ích dịch vụ')
+                ->description('Các lợi ích nổi bật của dịch vụ. Mỗi mục có tiêu đề và mô tả ngắn.')
+                ->schema([
+                    Forms\Components\Repeater::make('benefits')
+                        ->label('')
+                        ->schema([
+                            TranslatableField::group('title', label: 'Tiêu đề lợi ích', example: 'Giảm căng thẳng, thư giãn sâu')
+                                ->columnSpanFull(),
+                            TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2, example: 'Giúp giải tỏa căng cơ, cải thiện tuần hoàn và tinh thần.')
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(1)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->cloneable()
+                        ->itemLabel(fn (array $state): ?string => is_array($state['title'] ?? null) ? ($state['title']['vi'] ?? null) : ($state['title'] ?? null))
+                        ->addActionLabel('+ Thêm lợi ích')
+                        ->columnSpanFull(),
+                ]),
+            Forms\Components\Section::make('Hình ảnh trải nghiệm khách hàng')
+                ->description('Bộ ảnh thực tế khách hàng trải nghiệm dịch vụ. Mỗi ảnh có mô tả (alt) cho SEO/khả năng truy cập.')
+                ->schema([
+                    Forms\Components\Repeater::make('experience_images')
+                        ->label('')
+                        ->schema([
+                            Forms\Components\FileUpload::make('image')
+                                ->label('Ảnh')
+                                ->image()
+                                ->disk('public')
+                                ->directory('services/experience')
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                ->maxSize(5120)
+                                ->required(),
+                            Forms\Components\TextInput::make('alt')
+                                ->label('Mô tả ảnh (alt)')
+                                ->placeholder('VD: Khách hàng thư giãn trong phòng trị liệu'),
+                        ])
+                        ->columns(2)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->grid(2)
+                        ->addActionLabel('+ Thêm ảnh')
+                        ->columnSpanFull(),
+                ]),
             Forms\Components\Section::make('Hình ảnh')
                 ->schema([
                     Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')

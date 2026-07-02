@@ -116,7 +116,8 @@
         "privacy": "Privacy policy",
         "terms": "Terms of service",
         "support": "Customer support",
-        "rights": "© {{year}} Mầm Spa. All rights reserved."
+        "rights": "© {{year}} Mầm Spa. All rights reserved.",
+        "paymentGuide": "Payment Guide"
     },
     "services": {
         "category": {
@@ -220,7 +221,11 @@
             "faqEyebrow": "Mầm answers your questions",
             "faqTitle": "Frequently asked questions",
             "relatedEyebrow": "Continue your healing journey",
-            "relatedTitle": "Explore other services"
+            "relatedTitle": "Explore other services",
+            "stepsEyebrow": "A step-by-step experience",
+            "stepsTitle": "Treatment process",
+            "experienceEyebrow": "Moments at Mầm Spa",
+            "experienceTitle": "Customer experience gallery"
         }
     },
     "booking": {
@@ -375,6 +380,43 @@
             "p2": "An ideal destination to set aside the rush of life, relax deeply and reconnect with yourself.",
             "cta": "Explore in detail",
             "caption": "A peaceful corner at {{name}}"
+        }
+    },
+    "paymentGuide": {
+        "eyebrow": "Mầm Spa",
+        "title": "Payment Guide",
+        "subtitle": "A few gentle notes on payment, so your journey at Mầm stays light and complete.",
+        "metaDescription": "Payment guide at Mầm Spa: cash, bank transfer, Visa/Mastercard/JCB cards, MoMo/VNPay/ZaloPay e-wallets and VAT invoices.",
+        "sections": {
+            "methods": {
+                "title": "Payment methods",
+                "p1": "So your moment of calm stays whole until you leave, Mầm offers several ways to pay — at your own ease.",
+                "p2": "You may pay by cash, bank transfer, card or e-wallet — whichever feels most convenient to you.",
+                "p3": "Every transaction is handled gently and clearly, right at the reception."
+            },
+            "cards": {
+                "title": "Cards & E-wallets",
+                "p1": "Mầm warmly welcomes most international cards: Visa, Mastercard, JCB, American Express, UnionPay and Apple Pay.",
+                "p2": "For those who prefer e-wallets, Mầm is also ready with MoMo, VNPay and ZaloPay.",
+                "p3": "Just one tap and payment is done, so you keep that feeling of calm to carry home."
+            },
+            "transfer": {
+                "title": "Bank transfer",
+                "p1": "If you'd like to transfer, our reception will kindly share Mầm's account details with you.",
+                "p2": "Simply note your name and booking phone number in the transfer, so Mầm can reconcile it quickly.",
+                "p3": "Once the transfer is complete, Mầm will confirm with you so you can be fully at ease."
+            },
+            "invoice": {
+                "title": "VAT invoice",
+                "p1": "Mầm is always happy to issue a VAT invoice whenever you need one.",
+                "p2": "Just share your invoicing details before payment, so Mầm can prepare everything accurately and completely."
+            },
+            "fees": {
+                "title": "Surcharges & Refunds",
+                "p1": "Mầm wishes everything to be transparent, so there is no surcharge for any payment method.",
+                "p2": "On public holidays there may be a small surcharge — Mầm will always let you know in advance.",
+                "p3": "If a refund is ever needed, please let our reception know — Mầm will listen and help you with the utmost care."
+            }
         }
     }
 }

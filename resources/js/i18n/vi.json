@@ -116,7 +116,8 @@
         "privacy": "Chính sách bảo mật",
         "terms": "Điều khoản dịch vụ",
         "support": "Hỗ trợ khách hàng",
-        "rights": "© {{year}} Mầm Spa. All rights reserved."
+        "rights": "© {{year}} Mầm Spa. All rights reserved.",
+        "paymentGuide": "Hướng dẫn thanh toán"
     },
     "services": {
         "category": {
@@ -220,7 +221,11 @@
             "faqEyebrow": "Mầm giải đáp cùng bạn",
             "faqTitle": "Câu hỏi thường gặp",
             "relatedEyebrow": "Continue your healing journey",
-            "relatedTitle": "Tham khảo dịch vụ khác"
+            "relatedTitle": "Tham khảo dịch vụ khác",
+            "stepsEyebrow": "Trải nghiệm từng bước",
+            "stepsTitle": "Quy trình liệu trình",
+            "experienceEyebrow": "Khoảnh khắc tại Mầm Spa",
+            "experienceTitle": "Hình ảnh trải nghiệm khách hàng"
         }
     },
     "booking": {
@@ -375,6 +380,43 @@
             "p2": "Một điểm đến lý tưởng để tạm gác lại nhịp sống hối hả, thư giãn sâu và kết nối lại với chính mình.",
             "cta": "Khám phá chi tiết",
             "caption": "Góc nhỏ bình yên tại {{name}}"
+        }
+    },
+    "paymentGuide": {
+        "eyebrow": "Mầm Spa",
+        "title": "Hướng dẫn thanh toán",
+        "subtitle": "Những lưu ý nhỏ về thanh toán, để hành trình tại Mầm luôn nhẹ nhàng và trọn vẹn.",
+        "metaDescription": "Hướng dẫn các phương thức thanh toán tại Mầm Spa: tiền mặt, chuyển khoản, thẻ Visa/Mastercard/JCB, ví điện tử MoMo/VNPay/ZaloPay và xuất hóa đơn VAT.",
+        "sections": {
+            "methods": {
+                "title": "Phương thức thanh toán",
+                "p1": "Để khoảnh khắc thư thái của bạn trọn vẹn đến tận khi rời đi, Mầm chuẩn bị nhiều cách thanh toán để bạn thật thong thả lựa chọn.",
+                "p2": "Bạn có thể thanh toán bằng tiền mặt, chuyển khoản ngân hàng, thẻ hoặc ví điện tử — tùy theo điều khiến bạn thấy thuận tiện nhất.",
+                "p3": "Mọi giao dịch đều được thực hiện nhẹ nhàng, rõ ràng ngay tại quầy lễ tân."
+            },
+            "cards": {
+                "title": "Thẻ & Ví điện tử",
+                "p1": "Mầm trân trọng đón nhận hầu hết các loại thẻ quốc tế: Visa, Mastercard, JCB, American Express, UnionPay và Apple Pay.",
+                "p2": "Với những ai quen dùng ví điện tử, Mầm cũng sẵn sàng với MoMo, VNPay và ZaloPay.",
+                "p3": "Chỉ một chạm, phần thanh toán khép lại để bạn giữ trọn cảm giác an yên mang về."
+            },
+            "transfer": {
+                "title": "Chuyển khoản ngân hàng",
+                "p1": "Nếu bạn muốn chuyển khoản, lễ tân sẽ gửi bạn thông tin tài khoản của Mầm một cách chu đáo.",
+                "p2": "Bạn chỉ cần ghi rõ tên và số điện thoại đặt lịch trong nội dung chuyển khoản, để Mầm đối soát thật nhanh.",
+                "p3": "Khi giao dịch hoàn tất, Mầm sẽ xác nhận lại để bạn hoàn toàn yên tâm."
+            },
+            "invoice": {
+                "title": "Hóa đơn (VAT)",
+                "p1": "Mầm luôn sẵn lòng xuất hóa đơn VAT mỗi khi bạn cần.",
+                "p2": "Bạn chỉ cần chia sẻ thông tin xuất hóa đơn trước khi thanh toán, để Mầm chuẩn bị thật chính xác và trọn vẹn."
+            },
+            "fees": {
+                "title": "Phụ phí & Hoàn tiền",
+                "p1": "Mầm mong mọi điều thật minh bạch, nên không có bất kỳ phụ phí nào cho các phương thức thanh toán.",
+                "p2": "Vào những dịp Quốc lễ, đôi khi có một khoản phụ thu nhỏ — Mầm sẽ luôn thông báo trước để bạn an tâm.",
+                "p3": "Với những trường hợp cần hoàn tiền, xin bạn nhắn với lễ tân — Mầm sẽ lắng nghe và hỗ trợ bạn một cách chu đáo nhất."
+            }
         }
     }
 }

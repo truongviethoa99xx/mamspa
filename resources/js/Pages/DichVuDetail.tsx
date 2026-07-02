@@ -8,6 +8,23 @@ import { breadcrumbSchema, faqSchema, serviceSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
 
+interface ServiceStep {
+    name: Record<string, string> | string;
+    description?: Record<string, string> | string;
+    duration?: number | string | null;
+    image?: string | null;
+}
+
+interface ServiceBenefit {
+    title: Record<string, string> | string;
+    description?: Record<string, string> | string;
+}
+
+interface ExperienceImage {
+    image: string;
+    alt?: string;
+}
+
 interface Service {
     id: number;
     slug: string;
@@ -18,6 +35,9 @@ interface Service {
     price: number;
     is_featured: boolean;
     ingredients: string[];
+    steps?: ServiceStep[];
+    benefits?: ServiceBenefit[];
+    experience_images?: ExperienceImage[];
     images?: string[];
     branches: string[];
 }
@@ -189,6 +209,113 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                     </div>
                 </div>
             </section>
+
+            {(service.steps ?? []).filter((s) => tr(s.name, locale)).length > 0 && (
+                <section className="bg-maha-50 pb-12 md:pb-16">
+                    <div className="mx-auto max-w-3xl px-5 sm:px-6">
+                        <p className="text-center font-serif text-sm italic text-[#6e7a51] md:text-base">
+                            {t('dichvu.detail.stepsEyebrow', 'Trải nghiệm từng bước')}
+                        </p>
+                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                            {t('dichvu.detail.stepsTitle', 'Quy trình liệu trình')}
+                        </h2>
+                        <ol className="mt-8 space-y-4 md:mt-12">
+                            {(service.steps ?? [])
+                                .filter((s) => tr(s.name, locale))
+                                .map((step, i) => (
+                                    <li
+                                        key={i}
+                                        className="flex gap-5 rounded-2xl border border-maha-100 bg-white p-5 shadow-sm shadow-maha-900/5 md:p-6"
+                                    >
+                                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink font-serif text-lg font-bold text-maha-50">
+                                            {i + 1}
+                                        </span>
+                                        <div className="min-w-0 flex-1">
+                                            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                                                <h3 className="font-serif text-lg font-bold text-ink md:text-xl">
+                                                    {tr(step.name, locale)}
+                                                </h3>
+                                                {step.duration ? (
+                                                    <span className="shrink-0 text-sm font-medium text-[#8a995e]">
+                                                        {step.duration} {t('common.minute', 'phút')}
+                                                    </span>
+                                                ) : null}
+                                            </div>
+                                            {tr(step.description, locale) && (
+                                                <p className="mt-2 text-sm leading-relaxed text-ink/75 md:text-base">
+                                                    {tr(step.description, locale)}
+                                                </p>
+                                            )}
+                                        </div>
+                                        {step.image && (
+                                            <img
+                                                src={step.image}
+                                                alt={tr(step.name, locale)}
+                                                loading="lazy"
+                                                className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24"
+                                            />
+                                        )}
+                                    </li>
+                                ))}
+                        </ol>
+                    </div>
+                </section>
+            )}
+
+            {(service.benefits ?? []).filter((b) => tr(b.title, locale)).length > 0 && (
+                <section className="bg-maha-50 pb-12 md:pb-16">
+                    <div className="mx-auto max-w-4xl px-5 sm:px-6">
+                        <p className="text-center font-serif text-sm italic text-[#6e7a51] md:text-base">
+                            {t('dichvu.detail.benefitsEyebrow')}
+                        </p>
+                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                            {t('dichvu.detail.benefitsHeading')}
+                        </h2>
+                        <div className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-12">
+                            {(service.benefits ?? [])
+                                .filter((b) => tr(b.title, locale))
+                                .map((b, i) => (
+                                    <div
+                                        key={i}
+                                        className="rounded-2xl border border-maha-100 bg-white p-5 shadow-sm shadow-maha-900/5 md:p-6"
+                                    >
+                                        <h3 className="font-serif text-lg font-bold text-ink">{tr(b.title, locale)}</h3>
+                                        {tr(b.description, locale) && (
+                                            <p className="mt-2 text-sm leading-relaxed text-ink/75">
+                                                {tr(b.description, locale)}
+                                            </p>
+                                        )}
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {(service.experience_images ?? []).length > 0 && (
+                <section className="bg-maha-50 pb-14 md:pb-20">
+                    <div className="mx-auto max-w-6xl px-5 sm:px-6">
+                        <p className="text-center font-serif text-sm italic text-[#6e7a51] md:text-base">
+                            {t('dichvu.detail.experienceEyebrow', 'Khoảnh khắc tại Mầm Spa')}
+                        </p>
+                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                            {t('dichvu.detail.experienceTitle', 'Hình ảnh trải nghiệm khách hàng')}
+                        </h2>
+                        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:mt-12 lg:grid-cols-4">
+                            {(service.experience_images ?? []).map((img, i) => (
+                                <div key={i} className="aspect-square overflow-hidden rounded-2xl bg-maha-100">
+                                    <img
+                                        src={img.image}
+                                        alt={img.alt || ''}
+                                        loading="lazy"
+                                        className="h-full w-full object-cover transition-transform hover:scale-105"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {combos.length > 0 && (
                 <section className="bg-maha-50 pb-14 md:pb-20">

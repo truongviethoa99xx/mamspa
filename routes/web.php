@@ -12,6 +12,7 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TranslationController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/i18n/{lang}', [TranslationController::class, 'show'])->name('i18n.show');
@@ -43,5 +44,9 @@ Route::get('/promotions', [PromotionController::class, 'index'])->name('promotio
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
+
+Route::get('/luu-y-dich-vu', fn () => Inertia::render('PaymentGuide'))->name('service-guidelines');
+// Giữ URL cũ hoạt động (301) phòng khi đã chia sẻ.
+Route::permanentRedirect('/huong-dan-thanh-toan', '/luu-y-dich-vu');
 
 require __DIR__.'/auth.php';

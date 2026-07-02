@@ -24,6 +24,19 @@ class DichVuController extends Controller
             'price' => $s->price,
             'is_featured' => $s->is_featured,
             'ingredients' => $s->ingredients ?? [],
+            'steps' => collect($s->steps ?? [])
+                ->map(fn ($step) => array_merge(
+                    is_array($step) ? $step : [],
+                    ['image' => $this->publicUrl($step['image'] ?? null)],
+                ))->all(),
+            'benefits' => $s->benefits ?? [],
+            'experience_images' => collect($s->experience_images ?? [])
+                ->map(fn ($img) => [
+                    'image' => $this->publicUrl($img['image'] ?? null),
+                    'alt' => $img['alt'] ?? '',
+                ])
+                ->filter(fn ($img) => ! empty($img['image']))
+                ->values()->all(),
             'images' => $this->serviceImages($s),
             'branches' => $s->branches->pluck('slug'),
         ];

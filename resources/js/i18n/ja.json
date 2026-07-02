@@ -220,7 +220,11 @@
             "faqEyebrow": "Mầm がお答えします",
             "faqTitle": "よくある質問",
             "relatedEyebrow": "癒しの旅を続ける",
-            "relatedTitle": "他のサービスを見る"
+            "relatedTitle": "他のサービスを見る",
+            "stepsEyebrow": "ステップごとの体験",
+            "stepsTitle": "施術の流れ",
+            "experienceEyebrow": "Mầm Spa での瞬間",
+            "experienceTitle": "お客様の体験ギャラリー"
         }
     },
     "booking": {

@@ -220,7 +220,11 @@
             "faqEyebrow": "Mầm 为您解答",
             "faqTitle": "常见问题",
             "relatedEyebrow": "继续您的疗愈之旅",
-            "relatedTitle": "探索其他服务"
+            "relatedTitle": "探索其他服务",
+            "stepsEyebrow": "逐步体验",
+            "stepsTitle": "护理流程",
+            "experienceEyebrow": "Mầm Spa 的时刻",
+            "experienceTitle": "顾客体验照片"
         }
     },
     "booking": {
