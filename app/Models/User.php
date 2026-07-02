@@ -67,7 +67,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
     {
         $svg = sprintf(
             '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">'
-            .'<rect width="96" height="96" rx="48" fill="#c1664a"/>'
+            .'<rect width="96" height="96" rx="48" fill="#556B3F"/>'
             .'<text x="48" y="48" dy="0.35em" text-anchor="middle" '
             .'font-family="Quicksand, ui-sans-serif, sans-serif" font-size="40" font-weight="700" '
             .'fill="#fffdfa">%s</text></svg>',

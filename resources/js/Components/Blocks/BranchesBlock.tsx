@@ -111,7 +111,7 @@ export function BranchesBlock({ data }: { data: { branches?: BranchItem[] } }) {
 
                     {/* Right — editorial copy */}
                     <div>
-                        <p className="font-serif text-sm italic text-[#6e7a51] md:text-lg">{eyebrow}</p>
+                        <p className="font-serif text-sm italic text-[#556B3F] md:text-lg">{eyebrow}</p>
                         <h3 className="mt-2 font-serif text-lg uppercase tracking-wide text-ink sm:text-2xl md:mt-3 md:text-3xl">
                             {subheading}
                         </h3>

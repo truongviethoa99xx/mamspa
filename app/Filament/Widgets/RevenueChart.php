@@ -51,8 +51,8 @@ class RevenueChart extends ChartWidget
             'datasets' => [[
                 'label' => 'Doanh thu (VND)',
                 'data' => $values,
-                'backgroundColor' => '#c1664a',
-                'hoverBackgroundColor' => '#a8513a',
+                'backgroundColor' => '#556B3F',
+                'hoverBackgroundColor' => '#425436',
                 'borderRadius' => 8,
                 'borderSkipped' => false,
                 'maxBarThickness' => 36,

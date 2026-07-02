@@ -5,7 +5,7 @@
 @layer components {
     /* Shared text/textarea field style for forms (e.g. booking). */
     .input-base {
-        @apply w-full rounded-xl border border-maha-200 bg-white px-4 py-3 text-ink shadow-sm transition-colors placeholder:text-maha-400 focus:border-[#6b7a4f] focus:outline-none;
+        @apply w-full rounded-xl border border-maha-200 bg-white px-4 py-3 text-ink shadow-sm transition-colors placeholder:text-maha-400 focus:border-[#556B3F] focus:outline-none;
     }
 }
 

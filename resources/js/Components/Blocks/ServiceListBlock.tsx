@@ -22,10 +22,10 @@ export function ServiceListBlock({ data }: { data: { title?: unknown; services?:
     }
 
     return (
-        <section className="bg-[#f8f3ea] py-10 sm:py-14 md:py-16 lg:py-20">
+        <section className="bg-[#F6F3EF] py-10 sm:py-14 md:py-16 lg:py-20">
             <div className="mx-auto flex w-full max-w-7xl flex-col px-5 sm:px-6 2xl:max-w-[1440px]">
                 {/* Header */}
-                <p className="font-serif text-sm italic text-[#6e7a51] md:text-lg">{t('blocks.services.eyebrow')}</p>
+                <p className="font-serif text-sm italic text-[#556B3F] md:text-lg">{t('blocks.services.eyebrow')}</p>
                 {data.title && (
                     <h2 className="mt-2 font-serif text-2xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                         {tr(data.title, locale)}
@@ -50,7 +50,7 @@ export function ServiceListBlock({ data }: { data: { title?: unknown; services?:
 
                             {/* Title chip */}
                             <div className="relative inline-flex w-fit items-center gap-3 rounded-lg bg-maha-50 px-4 py-2.5 shadow-sm">
-                                <span className="h-5 w-1 rounded-full bg-[#5e6b45]" />
+                                <span className="h-5 w-1 rounded-full bg-[#475934]" />
                                 <span className="font-serif text-sm font-bold uppercase tracking-wide text-ink">
                                     {tr(s.name, locale)}
                                 </span>

@@ -40,8 +40,8 @@ export function HeroBlock({ data }: { data: HeroData }) {
         )}
         <section
             ref={sectionRef}
-            className="relative isolate flex h-[520px] max-h-[78svh] min-h-[440px] flex-col overflow-hidden bg-[#474c3c] bg-cover bg-center sm:h-[72vh] sm:min-h-[500px] md:h-[78vh] lg:h-[88vh] lg:min-h-[560px] lg:max-h-[940px]"
-            style={data.image ? { backgroundImage: `linear-gradient(rgba(45, 51, 39, 0.58), rgba(45, 51, 39, 0.58)), url(${data.image})` } : undefined}
+            className="relative isolate flex h-[520px] max-h-[78svh] min-h-[440px] flex-col overflow-hidden bg-[#2F3E2E] bg-cover bg-center sm:h-[72vh] sm:min-h-[500px] md:h-[78vh] lg:h-[88vh] lg:min-h-[560px] lg:max-h-[940px]"
+            style={data.image ? { backgroundImage: `linear-gradient(rgba(47,62,46, 0.58), rgba(47,62,46, 0.58)), url(${data.image})` } : undefined}
         >
             {/* Brand wordmark */}
             <Link
@@ -80,7 +80,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
             {/* Booking CTA pill */}
             <Link
                 href={ctaLink}
-                className="absolute bottom-5 right-5 z-10 inline-flex items-center gap-2 rounded-full bg-maha-50 px-4 py-2.5 text-sm font-semibold tracking-wide text-[#474c3c] shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 sm:gap-3 sm:px-8 sm:py-4 sm:text-base md:bottom-10 md:right-10"
+                className="absolute bottom-5 right-5 z-10 inline-flex items-center gap-2 rounded-full bg-maha-50 px-4 py-2.5 text-sm font-semibold tracking-wide text-[#2F3E2E] shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 sm:gap-3 sm:px-8 sm:py-4 sm:text-base md:bottom-10 md:right-10"
             >
                 <CalendarDays className="h-5 w-5" />
                 {ctaText}

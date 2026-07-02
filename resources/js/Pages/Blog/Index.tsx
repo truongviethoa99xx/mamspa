@@ -83,11 +83,11 @@ export default function BlogIndex({ featured, posts }: BlogIndexProps) {
                 <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
                     {/* Header */}
                     <header className="mb-12 text-center">
-                        <p className="font-serif text-lg italic text-[#6b7a4f]">{t('blog.story')}</p>
+                        <p className="font-serif text-lg italic text-[#556B3F]">{t('blog.story')}</p>
                         <h1 className="mt-2 font-serif text-4xl tracking-wide text-heading md:text-5xl">
                             {t('nav.blog')}
                         </h1>
-                        <span className="mx-auto mt-5 block h-px w-20 bg-[#6b7a4f]/60" />
+                        <span className="mx-auto mt-5 block h-px w-20 bg-[#556B3F]/60" />
                     </header>
 
                     {/* Featured */}
@@ -148,11 +148,11 @@ function FeaturedCard({ post, locale, cta }: { post: Post; locale: string; cta: 
             <div className="flex flex-col justify-center gap-5 p-8 md:p-12">
                 <div className="flex flex-wrap items-center gap-3">
                     {post.category && (
-                        <span className="rounded-full bg-maha-100 px-3 py-1 text-xs font-semibold text-[#6b7a4f]">
+                        <span className="rounded-full bg-maha-100 px-3 py-1 text-xs font-semibold text-[#556B3F]">
                             {post.category}
                         </span>
                     )}
-                    {date && <span className="text-xs font-semibold uppercase tracking-wider text-[#6b7a4f]">{date}</span>}
+                    {date && <span className="text-xs font-semibold uppercase tracking-wider text-[#556B3F]">{date}</span>}
                 </div>
                 <h2 className="font-serif text-3xl leading-tight text-heading md:text-4xl">{tr(post.title, locale)}</h2>
                 <p className="text-base leading-relaxed text-ink/70">{tr(post.excerpt, locale)}</p>
@@ -186,14 +186,14 @@ function PostCard({ post, locale, readMore }: { post: Post; locale: string; read
                 )}
             </div>
             <div className="flex flex-1 flex-col p-6">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#6b7a4f]">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#556B3F]">
                     {post.category && <span>{post.category}</span>}
                     {post.category && date && <span className="mx-1.5">•</span>}
                     {date}
                 </p>
                 <h3 className="mt-2 font-serif text-xl leading-snug text-heading">{tr(post.title, locale)}</h3>
                 <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink/65">{tr(post.excerpt, locale)}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition-colors group-hover:text-[#6b7a4f]">
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ink transition-colors group-hover:text-[#556B3F]">
                     {readMore}
                     <ChevronRight className="h-4 w-4" />
                 </span>

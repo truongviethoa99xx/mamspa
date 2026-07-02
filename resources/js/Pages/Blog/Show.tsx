@@ -60,14 +60,14 @@ const BODY_CLASS = [
     '[&_p]:mt-5 [&_p]:leading-[1.85]',
     '[&_h2]:mt-12 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:leading-snug [&_h2]:text-heading md:[&_h2]:text-3xl',
     '[&_h3]:mt-9 [&_h3]:font-serif [&_h3]:text-xl [&_h3]:text-heading',
-    '[&_a]:text-[#6b7a4f] [&_a]:underline [&_a]:underline-offset-2',
+    '[&_a]:text-[#556B3F] [&_a]:underline [&_a]:underline-offset-2',
     '[&_strong]:text-ink [&_strong]:font-semibold',
     '[&_ul]:mt-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6',
     '[&_ol]:mt-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6',
     '[&_img]:mt-8 [&_img]:w-full [&_img]:rounded-2xl',
     '[&_figure]:mt-8 [&_figure>img]:mt-0',
     '[&_figcaption]:mt-3 [&_figcaption]:text-center [&_figcaption]:font-serif [&_figcaption]:text-sm [&_figcaption]:italic [&_figcaption]:text-maha-600',
-    '[&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-[#6b7a4f] [&_blockquote]:pl-6 [&_blockquote]:font-serif [&_blockquote]:text-xl [&_blockquote]:italic [&_blockquote]:leading-relaxed [&_blockquote]:text-heading',
+    '[&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-[#556B3F] [&_blockquote]:pl-6 [&_blockquote]:font-serif [&_blockquote]:text-xl [&_blockquote]:italic [&_blockquote]:leading-relaxed [&_blockquote]:text-heading',
 ].join(' ')
 
 export default function BlogShow({ post, related }: Props) {
@@ -107,11 +107,11 @@ export default function BlogShow({ post, related }: Props) {
                 <div className="mx-auto max-w-6xl px-4 py-10 md:py-14">
                     {/* Breadcrumb */}
                     <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-maha-600">
-                        <Link href="/" className="transition-colors hover:text-[#6b7a4f]">
+                        <Link href="/" className="transition-colors hover:text-[#556B3F]">
                             {t('nav.home')}
                         </Link>
                         <span className="text-maha-300">/</span>
-                        <Link href="/tin-tuc" className="transition-colors hover:text-[#6b7a4f]">
+                        <Link href="/tin-tuc" className="transition-colors hover:text-[#556B3F]">
                             {t('nav.blog')}
                         </Link>
                         <span className="text-maha-300">/</span>
@@ -121,7 +121,7 @@ export default function BlogShow({ post, related }: Props) {
                     {/* Title + meta */}
                     <header className="mt-7 max-w-3xl">
                         {post.category && (
-                            <span className="mb-4 inline-block rounded-full bg-maha-100 px-3 py-1 text-xs font-semibold text-[#6b7a4f]">
+                            <span className="mb-4 inline-block rounded-full bg-maha-100 px-3 py-1 text-xs font-semibold text-[#556B3F]">
                                 {post.category}
                             </span>
                         )}
@@ -174,7 +174,7 @@ export default function BlogShow({ post, related }: Props) {
                                                         )}
                                                     </span>
                                                     <span className="min-w-0">
-                                                        <span className="line-clamp-2 font-serif text-[15px] leading-snug text-heading transition-colors group-hover:text-[#6b7a4f]">
+                                                        <span className="line-clamp-2 font-serif text-[15px] leading-snug text-heading transition-colors group-hover:text-[#556B3F]">
                                                             {tr(p.title, locale)}
                                                         </span>
                                                         {p.published_at && (
@@ -194,7 +194,7 @@ export default function BlogShow({ post, related }: Props) {
                             <section className="overflow-hidden rounded-3xl bg-ink shadow-lg">
                                 <div className="aspect-[4/3] w-full bg-maha-200" />
                                 <div className="px-7 py-8 text-center">
-                                    <p className="font-serif text-sm italic text-[#9aa97a]">{t('blog.ctaEyebrow')}</p>
+                                    <p className="font-serif text-sm italic text-[#8C9A6B]">{t('blog.ctaEyebrow')}</p>
                                     <h3 className="mt-1 font-serif text-2xl tracking-wide text-maha-50">
                                         {t('blog.ctaTitle')}
                                     </h3>

@@ -9,22 +9,24 @@ export default {
     theme: {
         extend: {
             colors: {
+                // Brand palette: forest green → sage → tan → cream
+                // (#2F3E2E · #556B3F · #8C9A6B · #CDBCA3 · #E9E2D5 · #F6F3EF)
                 maha: {
-                    50: '#fbf7f2',
-                    100: '#f3ead9',
-                    200: '#e6d3b3',
-                    300: '#d4b585',
-                    400: '#c39961',
-                    500: '#b07f48',
-                    600: '#92653a',
-                    700: '#754e30',
-                    800: '#5e3e29',
-                    900: '#4d3424',
+                    50: '#F6F3EF',
+                    100: '#E9E2D5',
+                    200: '#CDBCA3',
+                    300: '#ACAB87',
+                    400: '#8C9A6B',
+                    500: '#718255',
+                    600: '#556B3F',
+                    700: '#425436',
+                    800: '#2F3E2E',
+                    900: '#243023',
                 },
                 // Semantic text tokens
-                heading: '#1f3a28',   // dark green — main heading (largest)
-                subheading: '#754e30', // brown/beige — sub-heading
-                ink: '#22251f',        // off-black / dark charcoal — body text
+                heading: '#2F3E2E',    // dark forest green — main heading (largest)
+                subheading: '#556B3F', // olive green — sub-heading
+                ink: '#333A31',        // dark green-charcoal — body text
             },
             fontFamily: {
                 sans: ['Quicksand', 'system-ui', 'sans-serif'],

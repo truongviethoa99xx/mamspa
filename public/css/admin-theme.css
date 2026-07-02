@@ -1,35 +1,35 @@
 /* =============================================================
    Maha Spa — Admin (Filament) theme  ·  "Trung tính ấm"
-   Tông kem/cát · chữ nâu-xám · terracotta dịu.
+   Tông kem/cát · chữ xanh rêu · ô liu dịu — đồng bộ palette website.
    Cảm giác "cửa hàng" ấm áp, không phải dashboard kỹ thuật.
    Nạp qua render hook — không cần build Vite.
    ============================================================= */
 
 :root {
-    --warm-bg: #f4eee4;          /* nền cát */
-    --warm-bg-soft: #faf6ef;
-    --card: #fffdf9;             /* thẻ trắng ngà */
-    --line: #ece3d4;            /* viền mảnh ấm */
-    --line-soft: #f2ebde;
+    --warm-bg: #EFEAE0;          /* nền cát */
+    --warm-bg-soft: #F6F3EF;
+    --card: #FFFEFB;             /* thẻ trắng ngà */
+    --line: #E0D8C8;            /* viền mảnh ấm */
+    --line-soft: #EDE7DA;
 
-    --terra: #c1664a;           /* terracotta — màu nhấn chính */
-    --terra-deep: #a8513a;
-    --terra-soft: #f5e2d8;      /* tint nền nhạt */
-    --terra-tint: #f0d8cc;
+    --terra: #556B3F;           /* xanh ô liu — màu nhấn chính */
+    --terra-deep: #425436;
+    --terra-soft: #E7EBDD;      /* tint nền nhạt */
+    --terra-tint: #DAE1CD;
 
-    --text: #4a4138;            /* nâu-xám đậm (heading) */
-    --text-body: #6a5f53;
-    --text-muted: #9c8f80;
+    --text: #2F3E2E;            /* nâu-xám đậm (heading) */
+    --text-body: #4A5145;
+    --text-muted: #8C8E80;
 
     --green: #5f8c5a;
     --green-soft: #e6efe1;
     --amber: #c98a2e;
     --amber-soft: #f6ead2;
-    --sand: #e9dcc4;
+    --sand: #DACFB9;
 
-    --shadow-sm: 0 1px 2px rgba(74, 65, 56, 0.05);
-    --shadow: 0 10px 30px -16px rgba(74, 65, 56, 0.22);
-    --shadow-lg: 0 30px 70px -30px rgba(74, 65, 56, 0.35);
+    --shadow-sm: 0 1px 2px rgba(47, 62, 46, 0.05);
+    --shadow: 0 10px 30px -16px rgba(47, 62, 46, 0.22);
+    --shadow-lg: 0 30px 70px -30px rgba(47, 62, 46, 0.35);
     --radius: 1.25rem;
     --admin-header-height: 4.25rem;
 }
@@ -42,7 +42,7 @@
 
 .fi-main {
     /* hơi sáng hơn nền để vùng nội dung "thở" */
-    background-image: radial-gradient(60rem 50rem at 100% -10%, rgba(193, 102, 74, 0.05), transparent 60%);
+    background-image: radial-gradient(60rem 50rem at 100% -10%, rgba(85, 107, 63, 0.05), transparent 60%);
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -177,7 +177,7 @@ h1, h2, h3, h4, h5, h6,
     flex-direction: column;
     gap: 0.65rem;
     padding-block: 0.75rem;
-    border-bottom: 1px solid rgba(236, 227, 212, 0.65);
+    border-bottom: 1px solid rgba(224, 216, 200, 0.65);
 }
 
 @media (min-width: 640px) {
@@ -262,7 +262,7 @@ h1, h2, h3, h4, h5, h6,
 /* ---------- Nút ---------- */
 .fi-btn { border-radius: 9999px; font-weight: 700; }
 .fi-btn-color-primary {
-    box-shadow: 0 10px 22px -12px rgba(193, 102, 74, 0.8);
+    box-shadow: 0 10px 22px -12px rgba(85, 107, 63, 0.8);
 }
 
 /* ---------- Form / input ---------- */
@@ -282,15 +282,15 @@ h1, h2, h3, h4, h5, h6,
     font-size: 0.7rem;
     letter-spacing: 0.05em;
 }
-.fi-ta-row:hover { background-color: rgba(245, 226, 216, 0.4); }
+.fi-ta-row:hover { background-color: rgba(231, 235, 221, 0.4); }
 
 /* ---------- Trang đăng nhập ---------- */
 .fi-simple-layout {
-    background-color: #2a221c;
+    background-color: #2F3E2E;
     background-image:
-        radial-gradient(70rem 70rem at 80% -20%, rgba(193, 102, 74, 0.5), transparent 55%),
-        radial-gradient(55rem 55rem at -10% 120%, rgba(233, 220, 196, 0.35), transparent 55%),
-        linear-gradient(160deg, #3a2c22 0%, #2a221c 60%, #1f1813 100%);
+        radial-gradient(70rem 70rem at 80% -20%, rgba(85, 107, 63, 0.5), transparent 55%),
+        radial-gradient(55rem 55rem at -10% 120%, rgba(218, 207, 185, 0.35), transparent 55%),
+        linear-gradient(160deg, #3A4A38 0%, #2F3E2E 60%, #243023 100%);
     min-height: 100vh;
 }
 .fi-simple-main {

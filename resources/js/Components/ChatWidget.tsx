@@ -127,7 +127,7 @@ export function ChatWidget() {
             <button
                 type="button"
                 onClick={() => setIsOpen((open) => !open)}
-                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#c1664a] text-white shadow-[0_8px_24px_rgba(193,102,74,0.36)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:bg-[#a8513a]"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-[#556B3F] text-white shadow-[0_8px_24px_rgba(85,107,63,0.36)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:bg-[#425436]"
                 aria-expanded={isOpen}
                 aria-label={isOpen ? 'Đóng nút liên hệ' : t('common.chat')}
                 title={isOpen ? 'Đóng' : t('common.chat')}

@@ -180,26 +180,26 @@ export default function AboutUs({ branch }: Props) {
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-20">
                         <div>
-                            <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold text-[#6e7a51] md:text-base">
+                            <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold text-[#556B3F] md:text-base">
                                 <Link href="/" className="transition-colors hover:text-ink">
                                     Trang chủ
                                 </Link>
-                                <span className="text-[#8a995e]">/</span>
+                                <span className="text-[#8C9A6B]">/</span>
                                 <Link href="/gioi-thieu" className="transition-colors hover:text-ink">
                                     Chi nhánh
                                 </Link>
-                                <span className="text-[#8a995e]">/</span>
-                                <span className="font-medium text-[#66764b]">{label}</span>
+                                <span className="text-[#8C9A6B]">/</span>
+                                <span className="font-medium text-[#475934]">{label}</span>
                             </nav>
 
-                            <p className="mt-16 font-serif text-xl italic leading-relaxed text-[#66764b] md:text-2xl">
+                            <p className="mt-16 font-serif text-xl italic leading-relaxed text-[#475934] md:text-2xl">
                                 {text(content.hero_eyebrow, 'Trạm dừng chân bình yên giữa lòng Sài Gòn')}
                             </p>
                             <h1 className="mt-4 font-serif text-5xl uppercase tracking-wide text-ink md:text-6xl">
                                 {heroHeading}
                             </h1>
 
-                            <div className="mt-12 max-w-xl space-y-9 text-base leading-8 text-[#66764b] md:text-lg md:leading-9">
+                            <div className="mt-12 max-w-xl space-y-9 text-base leading-8 text-[#475934] md:text-lg md:leading-9">
                                 <p>{heroBody1}</p>
                                 <p>{heroBody2}</p>
                             </div>
@@ -208,22 +208,22 @@ export default function AboutUs({ branch }: Props) {
                                 href={mapUrl(branch)}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="mt-14 inline-flex min-w-56 items-center justify-center rounded-full bg-ink px-9 py-4 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#1a1d18]"
+                                className="mt-14 inline-flex min-w-56 items-center justify-center rounded-full bg-ink px-9 py-4 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                             >
                                 {heroCta}
                             </a>
                         </div>
 
                         <div className="relative mx-auto aspect-[1/1.08] w-full max-w-[620px] bg-cover bg-center" style={imageStyle(images[0])}>
-                            <div className="absolute inset-x-[3%] bottom-[2%] top-[10%] rounded-[1.5rem] border-2 border-dashed border-[#8a995e]" />
-                            {!images[0] && <div className="absolute inset-x-[6%] bottom-0 top-0 rounded-b-[1.75rem] rounded-t-full bg-[#cfc6b5]" />}
+                            <div className="absolute inset-x-[3%] bottom-[2%] top-[10%] rounded-[1.5rem] border-2 border-dashed border-[#8C9A6B]" />
+                            {!images[0] && <div className="absolute inset-x-[6%] bottom-0 top-0 rounded-b-[1.75rem] rounded-t-full bg-[#CDBCA3]" />}
                         </div>
                     </div>
                 </div>
             </section>
             <section className="bg-maha-50 pb-14 md:pb-16">
                 <div className="mx-auto max-w-6xl px-5 sm:px-6">
-                    <p className="text-center font-serif text-sm italic text-[#6e7a51]">
+                    <p className="text-center font-serif text-sm italic text-[#556B3F]">
                         {text(content.space_eyebrow, 'Vẻ đẹp của sự mộc mạc và tĩnh tại')}
                     </p>
                     <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
@@ -231,19 +231,19 @@ export default function AboutUs({ branch }: Props) {
                     </h2>
 
                     <div className="mt-9 grid gap-6 lg:grid-cols-[1.85fr_1fr]">
-                        <div className="relative min-h-[340px] rounded-3xl bg-[#cfc6b5] bg-cover bg-center md:min-h-[420px]" style={imageStyle(images[1])}>
+                        <div className="relative min-h-[340px] rounded-3xl bg-[#CDBCA3] bg-cover bg-center md:min-h-[420px]" style={imageStyle(images[1])}>
                             <span className="absolute bottom-6 left-6 rounded-xl bg-white px-6 py-3.5 font-serif text-sm font-bold text-ink">
                                 {text(content.space_image_1_label, 'Phòng trị liệu riêng tư')}
                             </span>
                         </div>
 
                         <div className="grid gap-6">
-                            <div className="relative min-h-[165px] rounded-3xl bg-[#cfc6b5] bg-cover bg-center md:min-h-[197px]" style={imageStyle(images[2])}>
+                            <div className="relative min-h-[165px] rounded-3xl bg-[#CDBCA3] bg-cover bg-center md:min-h-[197px]" style={imageStyle(images[2])}>
                                 <span className="absolute bottom-6 left-6 rounded-xl bg-white px-6 py-3.5 font-serif text-sm font-bold text-ink">
                                     {text(content.space_image_2_label, 'Góc thưởng trà')}
                                 </span>
                             </div>
-                            <div className="relative min-h-[165px] rounded-3xl bg-[#cfc6b5] bg-cover bg-center md:min-h-[197px]" style={imageStyle(images[3])}>
+                            <div className="relative min-h-[165px] rounded-3xl bg-[#CDBCA3] bg-cover bg-center md:min-h-[197px]" style={imageStyle(images[3])}>
                                 <span className="absolute bottom-6 left-6 rounded-xl bg-white px-6 py-3.5 font-serif text-sm font-bold text-ink">
                                     {text(content.space_image_3_label, 'Chi tiết Đông Dương')}
                                 </span>
@@ -255,7 +255,7 @@ export default function AboutUs({ branch }: Props) {
                         {[1, 2, 3].map((item) => (
                             <div
                                 key={item}
-                                className="rounded-3xl bg-[#cfc6b5] bg-cover bg-center p-4"
+                                className="rounded-3xl bg-[#CDBCA3] bg-cover bg-center p-4"
                                 style={imageStyle(images[item + 3])}
                             >
                                 <div className="aspect-[4/3.85] rounded-xl border-2 border-white/70" />
@@ -268,7 +268,7 @@ export default function AboutUs({ branch }: Props) {
                 <div className="mx-auto max-w-6xl px-5 sm:px-6">
                     <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                         <div>
-                            <p className="font-serif text-sm italic text-[#6e7a51] md:text-base">
+                            <p className="font-serif text-sm italic text-[#556B3F] md:text-base">
                                 {text(content.reviews_eyebrow, 'Hành trình chữa lành không biên giới')}
                             </p>
                             <h2 className="mt-2 font-serif text-3xl uppercase tracking-wide text-ink md:text-4xl">
@@ -280,7 +280,7 @@ export default function AboutUs({ branch }: Props) {
                             <button
                                 type="button"
                                 onClick={() => scrollReviews('prev')}
-                                className="flex h-12 w-12 items-center justify-center rounded-full border border-maha-200 bg-white text-[#8a995e]"
+                                className="flex h-12 w-12 items-center justify-center rounded-full border border-maha-200 bg-white text-[#8C9A6B]"
                                 aria-label="Previous review"
                             >
                                 <ChevronLeft className="h-6 w-6" />
@@ -303,7 +303,7 @@ export default function AboutUs({ branch }: Props) {
                                 data-review-card
                                 className="w-[280px] shrink-0 rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 md:w-[310px]"
                             >
-                                <div className="relative aspect-[16/10.4] rounded-xl bg-[#cfc6b5]">
+                                <div className="relative aspect-[16/10.4] rounded-xl bg-[#CDBCA3]">
                                     <span className="absolute left-4 top-4 rounded-full bg-white px-4 py-2 font-serif text-sm font-bold text-ink">
                                         {review.flag} {review.country}
                                     </span>
@@ -315,7 +315,7 @@ export default function AboutUs({ branch }: Props) {
                                     <h3 className="mt-4 font-serif text-xl font-bold leading-snug text-ink">
                                         {text(review.title, '')}
                                     </h3>
-                                    <p className="mt-4 text-sm leading-7 text-[#66764b]">
+                                    <p className="mt-4 text-sm leading-7 text-[#475934]">
                                         {text(review.content, '')}
                                     </p>
                                 </div>
@@ -332,13 +332,13 @@ export default function AboutUs({ branch }: Props) {
                 <div className="mx-auto max-w-6xl px-5 sm:px-6">
                     <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14">
                         <div>
-                            <p className="font-serif text-sm italic text-[#6e7a51] md:text-base">
+                            <p className="font-serif text-sm italic text-[#556B3F] md:text-base">
                                 {text(content.contact_eyebrow, 'Ghé thăm không gian yên bình')}
                             </p>
                             <h2 className="mt-2 font-serif text-3xl uppercase tracking-wide text-ink md:text-4xl">
                                 {text(content.contact_heading, 'Thông tin liên hệ')}
                             </h2>
-                            <span className="mt-5 block h-px w-20 bg-[#8a995e]" />
+                            <span className="mt-5 block h-px w-20 bg-[#8C9A6B]" />
 
                             <div className="mt-10 space-y-9">
                                 <div className="flex gap-6">
@@ -347,7 +347,7 @@ export default function AboutUs({ branch }: Props) {
                                         <h3 className="font-serif text-xl font-bold text-ink">
                                             {text(content.address_heading, 'Địa chỉ chi nhánh')}
                                         </h3>
-                                        <p className="mt-2 text-base leading-7 text-[#66764b]">
+                                        <p className="mt-2 text-base leading-7 text-[#475934]">
                                             {branch.address}
                                         </p>
                                     </div>
@@ -361,7 +361,7 @@ export default function AboutUs({ branch }: Props) {
                                         </h3>
                                         <p className="mt-2 text-base font-bold leading-7 text-ink">
                                             {branch.phone}
-                                            <span className="ml-4 font-serif font-normal italic text-[#66764b]">
+                                            <span className="ml-4 font-serif font-normal italic text-[#475934]">
                                                 {text(content.phone_note, '(Hỗ trợ Zalo / WhatsApp / Line)')}
                                             </span>
                                         </p>
@@ -374,9 +374,9 @@ export default function AboutUs({ branch }: Props) {
                                         <h3 className="font-serif text-xl font-bold text-ink">
                                             {text(content.hours_heading, 'Giờ đón khách')}
                                         </h3>
-                                        <p className="mt-2 text-base leading-7 text-[#66764b]">
+                                        <p className="mt-2 text-base leading-7 text-[#475934]">
                                             {branch.open_hours}
-                                            <span className="ml-4 font-serif italic text-[#8a995e]">
+                                            <span className="ml-4 font-serif italic text-[#8C9A6B]">
                                                 {text(content.hours_note, '(Mở cửa tất cả các ngày trong tuần)')}
                                             </span>
                                         </p>
@@ -385,7 +385,7 @@ export default function AboutUs({ branch }: Props) {
                             </div>
                         </div>
 
-                        <div className="relative min-h-[330px] overflow-hidden rounded-3xl bg-[#eadcc7] md:min-h-[390px]">
+                        <div className="relative min-h-[330px] overflow-hidden rounded-3xl bg-[#E9E2D5] md:min-h-[390px]">
                             <iframe
                                 title={`Bản đồ ${branchLabel(tr(branch.name, locale))}`}
                                 src={mapEmbedUrl(branch)}

@@ -24,7 +24,7 @@ interface TestimonialData {
     widgets?: ReviewWidget[];
 }
 
-const AVATAR_COLORS = ['#3b6f5e', '#1f6f8b', '#9a6b3f', '#7d8b5a', '#8b5e83', '#b0623a'];
+const AVATAR_COLORS = ['#3b6f5e', '#1f6f8b', '#9a6b3f', '#718255', '#8b5e83', '#b0623a'];
 
 function avatarColor(name: string): string {
     let hash = 0;
@@ -79,7 +79,7 @@ export function TestimonialBlock({ data }: { data: TestimonialData }) {
         <section className="bg-maha-50 py-10 sm:py-16 md:py-24">
             <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                 {/* Header */}
-                <p className="text-center font-serif text-sm italic text-[#6e7a51] md:text-lg">
+                <p className="text-center font-serif text-sm italic text-[#556B3F] md:text-lg">
                     {t('blocks.testimonial.eyebrow')}
                 </p>
                 <h2 className="mt-2 text-center font-serif text-2xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">

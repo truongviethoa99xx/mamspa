@@ -127,11 +127,11 @@ function FancySelect({
                                 }}
                                 className={cn(
                                     'flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-maha-50 sm:text-base',
-                                    active && 'bg-[#f6ead2] font-semibold text-ink',
+                                    active && 'bg-[#E9E2D5] font-semibold text-ink',
                                 )}
                             >
                                 <span className="truncate">{o.label}</span>
-                                {active && <Check className="h-4 w-4 shrink-0 text-[#6e7a51]" />}
+                                {active && <Check className="h-4 w-4 shrink-0 text-[#556B3F]" />}
                             </button>
                         );
                     })}
@@ -330,7 +330,7 @@ function SearchableServiceSelect({
                 onClick={() => setOpen((current) => ! current)}
                 className={cn(
                     'flex min-h-[3.25rem] w-full items-center justify-between gap-3 rounded-xl border bg-white px-4 py-3 text-left text-base text-ink transition-colors sm:min-h-[3.75rem] sm:px-5 sm:text-lg',
-                    open ? 'border-[#b87339] ring-2 ring-[#b87339]/10' : 'border-[#ead2ae]',
+                    open ? 'border-[#556B3F] ring-2 ring-[#556B3F]/10' : 'border-[#CDBCA3]',
                     hasError && value.length === 0 && 'border-red-400 ring-2 ring-red-100',
                 )}
                 aria-haspopup="listbox"
@@ -338,7 +338,7 @@ function SearchableServiceSelect({
             >
                 <span className={cn('flex items-center gap-2 truncate', value.length === 0 && 'text-ink/70')}>
                     {value.length > 0 && (
-                        <span className="shrink-0 rounded-full bg-[#6e7a51] px-2 py-0.5 text-xs font-semibold text-white">
+                        <span className="shrink-0 rounded-full bg-[#556B3F] px-2 py-0.5 text-xs font-semibold text-white">
                             {value.length}
                         </span>
                     )}
@@ -355,7 +355,7 @@ function SearchableServiceSelect({
                     {selectedServices.map((service) => (
                         <span
                             key={service.id}
-                            className="inline-flex items-center gap-1.5 rounded-full bg-[#f6ead2] py-1 pl-3 pr-2 text-xs font-medium text-ink"
+                            className="inline-flex items-center gap-1.5 rounded-full bg-[#E9E2D5] py-1 pl-3 pr-2 text-xs font-medium text-ink"
                         >
                             {tr(service.name, locale)}
                             <button
@@ -372,7 +372,7 @@ function SearchableServiceSelect({
             )}
 
             {open && (
-                <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-30 overflow-hidden rounded-2xl border border-[#ead2ae] bg-white shadow-2xl shadow-maha-900/10">
+                <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-30 overflow-hidden rounded-2xl border border-[#CDBCA3] bg-white shadow-2xl shadow-maha-900/10">
                     <div className="relative border-b border-maha-100">
                         <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-maha-500" />
                         <input
@@ -401,14 +401,14 @@ function SearchableServiceSelect({
                                         onClick={() => toggle(serviceValue)}
                                         className={cn(
                                             'flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-maha-50',
-                                            active && 'bg-[#f6ead2] text-ink',
+                                            active && 'bg-[#E9E2D5] text-ink',
                                         )}
                                     >
                                         <span className="flex items-center gap-3">
                                             <span
                                                 className={cn(
                                                     'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors',
-                                                    active ? 'border-[#6e7a51] bg-[#6e7a51] text-white' : 'border-maha-300',
+                                                    active ? 'border-[#556B3F] bg-[#556B3F] text-white' : 'border-maha-300',
                                                 )}
                                             >
                                                 {active && <Check className="h-3.5 w-3.5" />}
@@ -563,7 +563,7 @@ export function BookingFormBlock({
                     className="rounded-2xl bg-white p-4 shadow-xl shadow-maha-900/5 sm:p-6 md:rounded-3xl md:p-12"
                 >
                     {/* Title */}
-                    <div className="mb-6 rounded-xl border border-maha-100 bg-[#eef0e8] px-4 py-4 text-center md:mb-10 md:rounded-2xl md:px-6 md:py-8">
+                    <div className="mb-6 rounded-xl border border-maha-100 bg-[#E9E2D5] px-4 py-4 text-center md:mb-10 md:rounded-2xl md:px-6 md:py-8">
                         <h2 className="font-serif text-xl uppercase tracking-wide text-ink sm:text-3xl md:text-4xl">
                             {t('blocks.bookingForm.title')}
                         </h2>
@@ -704,7 +704,7 @@ export function BookingFormBlock({
                             {guestServices.map((g, i) => (
                                 <div key={i} className="grid items-start gap-2 md:grid-cols-[140px_1fr] md:gap-4">
                                     <span className="flex items-center gap-2 pt-3 text-sm font-bold text-ink">
-                                        <span className="h-1.5 w-1.5 rounded-full bg-[#5e6b45]" />
+                                        <span className="h-1.5 w-1.5 rounded-full bg-[#475934]" />
                                         {i + 1}.{' '}
                                         {g.gender === 'male'
                                             ? t('blocks.bookingForm.guestMale')
@@ -747,7 +747,7 @@ export function BookingFormBlock({
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="w-full rounded-lg bg-ink py-3.5 font-serif text-sm font-semibold uppercase tracking-wide text-maha-50 transition-colors hover:bg-[#1a1d18] disabled:opacity-60 sm:py-4 sm:text-base"
+                        className="w-full rounded-lg bg-ink py-3.5 font-serif text-sm font-semibold uppercase tracking-wide text-maha-50 transition-colors hover:bg-[#243023] disabled:opacity-60 sm:py-4 sm:text-base"
                     >
                         {submitting ? t('common.processing') : t('blocks.bookingForm.submit')}
                     </button>
@@ -768,8 +768,8 @@ export function BookingFormBlock({
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Check icon */}
-                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#eef0e8]">
-                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#7d8b5a] text-white">
+                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#E9E2D5]">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#718255] text-white">
                             <Check className="h-7 w-7" strokeWidth={3} />
                         </span>
                     </div>
@@ -779,7 +779,7 @@ export function BookingFormBlock({
                     </h3>
 
                     <div className="mt-6 rounded-2xl border border-maha-100 bg-maha-50/60 px-5 py-6 md:px-8">
-                        <p className="font-serif text-sm italic leading-relaxed text-[#6e7a51] md:text-base">
+                        <p className="font-serif text-sm italic leading-relaxed text-[#556B3F] md:text-base">
                             {t('blocks.bookingForm.success.message')}
                         </p>
                     </div>
@@ -792,7 +792,7 @@ export function BookingFormBlock({
 
                     <Link
                         href="/"
-                        className="mt-7 inline-block rounded-full bg-ink px-10 py-3.5 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#1a1d18]"
+                        className="mt-7 inline-block rounded-full bg-ink px-10 py-3.5 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                     >
                         {t('blocks.bookingForm.success.home')}
                     </Link>

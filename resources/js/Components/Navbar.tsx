@@ -64,7 +64,7 @@ function NavDropdown({ label, items, href }: { label: string; items: MenuItem[];
                                 <Link
                                     href={item.href}
                                     onClick={() => setOpen(false)}
-                                    className="group/item flex items-center justify-between rounded-xl px-5 py-3 font-serif text-[15px] text-[#5e6b45] transition-colors hover:bg-maha-50 hover:font-bold hover:text-ink"
+                                    className="group/item flex items-center justify-between rounded-xl px-5 py-3 font-serif text-[15px] text-[#475934] transition-colors hover:bg-maha-50 hover:font-bold hover:text-ink"
                                 >
                                     {item.label}
                                     <ChevronRight className="h-4 w-4 opacity-0 transition-opacity group-hover/item:opacity-100" />

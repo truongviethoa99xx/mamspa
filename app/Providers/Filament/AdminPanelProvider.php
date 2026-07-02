@@ -46,9 +46,9 @@ class AdminPanelProvider extends PanelProvider
             ->brandName(fn (): string => Schema::hasTable('site_settings')
                 ? (SiteSetting::current()->brand_name ?: 'Mầm Spa')
                 : 'Mầm Spa')
-            // Tông "trung tính ấm": terracotta dịu + nền cát kem, chữ nâu-xám.
+            // Tông thiên nhiên: xanh ô liu + nền kem, đồng bộ palette website.
             ->colors([
-                'primary' => Color::hex('#c1664a'),
+                'primary' => Color::hex('#556B3F'),
                 'gray' => Color::Stone,
             ])
             ->brandLogo(function (): string {

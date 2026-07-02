@@ -167,7 +167,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
             <Seo title={`${t('nav.services')} | Mầm Spa`} />
 
             {/* Search hero */}
-            <section className="bg-[#8c897b] py-20 md:py-28">
+            <section className="bg-[#8C9A6B] py-20 md:py-28">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     <p className="font-serif text-lg italic text-maha-50/80 md:text-xl">
                         {t('dichvu.eyebrow')}
@@ -192,7 +192,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                     >
                         {/* Branch */}
                         <div className="flex items-center gap-2 px-3 py-2 sm:py-0 sm:pr-4">
-                            <MapPin className="h-5 w-5 shrink-0 text-[#6e7a51]" />
+                            <MapPin className="h-5 w-5 shrink-0 text-[#556B3F]" />
                             <select
                                 value={branch}
                                 onChange={(e) => setBranch(e.target.value)}
@@ -211,7 +211,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
 
                         {/* Query */}
                         <div className="flex flex-1 items-center gap-3 px-3 py-2 sm:py-0 sm:pl-4">
-                            <Search className="h-5 w-5 shrink-0 text-[#6e7a51]" />
+                            <Search className="h-5 w-5 shrink-0 text-[#556B3F]" />
                             <input
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
@@ -222,7 +222,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
 
                         <button
                             type="submit"
-                            className="rounded-full bg-ink px-8 py-3.5 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#1a1d18]"
+                            className="rounded-full bg-ink px-8 py-3.5 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                         >
                             {t('dichvu.searchButton')}
                         </button>
@@ -234,13 +234,13 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
             <section className="bg-maha-50 py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     {/* Header */}
-                    <p className="text-center font-serif text-base italic text-[#6e7a51] md:text-lg">
+                    <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
                         {t('dichvu.combos.eyebrow')}
                     </p>
                     <h2 className="mt-2 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                         {t('dichvu.combos.title')}
                     </h2>
-                    <span className="mx-auto mt-5 block h-px w-20 bg-[#6e7a51]" />
+                    <span className="mx-auto mt-5 block h-px w-20 bg-[#556B3F]" />
 
                     <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {combos.map((c) => (
@@ -252,7 +252,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-maha-200">
                                     {c.images?.[0] && <img src={c.images[0]} alt={tr(c.name, locale)} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
                                     {c.is_featured && (
-                                        <span className="absolute left-3 top-3 rounded-full bg-[#7d8b5a] px-3 py-1 text-xs font-semibold text-white">
+                                        <span className="absolute left-3 top-3 rounded-full bg-[#718255] px-3 py-1 text-xs font-semibold text-white">
                                             {t('dichvu.combos.bestseller')}
                                         </span>
                                     )}
@@ -260,7 +260,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
 
                                 <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
                                     <h3 className="font-serif text-2xl text-ink">{tr(c.name, locale)}</h3>
-                                    <p className="mt-1 font-bold text-[#6e7a51]">
+                                    <p className="mt-1 font-bold text-[#556B3F]">
                                         {c.duration} {t('blocks.menu.minute')} · {formatVND(c.price)}
                                     </p>
                                     {c.ingredients.length > 0 ? (
@@ -293,13 +293,13 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
             <section className="bg-maha-50 py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     {/* Header */}
-                    <p className="text-center font-serif text-base italic text-[#6e7a51] md:text-lg">
+                    <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
                         {content?.massage_eyebrow || 'Vietnamese Healing Therapy'}
                     </p>
                     <h2 className="mt-2 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                         {t('dichvu.massage.title')}
                     </h2>
-                    <span className="mx-auto mt-5 block h-px w-20 bg-[#6e7a51]" />
+                    <span className="mx-auto mt-5 block h-px w-20 bg-[#556B3F]" />
 
                     <div className="mt-14 grid gap-10 md:grid-cols-3">
                         {massageCards.map((m, index) => (
@@ -326,7 +326,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                     <div className="mt-14 flex justify-center">
                         <Link
                             href="/dat-lich"
-                            className="inline-flex items-center gap-3 rounded-full bg-ink px-9 py-4 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#1a1d18]"
+                            className="inline-flex items-center gap-3 rounded-full bg-ink px-9 py-4 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                         >
                             <CalendarDays className="h-5 w-5" />
                             {t('common.bookNow')}
@@ -338,13 +338,13 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
             {/* Head spa and scalp care */}
             <section className="bg-maha-50 pb-12 pt-1 md:pb-16 md:pt-2">
                 <div className="mx-auto max-w-5xl px-5 sm:px-6">
-                    <p className="text-center font-serif text-sm italic text-[#6e7a51]">
+                    <p className="text-center font-serif text-sm italic text-[#556B3F]">
                         {content?.head_spa_eyebrow || 'Nourish your roots, calm your mind'}
                     </p>
                     <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
                         {content?.head_spa_title || 'Head Spa & Scalp Care'}
                     </h2>
-                    <span className="mx-auto mt-3 block h-px w-14 bg-[#6e7a51]" />
+                    <span className="mx-auto mt-3 block h-px w-14 bg-[#556B3F]" />
 
                     <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:gap-8">
                         {headSpaCards.map((card) => (
@@ -352,7 +352,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                                 key={card.title}
                                 className="rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5"
                             >
-                                <div className="aspect-[16/6.4] rounded-xl bg-[#cfc6b5] bg-cover bg-center" style={imageStyle(card.image)} />
+                                <div className="aspect-[16/6.4] rounded-xl bg-[#CDBCA3] bg-cover bg-center" style={imageStyle(card.image)} />
 
                                 <div className="px-1 pb-1 pt-6">
                                     <h3 className="font-serif text-lg font-bold uppercase tracking-wide text-ink md:text-xl">
@@ -366,11 +366,11 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                                                     <h4 className="text-base font-bold leading-snug text-ink md:text-lg">
                                                         {service.name}
                                                     </h4>
-                                                    <span className="shrink-0 pt-0.5 font-serif text-base font-bold text-[#8a995e] md:text-lg">
+                                                    <span className="shrink-0 pt-0.5 font-serif text-base font-bold text-[#8C9A6B] md:text-lg">
                                                         {service.duration}
                                                     </span>
                                                 </div>
-                                                <p className="mt-2 text-sm leading-6 text-[#66764b] md:text-base md:leading-7">
+                                                <p className="mt-2 text-sm leading-6 text-[#475934] md:text-base md:leading-7">
                                                     {service.description}
                                                 </p>
                                             </div>
@@ -384,7 +384,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                     <div className="mt-10 flex justify-center">
                         <Link
                             href="/dat-lich"
-                            className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3 font-serif text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#1a1d18]"
+                            className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3 font-serif text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                         >
                             <CalendarDays className="h-4 w-4" />
                             {t('common.bookNow')}
@@ -396,13 +396,13 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
             {/* Other care services */}
             <section className="bg-maha-50 pb-14 pt-1 md:pb-20 md:pt-2">
                 <div className="mx-auto max-w-5xl px-5 sm:px-6">
-                    <p className="text-center font-serif text-sm italic text-[#6e7a51]">
+                    <p className="text-center font-serif text-sm italic text-[#556B3F]">
                         {content?.other_care_eyebrow || 'Beauty from within'}
                     </p>
                     <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
                         {content?.other_care_title || 'Các dịch vụ chăm sóc khác'}
                     </h2>
-                    <span className="mx-auto mt-3 block h-px w-14 bg-[#6e7a51]" />
+                    <span className="mx-auto mt-3 block h-px w-14 bg-[#556B3F]" />
 
                     <div className="mt-10 space-y-14 md:mt-12 md:space-y-16">
                         {otherCareItems.map((item, index) => {
@@ -411,10 +411,10 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                                     <h3 className="font-serif text-2xl font-bold text-ink md:text-3xl">
                                         {item.title}
                                     </h3>
-                                    <p className="mt-2 font-serif text-sm italic text-[#8a995e]">
+                                    <p className="mt-2 font-serif text-sm italic text-[#8C9A6B]">
                                         {item.eyebrow}
                                     </p>
-                                    <div className="mt-7 space-y-5 text-sm leading-7 text-[#66764b] md:text-base md:leading-8">
+                                    <div className="mt-7 space-y-5 text-sm leading-7 text-[#475934] md:text-base md:leading-8">
                                         {item.paragraphs.map((paragraph) => (
                                             <p key={paragraph}>{paragraph}</p>
                                         ))}
@@ -422,7 +422,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                                     <div className="mt-8">
                                         <Link
                                             href="/dat-lich"
-                                            className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3 font-serif text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#1a1d18]"
+                                            className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3 font-serif text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                                         >
                                             <CalendarDays className="h-4 w-4" />
                                             {t('common.bookNow')}
@@ -431,7 +431,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                                 </div>
                             );
 
-                            const image = <div className="aspect-[16/12.5] rounded-2xl bg-[#cfc6b5] bg-cover bg-center" style={imageStyle(item.image)} />;
+                            const image = <div className="aspect-[16/12.5] rounded-2xl bg-[#CDBCA3] bg-cover bg-center" style={imageStyle(item.image)} />;
 
                             return (
                                 <div key={item.title} className="grid gap-8 md:grid-cols-2 md:items-center md:gap-12">

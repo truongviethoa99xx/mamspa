@@ -74,10 +74,10 @@ export default function PaymentGuide() {
                 )}
             />
 
-            <section className="bg-[#f3ece0] py-16 md:py-24">
+            <section className="bg-[#E9E2D5] py-16 md:py-24">
                 <div className="mx-auto max-w-3xl px-5 sm:px-6">
                     {/* Header */}
-                    <p className="text-center font-serif text-xs font-semibold uppercase tracking-[0.3em] text-[#6e7a51] md:text-sm">
+                    <p className="text-center font-serif text-xs font-semibold uppercase tracking-[0.3em] text-[#556B3F] md:text-sm">
                         {t('serviceGuidelines.eyebrow', 'Mầm Spa')}
                     </p>
                     <h1 className="mt-3 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
@@ -95,8 +95,8 @@ export default function PaymentGuide() {
                                     {/* Dot marker on the line (filled for first & last) */}
                                     <span
                                         className={[
-                                            'absolute top-1.5 flex h-3.5 w-3.5 -translate-x-[2.4rem] items-center justify-center rounded-full border-2 border-[#6e7a51] md:-translate-x-[2.9rem]',
-                                            i === 0 || i === SECTIONS.length - 1 ? 'bg-[#6e7a51]' : 'bg-[#f3ece0]',
+                                            'absolute top-1.5 flex h-3.5 w-3.5 -translate-x-[2.4rem] items-center justify-center rounded-full border-2 border-[#556B3F] md:-translate-x-[2.9rem]',
+                                            i === 0 || i === SECTIONS.length - 1 ? 'bg-[#556B3F]' : 'bg-[#E9E2D5]',
                                         ].join(' ')}
                                     >
                                         {(i === 0 || i === SECTIONS.length - 1) && (

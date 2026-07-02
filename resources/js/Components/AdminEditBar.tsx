@@ -50,11 +50,11 @@ export function AdminEditBar() {
     const target = editTarget(path);
 
     return (
-        <div className="fixed bottom-6 left-6 z-50 flex max-w-[calc(100vw-2rem)] flex-wrap items-center gap-2 rounded-full border border-[#d8c7bb] bg-white/95 p-2 text-sm font-semibold text-[#5b4638] shadow-[0_10px_30px_rgba(69,52,40,0.18)] backdrop-blur">
+        <div className="fixed bottom-6 left-6 z-50 flex max-w-[calc(100vw-2rem)] flex-wrap items-center gap-2 rounded-full border border-[#CDBCA3] bg-white/95 p-2 text-sm font-semibold text-[#2F3E2E] shadow-[0_10px_30px_rgba(47,62,46,0.18)] backdrop-blur">
             {user.can_manage_content && (
                 <a
                     href={target.href}
-                    className="inline-flex items-center gap-2 rounded-full bg-[#c1664a] px-4 py-2 text-white transition hover:bg-[#a8513a]"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#556B3F] px-4 py-2 text-white transition hover:bg-[#425436]"
                 >
                     <Edit3 className="h-4 w-4" />
                     {target.label}
@@ -64,7 +64,7 @@ export function AdminEditBar() {
             {user.can_manage_content && (
                 <a
                     href="/admin/translation-strings"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#e7d8cc] bg-[#fbf8f4] transition hover:bg-[#f2e7de]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E9E2D5] bg-[#F6F3EF] transition hover:bg-[#E9E2D5]"
                     title="Sửa UI Translations"
                     aria-label="Sửa UI Translations"
                 >
@@ -74,7 +74,7 @@ export function AdminEditBar() {
             {user.can_manage_site && (
                 <a
                     href="/admin/site-settings"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#e7d8cc] bg-[#fbf8f4] transition hover:bg-[#f2e7de]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E9E2D5] bg-[#F6F3EF] transition hover:bg-[#E9E2D5]"
                     title="Thiết lập chung"
                     aria-label="Thiết lập chung"
                 >
@@ -84,7 +84,7 @@ export function AdminEditBar() {
             {user.can_manage_staff && (
                 <a
                     href="/admin/users"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#e7d8cc] bg-[#fbf8f4] transition hover:bg-[#f2e7de]"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#E9E2D5] bg-[#F6F3EF] transition hover:bg-[#E9E2D5]"
                     title="Nhân sự & phân quyền"
                     aria-label="Nhân sự & phân quyền"
                 >

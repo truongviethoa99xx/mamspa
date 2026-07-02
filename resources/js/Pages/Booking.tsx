@@ -162,14 +162,14 @@ export default function Booking({ preselect, branches, services }: Props) {
                 <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
                     {/* Header */}
                     <header className="text-center">
-                        <p className="font-serif text-base italic text-[#6b7a4f]">{t('bookingForm.eyebrow')}</p>
+                        <p className="font-serif text-base italic text-[#556B3F]">{t('bookingForm.eyebrow')}</p>
                         <h1 className="mt-1 font-serif text-4xl tracking-wide text-heading md:text-5xl">
                             {t('bookingForm.title')}
                         </h1>
                     </header>
 
                     {/* Thank-you banner */}
-                    <div className="mx-auto mt-8 max-w-4xl rounded-2xl border border-[#cdd2b5] bg-[#eef0e3] px-6 py-5 text-center">
+                    <div className="mx-auto mt-8 max-w-4xl rounded-2xl border border-[#CDBCA3] bg-[#E9E2D5] px-6 py-5 text-center">
                         <p className="text-sm leading-relaxed text-ink/80">{t('bookingForm.thankYou')}</p>
                     </div>
 
@@ -184,7 +184,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                     <select
                                         value={branchId ?? ''}
                                         onChange={(e) => setBranchId(Number(e.target.value))}
-                                        className="w-full appearance-none rounded-2xl border border-maha-200 bg-white px-5 py-4 text-ink shadow-sm focus:border-[#6b7a4f] focus:outline-none"
+                                        className="w-full appearance-none rounded-2xl border border-maha-200 bg-white px-5 py-4 text-ink shadow-sm focus:border-[#556B3F] focus:outline-none"
                                     >
                                         {branches.map((b) => (
                                             <option key={b.id} value={b.id}>
@@ -218,7 +218,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                             {guests.map((g, i) => (
                                                 <li key={g.key} className="grid items-center gap-3 sm:grid-cols-[160px_1fr]">
                                                     <span className="flex items-center gap-2 text-sm text-ink/80">
-                                                        <span className="h-1.5 w-1.5 rounded-full bg-[#6b7a4f]" />
+                                                        <span className="h-1.5 w-1.5 rounded-full bg-[#556B3F]" />
                                                         {i + 1}. {g.label}
                                                     </span>
                                                     <div className="relative">
@@ -227,7 +227,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                                             onChange={(e) =>
                                                                 setServiceByKey((prev) => ({ ...prev, [g.key]: Number(e.target.value) }))
                                                             }
-                                                            className="w-full appearance-none rounded-xl border border-maha-200 bg-maha-50 px-4 py-3 text-sm text-ink focus:border-[#6b7a4f] focus:outline-none"
+                                                            className="w-full appearance-none rounded-xl border border-maha-200 bg-maha-50 px-4 py-3 text-sm text-ink focus:border-[#556B3F] focus:outline-none"
                                                         >
                                                             {availableServices.map((s) => (
                                                                 <option key={s.id} value={s.id}>
@@ -257,7 +257,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                         {(['afternoon', 'evening', 'morning'] as const).map((period) =>
                                             groupedSlots[period].length > 0 ? (
                                                 <div key={period} className="mb-6">
-                                                    <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#6b7a4f]">
+                                                    <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#556B3F]">
                                                         {t(`bookingForm.${period}`)}
                                                     </p>
                                                     <div className="flex flex-wrap gap-3">
@@ -276,7 +276,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                                                             ? 'border-ink bg-ink text-maha-50'
                                                                             : disabled
                                                                               ? 'cursor-not-allowed border-maha-100 bg-maha-50 text-maha-300'
-                                                                              : 'border-maha-200 bg-white text-ink hover:border-[#6b7a4f]')
+                                                                              : 'border-maha-200 bg-white text-ink hover:border-[#556B3F]')
                                                                     }
                                                                 >
                                                                     {s.start}
@@ -304,7 +304,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                         />
                                     </Field>
                                     <Field label={t('bookingForm.phone')} required>
-                                        <div className="flex overflow-hidden rounded-xl border border-maha-200 bg-white focus-within:border-[#6b7a4f]">
+                                        <div className="flex overflow-hidden rounded-xl border border-maha-200 bg-white focus-within:border-[#556B3F]">
                                             <span className="flex items-center border-r border-maha-200 px-3 text-lg">🇻🇳</span>
                                             <input
                                                 value={contact.phone}
@@ -323,7 +323,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                         />
                                     </Field>
                                     <Field label={t('bookingForm.contactChannel')}>
-                                        <div className="flex overflow-hidden rounded-xl border border-maha-200 bg-white focus-within:border-[#6b7a4f]">
+                                        <div className="flex overflow-hidden rounded-xl border border-maha-200 bg-white focus-within:border-[#556B3F]">
                                             <div className="relative">
                                                 <select
                                                     value={contact.channel}
@@ -362,19 +362,19 @@ export default function Booking({ preselect, branches, services }: Props) {
 
                         {/* ── Summary column ── */}
                         <aside className="lg:sticky lg:top-24 lg:self-start">
-                            <div className="rounded-3xl border border-[#cdd2b5] bg-white p-7 shadow-xl shadow-maha-900/5">
+                            <div className="rounded-3xl border border-[#CDBCA3] bg-white p-7 shadow-xl shadow-maha-900/5">
                                 <h2 className="text-center font-serif text-2xl text-heading">{t('bookingForm.summaryTitle')}</h2>
-                                <span className="mx-auto mt-3 block h-px w-16 bg-[#6b7a4f]/50" />
+                                <span className="mx-auto mt-3 block h-px w-16 bg-[#556B3F]/50" />
 
                                 <dl className="mt-6 space-y-5 text-sm">
                                     <div>
-                                        <dt className="text-xs font-semibold uppercase tracking-wider text-[#6b7a4f]">
+                                        <dt className="text-xs font-semibold uppercase tracking-wider text-[#556B3F]">
                                             {t('bookingForm.summaryPlace')}
                                         </dt>
                                         <dd className="mt-1 font-semibold text-ink">{tr(selectedBranch?.name, locale) || '—'}</dd>
                                     </div>
                                     <div>
-                                        <dt className="text-xs font-semibold uppercase tracking-wider text-[#6b7a4f]">
+                                        <dt className="text-xs font-semibold uppercase tracking-wider text-[#556B3F]">
                                             {t('bookingForm.summaryDatetime')}
                                         </dt>
                                         <dd className="mt-1 font-semibold text-ink">
@@ -382,7 +382,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                         </dd>
                                     </div>
                                     <div>
-                                        <dt className="text-xs font-semibold uppercase tracking-wider text-[#6b7a4f]">
+                                        <dt className="text-xs font-semibold uppercase tracking-wider text-[#556B3F]">
                                             {t('bookingForm.summaryCustomers')} ({guests.length} {t('bookingForm.people')})
                                         </dt>
                                         <dd className="mt-2 space-y-3">
@@ -424,7 +424,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                                 value={voucherCode}
                                                 onChange={(e) => setVoucherCode(e.target.value)}
                                                 placeholder="Voucher"
-                                                className="w-full rounded-lg border border-maha-200 bg-white px-3 py-2 text-sm focus:border-[#6b7a4f] focus:outline-none"
+                                                className="w-full rounded-lg border border-maha-200 bg-white px-3 py-2 text-sm focus:border-[#556B3F] focus:outline-none"
                                             />
                                             <button
                                                 type="button"
@@ -524,11 +524,11 @@ function Calendar({ value, min, locale, onChange }: { value: string; min: string
     return (
         <div className="rounded-2xl border border-maha-200 bg-white p-5">
             <div className="mb-4 flex items-center justify-center gap-4">
-                <button type="button" onClick={() => shift(-1)} className="text-maha-600 hover:text-[#6b7a4f]" aria-label="prev">
+                <button type="button" onClick={() => shift(-1)} className="text-maha-600 hover:text-[#556B3F]" aria-label="prev">
                     <ChevronLeft className="h-5 w-5" />
                 </button>
                 <span className="font-serif text-lg capitalize text-heading">{monthLabel}</span>
-                <button type="button" onClick={() => shift(1)} className="text-maha-600 hover:text-[#6b7a4f]" aria-label="next">
+                <button type="button" onClick={() => shift(1)} className="text-maha-600 hover:text-[#556B3F]" aria-label="next">
                     <ChevronRight className="h-5 w-5" />
                 </button>
             </div>

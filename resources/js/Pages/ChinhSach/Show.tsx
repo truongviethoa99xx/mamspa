@@ -47,12 +47,12 @@ const BODY_CLASS = [
     '[&_p]:mt-5 [&_p]:leading-[1.85]',
     '[&_h2]:mt-12 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:leading-snug [&_h2]:text-heading md:[&_h2]:text-3xl',
     '[&_h3]:mt-9 [&_h3]:font-serif [&_h3]:text-xl [&_h3]:text-heading',
-    '[&_a]:text-[#6b7a4f] [&_a]:underline [&_a]:underline-offset-2',
+    '[&_a]:text-[#556B3F] [&_a]:underline [&_a]:underline-offset-2',
     '[&_strong]:text-ink [&_strong]:font-semibold',
     '[&_ul]:mt-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6',
     '[&_ol]:mt-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6',
     '[&_img]:mt-8 [&_img]:w-full [&_img]:rounded-2xl',
-    '[&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-[#6b7a4f] [&_blockquote]:pl-6 [&_blockquote]:font-serif [&_blockquote]:text-xl [&_blockquote]:italic [&_blockquote]:leading-relaxed [&_blockquote]:text-heading',
+    '[&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-[#556B3F] [&_blockquote]:pl-6 [&_blockquote]:font-serif [&_blockquote]:text-xl [&_blockquote]:italic [&_blockquote]:leading-relaxed [&_blockquote]:text-heading',
 ].join(' ');
 
 export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
@@ -77,11 +77,11 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
             <div className="bg-maha-50">
                 <div className="mx-auto max-w-6xl px-4 py-10 md:py-14">
                     <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-maha-600">
-                        <Link href="/" className="transition-colors hover:text-[#6b7a4f]">
+                        <Link href="/" className="transition-colors hover:text-[#556B3F]">
                             {t('nav.home')}
                         </Link>
                         <span className="text-maha-300">/</span>
-                        <Link href="/chinh-sach" className="transition-colors hover:text-[#6b7a4f]">
+                        <Link href="/chinh-sach" className="transition-colors hover:text-[#556B3F]">
                             {t('policy.pageTitle', 'Chính sách')}
                         </Link>
                         <span className="text-maha-300">/</span>
@@ -89,7 +89,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
                     </nav>
 
                     <header className="mt-7 max-w-3xl">
-                        <p className="font-serif text-sm italic text-[#6b7a4f]">
+                        <p className="font-serif text-sm italic text-[#556B3F]">
                             {t('policy.pageTitle', 'Chính sách')}
                         </p>
                         <h1 className="mt-2 font-serif text-4xl leading-[1.1] text-heading md:text-5xl">{name}</h1>
@@ -122,7 +122,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
                                                     href={`/chinh-sach/${p.slug}`}
                                                     className="group flex items-center gap-3 rounded-xl px-3 py-3 -mx-3 transition-colors hover:bg-maha-50"
                                                 >
-                                                    <ShieldCheck className="h-4 w-4 shrink-0 text-[#6b7a4f]" />
+                                                    <ShieldCheck className="h-4 w-4 shrink-0 text-[#556B3F]" />
                                                     <span className="flex-1 text-sm leading-snug text-ink/80 transition-colors group-hover:text-heading">
                                                         {tr(p.name, locale)}
                                                     </span>
@@ -135,7 +135,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
                             )}
 
                             <section className="rounded-3xl bg-ink px-7 py-8 text-center shadow-lg">
-                                <p className="font-serif text-sm italic text-[#9aa97a]">
+                                <p className="font-serif text-sm italic text-[#8C9A6B]">
                                     {t('policy.ctaEyebrow', 'Cần hỗ trợ thêm?')}
                                 </p>
                                 <h3 className="mt-1 font-serif text-xl tracking-wide text-maha-50">

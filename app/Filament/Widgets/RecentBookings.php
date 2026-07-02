@@ -29,7 +29,7 @@ class RecentBookings extends Widget
         'cancelled' => 'Đã huỷ',
     ];
 
-    private const AVATAR_COLORS = ['#c1664a', '#a8754a', '#7a8c5a', '#8a6d8b', '#5f8c7a', '#b0823a'];
+    private const AVATAR_COLORS = ['#556B3F', '#a8754a', '#7a8c5a', '#8a6d8b', '#5f8c7a', '#b0823a'];
 
     protected function getViewData(): array
     {

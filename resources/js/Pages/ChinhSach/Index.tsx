@@ -26,13 +26,13 @@ export default function ChinhSachIndex({ pages }: ChinhSachIndexProps) {
             <section className="bg-maha-50">
                 <div className="mx-auto max-w-5xl px-4 py-16 md:py-24">
                     <header className="mx-auto max-w-2xl text-center">
-                        <p className="font-serif text-lg italic text-[#6b7a4f]">
+                        <p className="font-serif text-lg italic text-[#556B3F]">
                             {t('policy.eyebrow', 'Minh bạch & rõ ràng')}
                         </p>
                         <h1 className="mt-2 font-serif text-4xl tracking-wide text-heading md:text-5xl">
                             {t('policy.pageTitle', 'Chính sách')}
                         </h1>
-                        <span className="mx-auto mt-5 block h-px w-20 bg-[#6b7a4f]/60" />
+                        <span className="mx-auto mt-5 block h-px w-20 bg-[#556B3F]/60" />
                         <p className="mt-6 text-base leading-relaxed text-ink/65">
                             {t(
                                 'policy.pageDescription',
@@ -84,13 +84,13 @@ function PolicyCard({ page, locale, index, readMore }: PolicyCardProps) {
                 {String(index + 1).padStart(2, '0')}
             </span>
 
-            <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-maha-50 transition-colors duration-300 group-hover:bg-[#6b7a4f]">
+            <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-maha-50 transition-colors duration-300 group-hover:bg-[#556B3F]">
                 <ShieldCheck className="h-5 w-5" />
             </span>
 
             <div className="relative flex flex-1 flex-col">
                 <h2 className="font-serif text-2xl leading-snug text-heading">{tr(page.name, locale)}</h2>
-                <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold tracking-wide text-ink/70 transition-colors group-hover:text-[#6b7a4f]">
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold tracking-wide text-ink/70 transition-colors group-hover:text-[#556B3F]">
                     {readMore}
                     <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
