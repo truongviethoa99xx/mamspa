@@ -1,7 +1,8 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import AuthLayout from '@/Layouts/AuthLayout';
+import { Seo } from '@/Components/Seo';
 
 export default function Login({ status }: { status?: string }) {
     const { t } = useTranslation();
@@ -16,7 +17,7 @@ export default function Login({ status }: { status?: string }) {
 
     return (
         <AuthLayout>
-            <Head title={t('auth.login')} />
+            <Seo title={t('auth.login')} noIndex />
             <h1 className="mb-4 font-serif text-2xl text-maha-700">{t('auth.login')}</h1>
             {status && <p className="mb-3 text-sm text-green-600">{status}</p>}
             <form onSubmit={submit} className="space-y-3">

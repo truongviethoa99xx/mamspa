@@ -8,7 +8,9 @@ class SiteSetting extends Model
 {
     protected $fillable = [
         'brand_name',
+        'logo_path',
         'tagline',
+        'meta_description',
         'hotline',
         'email',
         'chat_url',

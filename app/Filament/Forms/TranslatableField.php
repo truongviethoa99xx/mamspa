@@ -2,6 +2,7 @@
 
 namespace App\Filament\Forms;
 
+use App\Filament\Forms\Components\QuillEditor;
 use App\Models\TranslationString;
 use App\Services\Translation\TranslationManager;
 use Filament\Forms;
@@ -21,7 +22,7 @@ class TranslatableField
 {
     /**
      * @param  string  $field  tên field translatable, vd. 'name', 'description'
-     * @param  string  $as  'text' | 'textarea' | 'rich'
+     * @param  string  $as  'text' | 'textarea' | 'rich' | 'quill'
      * @param  string|null  $example  văn bản ví dụ hiển thị trong placeholder (vd. "Khám phá chi tiết")
      */
     public static function group(string $field, string $as = 'text', ?string $label = null, int $rows = 3, bool $required = false, ?string $example = null): Forms\Components\Tabs
@@ -36,6 +37,7 @@ class TranslatableField
             $input = match ($as) {
                 'textarea' => Forms\Components\Textarea::make($name)->rows($rows),
                 'rich' => Forms\Components\RichEditor::make($name),
+                'quill' => QuillEditor::make($name),
                 default => Forms\Components\TextInput::make($name),
             };
             if ($required && $lang === 'vi') {
@@ -44,7 +46,7 @@ class TranslatableField
 
             $input = $input->label($fieldLabel);
 
-            if ($as !== 'rich') {
+            if (! in_array($as, ['rich', 'quill'], true)) {
                 $input = $input->placeholder($placeholder);
             }
 

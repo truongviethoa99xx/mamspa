@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, ChevronRight, LogOut, Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { cn, tr } from '@/Lib/utils';
+import { cn, publicAssetUrl, tr } from '@/Lib/utils';
 import { useLocale } from '@/Hooks/useLocale';
 import type { SharedProps } from '@/types';
 
@@ -84,6 +84,8 @@ export function Navbar() {
     const { props } = usePage<SharedProps>();
     const [open, setOpen] = useState(false);
     const serviceMenu: MenuItem[] = props.site?.service_menu ?? [];
+    const brandName = props.site?.brand_name || 'Mầm Spa';
+    const logoUrl = publicAssetUrl(props.site?.logo_path) || '/images/logo.svg';
 
     const branchItems: MenuItem[] = (props.branches ?? []).map((b) => ({
         href: `/chi-nhanh/${b.slug}`,
@@ -119,8 +121,8 @@ export function Navbar() {
                 {/* Center logo */}
                 <Link href="/" className="flex items-center justify-center md:col-start-2">
                     <img
-                        src="/images/logo.svg"
-                        alt="Mầm Spa"
+                        src={logoUrl}
+                        alt={brandName}
                         width={120}
                         height={120}
                         className="h-16 w-16 object-contain md:h-20 md:w-20 lg:h-[112px] lg:w-[112px]"

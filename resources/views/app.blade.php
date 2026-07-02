@@ -6,7 +6,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index, follow">
 
-    <title inertia>{{ config('app.name', 'Mầm Spa') }}</title>
+    @php
+        // $page['props']['site'] is already resolved once per request by HandleInertiaRequests;
+        // reuse it here instead of re-querying SiteSetting.
+        $siteProps = $page['props']['site'] ?? [];
+        $siteName = $siteProps['brand_name'] ?? config('app.name', 'Mầm Spa');
+        $siteLogoUrl = ! empty($siteProps['logo_path']) ? asset('storage/'.$siteProps['logo_path']) : asset('images/logo.svg');
+    @endphp
+
+    <title inertia>{{ $siteName }}</title>
 
     @php
         $path = request()->path() === '/' ? '' : '/' . request()->path();
@@ -27,7 +35,7 @@
     <link rel="alternate" hreflang="x-default" href="{{ $canonicalBase }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Mầm Spa">
+    <meta property="og:site_name" content="{{ $siteName }}">
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:locale" content="{{ $currentLocale === 'vi' ? 'vi_VN' : ($currentLocale === 'en' ? 'en_US' : ($currentLocale === 'ja' ? 'ja_JP' : ($currentLocale === 'ko' ? 'ko_KR' : 'zh_CN'))) }}">
     <meta property="og:image" content="{{ config('app.url') }}/images/banner.png">
@@ -49,9 +57,9 @@
             [
                 '@type' => 'Organization',
                 '@id' => config('app.url') . '/#organization',
-                'name' => 'Mầm Spa',
+                'name' => $siteName,
                 'url' => config('app.url'),
-                'logo' => config('app.url') . '/images/logo.svg',
+                'logo' => $siteLogoUrl,
                 'sameAs' => [
                     'https://www.facebook.com/mahaSpa.danang',
                     'https://www.instagram.com/mahaspa.danang',
@@ -65,7 +73,7 @@
                 '@type' => 'WebSite',
                 '@id' => config('app.url') . '/#website',
                 'url' => config('app.url'),
-                'name' => 'Mầm Spa',
+                'name' => $siteName,
                 'publisher' => ['@id' => config('app.url') . '/#organization'],
                 'potentialAction' => [
                     '@type' => 'SearchAction',

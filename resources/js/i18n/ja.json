@@ -305,7 +305,9 @@
             "email": "メールアドレス",
             "phone": "電話番号",
             "subject": "件名",
-            "message": "メッセージ"
+            "message": "メッセージ",
+            "title": "メッセージを送る",
+            "subtitle": "Mầm よりできるだけ早くご返信いたします。"
         }
     },
     "promotions": {
@@ -380,5 +382,14 @@
             "cta": "詳しく見る",
             "caption": "{{name}} の静かな一角"
         }
+    },
+    "notFound": {
+        "title": "ページが見つかりません",
+        "heading": "404",
+        "description": "申し訳ございません。お探しのページは存在しないか、移動された可能性があります。",
+        "backHome": "ホームに戻る",
+        "suggestionsTitle": "こちらもご覧ください：",
+        "exploreServices": "サービスを見る",
+        "contact": "お問い合わせ"
     }
 }

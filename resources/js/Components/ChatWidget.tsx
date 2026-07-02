@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePage } from '@inertiajs/react';
 import type { SharedProps } from '@/types';
-import { cn } from '@/Lib/utils';
+import { cn, publicAssetUrl } from '@/Lib/utils';
 
 type ContactButton = NonNullable<SharedProps['site']>['floating_contact_buttons'][number];
 
@@ -50,15 +50,8 @@ const DEFAULT_BUTTONS: ContactButton[] = [
     },
 ];
 
-function publicIconUrl(path?: string | null) {
-    if (!path) return null;
-    if (path.startsWith('http') || path.startsWith('/')) return path;
-
-    return `/storage/${path}`;
-}
-
 function ButtonIcon({ button }: { button: ContactButton }) {
-    const iconUrl = publicIconUrl(button.icon);
+    const iconUrl = publicAssetUrl(button.icon);
     if (iconUrl) {
         return <img src={iconUrl} alt="" className="h-[58%] w-[58%] object-contain" loading="lazy" />;
     }

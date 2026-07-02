@@ -5,8 +5,9 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && npm run build:filament-assets",
         "build:ssr": "vite build && vite build --ssr",
+        "build:filament-assets": "node bin/build-filament-quill.js",
         "lint": "eslint resources/js --ext .ts,.tsx",
         "format": "prettier --write resources/js"
     },
@@ -21,6 +22,7 @@
         "autoprefixer": "^10.4.19",
         "axios": "^1.6.8",
         "concurrently": "^9.2.1",
+        "esbuild": "^0.28.1",
         "eslint": "^8.57.0",
         "eslint-plugin-react": "^7.34.1",
         "eslint-plugin-react-hooks": "^4.6.0",
@@ -40,6 +42,7 @@
         "i18next": "^23.10.1",
         "i18next-browser-languagedetector": "^7.2.1",
         "lucide-react": "^0.363.0",
+        "quill": "^2.0.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-i18next": "^14.1.0",

@@ -20,7 +20,9 @@ export interface FooterBranch {
 
 export interface SiteSettings {
     brand_name?: string | null;
+    logo_path?: string | null;
     tagline?: string | null;
+    meta_description?: string | null;
     hotline?: string | null;
     email?: string | null;
     chat_url?: string | null;

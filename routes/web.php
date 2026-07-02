@@ -8,6 +8,7 @@ use App\Http\Controllers\DichVuController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GioiThieuController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PolicyPageController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TranslationController;
@@ -45,8 +46,21 @@ Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 
+Route::get('/chinh-sach', [PolicyPageController::class, 'index'])->name('chinh-sach.index');
+Route::get('/chinh-sach/{policyPage:slug}', [PolicyPageController::class, 'show'])->name('chinh-sach.show');
+
 Route::get('/luu-y-dich-vu', fn () => Inertia::render('PaymentGuide'))->name('service-guidelines');
 // Giữ URL cũ hoạt động (301) phòng khi đã chia sẻ.
 Route::permanentRedirect('/huong-dan-thanh-toan', '/luu-y-dich-vu');
 
 require __DIR__.'/auth.php';
+
+// Catch-all for URLs that don't match any route above. Defined here (rather
+// than only in the exception handler) so it runs through the full `web`
+// middleware group — locale + Inertia shared props (auth, site, branches...)
+// need to be available for the layout, same as on every other page.
+Route::fallback(function () {
+    return Inertia::render('NotFound')
+        ->toResponse(request())
+        ->setStatusCode(404);
+})->name('fallback');

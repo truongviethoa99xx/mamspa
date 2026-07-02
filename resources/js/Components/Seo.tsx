@@ -1,4 +1,5 @@
-import { Head } from '@inertiajs/react'
+import { Head, usePage } from '@inertiajs/react'
+import type { SharedProps } from '@/types'
 
 interface SeoProps {
   title: string
@@ -9,24 +10,28 @@ interface SeoProps {
   noIndex?: boolean
 }
 
-const BRAND_SUFFIX = ' | Mầm Spa'
+const DEFAULT_BRAND_NAME = 'Mầm Spa'
 
 export function Seo({ title, description, image, type = 'website', schema, noIndex }: SeoProps) {
-  const fullTitle = title.endsWith(BRAND_SUFFIX) ? title : `${title}${BRAND_SUFFIX}`
+  const { props } = usePage<SharedProps>()
+  const brandName = props.site?.brand_name || DEFAULT_BRAND_NAME
+  const brandSuffix = ` | ${brandName}`
+  const fullTitle = title.endsWith(brandSuffix) ? title : `${title}${brandSuffix}`
+  const metaDescription = description || props.site?.meta_description || undefined
   const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : []
 
   return (
     <Head title={fullTitle}>
-      {description && <meta name="description" content={description} />}
+      {metaDescription && <meta name="description" content={metaDescription} />}
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
       <meta property="og:title" content={fullTitle} />
-      {description && <meta property="og:description" content={description} />}
+      {metaDescription && <meta property="og:description" content={metaDescription} />}
       {image && <meta property="og:image" content={image} />}
       <meta property="og:type" content={type} />
 
       <meta name="twitter:title" content={fullTitle} />
-      {description && <meta name="twitter:description" content={description} />}
+      {metaDescription && <meta name="twitter:description" content={metaDescription} />}
       {image && <meta name="twitter:image" content={image} />}
 
       {schemas.map((s, i) => (

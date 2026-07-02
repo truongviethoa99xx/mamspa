@@ -305,7 +305,9 @@
             "email": "电子邮件",
             "phone": "手机号码",
             "subject": "主题",
-            "message": "留言内容"
+            "message": "留言内容",
+            "title": "给我们留言",
+            "subtitle": "Mầm 会尽快回复您。"
         }
     },
     "promotions": {
@@ -380,5 +382,14 @@
             "cta": "查看详情",
             "caption": "{{name}} 的宁静一隅"
         }
+    },
+    "notFound": {
+        "title": "找不到页面",
+        "heading": "404",
+        "description": "抱歉，您访问的页面不存在或已被移动。",
+        "backHome": "返回首页",
+        "suggestionsTitle": "您可能在寻找：",
+        "exploreServices": "探索服务",
+        "contact": "联系我们"
     }
 }

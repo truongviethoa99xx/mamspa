@@ -305,7 +305,9 @@
             "email": "이메일",
             "phone": "전화번호",
             "subject": "제목",
-            "message": "메시지"
+            "message": "메시지",
+            "title": "메시지 보내기",
+            "subtitle": "Mầm이 최대한 빨리 답변드리겠습니다."
         }
     },
     "promotions": {
@@ -380,5 +382,14 @@
             "cta": "자세히 보기",
             "caption": "{{name}}의 평온한 한 켠"
         }
+    },
+    "notFound": {
+        "title": "페이지를 찾을 수 없습니다",
+        "heading": "404",
+        "description": "죄송합니다. 찾으시는 페이지가 존재하지 않거나 이동되었습니다.",
+        "backHome": "홈으로 돌아가기",
+        "suggestionsTitle": "이런 페이지는 어떠세요?",
+        "exploreServices": "서비스 둘러보기",
+        "contact": "문의하기"
     }
 }

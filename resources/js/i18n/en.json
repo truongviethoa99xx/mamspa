@@ -306,7 +306,9 @@
             "email": "Email",
             "phone": "Phone",
             "subject": "Subject",
-            "message": "Message"
+            "message": "Message",
+            "title": "Send us a message",
+            "subtitle": "Mầm will get back to you as soon as possible."
         }
     },
     "promotions": {
@@ -418,5 +420,14 @@
                 "p3": "If a refund is ever needed, please let our reception know — Mầm will listen and help you with the utmost care."
             }
         }
+    },
+    "notFound": {
+        "title": "Page not found",
+        "heading": "404",
+        "description": "Sorry, the page you're looking for doesn't exist or has been moved.",
+        "backHome": "Back to home",
+        "suggestionsTitle": "You might be looking for:",
+        "exploreServices": "Explore services",
+        "contact": "Contact Mầm Spa"
     }
 }

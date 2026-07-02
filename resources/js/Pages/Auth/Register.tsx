@@ -1,7 +1,8 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import AuthLayout from '@/Layouts/AuthLayout';
+import { Seo } from '@/Components/Seo';
 
 export default function Register() {
     const { t } = useTranslation();
@@ -16,7 +17,7 @@ export default function Register() {
 
     return (
         <AuthLayout>
-            <Head title={t('auth.register')} />
+            <Seo title={t('auth.register')} noIndex />
             <h1 className="mb-4 font-serif text-2xl text-maha-700">{t('auth.register')}</h1>
             <form onSubmit={submit} className="space-y-3">
                 <input className="w-full rounded-lg border px-4 py-2" placeholder={t('auth.name')}

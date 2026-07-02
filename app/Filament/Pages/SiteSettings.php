@@ -37,7 +37,7 @@ class SiteSettings extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill(SiteSetting::current()->only([
-            'brand_name', 'tagline', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links', 'review_widget',
+            'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links', 'review_widget',
         ]));
     }
 
@@ -47,9 +47,30 @@ class SiteSettings extends Page implements HasForms
             ->schema([
                 Forms\Components\Section::make('Thông tin toàn site')
                     ->schema([
-                        Forms\Components\TextInput::make('brand_name')->label('Tên thương hiệu'),
+                        Forms\Components\TextInput::make('brand_name')
+                            ->label('Tên thương hiệu')
+                            ->helperText('Hiển thị ở navbar, footer, tiêu đề trình duyệt (SEO title) và dữ liệu có cấu trúc Organization.')
+                            ->maxLength(70)
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('logo_path')
+                            ->label('Logo website')
+                            ->helperText('Ảnh vuông, nền trong suốt, tối thiểu 512×512px. Định dạng SVG hoặc PNG cho chất lượng tốt nhất. Dùng ở navbar, admin panel và schema.org Organization.')
+                            ->image()
+                            ->acceptedFileTypes(['image/svg+xml', 'image/png', 'image/webp'])
+                            ->maxSize(2048)
+                            ->disk('public')
+                            ->directory('branding')
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('tagline')->label('Tagline footer'),
-                        Forms\Components\TextInput::make('hotline')->label('Hotline')->tel(),
+                        Forms\Components\Textarea::make('meta_description')
+                            ->label('Mô tả SEO mặc định (meta description)')
+                            ->helperText('Dùng cho các trang chưa khai báo mô tả riêng. Nên viết 120-160 ký tự, chứa từ khóa chính (spa, massage, Đà Nẵng...).')
+                            ->rows(3)
+                            ->maxLength(160)
+                            ->live(onBlur: true)
+                            ->hint(fn (?string $state): string => mb_strlen($state ?? '').'/160 ký tự')
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('hotline')->label('Hotline'),
                         Forms\Components\TextInput::make('email')->label('Email')->email()->rules(['not_regex:/[\r\n]/']),
                         Forms\Components\TextInput::make('chat_url')->label('Link nút chat / Zalo')->url()->columnSpanFull(),
                     ])
@@ -117,8 +138,8 @@ class SiteSettings extends Page implements HasForms
                                     ->required(),
                                 Forms\Components\TextInput::make('href')
                                     ->label('Link')
-                                    ->helperText('Ví dụ: https://zalo.me/0865806166, tel:0865806166, https://wa.me/84865806166')
-                                    ->rules(['regex:/\A(https?:\/\/|tel:|mailto:|sms:)/i'])
+                                    ->helperText('Ví dụ: https://zalo.me/0865806166, tel:0865806166, https://wa.me/84865806166. Chưa có link thì để "#".')
+                                    ->rules(['regex:/\A(#|https?:\/\/|tel:|mailto:|sms:)/i'])
                                     ->required(),
                                 Forms\Components\ColorPicker::make('background')
                                     ->label('Màu nền')

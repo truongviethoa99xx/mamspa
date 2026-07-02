@@ -55,7 +55,9 @@ class HandleInertiaRequests extends Middleware
                 ])->all(),
             'site' => [
                 'brand_name' => $site?->brand_name,
+                'logo_path' => $site?->logo_path,
                 'tagline' => $site?->tagline,
+                'meta_description' => $site?->meta_description,
                 'hotline' => $site?->hotline,
                 'email' => $site?->email,
                 'chat_url' => $site?->chat_url,

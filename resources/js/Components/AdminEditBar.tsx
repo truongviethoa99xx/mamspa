@@ -40,7 +40,7 @@ function editTarget(path: string) {
 
 export function AdminEditBar() {
     const page = usePage<SharedProps>();
-    const user = page.props.auth.user;
+    const user = page.props.auth?.user;
 
     if (!user?.can_manage_content && !user?.can_manage_site && !user?.can_manage_staff) {
         return null;

@@ -306,7 +306,9 @@
             "email": "Email",
             "phone": "Số điện thoại",
             "subject": "Chủ đề",
-            "message": "Nội dung"
+            "message": "Nội dung",
+            "title": "Gửi lời nhắn",
+            "subtitle": "Mầm sẽ phản hồi bạn trong thời gian sớm nhất."
         }
     },
     "promotions": {
@@ -418,5 +420,14 @@
                 "p3": "Với những trường hợp cần hoàn tiền, xin bạn nhắn với lễ tân — Mầm sẽ lắng nghe và hỗ trợ bạn một cách chu đáo nhất."
             }
         }
+    },
+    "notFound": {
+        "title": "Không tìm thấy trang",
+        "heading": "404",
+        "description": "Xin lỗi, trang bạn tìm không tồn tại hoặc đã được di chuyển.",
+        "backHome": "Về trang chủ",
+        "suggestionsTitle": "Có thể bạn đang tìm:",
+        "exploreServices": "Khám phá dịch vụ",
+        "contact": "Liên hệ với Mầm"
     }
 }

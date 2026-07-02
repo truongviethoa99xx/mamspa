@@ -13,6 +13,13 @@ export function formatVND(value: number): string {
     }).format(value);
 }
 
+export function publicAssetUrl(path?: string | null): string | null {
+    if (!path) return null;
+    if (path.startsWith('http') || path.startsWith('/')) return path;
+
+    return `/storage/${path}`;
+}
+
 export function tr(value: unknown, locale: string = 'vi'): string {
     if (typeof value === 'string') return value;
     if (value && typeof value === 'object' && locale in value) {
