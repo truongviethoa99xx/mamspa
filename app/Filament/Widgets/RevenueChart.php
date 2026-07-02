@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Booking;
+use App\Models\User;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
 
@@ -15,6 +16,14 @@ class RevenueChart extends ChartWidget
     protected static ?int $sort = 3;
 
     protected static ?string $maxHeight = '260px';
+
+    // Dữ liệu doanh thu — ẩn với biên tập viên (chỉ quản lý nội dung).
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+
+        return $user instanceof User && $user->hasAnyRole(User::adminRoles());
+    }
 
     protected function getData(): array
     {

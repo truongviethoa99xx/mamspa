@@ -47,3 +47,6 @@ yarn-error.log
 #    package-lock.json
 #  → KHÔNG thêm /vendor hay /public/build vào danh sách ignore phía trên.
 # ════════════════════════════════════════════════════════════════════
+
+# log production tải về để debug — không commit
+/laravel.log

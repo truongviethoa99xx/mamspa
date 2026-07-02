@@ -29,7 +29,7 @@ class ServiceResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Dịch vụ';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 6;
 
     protected static function allowedRoles(): array
     {

@@ -29,6 +29,8 @@ class PromotionResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Khuyến mãi';
 
+    protected static ?int $navigationSort = 9;
+
     protected static function allowedRoles(): array
     {
         return User::contentRoles();

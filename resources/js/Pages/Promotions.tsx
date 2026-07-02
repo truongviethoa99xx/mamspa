@@ -21,7 +21,7 @@ export default function Promotions({ promotions }: { promotions: Promo[] }) {
         <PublicLayout>
             <Seo
                 title={t('nav.promotions')}
-                description={t('promotions.metaDescription', 'Ưu đãi và khuyến mãi mới nhất tại Mầm Spa Đà Nẵng — chương trình theo mùa, lễ Tết và gói combo trị liệu.')}
+                description={t('promotions.metaDescription', 'Ưu đãi và khuyến mãi mới nhất tại Mầm Spa — chương trình theo mùa, lễ Tết và gói combo trị liệu.')}
             />
             <section className="bg-maha-50 py-12">
                 <div className="mx-auto max-w-5xl px-4">

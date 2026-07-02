@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Booking;
+use App\Models\User;
 use Filament\Widgets\Widget;
 use Illuminate\Support\Carbon;
 
@@ -13,6 +14,14 @@ class UpcomingAppointments extends Widget
     protected int|string|array $columnSpan = 1;
 
     protected static ?int $sort = 4;
+
+    // Lịch hẹn khách hàng — ẩn với biên tập viên (chỉ quản lý nội dung).
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+
+        return $user instanceof User && $user->hasAnyRole(User::adminRoles());
+    }
 
     protected function getViewData(): array
     {

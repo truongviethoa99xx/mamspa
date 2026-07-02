@@ -76,7 +76,7 @@ export default function BlogIndex({ featured, posts }: BlogIndexProps) {
         <PublicLayout>
             <Seo
                 title={t('nav.blog')}
-                description={t('blog.metaDescription', 'Cẩm nang chăm sóc sức khoẻ, wellness và trải nghiệm thư giãn tại Mầm Spa Đà Nẵng.')}
+                description={t('blog.metaDescription', 'Cẩm nang chăm sóc sức khoẻ, wellness và trải nghiệm thư giãn tại Mầm Spa.')}
             />
 
             <section className="bg-maha-50">

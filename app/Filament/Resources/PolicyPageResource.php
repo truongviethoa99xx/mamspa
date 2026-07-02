@@ -29,6 +29,8 @@ class PolicyPageResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Trang chính sách';
 
+    protected static ?int $navigationSort = 5;
+
     protected static function allowedRoles(): array
     {
         return User::contentRoles();

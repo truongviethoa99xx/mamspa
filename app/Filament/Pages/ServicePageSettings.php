@@ -25,6 +25,8 @@ class ServicePageSettings extends Page implements HasForms
 
     protected static ?string $navigationLabel = 'Trang Dịch vụ';
 
+    protected static ?int $navigationSort = 3;
+
     protected static string $view = 'filament.pages.service-page-settings';
 
     public ?array $data = [];

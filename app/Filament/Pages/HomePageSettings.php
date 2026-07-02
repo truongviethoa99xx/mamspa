@@ -26,6 +26,8 @@ class HomePageSettings extends Page implements HasForms
 
     protected static ?string $navigationLabel = 'Trang chủ';
 
+    protected static ?int $navigationSort = 1;
+
     protected static string $view = 'filament.pages.home-page-settings';
 
     public ?array $data = [];

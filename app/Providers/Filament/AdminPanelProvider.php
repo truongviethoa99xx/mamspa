@@ -71,6 +71,14 @@ class AdminPanelProvider extends PanelProvider
                     asset('css/admin-theme.css').'?v='.filemtime(public_path('css/admin-theme.css')),
                 ),
             )
+            // Thứ tự nhóm menu: vận hành hằng ngày trước, nội dung sau, hệ thống cuối.
+            ->navigationGroups([
+                'Vận hành',
+                'Khách hàng',
+                'Bán hàng',
+                'Nội dung',
+                'Hệ thống',
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

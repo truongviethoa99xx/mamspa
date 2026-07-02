@@ -25,6 +25,8 @@ class AboutPageSettings extends Page implements HasForms
 
     protected static ?string $navigationLabel = 'Trang Giới thiệu';
 
+    protected static ?int $navigationSort = 2;
+
     protected static string $view = 'filament.pages.about-page-settings';
 
     public ?array $data = [];

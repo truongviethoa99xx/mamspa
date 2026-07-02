@@ -30,7 +30,9 @@ SSR không được dùng ở runtime (blade dùng `@inertia` client-side) nên 
 ## 1. Yêu cầu phía hosting
 
 - PHP **8.3+** (cPanel → *MultiPHP Manager* chọn 8.3), bật extension: `pdo_mysql`,
-  `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `fileinfo`, `gd`.
+  `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `fileinfo`, `gd`,
+  **`intl`** (bắt buộc — Filament dùng cho phân trang, thiếu là 500 mọi trang admin có bảng).
+  Kiểm tra ở cPanel → *Select PHP Version* → tab *Extensions* → tick `intl` + `fileinfo`.
 - MySQL 8 (hoặc MariaDB 10.6+).
 - Cho phép tạo **Cron Job** (gần như host nào cũng có).
 - *(Khuyến nghị)* SSH access — chạy `artisan` tiện hơn. Nếu không có SSH, mục 6 có cách
@@ -208,6 +210,8 @@ cPanel chạy PHP dưới user của bạn nên `755/644` là đủ (đừng dù
 | **500 Internal Server Error** | `.env` sai DB, thiếu `APP_KEY`, hoặc `storage/` không ghi được. Xem `storage/logs/laravel.log`. Tạm `APP_DEBUG=true` để xem lỗi rồi tắt lại. |
 | **Ảnh upload không hiện** | Chưa chạy `php artisan storage:link`. Ở host không cho symlink: copy `storage/app/public/*` → `public/storage/`. |
 | **Admin `/admin` lỗi** | Chưa `php artisan filament:optimize` hoặc chưa tạo user. |
+| **500 ở các trang danh sách admin (blog-posts, bookings...), log báo `The "intl" PHP extension is required`** | Extension `intl` bị tắt. cPanel → *Select PHP Version* → *Extensions* → tick `intl`. |
+| **Log báo `Class "finfo" not found` khi upload ảnh** | Extension `fileinfo` bị tắt. Bật tương tự như `intl` ở trên. |
 | **Đổi `.env` không ăn** | Đang cache config. Chạy `php artisan config:clear` rồi `config:cache`. |
 | **Mail không gửi** | Sai `MAIL_*`. Shared hosting thường chặn SMTP ngoài — ưu tiên SMTP nội bộ host (port 465/ssl) hoặc Mailgun/SendGrid API. |
 | **`composer: command not found`** | **Bình thường — không cần Composer trên cPanel.** `vendor/` đã có sẵn qua `git pull`. Đừng chạy `composer install`. Nếu thật sự cần, dùng `composer.phar` (ngay dưới). |

@@ -12,7 +12,7 @@ export default function Gallery({ images }: { images: { src: string; branch: str
         <PublicLayout>
             <Seo
                 title={t('nav.gallery')}
-                description={t('gallery.metaDescription', 'Khám phá không gian Indochine yên tĩnh của Mầm Spa Đà Nẵng qua bộ sưu tập hình ảnh hai chi nhánh.')}
+                description={t('gallery.metaDescription', 'Khám phá không gian Indochine yên tĩnh của Mầm Spa qua bộ sưu tập hình ảnh hai chi nhánh.')}
             />
             <section className="bg-maha-50 py-12">
                 <div className="mx-auto max-w-5xl px-4">

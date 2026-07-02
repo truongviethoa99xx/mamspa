@@ -31,7 +31,7 @@ class UserResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Nhân sự & phân quyền';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     protected static function allowedRoles(): array
     {

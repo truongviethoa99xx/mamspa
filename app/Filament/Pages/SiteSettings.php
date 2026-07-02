@@ -19,11 +19,13 @@ class SiteSettings extends Page implements HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static ?string $navigationGroup = 'Nội dung';
+    protected static ?string $navigationGroup = 'Hệ thống';
 
     protected static ?string $title = 'Thiết lập chung';
 
     protected static ?string $navigationLabel = 'Thiết lập chung';
+
+    protected static ?int $navigationSort = 1;
 
     protected static string $view = 'filament.pages.site-settings';
 

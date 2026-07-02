@@ -91,8 +91,8 @@ export default function Home({
     return (
         <PublicLayout>
             <Seo
-                title="Spa Đà Nẵng — Cân bằng Thân Tâm Trí"
-                description="Mầm Spa Đà Nẵng — không gian trị liệu massage, chăm sóc da, gội đầu dưỡng sinh. Hành trình cân bằng Thân Tâm Trí. Đặt lịch online tại 2 chi nhánh."
+                title="Mầm Spa — Cân bằng Thân Tâm Trí"
+                description="Mầm Spa — không gian trị liệu massage, chăm sóc da, gội đầu dưỡng sinh. Hành trình cân bằng Thân Tâm Trí. Đặt lịch online tại 2 chi nhánh."
             />
 
             <HeroBlock data={hero} />

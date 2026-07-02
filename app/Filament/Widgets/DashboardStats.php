@@ -15,6 +15,14 @@ class DashboardStats extends Widget
 
     protected static ?int $sort = 2;
 
+    // Chứa doanh thu & số liệu booking — ẩn với biên tập viên (chỉ quản lý nội dung).
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+
+        return $user instanceof User && $user->hasAnyRole(User::adminRoles());
+    }
+
     protected function getViewData(): array
     {
         $today = Carbon::today();

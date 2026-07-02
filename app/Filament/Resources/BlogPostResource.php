@@ -30,6 +30,8 @@ class BlogPostResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Bài viết';
 
+    protected static ?int $navigationSort = 8;
+
     protected static function allowedRoles(): array
     {
         return User::contentRoles();

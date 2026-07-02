@@ -155,7 +155,7 @@ export default function Booking({ preselect, branches, services }: Props) {
         <PublicLayout>
             <Seo
                 title={t('bookingForm.title')}
-                description={t('bookingForm.metaDescription', 'Đặt lịch trị liệu online tại Mầm Spa Đà Nẵng — chọn chi nhánh, dịch vụ và khung giờ phù hợp chỉ trong vài bước.')}
+                description={t('bookingForm.metaDescription', 'Đặt lịch trị liệu online tại Mầm Spa — chọn chi nhánh, dịch vụ và khung giờ phù hợp chỉ trong vài bước.')}
             />
 
             <section className="bg-maha-50">

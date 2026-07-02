@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Booking;
+use App\Models\User;
 use Filament\Widgets\Widget;
 
 class RecentBookings extends Widget
@@ -12,6 +13,14 @@ class RecentBookings extends Widget
     protected int|string|array $columnSpan = 'full';
 
     protected static ?int $sort = 5;
+
+    // Dữ liệu booking khách hàng — ẩn với biên tập viên (chỉ quản lý nội dung).
+    public static function canView(): bool
+    {
+        $user = auth()->user();
+
+        return $user instanceof User && $user->hasAnyRole(User::adminRoles());
+    }
 
     private const STATUS_LABEL = [
         'pending' => 'Chờ duyệt',

@@ -26,6 +26,8 @@ class ContactPageSettings extends Page implements HasForms
 
     protected static ?string $navigationLabel = 'Trang Liên hệ';
 
+    protected static ?int $navigationSort = 4;
+
     protected static string $view = 'filament.pages.contact-page-settings';
 
     public ?array $data = [];

@@ -29,7 +29,7 @@ class BranchResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Chi nhánh';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 7;
 
     protected static function allowedRoles(): array
     {
