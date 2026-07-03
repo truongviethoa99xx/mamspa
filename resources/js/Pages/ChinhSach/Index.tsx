@@ -74,7 +74,7 @@ interface PolicyCardProps {
 function PolicyCard({ page, locale, index, readMore }: PolicyCardProps) {
     return (
         <Link
-            href={`/chinh-sach/${page.slug}`}
+            href={`/chinh-sach/${page.slug}/`}
             className="group relative flex flex-col gap-6 overflow-hidden rounded-3xl border border-maha-100 bg-white p-7 shadow-sm shadow-maha-900/[0.03] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-maha-900/10 md:p-8"
         >
             <span

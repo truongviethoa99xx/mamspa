@@ -18,9 +18,11 @@ class HomePageContentSeeder extends Seeder
           'hero_subtitle' => '{"en": "Traditional Vietnamese spa experience in Da Nang", "ja": null, "ko": null, "vi": "Gác lại những bộn bề của nhịp sống hối hả, mời bạn bước vào không gian Indochine tĩnh lặng để lắng nghe cơ thể và vỗ về tâm hồn.", "zh": null}',
           'hero_eyebrow' => '{"en": "Rooted in Vietnam\'s healing traditions", "ja": "ベトナムの伝統的な治療法に由来する", "ko": "베트남의 전통 치유에서 유래한", "vi": " Bắt nguồn từ truyền thống chữa bệnh của Việt Nam", "zh": "源自越南的传统疗法"}',
           'hero_cta_text' => '{"en": "Book now", "ja": "今すぐ予約", "ko": "지금 예약하기", "vi": "Đặt lịch ngay", "zh": "立即预约"}',
-          'hero_cta_link' => '/dat-lich',
+          'hero_cta_link' => '/dat-lich/',
           'hero_image' => NULL,
+          'hero_visible' => 1,
           'service_list_title' => '{"en": "Featured Services", "ja": null, "ko": null, "vi": "Dịch vụ nổi bật", "zh": null}',
+          'featured_services_visible' => 1,
           'branch_intro_title' => '{"en": "Explore the Mầm Spa spaces", "ja": "Mầm Spa の空間を巡る", "ko": "Mầm Spa 공간 둘러보기", "vi": "Khám phá các không gian Mầm Spa", "zh": "探索 Mầm Spa 空间"}',
           'branch_intro_eyebrow' => '{"en": "A retreat for body, mind & soul", "ja": "A retreat for body, mind & soul", "ko": "A retreat for body, mind & soul", "vi": "A retreat for body, mind & soul", "zh": "A retreat for body, mind & soul"}',
           'branch_intro_subheading' => '{"en": "A healing space", "ja": "癒やしの空間", "ko": "치유의 공간", "vi": "Không gian chữa lành", "zh": "疗愈空间"}',
@@ -33,6 +35,7 @@ class HomePageContentSeeder extends Seeder
           'testimonial_review_count' => 0,
           'testimonial_source' => 'google',
           'testimonials' => '[]',
+          'testimonials_visible' => 1,
         );
 
         $data['created_at'] = $data['created_at'] ?? now();

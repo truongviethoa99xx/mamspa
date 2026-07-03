@@ -73,7 +73,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
 
     const name = tr(service.name, locale);
     const description = tr(service.description, locale);
-    const bookHref = `/dat-lich?service=${service.slug}`;
+    const bookHref = `/dat-lich/?service=${service.slug}`;
     const heroImage = service.images?.[0];
 
     const serviceUrl = `${window.location.origin}/dich-vu/${service.slug}`;
@@ -89,7 +89,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
         }),
         breadcrumbSchema([
             { name: t('nav.home'), url: window.location.origin },
-            { name: t('nav.services'), url: window.location.origin + '/dich-vu' },
+            { name: t('nav.services'), url: window.location.origin + '/dich-vu/' },
             { name, url: serviceUrl },
         ]),
         ...(faqs.length > 0 ? [faqSchema(faqs)] : []),
@@ -108,7 +108,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                                     {t('nav.home')}
                                 </Link>
                                 <span className="text-[#8C9A6B]">/</span>
-                                <Link href="/dich-vu" className="transition-colors hover:text-ink">
+                                <Link href="/dich-vu/" className="transition-colors hover:text-ink">
                                     {t('nav.services')}
                                 </Link>
                                 <span className="text-[#8C9A6B]">/</span>
@@ -158,7 +158,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                                     {t('common.bookNow')}
                                 </Link>
                                 <Link
-                                    href="/contact"
+                                    href="/contact/"
                                     className="inline-flex min-w-44 items-center justify-center rounded-full border-2 border-ink px-8 py-3.5 font-serif text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-ink hover:text-maha-50"
                                 >
                                     {t('dichvu.detail.consult')}
@@ -330,7 +330,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                             {combos.map((item) => (
                                 <Link
                                     key={item.id}
-                                    href={`/dich-vu/${item.slug}`}
+                                    href={`/dich-vu/${item.slug}/`}
                                     className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
                                 >
                                     <div className="relative aspect-[16/9.6] overflow-hidden rounded-xl bg-[#CDBCA3]">
@@ -464,7 +464,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                             {related.map((item) => (
                                 <Link
                                     key={item.id}
-                                    href={`/dich-vu/${item.slug}`}
+                                    href={`/dich-vu/${item.slug}/`}
                                     className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
                                 >
                                     <div className="aspect-[4/3] rounded-xl bg-[#CDBCA3]" />

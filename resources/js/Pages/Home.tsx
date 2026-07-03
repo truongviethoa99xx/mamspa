@@ -40,7 +40,6 @@ interface BranchItem {
     body_1?: Translatable
     body_2?: Translatable
     cta?: Translatable
-    caption?: Translatable
 }
 
 interface BookingBranch {
@@ -65,6 +64,12 @@ interface Testimonials {
     widgets?: { name?: Translatable; html: string }[]
 }
 
+interface SectionVisibility {
+    hero: boolean
+    featuredServices: boolean
+    testimonials: boolean
+}
+
 interface Props {
     hero: HeroContent
     featuredServices: ServiceItem[]
@@ -73,6 +78,7 @@ interface Props {
     bookingBranches: BookingBranch[]
     bookingServices: BookingService[]
     testimonials: Testimonials
+    sectionVisibility: SectionVisibility
 }
 
 /**
@@ -87,6 +93,7 @@ export default function Home({
     bookingBranches,
     bookingServices,
     testimonials,
+    sectionVisibility,
 }: Props) {
     return (
         <PublicLayout>
@@ -95,12 +102,14 @@ export default function Home({
                 description="Mầm Spa — không gian trị liệu massage, chăm sóc da, gội đầu dưỡng sinh. Hành trình cân bằng Thân Tâm Trí. Đặt lịch online tại 2 chi nhánh."
             />
 
-            <HeroBlock data={hero} />
+            {sectionVisibility.hero && <HeroBlock data={hero} />}
             <BranchesBlock data={{ branches }} />
-            <ServiceListBlock data={{ title: hero.service_list_title, services: featuredServices }} />
+            {sectionVisibility.featuredServices && (
+                <ServiceListBlock data={{ title: hero.service_list_title, services: featuredServices }} />
+            )}
             <ServiceMenuBlock data={{ services: menuServices }} />
             <BookingFormBlock data={{ branches: bookingBranches, services: bookingServices }} />
-            <TestimonialBlock data={testimonials} />
+            {sectionVisibility.testimonials && <TestimonialBlock data={testimonials} />}
         </PublicLayout>
     )
 }

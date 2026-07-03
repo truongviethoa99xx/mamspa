@@ -9,10 +9,15 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder...
+    # Add Trailing Slash (301) — URL chuẩn SEO luôn kết thúc bằng "/".
+    # Chỉ áp dụng cho GET, bỏ qua file thật, URL có đuôi file (.xml, .js...)
+    # và khu vực admin/livewire.
+    RewriteCond %{REQUEST_METHOD} =GET
+    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+    RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]+$
+    RewriteCond %{REQUEST_URI} !^/(admin|livewire)(/|$)
+    RewriteRule ^(.+[^/])$ /$1/ [L,R=301]
 
     # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d

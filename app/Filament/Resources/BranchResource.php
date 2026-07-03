@@ -148,7 +148,6 @@ class BranchResource extends Resource
                     TranslatableField::group('page_content.home_intro_body_1', as: 'textarea', label: 'Đoạn mô tả 1', rows: 3, example: 'Lạc bước vào không gian Lê Văn Sỹ như trở về một khoảng trời yên tĩnh hiếm hoi.'),
                     TranslatableField::group('page_content.home_intro_body_2', as: 'textarea', label: 'Đoạn mô tả 2', rows: 3, example: 'Một điểm đến lý tưởng để tạm gác lại nhịp sống hối hả và kết nối lại với chính mình.'),
                     TranslatableField::group('page_content.home_intro_cta', label: 'Nút xem chi tiết', example: 'Khám phá chi tiết'),
-                    TranslatableField::group('page_content.home_intro_caption', label: 'Chú thích ảnh nhỏ', example: 'Góc nhỏ bình yên tại Mầm Spa Lê Văn Sỹ'),
                 ])
                 ->columns(2)
                 ->collapsible(),

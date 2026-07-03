@@ -17,8 +17,9 @@
     <title inertia>{{ $siteName }}</title>
 
     @php
-        $path = request()->path() === '/' ? '' : '/' . request()->path();
-        $canonicalBase = config('app.url') . ($path ? $path : '/');
+        // URL chuẩn luôn kết thúc bằng "/" (khớp với rule 301 trong .htaccess).
+        $path = trim(request()->path(), '/');
+        $canonicalBase = config('app.url') . '/' . ($path !== '' ? $path . '/' : '');
         $currentLocale = app()->getLocale();
         $defaultLocale = config('app.locale', 'vi');
         $localeMap = ['vi' => 'vi', 'en' => 'en', 'ja' => 'ja', 'ko' => 'ko', 'zh' => 'zh-Hans'];
@@ -36,7 +37,7 @@
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ $siteName }}">
-    <meta property="og:url" content="{{ request()->url() }}">
+    <meta property="og:url" content="{{ $canonicalBase }}">
     <meta property="og:locale" content="{{ $currentLocale === 'vi' ? 'vi_VN' : ($currentLocale === 'en' ? 'en_US' : ($currentLocale === 'ja' ? 'ja_JP' : ($currentLocale === 'ko' ? 'ko_KR' : 'zh_CN'))) }}">
     <meta property="og:image" content="{{ config('app.url') }}/images/banner.png">
     <meta property="og:image:width" content="1200">
@@ -77,7 +78,7 @@
                 'publisher' => ['@id' => config('app.url') . '/#organization'],
                 'potentialAction' => [
                     '@type' => 'SearchAction',
-                    'target' => ['@type' => 'EntryPoint', 'urlTemplate' => config('app.url') . '/dich-vu?category={search_term_string}'],
+                    'target' => ['@type' => 'EntryPoint', 'urlTemplate' => config('app.url') . '/dich-vu/?category={search_term_string}'],
                     'query-input' => 'required name=search_term_string',
                 ],
             ],
@@ -95,7 +96,7 @@
                 ],
                 'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 16.0685, 'longitude' => 108.2127],
                 'telephone' => '+84934743026',
-                'url' => config('app.url') . '/chi-nhanh/heritage',
+                'url' => config('app.url') . '/chi-nhanh/heritage/',
                 'openingHoursSpecification' => [
                     ['@type' => 'OpeningHoursSpecification', 'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens' => '09:00', 'closes' => '21:00'],
                 ],
@@ -117,7 +118,7 @@
                 ],
                 'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 16.0743, 'longitude' => 108.2208],
                 'telephone' => '+84978456185',
-                'url' => config('app.url') . '/chi-nhanh/signature',
+                'url' => config('app.url') . '/chi-nhanh/signature/',
                 'openingHoursSpecification' => [
                     ['@type' => 'OpeningHoursSpecification', 'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens' => '09:00', 'closes' => '21:00'],
                 ],

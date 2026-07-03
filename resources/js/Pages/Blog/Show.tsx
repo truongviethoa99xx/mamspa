@@ -94,7 +94,7 @@ export default function BlogShow({ post, related }: Props) {
         }),
         breadcrumbSchema([
             { name: 'Mầm Spa', url: window.location.origin },
-            { name: t('nav.blog'), url: window.location.origin + '/tin-tuc' },
+            { name: t('nav.blog'), url: window.location.origin + '/tin-tuc/' },
             { name: title, url },
         ]),
     ]
@@ -111,7 +111,7 @@ export default function BlogShow({ post, related }: Props) {
                             {t('nav.home')}
                         </Link>
                         <span className="text-maha-300">/</span>
-                        <Link href="/tin-tuc" className="transition-colors hover:text-[#556B3F]">
+                        <Link href="/tin-tuc/" className="transition-colors hover:text-[#556B3F]">
                             {t('nav.blog')}
                         </Link>
                         <span className="text-maha-300">/</span>
@@ -163,7 +163,7 @@ export default function BlogShow({ post, related }: Props) {
                                     <ul className="mt-5 space-y-5">
                                         {related.map((p) => (
                                             <li key={p.id}>
-                                                <Link href={`/tin-tuc/${p.slug}`} className="group flex gap-4">
+                                                <Link href={`/tin-tuc/${p.slug}/`} className="group flex gap-4">
                                                     <span className="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-maha-200">
                                                         {p.cover_image && (
                                                             <img
@@ -200,7 +200,7 @@ export default function BlogShow({ post, related }: Props) {
                                     </h3>
                                     <p className="mt-3 text-sm leading-relaxed text-maha-100/70">{t('blog.ctaDesc')}</p>
                                     <Link
-                                        href="/dich-vu?category=head-spa"
+                                        href="/dich-vu/?category=head-spa"
                                         className="mt-6 inline-flex items-center gap-2 rounded-full bg-maha-50 px-7 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-white"
                                     >
                                         {t('blog.ctaButton')}

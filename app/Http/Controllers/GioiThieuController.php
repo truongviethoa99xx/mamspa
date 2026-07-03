@@ -58,6 +58,17 @@ class GioiThieuController extends Controller
                 'review_quote' => $content->review_quote,
                 'review_quote_author' => $content->review_quote_author,
             ],
+            // Cờ ẩn/hiện từng khối, chỉnh trong /admin/about-page-settings.
+            'sectionVisibility' => [
+                'hero' => (bool) $content->hero_visible,
+                'features' => (bool) $content->features_visible,
+                'contactBar' => (bool) $content->contact_bar_visible,
+                'story' => (bool) $content->story_visible,
+                'vision' => (bool) $content->vision_visible,
+                'values' => (bool) $content->values_visible,
+                'team' => (bool) $content->team_visible,
+                'reviews' => (bool) $content->reviews_visible,
+            ],
         ]);
     }
 

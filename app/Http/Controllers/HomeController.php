@@ -19,28 +19,34 @@ class HomeController extends Controller
      */
     public function __invoke(): Response
     {
+        $content = HomePageContent::current();
+
         return Inertia::render('Home', [
-            'hero' => $this->hero(),
+            'hero' => $this->hero($content),
             'featuredServices' => $this->featuredServices(),
             'menuServices' => $this->menuServices(),
             'branches' => $this->branches(),
             'bookingBranches' => $this->bookingBranches(),
             'bookingServices' => $this->bookingServices(),
-            'testimonials' => $this->testimonials(),
+            'testimonials' => $this->testimonials($content),
+            // Cờ ẩn/hiện từng khối trên trang chủ, chỉnh trong /admin/home-page-settings.
+            'sectionVisibility' => [
+                'hero' => (bool) $content->hero_visible,
+                'featuredServices' => (bool) $content->featured_services_visible,
+                'testimonials' => (bool) $content->testimonials_visible,
+            ],
         ]);
     }
 
     /** Nội dung banner đầu trang (tĩnh, đa ngôn ngữ). */
-    protected function hero(): array
+    protected function hero(HomePageContent $content): array
     {
-        $content = HomePageContent::current();
-
         return [
             'eyebrow' => $content->hero_eyebrow,
             'title' => $content->hero_title ?: ['vi' => 'Hành trình cân bằng Thân – Tâm – Trí', 'en' => 'The Journey to Balance Body – Mind – Spirit'],
             'subtitle' => $content->hero_subtitle ?: ['vi' => 'Mầm Spa — Trải nghiệm spa truyền thống Việt giữa lòng Đà Nẵng', 'en' => 'Traditional Vietnamese spa experience in Da Nang'],
             'cta_text' => $content->hero_cta_text ?: 'Đặt lịch ngay',
-            'cta_link' => $content->hero_cta_link ?: '/dat-lich',
+            'cta_link' => $content->hero_cta_link ?: '/dat-lich/',
             'image' => $this->publicUrl($content->hero_image),
             'service_list_title' => $content->service_list_title ?: ['vi' => 'Dịch vụ nổi bật', 'en' => 'Featured Services'],
         ];
@@ -101,7 +107,6 @@ class HomeController extends Controller
                     'body_1' => $pc['home_intro_body_1'] ?? null,
                     'body_2' => $pc['home_intro_body_2'] ?? null,
                     'cta' => $pc['home_intro_cta'] ?? null,
-                    'caption' => $pc['home_intro_caption'] ?? null,
                     'images' => $b->getMedia('images')->map(fn ($media) => $media->getUrl())->all(),
                 ];
             })->all();
@@ -132,10 +137,8 @@ class HomeController extends Controller
     }
 
     /** Đánh giá khách hàng (tĩnh — đồng bộ Google reviews). */
-    protected function testimonials(): array
+    protected function testimonials(HomePageContent $content): array
     {
-        $content = HomePageContent::current();
-
         return [
             'rating' => $content->testimonial_rating ?: 5,
             'review_count' => $content->testimonial_review_count ?: 0,

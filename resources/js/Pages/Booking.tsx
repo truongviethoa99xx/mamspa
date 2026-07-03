@@ -87,7 +87,7 @@ export default function Booking({ preselect, branches, services }: Props) {
             return;
         }
         axios
-            .get('/dat-lich/slots', { params: { branch_id: branchId, date } })
+            .get('/dat-lich/slots/', { params: { branch_id: branchId, date } })
             .then((r) => setSlots(r.data.data))
             .catch(() => setSlots([]));
         setTimeSlot('');

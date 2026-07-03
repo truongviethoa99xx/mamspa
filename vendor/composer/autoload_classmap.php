@@ -86,6 +86,8 @@ return array(
     'App\\Http\\Controllers\\ServiceController' => $baseDir . '/app/Http/Controllers/ServiceController.php',
     'App\\Http\\Controllers\\SitemapController' => $baseDir . '/app/Http/Controllers/SitemapController.php',
     'App\\Http\\Controllers\\TranslationController' => $baseDir . '/app/Http/Controllers/TranslationController.php',
+    'App\\Http\\Middleware\\AddTrailingSlash' => $baseDir . '/app/Http/Middleware/AddTrailingSlash.php',
+    'App\\Http\\Middleware\\FixInertiaUrlTrailingSlash' => $baseDir . '/app/Http/Middleware/FixInertiaUrlTrailingSlash.php',
     'App\\Http\\Middleware\\HandleInertiaRequests' => $baseDir . '/app/Http/Middleware/HandleInertiaRequests.php',
     'App\\Http\\Middleware\\NoIndex' => $baseDir . '/app/Http/Middleware/NoIndex.php',
     'App\\Http\\Middleware\\SetLocale' => $baseDir . '/app/Http/Middleware/SetLocale.php',

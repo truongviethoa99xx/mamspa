@@ -15,19 +15,19 @@ class SitemapController extends Controller
         $base = config('app.url');
         $urls = [
             ['loc' => $base.'/', 'priority' => '1.0'],
-            ['loc' => $base.'/gioi-thieu', 'priority' => '0.7'],
-            ['loc' => $base.'/dich-vu', 'priority' => '0.9'],
-            ['loc' => $base.'/dat-lich', 'priority' => '0.9'],
-            ['loc' => $base.'/promotions', 'priority' => '0.7'],
-            ['loc' => $base.'/tin-tuc', 'priority' => '0.7'],
-            ['loc' => $base.'/gallery', 'priority' => '0.6'],
-            ['loc' => $base.'/contact', 'priority' => '0.6'],
+            ['loc' => $base.'/gioi-thieu/', 'priority' => '0.7'],
+            ['loc' => $base.'/dich-vu/', 'priority' => '0.9'],
+            ['loc' => $base.'/dat-lich/', 'priority' => '0.9'],
+            ['loc' => $base.'/promotions/', 'priority' => '0.7'],
+            ['loc' => $base.'/tin-tuc/', 'priority' => '0.7'],
+            ['loc' => $base.'/gallery/', 'priority' => '0.6'],
+            ['loc' => $base.'/contact/', 'priority' => '0.6'],
         ];
 
         if (Schema::hasTable('branches')) {
             foreach (Branch::where('is_active', true)->get() as $b) {
                 $urls[] = [
-                    'loc' => $base.'/chi-nhanh/'.$b->slug,
+                    'loc' => $base.'/chi-nhanh/'.$b->slug.'/',
                     'lastmod' => $b->updated_at?->toIso8601String(),
                     'priority' => '0.8',
                 ];
@@ -36,7 +36,7 @@ class SitemapController extends Controller
         if (Schema::hasTable('services')) {
             foreach (Service::active()->get() as $s) {
                 $urls[] = [
-                    'loc' => $base.'/dich-vu/'.$s->slug,
+                    'loc' => $base.'/dich-vu/'.$s->slug.'/',
                     'lastmod' => $s->updated_at?->toIso8601String(),
                     'priority' => '0.8',
                 ];
@@ -45,7 +45,7 @@ class SitemapController extends Controller
         if (Schema::hasTable('blog_posts')) {
             foreach (BlogPost::published()->get() as $p) {
                 $urls[] = [
-                    'loc' => $base.'/tin-tuc/'.$p->slug,
+                    'loc' => $base.'/tin-tuc/'.$p->slug.'/',
                     'lastmod' => $p->updated_at?->toIso8601String(),
                     'priority' => '0.6',
                 ];

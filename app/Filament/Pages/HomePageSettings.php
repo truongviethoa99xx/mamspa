@@ -41,8 +41,9 @@ class HomePageSettings extends Page implements HasForms
     {
         $this->form->fill(HomePageContent::current()->only([
             'hero_title', 'hero_subtitle', 'hero_eyebrow', 'hero_cta_text', 'hero_cta_link',
-            'hero_image', 'service_list_title', 'testimonial_rating', 'testimonial_review_count',
-            'testimonial_source', 'testimonials',
+            'hero_image', 'hero_visible', 'service_list_title', 'featured_services_visible',
+            'testimonial_rating', 'testimonial_review_count',
+            'testimonial_source', 'testimonials', 'testimonials_visible',
         ]));
     }
 
@@ -52,11 +53,16 @@ class HomePageSettings extends Page implements HasForms
             ->schema([
                 Forms\Components\Section::make('Phần đầu trang')
                     ->schema([
+                        Forms\Components\Toggle::make('hero_visible')
+                            ->label('Hiển thị khối này trên trang chủ')
+                            ->helperText('Tắt sẽ ẩn toàn bộ banner đầu trang khỏi trang chủ công khai, nội dung bên dưới vẫn được giữ lại để bật lại sau.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         TranslatableField::group('hero_eyebrow', label: 'Dòng giới thiệu'),
                         TranslatableField::group('hero_title', as: 'textarea', label: 'Tiêu đề', rows: 2),
                         TranslatableField::group('hero_subtitle', as: 'textarea', label: 'Mô tả', rows: 3),
                         TranslatableField::group('hero_cta_text', label: 'Nút CTA'),
-                        Forms\Components\TextInput::make('hero_cta_link')->label('Đường dẫn nút')->placeholder('/dat-lich'),
+                        Forms\Components\TextInput::make('hero_cta_link')->label('Đường dẫn nút')->placeholder('/dat-lich/'),
                         Forms\Components\FileUpload::make('hero_image')->label('Banner trang chủ')
                             ->image()
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
@@ -66,11 +72,21 @@ class HomePageSettings extends Page implements HasForms
 
                 Forms\Components\Section::make('Dịch vụ nổi bật')
                     ->schema([
+                        Forms\Components\Toggle::make('featured_services_visible')
+                            ->label('Hiển thị khối này trên trang chủ')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Dịch vụ nổi bật" khỏi trang chủ công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         TranslatableField::group('service_list_title', label: 'Tiêu đề khối'),
                     ]),
 
                 Forms\Components\Section::make('Đánh giá khách hàng')
                     ->schema([
+                        Forms\Components\Toggle::make('testimonials_visible')
+                            ->label('Hiển thị khối này trên trang chủ')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Đánh giá khách hàng" khỏi trang chủ công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('testimonial_rating')->label('Điểm tổng')->numeric()->minValue(1)->maxValue(5),
                         Forms\Components\TextInput::make('testimonial_review_count')->label('Số lượt đánh giá')->numeric()->minValue(0),
                         Forms\Components\TextInput::make('testimonial_source')->label('Nguồn')->placeholder('google'),

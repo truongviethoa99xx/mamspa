@@ -22,7 +22,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
     const heading = tr(data.title, locale) || t('home.hero.heading');
     const body = tr(data.subtitle, locale) || t('home.hero.body');
     const ctaText = tr(data.cta_text, locale) || t('common.bookNow');
-    const ctaLink = data.cta_link || '/dat-lich';
+    const ctaLink = data.cta_link || '/dat-lich/';
     const sectionRef = useRef<HTMLElement>(null);
 
     const handleExplore = (e: MouseEvent<HTMLAnchorElement>) => {

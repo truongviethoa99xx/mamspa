@@ -185,7 +185,7 @@ export default function AboutUs({ branch }: Props) {
                                     Trang chủ
                                 </Link>
                                 <span className="text-[#8C9A6B]">/</span>
-                                <Link href="/gioi-thieu" className="transition-colors hover:text-ink">
+                                <Link href="/gioi-thieu/" className="transition-colors hover:text-ink">
                                     Chi nhánh
                                 </Link>
                                 <span className="text-[#8C9A6B]">/</span>
@@ -413,7 +413,7 @@ export default function AboutUs({ branch }: Props) {
                     <ul className="grid gap-3 md:grid-cols-2">
                         {branch.services.map((s) => (
                             <li key={s.id}>
-                                <Link href={`/dich-vu/${s.slug}`}
+                                <Link href={`/dich-vu/${s.slug}/`}
                                     className="flex items-center justify-between rounded-lg border border-maha-100 p-4 hover:bg-maha-50">
                                     <div>
                                         <p className="font-semibold text-maha-700">{tr(s.name, locale)}</p>

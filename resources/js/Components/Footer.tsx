@@ -117,19 +117,19 @@ export function Footer() {
                 <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-sm text-maha-100/60 sm:flex-row sm:items-center sm:justify-between 2xl:max-w-[1440px]">
                     <p>{t('footer.rights', { year })}</p>
                     <nav className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <Link href="/chinh-sach" className="transition-colors hover:text-maha-50">
+                        <Link href="/chinh-sach/" className="transition-colors hover:text-maha-50">
                             {t('footer.privacy')}
                         </Link>
                         <span>•</span>
-                        <Link href="/chinh-sach" className="transition-colors hover:text-maha-50">
+                        <Link href="/chinh-sach/" className="transition-colors hover:text-maha-50">
                             {t('footer.terms')}
                         </Link>
                         <span>•</span>
-                        <Link href="/chinh-sach" className="transition-colors hover:text-maha-50">
+                        <Link href="/chinh-sach/" className="transition-colors hover:text-maha-50">
                             {t('footer.support')}
                         </Link>
                         <span>•</span>
-                        <Link href="/luu-y-dich-vu" className="transition-colors hover:text-maha-50">
+                        <Link href="/luu-y-dich-vu/" className="transition-colors hover:text-maha-50">
                             {t('footer.guidelines', 'Lưu ý dịch vụ')}
                         </Link>
                     </nav>

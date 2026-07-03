@@ -44,14 +44,15 @@ class AboutPageSettings extends Page implements HasForms
             'hero_image', 'story_image', 'vision_image',
             'value1_image', 'value2_image', 'value3_image',
             'team', 'instagram_handles', 'review_video_url', 'review_video_image', 'review_cards',
-            'hero_eyebrow', 'hero_title', 'hero_subtitle', 'hero_retreat',
-            'features',
-            'story_eyebrow', 'story_heading', 'story_p1', 'story_p2',
-            'vision_eyebrow', 'vision_title', 'vision_p1', 'vision_p2', 'vision_bullets',
+            'hero_eyebrow', 'hero_title', 'hero_subtitle', 'hero_retreat', 'hero_visible',
+            'features', 'features_visible',
+            'contact_bar_visible',
+            'story_eyebrow', 'story_heading', 'story_p1', 'story_p2', 'story_visible',
+            'vision_eyebrow', 'vision_title', 'vision_p1', 'vision_p2', 'vision_bullets', 'vision_visible',
             'values_eyebrow', 'values_title',
-            'value1_title', 'value1_desc', 'value2_title', 'value2_desc', 'value3_title', 'value3_desc',
-            'team_eyebrow', 'team_title',
-            'reviews_eyebrow', 'reviews_title', 'review_video_caption', 'review_quote', 'review_quote_author',
+            'value1_title', 'value1_desc', 'value2_title', 'value2_desc', 'value3_title', 'value3_desc', 'values_visible',
+            'team_eyebrow', 'team_title', 'team_visible',
+            'reviews_eyebrow', 'reviews_title', 'review_video_caption', 'review_quote', 'review_quote_author', 'reviews_visible',
         ]));
     }
 
@@ -65,6 +66,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Ảnh lớn + dòng giới thiệu, tiêu đề, mô tả và câu kết (retreat).')
                     ->icon('heroicon-o-photo')
                     ->schema([
+                        Forms\Components\Toggle::make('hero_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ ảnh + dòng giới thiệu + câu kết khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         Forms\Components\FileUpload::make('hero_image')->label('Ảnh đầu trang')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                         TranslatableField::group('hero_eyebrow', label: 'Dòng giới thiệu (eyebrow)', example: 'Chào mừng đến với Mầm Spa'),
@@ -77,6 +83,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Bốn trụ cột dưới phần đầu trang. Để trống dùng nội dung mặc định; icon gán theo thứ tự: Hoa · Bàn tay · Lá · Trà.')
                     ->icon('heroicon-o-sparkles')
                     ->schema([
+                        Forms\Components\Toggle::make('features_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối 4 ưu điểm khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         Forms\Components\Repeater::make('features')
                             ->label('')
                             ->schema([
@@ -96,6 +107,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Dòng điện thoại · địa chỉ · website ngay dưới phần đầu trang.')
                     ->icon('heroicon-o-phone')
                     ->schema([
+                        Forms\Components\Toggle::make('contact_bar_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn dòng điện thoại · địa chỉ · website khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('contact_phone')->label('Điện thoại')->tel(),
                         Forms\Components\TextInput::make('contact_website')->label('Website')->placeholder('mahaspa.vn'),
                         Forms\Components\TextInput::make('contact_address')->label('Địa chỉ')->columnSpanFull(),
@@ -105,6 +121,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Khối "Câu chuyện" — ảnh bên trái, chữ bên phải.')
                     ->icon('heroicon-o-book-open')
                     ->schema([
+                        Forms\Components\Toggle::make('story_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Câu chuyện thương hiệu" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         Forms\Components\FileUpload::make('story_image')->label('Ảnh câu chuyện')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                         TranslatableField::group('story_eyebrow', label: 'Dòng giới thiệu (eyebrow)', example: 'Câu chuyện của Mầm'),
@@ -117,6 +138,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Khối "Tầm nhìn" — chữ bên trái, ảnh bên phải.')
                     ->icon('heroicon-o-eye')
                     ->schema([
+                        Forms\Components\Toggle::make('vision_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Tầm nhìn & Sứ mệnh" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         Forms\Components\FileUpload::make('vision_image')->label('Ảnh tầm nhìn')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                         TranslatableField::group('vision_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
@@ -141,6 +167,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Tiêu đề khối + ba thẻ giá trị (trái → phải), mỗi thẻ gồm ảnh, tiêu đề, mô tả.')
                     ->icon('heroicon-o-squares-2x2')
                     ->schema([
+                        Forms\Components\Toggle::make('values_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Giá trị cốt lõi" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         TranslatableField::group('values_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
                         TranslatableField::group('values_title', label: 'Tiêu đề khối', example: 'Giá trị cốt lõi'),
                         Forms\Components\Grid::make(3)->schema([
@@ -169,6 +200,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Tiêu đề khối + danh sách nhân sự hiển thị ở khối "Đội ngũ".')
                     ->icon('heroicon-o-user-group')
                     ->schema([
+                        Forms\Components\Toggle::make('team_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Đội ngũ" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         TranslatableField::group('team_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
                         TranslatableField::group('team_title', label: 'Tiêu đề khối', example: 'Đội ngũ của chúng tôi'),
                         Forms\Components\Repeater::make('team')
@@ -192,6 +228,11 @@ class AboutPageSettings extends Page implements HasForms
                     ->description('Tiêu đề khối, video, trích dẫn và các card review cuối trang.')
                     ->icon('heroicon-o-heart')
                     ->schema([
+                        Forms\Components\Toggle::make('reviews_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Đánh giá khách hàng" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
                         TranslatableField::group('reviews_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
                         TranslatableField::group('reviews_title', label: 'Tiêu đề khối', example: 'Khách hàng nói gì'),
                         Forms\Components\FileUpload::make('review_video_image')->label('Ảnh/video thumbnail')

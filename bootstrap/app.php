@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\AddTrailingSlash;
+use App\Http\Middleware\FixInertiaUrlTrailingSlash;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
@@ -17,9 +19,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Chạy trước mọi middleware khác: URL không có "/" cuối 301 về bản có "/".
+        $middleware->web(prepend: [
+            AddTrailingSlash::class,
+        ]);
         $middleware->web(append: [
             SetLocale::class,
             HandleInertiaRequests::class,
+            FixInertiaUrlTrailingSlash::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->alias([

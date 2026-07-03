@@ -789,6 +789,8 @@ class ComposerStaticInit2b126a37d885fe015385edb9b6b5ff3e
         'App\\Http\\Controllers\\ServiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/ServiceController.php',
         'App\\Http\\Controllers\\SitemapController' => __DIR__ . '/../..' . '/app/Http/Controllers/SitemapController.php',
         'App\\Http\\Controllers\\TranslationController' => __DIR__ . '/../..' . '/app/Http/Controllers/TranslationController.php',
+        'App\\Http\\Middleware\\AddTrailingSlash' => __DIR__ . '/../..' . '/app/Http/Middleware/AddTrailingSlash.php',
+        'App\\Http\\Middleware\\FixInertiaUrlTrailingSlash' => __DIR__ . '/../..' . '/app/Http/Middleware/FixInertiaUrlTrailingSlash.php',
         'App\\Http\\Middleware\\HandleInertiaRequests' => __DIR__ . '/../..' . '/app/Http/Middleware/HandleInertiaRequests.php',
         'App\\Http\\Middleware\\NoIndex' => __DIR__ . '/../..' . '/app/Http/Middleware/NoIndex.php',
         'App\\Http\\Middleware\\SetLocale' => __DIR__ . '/../..' . '/app/Http/Middleware/SetLocale.php',

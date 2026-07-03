@@ -88,7 +88,7 @@ export function Navbar() {
     const logoUrl = publicAssetUrl(props.site?.logo_path) || '/images/logo.svg';
 
     const branchItems: MenuItem[] = (props.branches ?? []).map((b) => ({
-        href: `/chi-nhanh/${b.slug}`,
+        href: `/chi-nhanh/${b.slug}/`,
         label: tr(b.name, locale),
     }));
 
@@ -99,18 +99,18 @@ export function Navbar() {
                 <ul className="hidden items-center gap-8 md:flex">
                     <li>
                         <Link
-                            href="/gioi-thieu"
+                            href="/gioi-thieu/"
                             className="text-base font-medium tracking-wide text-maha-900 transition-colors hover:text-maha-600"
                         >
                             {t('nav.about')}
                         </Link>
                     </li>
                     <li>
-                        <NavDropdown label={t('nav.services')} items={serviceMenu} href="/dich-vu" />
+                        <NavDropdown label={t('nav.services')} items={serviceMenu} href="/dich-vu/" />
                     </li>
                     <li>
                         <Link
-                            href="/tin-tuc"
+                            href="/tin-tuc/"
                             className="text-base font-medium tracking-wide text-maha-900 transition-colors hover:text-maha-600"
                         >
                             {t('nav.blog')}
@@ -136,7 +136,7 @@ export function Navbar() {
                     {props.auth?.user ? (
                         <>
                             <Link
-                                href="/my-bookings"
+                                href="/my-bookings/"
                                 className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
                             >
                                 {t('nav.myBookings')}
@@ -152,7 +152,7 @@ export function Navbar() {
                         </>
                     ) : (
                         <Link
-                            href="/dat-lich"
+                            href="/dat-lich/"
                             className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
                         >
                             {t('common.bookNow')}
@@ -174,12 +174,12 @@ export function Navbar() {
             <div className={cn('border-t border-maha-100 bg-maha-50 md:hidden', open ? 'block' : 'hidden')}>
                 <ul className="flex flex-col gap-1 px-6 py-4">
                     <li>
-                        <Link href="/gioi-thieu" className="block py-2 text-base text-maha-900">
+                        <Link href="/gioi-thieu/" className="block py-2 text-base text-maha-900">
                             {t('nav.about')}
                         </Link>
                     </li>
                     <li>
-                        <Link href="/dich-vu" className="block py-2 text-base text-maha-900">
+                        <Link href="/dich-vu/" className="block py-2 text-base text-maha-900">
                             {t('nav.services')}
                         </Link>
                     </li>
@@ -191,7 +191,7 @@ export function Navbar() {
                         </li>
                     ))}
                     <li>
-                        <Link href="/tin-tuc" className="block py-2 text-base text-maha-900">
+                        <Link href="/tin-tuc/" className="block py-2 text-base text-maha-900">
                             {t('nav.blog')}
                         </Link>
                     </li>
@@ -209,7 +209,7 @@ export function Navbar() {
                         <>
                             <li className="mt-3">
                                 <Link
-                                    href="/my-bookings"
+                                    href="/my-bookings/"
                                     className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
                                 >
                                     {t('nav.myBookings')}
@@ -228,7 +228,7 @@ export function Navbar() {
                     ) : (
                         <li className="mt-3">
                             <Link
-                                href="/dat-lich"
+                                href="/dat-lich/"
                                 className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
                             >
                                 {t('common.bookNow')}

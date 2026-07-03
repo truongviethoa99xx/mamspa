@@ -37,7 +37,7 @@ export function ServiceListBlock({ data }: { data: { title?: unknown; services?:
                     {services.map((s) => (
                         <Link
                             key={s.id}
-                            href={`/services/${s.slug}`}
+                            href={`/services/${s.slug}/`}
                             className="group relative flex h-[260px] flex-col overflow-hidden rounded-xl bg-maha-200 p-4 sm:h-[400px] sm:rounded-2xl sm:p-5"
                         >
                             {s.images?.[0] && (

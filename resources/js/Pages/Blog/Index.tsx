@@ -130,7 +130,7 @@ function FeaturedCard({ post, locale, cta }: { post: Post; locale: string; cta: 
 
     return (
         <Link
-            href={`/tin-tuc/${post.slug}`}
+            href={`/tin-tuc/${post.slug}/`}
             className="group grid overflow-hidden rounded-3xl border border-maha-100 bg-white shadow-xl shadow-maha-900/5 transition-shadow hover:shadow-2xl hover:shadow-maha-900/10 md:grid-cols-2"
         >
             <div className="aspect-[4/3] w-full overflow-hidden bg-maha-200 md:aspect-auto">
@@ -170,7 +170,7 @@ function PostCard({ post, locale, readMore }: { post: Post; locale: string; read
 
     return (
         <Link
-            href={`/tin-tuc/${post.slug}`}
+            href={`/tin-tuc/${post.slug}/`}
             className="group flex flex-col overflow-hidden rounded-2xl border border-maha-100 bg-white shadow-sm transition-shadow hover:shadow-lg hover:shadow-maha-900/5"
         >
             <div className="aspect-[4/3] w-full overflow-hidden bg-maha-200">

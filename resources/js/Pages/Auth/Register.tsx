@@ -38,7 +38,7 @@ export default function Register() {
                     {t('auth.register')}
                 </button>
                 <p className="text-center text-sm text-gray-600">
-                    {t('auth.haveAccount')} <Link href="/login" className="text-maha-700 underline">{t('auth.login')}</Link>
+                    {t('auth.haveAccount')} <Link href="/login/" className="text-maha-700 underline">{t('auth.login')}</Link>
                 </p>
             </form>
         </AuthLayout>

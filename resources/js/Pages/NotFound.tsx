@@ -44,7 +44,7 @@ export default function NotFound() {
                             {t('notFound.backHome')}
                         </Link>
                         <Link
-                            href="/dich-vu"
+                            href="/dich-vu/"
                             className="inline-flex items-center gap-2 rounded-full border border-maha-300 px-8 py-3 text-sm font-semibold text-maha-700 transition hover:bg-maha-100"
                         >
                             <Sparkles className="h-4 w-4" />
@@ -57,17 +57,17 @@ export default function NotFound() {
                             {t('notFound.suggestionsTitle')}
                         </p>
                         <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-                            <Link href="/dat-lich" className="text-maha-700 underline-offset-4 hover:underline">
+                            <Link href="/dat-lich/" className="text-maha-700 underline-offset-4 hover:underline">
                                 {t('nav.booking')}
                             </Link>
-                            <Link href="/gioi-thieu" className="text-maha-700 underline-offset-4 hover:underline">
+                            <Link href="/gioi-thieu/" className="text-maha-700 underline-offset-4 hover:underline">
                                 {t('nav.about')}
                             </Link>
-                            <Link href="/tin-tuc" className="text-maha-700 underline-offset-4 hover:underline">
+                            <Link href="/tin-tuc/" className="text-maha-700 underline-offset-4 hover:underline">
                                 {t('nav.blog')}
                             </Link>
                             <Link
-                                href="/contact"
+                                href="/contact/"
                                 className="inline-flex items-center gap-1 text-maha-700 underline-offset-4 hover:underline"
                             >
                                 <PhoneCall className="h-3.5 w-3.5" />

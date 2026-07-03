@@ -95,7 +95,7 @@ export function ServiceMenuBlock({ data }: { data: { services?: MenuService[] } 
                                 </p>
 
                                 <Link
-                                    href={`/dat-lich?service=${s.slug}`}
+                                    href={`/dat-lich/?service=${s.slug}`}
                                     className="group mt-auto flex items-center justify-end gap-2 pt-3 text-sm font-semibold text-ink sm:gap-3 sm:pt-4 sm:text-base"
                                 >
                                     {t('blocks.menu.book')}

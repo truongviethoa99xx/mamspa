@@ -13,7 +13,9 @@ class HomePageContent extends Model
         'hero_cta_text',
         'hero_cta_link',
         'hero_image',
+        'hero_visible',
         'service_list_title',
+        'featured_services_visible',
         'branch_intro_title',
         'branch_intro_eyebrow',
         'branch_intro_subheading',
@@ -26,6 +28,7 @@ class HomePageContent extends Model
         'testimonial_review_count',
         'testimonial_source',
         'testimonials',
+        'testimonials_visible',
     ];
 
     protected $casts = [
@@ -33,7 +36,9 @@ class HomePageContent extends Model
         'hero_subtitle' => 'array',
         'hero_eyebrow' => 'array',
         'hero_cta_text' => 'array',
+        'hero_visible' => 'boolean',
         'service_list_title' => 'array',
+        'featured_services_visible' => 'boolean',
         'branch_intro_title' => 'array',
         'branch_intro_eyebrow' => 'array',
         'branch_intro_subheading' => 'array',
@@ -45,6 +50,7 @@ class HomePageContent extends Model
         'testimonial_rating' => 'integer',
         'testimonial_review_count' => 'integer',
         'testimonials' => 'array',
+        'testimonials_visible' => 'boolean',
     ];
 
     public static function current(): self

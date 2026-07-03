@@ -66,7 +66,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
 
     const schema = breadcrumbSchema([
         { name: 'Mầm Spa', url: window.location.origin },
-        { name: t('policy.pageTitle', 'Chính sách'), url: window.location.origin + '/chinh-sach' },
+        { name: t('policy.pageTitle', 'Chính sách'), url: window.location.origin + '/chinh-sach/' },
         { name, url },
     ]);
 
@@ -81,7 +81,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
                             {t('nav.home')}
                         </Link>
                         <span className="text-maha-300">/</span>
-                        <Link href="/chinh-sach" className="transition-colors hover:text-[#556B3F]">
+                        <Link href="/chinh-sach/" className="transition-colors hover:text-[#556B3F]">
                             {t('policy.pageTitle', 'Chính sách')}
                         </Link>
                         <span className="text-maha-300">/</span>
@@ -119,7 +119,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
                                         {other.map((p) => (
                                             <li key={p.slug}>
                                                 <Link
-                                                    href={`/chinh-sach/${p.slug}`}
+                                                    href={`/chinh-sach/${p.slug}/`}
                                                     className="group flex items-center gap-3 rounded-xl px-3 py-3 -mx-3 transition-colors hover:bg-maha-50"
                                                 >
                                                     <ShieldCheck className="h-4 w-4 shrink-0 text-[#556B3F]" />
@@ -142,7 +142,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
                                     {t('policy.ctaTitle', 'Liên hệ với chúng tôi')}
                                 </h3>
                                 <Link
-                                    href="/contact"
+                                    href="/contact/"
                                     className="mt-6 inline-flex items-center gap-2 rounded-full bg-maha-50 px-6 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-white"
                                 >
                                     {t('policy.ctaButton', 'Liên hệ ngay')}

@@ -48,7 +48,7 @@ i18n.use(LanguageDetector)
  */
 export async function loadRemoteTranslations(lang: 'vi' | 'en' | 'ja' | 'ko' | 'zh'): Promise<void> {
     try {
-        const res = await fetch(`/i18n/${lang}`, { headers: { Accept: 'application/json' } });
+        const res = await fetch(`/i18n/${lang}/`, { headers: { Accept: 'application/json' } });
         if (!res.ok) return;
         const flat = (await res.json()) as Record<string, string>;
         i18n.addResourceBundle(lang, 'translation', unflatten(flat), true, true);

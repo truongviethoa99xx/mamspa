@@ -16,7 +16,6 @@ interface BranchItem {
     body_1?: unknown;
     body_2?: unknown;
     cta?: unknown;
-    caption?: unknown;
     images?: string[];
 }
 
@@ -46,7 +45,6 @@ export function BranchesBlock({ data }: { data: { branches?: BranchItem[] } }) {
         .filter(Boolean)
         .join('\n\n');
     const cta = tr(branch.cta, locale) || t('blocks.branches.cta');
-    const caption = tr(branch.caption, locale) || t('blocks.branches.caption', { name });
     const paragraphs = description.split('\n').filter((p) => p.trim());
 
     const mainImage = branch.images?.[0];
@@ -94,7 +92,7 @@ export function BranchesBlock({ data }: { data: { branches?: BranchItem[] } }) {
                             )}
                         </div>
                         <figure className="absolute bottom-0 left-[65%] w-1/2 max-w-[300px] overflow-hidden rounded-2xl border-8 border-white bg-maha-100 shadow-2xl shadow-maha-900/10">
-                            <div className="aspect-square">
+                            <div className="aspect-[5/6]">
                                 {detailImage && (
                                     <img
                                         src={detailImage}
@@ -103,9 +101,6 @@ export function BranchesBlock({ data }: { data: { branches?: BranchItem[] } }) {
                                     />
                                 )}
                             </div>
-                            <figcaption className="px-3 py-3 text-center font-serif text-xs italic text-maha-600 sm:text-sm">
-                                {caption.replace('{{name}}', name)}
-                            </figcaption>
                         </figure>
                     </div>
 
@@ -126,7 +121,7 @@ export function BranchesBlock({ data }: { data: { branches?: BranchItem[] } }) {
                         </div>
 
                         <Link
-                            href={`/chi-nhanh/${branch.slug}`}
+                            href={`/chi-nhanh/${branch.slug}/`}
                             className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-ink sm:text-base md:mt-10"
                         >
                             <span>{cta}</span>

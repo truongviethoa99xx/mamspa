@@ -159,7 +159,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        router.get('/dich-vu', { branch, q: query }, { preserveState: true, preserveScroll: true });
+        router.get('/dich-vu/', { branch, q: query }, { preserveState: true, preserveScroll: true });
     };
 
     return (
@@ -246,7 +246,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                         {combos.map((c) => (
                             <Link
                                 key={c.id}
-                                href={`/dich-vu/${c.slug}`}
+                                href={`/dich-vu/${c.slug}/`}
                                 className="group flex flex-col rounded-3xl bg-white p-4 shadow-md shadow-maha-900/5 transition-transform hover:-translate-y-1"
                             >
                                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-maha-200">
@@ -325,7 +325,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                     {/* CTA */}
                     <div className="mt-14 flex justify-center">
                         <Link
-                            href="/dat-lich"
+                            href="/dat-lich/"
                             className="inline-flex items-center gap-3 rounded-full bg-ink px-9 py-4 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                         >
                             <CalendarDays className="h-5 w-5" />
@@ -383,7 +383,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
 
                     <div className="mt-10 flex justify-center">
                         <Link
-                            href="/dat-lich"
+                            href="/dat-lich/"
                             className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3 font-serif text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                         >
                             <CalendarDays className="h-4 w-4" />
@@ -421,7 +421,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                                     </div>
                                     <div className="mt-8">
                                         <Link
-                                            href="/dat-lich"
+                                            href="/dat-lich/"
                                             className="inline-flex items-center gap-2.5 rounded-full bg-ink px-7 py-3 font-serif text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                                         >
                                             <CalendarDays className="h-4 w-4" />

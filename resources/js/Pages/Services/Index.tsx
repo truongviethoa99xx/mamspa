@@ -34,7 +34,7 @@ export default function ServicesIndex({ filters, services, branches }: Props) {
         const params: Record<string, string> = { ...filters };
         if (value) params[key] = value;
         else delete params[key];
-        router.get('/services', params, { preserveScroll: true });
+        router.get('/services/', params, { preserveScroll: true });
     };
 
     return (
@@ -44,7 +44,7 @@ export default function ServicesIndex({ filters, services, branches }: Props) {
                 description="Khám phá các dịch vụ massage, facial, head spa, foot spa tại Mầm Spa."
                 schema={itemListSchema(services.map(s => ({
                     name: tr(s.name, locale),
-                    url: window.location.origin + '/services/' + s.slug,
+                    url: window.location.origin + '/services/' + s.slug + '/',
                 })))}
             />
             <section className="bg-maha-50 py-12">
@@ -80,7 +80,7 @@ export default function ServicesIndex({ filters, services, branches }: Props) {
             <section className="py-12">
                 <div className="mx-auto grid max-w-7xl gap-6 px-4 md:grid-cols-3">
                     {services.map((s) => (
-                        <Link key={s.id} href={`/services/${s.slug}`}
+                        <Link key={s.id} href={`/services/${s.slug}/`}
                             className="overflow-hidden rounded-xl border border-maha-100 bg-white transition hover:shadow-lg">
                             <div className="aspect-[4/3] bg-maha-100" />
                             <div className="p-5">

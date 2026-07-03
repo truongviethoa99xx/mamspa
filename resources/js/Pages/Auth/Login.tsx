@@ -38,7 +38,7 @@ export default function Login({ status }: { status?: string }) {
                     {t('auth.login')}
                 </button>
                 <p className="text-center text-sm text-gray-600">
-                    {t('auth.noAccount')} <Link href="/register" className="text-maha-700 underline">{t('auth.register')}</Link>
+                    {t('auth.noAccount')} <Link href="/register/" className="text-maha-700 underline">{t('auth.register')}</Link>
                 </p>
             </form>
         </AuthLayout>

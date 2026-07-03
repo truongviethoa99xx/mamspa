@@ -50,7 +50,7 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
                     {bookings.length === 0 && (
                         <div className="rounded-xl border border-maha-100 bg-white p-10 text-center text-gray-500">
                             {t('myBookings.empty')}
-                            <Link href="/dat-lich" className="mt-3 block text-maha-700 underline">{t('myBookings.bookOne')}</Link>
+                            <Link href="/dat-lich/" className="mt-3 block text-maha-700 underline">{t('myBookings.bookOne')}</Link>
                         </div>
                     )}
                     <ul className="space-y-3">
@@ -73,7 +73,7 @@ export default function MyBookings({ bookings }: { bookings: Booking[] }) {
                                 </div>
                                 <div className="mt-3 flex flex-wrap gap-2 text-sm">
                                     {b.payment_status === 'unpaid' && b.status !== 'cancelled' && (
-                                        <Link href={`/payment/vnpay/${b.id}`}
+                                        <Link href={`/payment/vnpay/${b.id}/`}
                                             className="rounded-full bg-maha-700 px-4 py-1 text-white">
                                             {t('myBookings.payVnpay')}
                                         </Link>

@@ -23,9 +23,11 @@ Route::get('/dich-vu', [DichVuController::class, 'index'])->name('dichvu');
 Route::get('/dich-vu/{slug}', [DichVuController::class, 'show'])->name('dichvu.detail');
 Route::get('/chi-nhanh/{branch:slug}', [BranchController::class, 'show'])->name('branches.show');
 // Legacy EN slugs → canonical VI slugs (301) to avoid duplicate content.
-Route::get('/about-us/{branch:slug}', fn (string $branch) => redirect("/chi-nhanh/{$branch}", 301))->name('about.branch');
-Route::get('/services', fn () => redirect('/dich-vu', 301))->name('services.index');
-Route::get('/services/{service:slug}', fn (string $service) => redirect("/dich-vu/{$service}", 301))->name('services.show');
+// Dùng redirect()->away() vì UrlGenerator của Laravel tự cắt dấu "/" cuối —
+// URL chuẩn của site luôn kết thúc bằng "/" (khớp rule 301 trong .htaccess).
+Route::get('/about-us/{branch:slug}', fn (string $branch) => redirect()->away(url("/chi-nhanh/{$branch}").'/', 301))->name('about.branch');
+Route::get('/services', fn () => redirect()->away(url('/dich-vu').'/', 301))->name('services.index');
+Route::get('/services/{service:slug}', fn (string $service) => redirect()->away(url("/dich-vu/{$service}").'/', 301))->name('services.show');
 
 Route::get('/dat-lich', [BookingController::class, 'index'])->name('booking.index');
 Route::post('/dat-lich', [BookingController::class, 'store'])->middleware('throttle:10,1')->name('booking.store');
@@ -34,13 +36,13 @@ Route::get('/dat-lich/slots', [BookingController::class, 'slots'])->middleware('
 Route::post('/dat-lich/voucher', [BookingController::class, 'validateVoucher'])->middleware('throttle:20,1')->name('booking.voucher');
 
 // Backward-compat: keep the old /booking URLs pointing at the new ones.
-Route::permanentRedirect('/booking', '/dat-lich');
+Route::get('/booking', fn () => redirect()->away(url('/dat-lich').'/', 301));
 
 Route::get('/tin-tuc', [BlogController::class, 'index'])->name('tin-tuc.index');
 Route::get('/tin-tuc/{post:slug}', [BlogController::class, 'show'])->name('tin-tuc.show');
 // Legacy EN slugs → canonical VI slugs (301).
-Route::get('/blog', fn () => redirect('/tin-tuc', 301))->name('blog.index');
-Route::get('/blog/{post:slug}', fn (string $post) => redirect("/tin-tuc/{$post}", 301))->name('blog.show');
+Route::get('/blog', fn () => redirect()->away(url('/tin-tuc').'/', 301))->name('blog.index');
+Route::get('/blog/{post:slug}', fn (string $post) => redirect()->away(url("/tin-tuc/{$post}").'/', 301))->name('blog.show');
 Route::get('/promotions', [PromotionController::class, 'index'])->name('promotions.index');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
@@ -51,7 +53,7 @@ Route::get('/chinh-sach/{policyPage:slug}', [PolicyPageController::class, 'show'
 
 Route::get('/luu-y-dich-vu', fn () => Inertia::render('PaymentGuide'))->name('service-guidelines');
 // Giữ URL cũ hoạt động (301) phòng khi đã chia sẻ.
-Route::permanentRedirect('/huong-dan-thanh-toan', '/luu-y-dich-vu');
+Route::get('/huong-dan-thanh-toan', fn () => redirect()->away(url('/luu-y-dich-vu').'/', 301));
 
 require __DIR__.'/auth.php';
 

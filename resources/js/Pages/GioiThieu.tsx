@@ -79,11 +79,23 @@ interface AboutContent {
     review_quote_author?: Translatable;
 }
 
-interface Props {
-    content: AboutContent;
+interface SectionVisibility {
+    hero: boolean;
+    features: boolean;
+    contactBar: boolean;
+    story: boolean;
+    vision: boolean;
+    values: boolean;
+    team: boolean;
+    reviews: boolean;
 }
 
-export default function GioiThieu({ content }: Props) {
+interface Props {
+    content: AboutContent;
+    sectionVisibility: SectionVisibility;
+}
+
+export default function GioiThieu({ content, sectionVisibility }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
     const { props } = usePage<SharedProps>();
@@ -138,94 +150,105 @@ export default function GioiThieu({ content }: Props) {
                 }}
             />
 
-            <section className="relative overflow-hidden bg-[#E9E2D5]">
-                <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:py-24 2xl:max-w-[1440px]">
-                    {/* Hero: photo + intro */}
-                    <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-                        {/* Photo */}
-                        <div className="aspect-[4/3] overflow-hidden rounded-[2rem] bg-maha-200 shadow-xl shadow-maha-900/10">
-                            <img
-                                src={content.hero_image ?? '/images/about-spa.jpg'}
-                                alt={txt(content.hero_title, 'about.title')}
-                                className="h-full w-full object-cover"
-                                onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
-                                }}
-                            />
-                        </div>
+            {(sectionVisibility.hero || sectionVisibility.features || sectionVisibility.contactBar) && (
+                <section className="relative overflow-hidden bg-[#E9E2D5]">
+                    <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:py-24 2xl:max-w-[1440px]">
+                        {sectionVisibility.hero && (
+                            <>
+                                {/* Hero: photo + intro */}
+                                <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+                                    {/* Photo */}
+                                    <div className="aspect-[4/3] overflow-hidden rounded-[2rem] bg-maha-200 shadow-xl shadow-maha-900/10">
+                                        <img
+                                            src={content.hero_image ?? '/images/about-spa.jpg'}
+                                            alt={txt(content.hero_title, 'about.title')}
+                                            className="h-full w-full object-cover"
+                                            onError={(e) => {
+                                                e.currentTarget.style.display = 'none';
+                                            }}
+                                        />
+                                    </div>
 
-                        {/* Intro text */}
-                        <div>
-                            <p className="font-serif text-lg italic" style={{ color: GREEN }}>
-                                {txt(content.hero_eyebrow, 'about.hero.eyebrow')}
-                            </p>
-                            <h1 className="mt-3 font-serif text-4xl uppercase leading-[1.1] text-ink sm:text-5xl md:text-6xl">
-                                {txt(content.hero_title, 'about.title')}
-                            </h1>
-                            <p className="mt-5 max-w-md text-base leading-relaxed text-ink/70 md:text-lg">
-                                {txt(content.hero_subtitle, 'about.subtitle')}
-                            </p>
-                        </div>
-                    </div>
+                                    {/* Intro text */}
+                                    <div>
+                                        <p className="font-serif text-lg italic" style={{ color: GREEN }}>
+                                            {txt(content.hero_eyebrow, 'about.hero.eyebrow')}
+                                        </p>
+                                        <h1 className="mt-3 font-serif text-4xl uppercase leading-[1.1] text-ink sm:text-5xl md:text-6xl">
+                                            {txt(content.hero_title, 'about.title')}
+                                        </h1>
+                                        <p className="mt-5 max-w-md text-base leading-relaxed text-ink/70 md:text-lg">
+                                            {txt(content.hero_subtitle, 'about.subtitle')}
+                                        </p>
+                                    </div>
+                                </div>
 
-                    {/* Feature pillars */}
-                    <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-                        {features.map(({ icon: Icon, title, description }, i) => (
-                            <div key={`${title}-${i}`} className="flex flex-col items-center text-center">
-                                <span
-                                    className="flex h-14 w-14 items-center justify-center rounded-full border"
-                                    style={{ borderColor: GREEN, color: GREEN }}
-                                >
-                                    <Icon className="h-6 w-6" strokeWidth={1.5} />
-                                </span>
-                                <h3 className="mt-4 font-serif text-base font-bold uppercase tracking-wide text-ink">
-                                    {title}
-                                </h3>
-                                <p className="mt-2 max-w-[15rem] text-sm leading-relaxed text-ink/70">
-                                    {description}
+                                {/* Retreat line */}
+                                <p className="mt-14 text-center font-serif text-xl italic text-ink/70 md:text-2xl">
+                                    {txt(content.hero_retreat, 'about.hero.retreat')}
                                 </p>
+                            </>
+                        )}
+
+                        {sectionVisibility.features && (
+                            /* Feature pillars */
+                            <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+                                {features.map(({ icon: Icon, title, description }, i) => (
+                                    <div key={`${title}-${i}`} className="flex flex-col items-center text-center">
+                                        <span
+                                            className="flex h-14 w-14 items-center justify-center rounded-full border"
+                                            style={{ borderColor: GREEN, color: GREEN }}
+                                        >
+                                            <Icon className="h-6 w-6" strokeWidth={1.5} />
+                                        </span>
+                                        <h3 className="mt-4 font-serif text-base font-bold uppercase tracking-wide text-ink">
+                                            {title}
+                                        </h3>
+                                        <p className="mt-2 max-w-[15rem] text-sm leading-relaxed text-ink/70">
+                                            {description}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Retreat line */}
-                    <p className="mt-14 text-center font-serif text-xl italic text-ink/70 md:text-2xl">
-                        {txt(content.hero_retreat, 'about.hero.retreat')}
-                    </p>
-
-                    {/* Contact bar */}
-                    <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-maha-300/60 pt-8 text-sm text-ink/80">
-                        {phone && (
-                            <a
-                                href={`tel:${phone.replace(/[^\d+]/g, '')}`}
-                                className="inline-flex items-center gap-2 transition-colors hover:text-ink"
-                            >
-                                <Phone className="h-4 w-4" style={{ color: GREEN }} />
-                                {phone}
-                            </a>
                         )}
-                        {address && (
-                            <span className="inline-flex items-center gap-2">
-                                <MapPin className="h-4 w-4" style={{ color: GREEN }} />
-                                {address}
-                            </span>
-                        )}
-                        {website && (
-                            <a
-                                href={`https://${website}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex items-center gap-2 transition-colors hover:text-ink"
-                            >
-                                <Globe className="h-4 w-4" style={{ color: GREEN }} />
-                                {website}
-                            </a>
+
+                        {sectionVisibility.contactBar && (
+                            /* Contact bar */
+                            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-maha-300/60 pt-8 text-sm text-ink/80">
+                                {phone && (
+                                    <a
+                                        href={`tel:${phone.replace(/[^\d+]/g, '')}`}
+                                        className="inline-flex items-center gap-2 transition-colors hover:text-ink"
+                                    >
+                                        <Phone className="h-4 w-4" style={{ color: GREEN }} />
+                                        {phone}
+                                    </a>
+                                )}
+                                {address && (
+                                    <span className="inline-flex items-center gap-2">
+                                        <MapPin className="h-4 w-4" style={{ color: GREEN }} />
+                                        {address}
+                                    </span>
+                                )}
+                                {website && (
+                                    <a
+                                        href={`https://${website}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="inline-flex items-center gap-2 transition-colors hover:text-ink"
+                                    >
+                                        <Globe className="h-4 w-4" style={{ color: GREEN }} />
+                                        {website}
+                                    </a>
+                                )}
+                            </div>
                         )}
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             {/* Brand story */}
+            {sectionVisibility.story && (
             <section className="bg-maha-50 py-16 md:py-24">
                 <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-6 lg:grid-cols-2 lg:gap-16 2xl:max-w-[1440px]">
                     {/* Image */}
@@ -256,8 +279,10 @@ export default function GioiThieu({ content }: Props) {
                     </div>
                 </div>
             </section>
+            )}
 
             {/* Vision & Mission */}
+            {sectionVisibility.vision && (
             <section className="bg-[#E9E2D5] py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     {/* Header */}
@@ -305,8 +330,10 @@ export default function GioiThieu({ content }: Props) {
                     </div>
                 </div>
             </section>
+            )}
 
             {/* Core values */}
+            {sectionVisibility.values && (
             <section className="bg-maha-50 py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     {/* Header */}
@@ -348,8 +375,10 @@ export default function GioiThieu({ content }: Props) {
                     </div>
                 </div>
             </section>
+            )}
 
             {/* Team */}
+            {sectionVisibility.team && (
             <section className="bg-[#E9E2D5] py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     {/* Header */}
@@ -394,8 +423,10 @@ export default function GioiThieu({ content }: Props) {
                     </div>
                 </div>
             </section>
+            )}
 
             {/* Customer reviews — media wall */}
+            {sectionVisibility.reviews && (
             <section className="bg-maha-50 py-16 md:py-24">
                 <div className="mx-auto max-w-5xl px-5 sm:px-6">
                     {/* Header */}
@@ -479,6 +510,7 @@ export default function GioiThieu({ content }: Props) {
                     </div>
                 </div>
             </section>
+            )}
         </PublicLayout>
     );
 }
