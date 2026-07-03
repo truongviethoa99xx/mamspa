@@ -19,7 +19,7 @@ class DichVuController extends Controller
             'slug' => $s->slug,
             'name' => $s->name,
             'description' => $s->description,
-            'category' => $s->category,
+            'category' => $s->category?->slug,
             'duration' => $s->duration,
             'price' => $s->price,
             'is_featured' => $s->is_featured,
@@ -42,6 +42,12 @@ class DichVuController extends Controller
         ];
     }
 
+    /** Dịch vụ thuộc danh mục "combo" (chính nó hoặc danh mục cấp 1 của nó có slug combo). */
+    private function isCombo(Service $s): bool
+    {
+        return $s->category && ($s->category->slug === 'combo' || $s->category->parent?->slug === 'combo');
+    }
+
     /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
     private function serviceImages(Service $s): array
     {
@@ -57,7 +63,7 @@ class DichVuController extends Controller
         $q = trim((string) $request->query('q', ''));
 
         $services = Service::active()
-            ->with('branches')
+            ->with(['branches', 'category.parent'])
             ->when($branchSlug, fn ($query) => $query->whereHas('branches', fn ($b) => $b->where('slug', $branchSlug)))
             ->when($q !== '', fn ($query) => $query->where('name', 'like', "%{$q}%"))
             ->orderByDesc('is_featured')
@@ -65,7 +71,7 @@ class DichVuController extends Controller
 
         return Inertia::render('DichVu', [
             'filters' => ['branch' => $branchSlug, 'q' => $q],
-            'combos' => $services->where('category', 'combo')->values()->map(fn ($s) => $this->map($s)),
+            'combos' => $services->filter(fn (Service $s) => $this->isCombo($s))->values()->map(fn ($s) => $this->map($s)),
             'services' => $services->map(fn ($s) => $this->map($s)),
             'branches' => Branch::where('is_active', true)->get()->map(fn ($b) => [
                 'slug' => $b->slug, 'name' => $b->name,
@@ -76,19 +82,19 @@ class DichVuController extends Controller
 
     public function show(string $slug): Response
     {
-        $service = Service::active()->with('branches')->where('slug', $slug)->firstOrFail();
+        $service = Service::active()->with(['branches', 'category.parent'])->where('slug', $slug)->firstOrFail();
 
         $related = Service::active()
-            ->with('branches')
+            ->with(['branches', 'category.parent'])
             ->whereKeyNot($service->getKey())
-            ->orderByRaw('category = ? desc', [$service->category])
+            ->orderByRaw('service_category_id = ? desc', [$service->service_category_id])
             ->orderByDesc('is_featured')
             ->limit(4)
             ->get();
 
         $combos = Service::active()
-            ->with('branches')
-            ->where('category', 'combo')
+            ->with(['branches', 'category.parent'])
+            ->inCategorySlug('combo')
             ->whereKeyNot($service->getKey())
             ->orderByDesc('is_featured')
             ->limit(3)

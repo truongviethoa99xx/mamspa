@@ -32,7 +32,6 @@ Route::get('/services/{service:slug}', fn (string $service) => redirect()->away(
 Route::get('/dat-lich', [BookingController::class, 'index'])->name('booking.index');
 Route::post('/dat-lich', [BookingController::class, 'store'])->middleware('throttle:10,1')->name('booking.store');
 Route::get('/dat-lich/success/{code}', [BookingController::class, 'success'])->name('booking.success');
-Route::get('/dat-lich/slots', [BookingController::class, 'slots'])->middleware('throttle:60,1')->name('booking.slots');
 Route::post('/dat-lich/voucher', [BookingController::class, 'validateVoucher'])->middleware('throttle:20,1')->name('booking.voucher');
 
 // Backward-compat: keep the old /booking URLs pointing at the new ones.

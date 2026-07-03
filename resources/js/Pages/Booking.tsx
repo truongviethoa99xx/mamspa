@@ -3,14 +3,15 @@ import { Seo } from '@/Components/Seo';
 import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { generateTimeOptions, parseOpenHours, tr } from '@/Lib/utils';
+import { FancySelect } from '@/Components/FancySelect';
+import { COUNTRY_CODES } from '@/Lib/countryCodes';
 
-interface Branch { id: number; slug: string; name: Record<string, string> | string; address: string; phone: string }
-interface Service { id: number; slug: string; name: Record<string, string> | string; category: string; duration: number; price: number; branch_ids: number[] }
-interface SlotOption { start: string; end: string; capacity: number; available: number }
+interface Branch { id: number; slug: string; name: Record<string, string> | string; address: string; phone: string; open_hours: string }
+interface Service { id: number; slug: string; name: Record<string, string> | string; category: Record<string, string> | string | null; duration: number; price: number; branch_ids: number[] }
 type Gender = 'male' | 'female';
 
 interface Props {
@@ -23,12 +24,6 @@ const DATE_LOCALES: Record<string, string> = { en: 'en-US', ja: 'ja-JP', ko: 'ko
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const money = (n: number, suffix = 'đ') => `${n.toLocaleString('vi-VN')} ${suffix}`;
-const periodOf = (start: string): 'morning' | 'afternoon' | 'evening' => {
-    const h = parseInt(start.slice(0, 2), 10);
-    if (h < 12) return 'morning';
-    if (h < 18) return 'afternoon';
-    return 'evening';
-};
 
 export default function Booking({ preselect, branches, services }: Props) {
     const { t } = useTranslation();
@@ -40,9 +35,8 @@ export default function Booking({ preselect, branches, services }: Props) {
     const [femaleCount, setFemaleCount] = useState(0);
     const [serviceByKey, setServiceByKey] = useState<Record<string, number>>({});
     const [date, setDate] = useState<string>('');
-    const [slots, setSlots] = useState<SlotOption[]>([]);
     const [timeSlot, setTimeSlot] = useState<string>('');
-    const [contact, setContact] = useState({ name: '', phone: '', email: '', note: '', channel: 'zalo', value: '' });
+    const [contact, setContact] = useState({ name: '', phone: '', email: '', note: '', channel: 'zalo', value: '', country: 'Việt Nam' });
     const [voucherCode, setVoucherCode] = useState('');
     const [voucherDiscount, setVoucherDiscount] = useState(0);
     const [voucherError, setVoucherError] = useState<string | null>(null);
@@ -81,27 +75,19 @@ export default function Booking({ preselect, branches, services }: Props) {
         if (s) setServiceByKey((prev) => ({ ...prev, m0: s.id, f0: prev.f0 ?? s.id }));
     }, [preselect.service, services]);
 
+    // Reset the chosen time whenever the branch or date changes — opening hours differ per branch.
     useEffect(() => {
-        if (!branchId || !date) {
-            setSlots([]);
-            return;
-        }
-        axios
-            .get('/dat-lich/slots/', { params: { branch_id: branchId, date } })
-            .then((r) => setSlots(r.data.data))
-            .catch(() => setSlots([]));
         setTimeSlot('');
     }, [branchId, date]);
 
     const selectedBranch = useMemo(() => branches.find((b) => b.id === branchId) ?? null, [branches, branchId]);
+    const branchHours = useMemo(() => parseOpenHours(selectedBranch?.open_hours), [selectedBranch]);
+    const timeOptions = useMemo(
+        () => generateTimeOptions(branchHours.open, branchHours.close, 30).map((v) => ({ value: v, label: v })),
+        [branchHours],
+    );
     const subtotal = guests.reduce((sum, g) => sum + (serviceFor(g.key)?.price ?? 0), 0);
     const total = Math.max(0, subtotal - voucherDiscount);
-
-    const groupedSlots = useMemo(() => {
-        const groups: Record<'morning' | 'afternoon' | 'evening', SlotOption[]> = { morning: [], afternoon: [], evening: [] };
-        slots.forEach((s) => groups[periodOf(s.start)].push(s));
-        return groups;
-    }, [slots]);
 
     const applyVoucher = async () => {
         setVoucherError(null);
@@ -122,6 +108,7 @@ export default function Booking({ preselect, branches, services }: Props) {
         if (!canSubmit || submitting) return;
         setSubmitting(true);
         setError(null);
+        const dialCode = COUNTRY_CODES.find((c) => c.name === contact.country)?.code ?? '+84';
         router.post(
             '/dat-lich',
             {
@@ -130,7 +117,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                 date,
                 time_slot: timeSlot,
                 guest_name: contact.name,
-                guest_phone: contact.phone,
+                guest_phone: `${dialCode} ${contact.phone}`.trim(),
                 guest_email: contact.email || undefined,
                 contact_channel: contact.channel || undefined,
                 contact_value: contact.value || undefined,
@@ -180,19 +167,13 @@ export default function Booking({ preselect, branches, services }: Props) {
                             <section>
                                 <h2 className="font-serif text-2xl text-heading">1. {t('bookingForm.sectionLocation')}</h2>
 
-                                <div className="relative mt-6">
-                                    <select
-                                        value={branchId ?? ''}
-                                        onChange={(e) => setBranchId(Number(e.target.value))}
-                                        className="w-full appearance-none rounded-2xl border border-maha-200 bg-white px-5 py-4 text-ink shadow-sm focus:border-[#556B3F] focus:outline-none"
-                                    >
-                                        {branches.map((b) => (
-                                            <option key={b.id} value={b.id}>
-                                                {tr(b.name, locale)}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <ChevronDown className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-maha-500" />
+                                <div className="mt-6">
+                                    <FancySelect
+                                        value={String(branchId ?? '')}
+                                        onChange={(v) => setBranchId(Number(v))}
+                                        placeholder={t('bookingForm.selectBranch')}
+                                        options={branches.map((b) => ({ value: String(b.id), label: tr(b.name, locale) }))}
+                                    />
                                 </div>
 
                                 {/* Guest counts */}
@@ -221,22 +202,15 @@ export default function Booking({ preselect, branches, services }: Props) {
                                                         <span className="h-1.5 w-1.5 rounded-full bg-[#556B3F]" />
                                                         {i + 1}. {g.label}
                                                     </span>
-                                                    <div className="relative">
-                                                        <select
-                                                            value={serviceFor(g.key)?.id ?? ''}
-                                                            onChange={(e) =>
-                                                                setServiceByKey((prev) => ({ ...prev, [g.key]: Number(e.target.value) }))
-                                                            }
-                                                            className="w-full appearance-none rounded-xl border border-maha-200 bg-maha-50 px-4 py-3 text-sm text-ink focus:border-[#556B3F] focus:outline-none"
-                                                        >
-                                                            {availableServices.map((s) => (
-                                                                <option key={s.id} value={s.id}>
-                                                                    {tr(s.name, locale)} ({s.duration} {t('common.minute')})
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                        <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-maha-500" />
-                                                    </div>
+                                                    <FancySelect
+                                                        value={String(serviceFor(g.key)?.id ?? '')}
+                                                        onChange={(v) => setServiceByKey((prev) => ({ ...prev, [g.key]: Number(v) }))}
+                                                        placeholder={t('bookingForm.chooseService')}
+                                                        options={availableServices.map((s) => ({
+                                                            value: String(s.id),
+                                                            label: `${tr(s.name, locale)} (${s.duration} ${t('common.minute')})`,
+                                                        }))}
+                                                    />
                                                 </li>
                                             ))}
                                         </ul>
@@ -251,41 +225,18 @@ export default function Booking({ preselect, branches, services }: Props) {
                                     <Calendar value={date} min={TODAY} locale={dateLocale} onChange={setDate} />
                                     <div>
                                         {!date && <p className="text-sm text-maha-600">{t('bookingForm.pickDate')}</p>}
-                                        {date && slots.length === 0 && (
-                                            <p className="text-sm text-maha-600">{t('bookingForm.noSlots')}</p>
-                                        )}
-                                        {(['afternoon', 'evening', 'morning'] as const).map((period) =>
-                                            groupedSlots[period].length > 0 ? (
-                                                <div key={period} className="mb-6">
-                                                    <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[#556B3F]">
-                                                        {t(`bookingForm.${period}`)}
-                                                    </p>
-                                                    <div className="flex flex-wrap gap-3">
-                                                        {groupedSlots[period].map((s) => {
-                                                            const disabled = s.available < guests.length || guests.length === 0;
-                                                            const active = timeSlot === s.start;
-                                                            return (
-                                                                <button
-                                                                    key={s.start}
-                                                                    type="button"
-                                                                    disabled={disabled}
-                                                                    onClick={() => setTimeSlot(s.start)}
-                                                                    className={
-                                                                        'min-w-[88px] rounded-full border px-5 py-2.5 text-sm font-medium transition-colors ' +
-                                                                        (active
-                                                                            ? 'border-ink bg-ink text-maha-50'
-                                                                            : disabled
-                                                                              ? 'cursor-not-allowed border-maha-100 bg-maha-50 text-maha-300'
-                                                                              : 'border-maha-200 bg-white text-ink hover:border-[#556B3F]')
-                                                                    }
-                                                                >
-                                                                    {s.start}
-                                                                </button>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                </div>
-                                            ) : null,
+                                        {date && (
+                                            <>
+                                                <FancySelect
+                                                    value={timeSlot}
+                                                    onChange={setTimeSlot}
+                                                    placeholder={t('bookingForm.timePlaceholder')}
+                                                    options={timeOptions}
+                                                />
+                                                <p className="mt-3 text-xs text-maha-500">
+                                                    {t('bookingForm.timeHint', branchHours)}
+                                                </p>
+                                            </>
                                         )}
                                     </div>
                                 </div>
@@ -304,17 +255,29 @@ export default function Booking({ preselect, branches, services }: Props) {
                                         />
                                     </Field>
                                     <Field label={t('bookingForm.phone')} required>
-                                        <div className="flex overflow-hidden rounded-xl border border-maha-200 bg-white focus-within:border-[#556B3F]">
-                                            <span className="flex items-center border-r border-maha-200 px-3 text-lg">🇻🇳</span>
+                                        <div className="flex gap-2">
+                                            <FancySelect
+                                                value={contact.country}
+                                                onChange={(v) => setContact({ ...contact, country: v })}
+                                                className="w-[7.25rem] shrink-0"
+                                                searchable
+                                                searchPlaceholder={t('blocks.bookingForm.phoneCountrySearchPlaceholder')}
+                                                emptyText={t('blocks.bookingForm.phoneCountryEmpty')}
+                                                options={COUNTRY_CODES.map((c) => ({
+                                                    value: c.name,
+                                                    label: `${c.flag} ${c.name} (${c.code})`,
+                                                    shortLabel: `${c.flag} ${c.code}`,
+                                                }))}
+                                            />
                                             <input
                                                 value={contact.phone}
                                                 onChange={(e) => setContact({ ...contact, phone: e.target.value })}
                                                 placeholder={t('bookingForm.phonePlaceholder')}
-                                                className="w-full bg-transparent px-4 py-3 text-ink focus:outline-none"
+                                                className="input-base"
                                             />
                                         </div>
                                     </Field>
-                                    <Field label={t('bookingForm.email')} required>
+                                    <Field label={t('bookingForm.email')}>
                                         <input
                                             value={contact.email}
                                             onChange={(e) => setContact({ ...contact, email: e.target.value })}
@@ -323,25 +286,22 @@ export default function Booking({ preselect, branches, services }: Props) {
                                         />
                                     </Field>
                                     <Field label={t('bookingForm.contactChannel')}>
-                                        <div className="flex overflow-hidden rounded-xl border border-maha-200 bg-white focus-within:border-[#556B3F]">
-                                            <div className="relative">
-                                                <select
-                                                    value={contact.channel}
-                                                    onChange={(e) => setContact({ ...contact, channel: e.target.value })}
-                                                    className="h-full appearance-none border-r border-maha-200 bg-maha-50 py-3 pl-4 pr-8 text-sm text-ink focus:outline-none"
-                                                >
-                                                    <option value="zalo">{t('bookingForm.channelZalo')}</option>
-                                                    <option value="messenger">{t('bookingForm.channelMessenger')}</option>
-                                                    <option value="whatsapp">{t('bookingForm.channelWhatsapp')}</option>
-                                                    <option value="phone">{t('bookingForm.channelPhone')}</option>
-                                                </select>
-                                                <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-maha-500" />
-                                            </div>
+                                        <div className="flex gap-2">
+                                            <FancySelect
+                                                value={contact.channel}
+                                                onChange={(v) => setContact({ ...contact, channel: v })}
+                                                className="w-[8.5rem] shrink-0"
+                                                options={[
+                                                    { value: 'zalo', label: t('bookingForm.channelZalo') },
+                                                    { value: 'whatsapp', label: t('bookingForm.channelWhatsapp') },
+                                                    { value: 'phone', label: t('bookingForm.channelPhone') },
+                                                ]}
+                                            />
                                             <input
                                                 value={contact.value}
                                                 onChange={(e) => setContact({ ...contact, value: e.target.value })}
                                                 placeholder={t('bookingForm.contactValuePlaceholder')}
-                                                className="w-full bg-transparent px-4 py-3 text-ink focus:outline-none"
+                                                className="input-base"
                                             />
                                         </div>
                                     </Field>

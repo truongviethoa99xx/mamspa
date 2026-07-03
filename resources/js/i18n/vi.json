@@ -36,6 +36,8 @@
         "evening": "Buổi tối",
         "pickDate": "Vui lòng chọn ngày để xem khung giờ.",
         "noSlots": "Không có khung giờ trống cho ngày này.",
+        "timePlaceholder": "--:--",
+        "timeHint": "Chi nhánh mở cửa {{open}} - {{close}}",
         "name": "Họ và tên",
         "namePlaceholder": "Nhập tên của bạn",
         "phone": "Số điện thoại",
@@ -56,7 +58,6 @@
         "confirm": "Xác nhận đặt lịch",
         "processing": "Đang xử lý...",
         "channelZalo": "Zalo",
-        "channelMessenger": "Messenger",
         "channelWhatsapp": "WhatsApp",
         "channelPhone": "Điện thoại"
     },

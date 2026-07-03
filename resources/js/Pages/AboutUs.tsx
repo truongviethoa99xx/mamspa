@@ -13,7 +13,7 @@ interface BranchService {
     id: number;
     slug: string;
     name: string | Record<string, string>;
-    category: string;
+    category: string | Record<string, string> | null;
     price: number;
     duration: number;
 }
@@ -216,7 +216,7 @@ export default function AboutUs({ branch }: Props) {
 
                         <div className="relative mx-auto aspect-[1/1.08] w-full max-w-[620px] bg-cover bg-center" style={imageStyle(images[0])}>
                             <div className="absolute inset-x-[3%] bottom-[2%] top-[10%] rounded-[1.5rem] border-2 border-dashed border-[#8C9A6B]" />
-                            {!images[0] && <div className="absolute inset-x-[6%] bottom-0 top-0 rounded-b-[1.75rem] rounded-t-full bg-[#CDBCA3]" />}
+                            {!images[0] && <div className="absolute inset-x-[6%] bottom-[2%] top-[10%] rounded-b-[1.75rem] rounded-t-full bg-[#CDBCA3]" />}
                         </div>
                     </div>
                 </div>
@@ -417,7 +417,7 @@ export default function AboutUs({ branch }: Props) {
                                     className="flex items-center justify-between rounded-lg border border-maha-100 p-4 hover:bg-maha-50">
                                     <div>
                                         <p className="font-semibold text-maha-700">{tr(s.name, locale)}</p>
-                                        <p className="text-xs text-gray-500">{s.duration} {t('common.minute')} · {s.category}</p>
+                                        <p className="text-xs text-gray-500">{s.duration} {t('common.minute')} · {tr(s.category, locale)}</p>
                                     </div>
                                     <span className="font-semibold">{formatVND(s.price)}</span>
                                 </Link>

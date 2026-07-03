@@ -36,6 +36,8 @@
         "evening": "Evening",
         "pickDate": "Please pick a date to see available times.",
         "noSlots": "No available time slots for this date.",
+        "timePlaceholder": "--:--",
+        "timeHint": "Branch hours: {{open}} - {{close}}",
         "name": "Full name",
         "namePlaceholder": "Enter your name",
         "phone": "Phone number",
@@ -56,7 +58,6 @@
         "confirm": "Confirm booking",
         "processing": "Processing...",
         "channelZalo": "Zalo",
-        "channelMessenger": "Messenger",
         "channelWhatsapp": "WhatsApp",
         "channelPhone": "Phone"
     },

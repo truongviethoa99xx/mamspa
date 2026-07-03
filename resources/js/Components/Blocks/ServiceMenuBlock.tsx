@@ -5,34 +5,42 @@ import { useTranslation } from 'react-i18next';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr, cn } from '@/Lib/utils';
 
-type Category = 'combo' | 'massage' | 'head-spa' | 'facial' | 'foot-spa';
-
-const CATEGORIES: Category[] = ['combo', 'massage', 'head-spa', 'facial', 'foot-spa'];
+interface MenuCategory {
+    slug: string;
+    name: unknown;
+}
 
 interface MenuService {
     id: number | string;
     slug: string;
     name: unknown;
     description: unknown;
-    category: Category;
+    category: { slug: string; name: unknown; root_slug: string } | null;
     duration: number;
     images?: string[];
 }
 
-export function ServiceMenuBlock({ data }: { data: { services?: MenuService[] } }) {
+interface ServiceMenuBlockData {
+    services?: MenuService[];
+    categories?: MenuCategory[];
+}
+
+export function ServiceMenuBlock({ data }: { data: ServiceMenuBlockData }) {
     const locale = useLocale();
     const { t } = useTranslation();
     const services = useMemo<MenuService[]>(() => data.services ?? [], [data.services]);
+    const categories = useMemo<MenuCategory[]>(() => data.categories ?? [], [data.categories]);
 
-    const [active, setActive] = useState<Category>('combo');
+    const [active, setActive] = useState<string>(categories[0]?.slug ?? '');
+    const activeSlug = active || categories[0]?.slug || '';
 
     const filtered = useMemo(
-        () => services.filter((s) => s.category === active),
-        [services, active],
+        () => services.filter((s) => s.category?.root_slug === activeSlug),
+        [services, activeSlug],
     );
 
-    // Chưa có dịch vụ nào thì ẩn cả khối menu.
-    if (services.length === 0) {
+    // Chưa có danh mục/dịch vụ nào thì ẩn cả khối menu.
+    if (services.length === 0 || categories.length === 0) {
         return null;
     }
 
@@ -45,18 +53,18 @@ export function ServiceMenuBlock({ data }: { data: { services?: MenuService[] } 
                         {t('blocks.menu.title')}
                     </h2>
                     <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 lg:mt-12 lg:block lg:space-y-6">
-                        {CATEGORIES.map((cat) => (
-                            <li key={cat}>
+                        {categories.map((cat) => (
+                            <li key={cat.slug}>
                                 <button
-                                    onClick={() => setActive(cat)}
+                                    onClick={() => setActive(cat.slug)}
                                     className={cn(
                                         'font-serif text-base transition-colors sm:text-lg',
-                                        cat === active
+                                        cat.slug === activeSlug
                                             ? 'border-b-2 border-ink pb-1 font-bold text-ink'
                                             : 'text-maha-600 hover:text-ink',
                                     )}
                                 >
-                                    {t(`blocks.menu.cat.${cat}`)}
+                                    {tr(cat.name, locale)}
                                 </button>
                             </li>
                         ))}

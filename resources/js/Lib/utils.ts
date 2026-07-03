@@ -30,3 +30,26 @@ export function tr(value: unknown, locale: string = 'vi'): string {
     }
     return '';
 }
+
+/** Phân tích chuỗi giờ mở cửa dạng "09:00 - 21:00" thành giờ mở/đóng cửa. */
+export function parseOpenHours(openHours: string | undefined): { open: string; close: string } {
+    const match = openHours?.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/);
+    return match ? { open: match[1], close: match[2] } : { open: '09:00', close: '21:00' };
+}
+
+/** Danh sách các mốc giờ (HH:mm) từ giờ mở đến giờ đóng cửa, cách nhau `stepMinutes`. */
+export function generateTimeOptions(open: string, close: string, stepMinutes = 30): string[] {
+    const toMinutes = (time: string) => {
+        const [h, m] = time.split(':').map(Number);
+        return h * 60 + m;
+    };
+    const start = toMinutes(open);
+    const end = toMinutes(close);
+    const options: string[] = [];
+    for (let mins = start; mins <= end; mins += stepMinutes) {
+        const h = Math.floor(mins / 60);
+        const m = mins % 60;
+        options.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+    }
+    return options;
+}

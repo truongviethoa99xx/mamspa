@@ -13,7 +13,7 @@ class BranchController extends Controller
     {
         abort_unless($branch->is_active, 404);
 
-        $branch->load('services');
+        $branch->load('services.category');
 
         // Chi nhánh chưa có widget đánh giá riêng thì dùng widget chung của site.
         $pageContent = $branch->page_content ?? [];
@@ -38,7 +38,7 @@ class BranchController extends Controller
                 ])->all(),
                 'services' => $branch->services->map(fn ($s) => [
                     'id' => $s->id, 'slug' => $s->slug, 'name' => $s->name,
-                    'category' => $s->category, 'price' => $s->price, 'duration' => $s->duration,
+                    'category' => $s->category?->name, 'price' => $s->price, 'duration' => $s->duration,
                 ])->all(),
             ],
         ]);

@@ -3,53 +3,53 @@
 namespace App\Services;
 
 use App\Models\Booking;
-use App\Models\Slot;
-use Illuminate\Support\Carbon;
+use App\Models\Branch;
 
 class SlotService
 {
+    /** Số khách tối đa có thể phục vụ cùng một khung giờ (không quản lý theo từng slot cố định nữa). */
+    private const CAPACITY = 4;
+
+    private const DEFAULT_OPEN = '09:00';
+
+    private const DEFAULT_CLOSE = '21:00';
+
     /**
-     * Trả về danh sách khung giờ trống của 1 chi nhánh trong 1 ngày.
-     * Mỗi slot kiểm tra số booking đang chiếm (status pending/confirmed) so với capacity.
+     * Giờ mở/đóng cửa của chi nhánh, phân tích từ chuỗi `open_hours` (vd. "09:00 - 21:00").
      *
-     * @return array<int, array{start: string, end: string, available: int, capacity: int}>
+     * @return array{open: string, close: string}
      */
-    public function availableSlots(int $branchId, string $date): array
+    public function openHours(int $branchId): array
     {
-        $slots = Slot::where('branch_id', $branchId)
-            ->where('is_active', true)
-            ->orderBy('start_time')
-            ->get();
+        $branch = Branch::findOrFail($branchId);
 
-        $bookingsByTime = $this->guestsByTimeSlot($branchId, $date);
+        if (! preg_match('/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})/', (string) $branch->open_hours, $matches)) {
+            return ['open' => self::DEFAULT_OPEN, 'close' => self::DEFAULT_CLOSE];
+        }
 
-        return $slots->map(function ($slot) use ($bookingsByTime) {
-            $key = Carbon::parse($slot->start_time)->format('H:i');
-            $used = (int) ($bookingsByTime[$key] ?? 0);
-
-            return [
-                'start' => $key,
-                'end' => Carbon::parse($slot->end_time)->format('H:i'),
-                'capacity' => $slot->capacity,
-                'available' => max(0, $slot->capacity - $used),
-            ];
-        })->toArray();
+        return ['open' => $matches[1], 'close' => $matches[2]];
     }
 
+    /**
+     * Khách có thể chọn tuỳ ý bất kỳ giờ nào trong khung giờ mở cửa của chi nhánh;
+     * chỉ cần chưa vượt quá sức chứa tại đúng thời điểm đó trong ngày.
+     */
     public function isSlotAvailable(int $branchId, string $date, string $timeSlot, int $needed = 1): bool
     {
-        $slot = Slot::where('branch_id', $branchId)
-            ->where('start_time', $timeSlot)
-            ->where('is_active', true)
-            ->first();
-
-        if (! $slot) {
+        if (! $this->isWithinOpenHours($branchId, $timeSlot)) {
             return false;
         }
 
         $used = (int) ($this->guestsByTimeSlot($branchId, $date)[$timeSlot] ?? 0);
 
-        return ($used + max(1, $needed)) <= $slot->capacity;
+        return ($used + max(1, $needed)) <= self::CAPACITY;
+    }
+
+    private function isWithinOpenHours(int $branchId, string $timeSlot): bool
+    {
+        ['open' => $open, 'close' => $close] = $this->openHours($branchId);
+
+        return $timeSlot >= $open && $timeSlot <= $close;
     }
 
     /**

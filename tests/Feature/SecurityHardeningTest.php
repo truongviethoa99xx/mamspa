@@ -3,6 +3,7 @@
 use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -19,11 +20,16 @@ function createSecurityTestBooking(?User $user = null): Booking
         'is_active' => true,
     ]);
 
+    $category = ServiceCategory::create([
+        'slug' => 'security-category',
+        'name' => ['vi' => 'Danh mục kiểm thử'],
+    ]);
+
     $service = Service::create([
         'slug' => 'security-service',
         'name' => ['vi' => 'Dịch vụ kiểm thử'],
         'description' => ['vi' => 'Mô tả'],
-        'category' => 'massage',
+        'service_category_id' => $category->id,
         'duration' => 60,
         'price' => 100000,
         'is_active' => true,

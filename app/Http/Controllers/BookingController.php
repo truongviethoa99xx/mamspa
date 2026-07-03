@@ -8,7 +8,6 @@ use App\Models\Booking;
 use App\Models\Branch;
 use App\Models\Service;
 use App\Services\BookingService;
-use App\Services\SlotService;
 use App\Services\VoucherService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,25 +28,13 @@ class BookingController extends Controller
             ],
             'branches' => Branch::where('is_active', true)->get()->map(fn ($b) => [
                 'id' => $b->id, 'slug' => $b->slug, 'name' => $b->name,
-                'address' => $b->address, 'phone' => $b->phone,
+                'address' => $b->address, 'phone' => $b->phone, 'open_hours' => $b->open_hours,
             ])->all(),
-            'services' => Service::active()->with('branches')->get()->map(fn ($s) => [
+            'services' => Service::active()->with(['branches', 'category'])->get()->map(fn ($s) => [
                 'id' => $s->id, 'slug' => $s->slug, 'name' => $s->name,
-                'category' => $s->category, 'duration' => $s->duration, 'price' => $s->price,
+                'category' => $s->category?->name, 'duration' => $s->duration, 'price' => $s->price,
                 'branch_ids' => $s->branches->pluck('id'),
             ])->all(),
-        ]);
-    }
-
-    public function slots(Request $request, SlotService $svc)
-    {
-        $data = $request->validate([
-            'branch_id' => 'required|integer|exists:branches,id',
-            'date' => 'required|date|after_or_equal:today',
-        ]);
-
-        return response()->json([
-            'data' => $svc->availableSlots($data['branch_id'], $data['date']),
         ]);
     }
 

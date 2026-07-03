@@ -36,7 +36,7 @@ class StoreBookingRequest extends FormRequest
             'guest_name' => 'required|string|min:2|max:100',
             'guest_phone' => 'required|string|min:8|max:20',
             'guest_email' => ['nullable', 'email', 'not_regex:/[\r\n]/'],
-            'contact_channel' => 'nullable|in:zalo,messenger,whatsapp,phone',
+            'contact_channel' => 'nullable|in:zalo,whatsapp,phone',
             'contact_value' => 'nullable|string|max:100',
             'note' => 'nullable|string|max:3000',
             'voucher_code' => 'nullable|string|max:32',

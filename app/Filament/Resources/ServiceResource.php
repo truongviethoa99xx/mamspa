@@ -6,6 +6,7 @@ use App\Filament\Concerns\RestrictsFilamentAccess;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -41,13 +42,12 @@ class ServiceResource extends Resource
         return $form->schema([
             Forms\Components\Section::make('Cơ bản')->schema([
                 Forms\Components\TextInput::make('slug')->label('Slug')->required()->unique(ignoreRecord: true),
-                Forms\Components\Select::make('category')->label('Danh mục')->options([
-                    'massage' => 'Body Massage',
-                    'facial' => 'Facial / Da mặt',
-                    'head-spa' => 'Head Spa',
-                    'foot-spa' => 'Foot Spa',
-                    'combo' => 'Combo',
-                ])->native(false)->required(),
+                Forms\Components\Select::make('service_category_id')
+                    ->label('Danh mục')
+                    ->options(fn () => self::categoryOptions())
+                    ->searchable()
+                    ->native(false)
+                    ->required(),
                 Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required(),
                 Forms\Components\TextInput::make('price')->label('Giá (VND)')->numeric()->required(),
                 Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
@@ -169,19 +169,39 @@ class ServiceResource extends Resource
         return $table->columns([
             Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable()->sortable(),
             Tables\Columns\TextColumn::make('name')->label('Tên dịch vụ')->searchable(),
-            Tables\Columns\TextColumn::make('category')->label('Danh mục')->badge(),
+            Tables\Columns\TextColumn::make('category.name')->label('Danh mục')->badge(),
             Tables\Columns\TextColumn::make('duration')->label('Thời lượng')->suffix(' phút'),
             Tables\Columns\TextColumn::make('price')->label('Giá')->money('VND'),
             Tables\Columns\IconColumn::make('is_featured')->label('Nổi bật')->boolean(),
             Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
         ])->filters([
-            Tables\Filters\SelectFilter::make('category')->label('Danh mục')->options([
-                'massage' => 'Massage', 'facial' => 'Facial',
-                'head-spa' => 'Head Spa', 'foot-spa' => 'Foot Spa', 'combo' => 'Combo',
-            ]),
+            Tables\Filters\SelectFilter::make('service_category_id')
+                ->label('Danh mục')
+                ->options(fn () => self::categoryOptions()),
         ])->actions([
             Tables\Actions\EditAction::make(),
         ]);
+    }
+
+    /** Options nhóm theo danh mục cấp 1: cho phép chọn chính danh mục cấp 1 hoặc một danh mục con cấp 2. */
+    protected static function categoryOptions(): array
+    {
+        return ServiceCategory::query()
+            ->active()
+            ->roots()
+            ->with(['children' => fn ($q) => $q->active()->orderBy('order')])
+            ->orderBy('order')
+            ->get()
+            ->mapWithKeys(function (ServiceCategory $root) {
+                $rootLabel = $root->getTranslation('name', 'vi');
+                $options = [$root->id => "{$rootLabel} (danh mục gốc)"];
+                foreach ($root->children as $child) {
+                    $options[$child->id] = $child->getTranslation('name', 'vi');
+                }
+
+                return [$rootLabel => $options];
+            })
+            ->all();
     }
 
     public static function getPages(): array

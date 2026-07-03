@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use App\Models\HomePageContent;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -25,6 +26,7 @@ class HomeController extends Controller
             'hero' => $this->hero($content),
             'featuredServices' => $this->featuredServices(),
             'menuServices' => $this->menuServices(),
+            'menuCategories' => $this->menuCategories(),
             'branches' => $this->branches(),
             'bookingBranches' => $this->bookingBranches(),
             'bookingServices' => $this->bookingServices(),
@@ -55,32 +57,56 @@ class HomeController extends Controller
     /** Dịch vụ nổi bật cho khối grid. */
     protected function featuredServices(): array
     {
-        return Service::active()->featured()->get()
+        return Service::active()->featured()->with('category.parent')->get()
             ->map(fn (Service $s) => [
                 'id' => $s->id,
                 'slug' => $s->slug,
                 'name' => $s->name,
                 'description' => $s->description,
-                'category' => $s->category,
+                'category' => $this->categoryPayload($s),
                 'duration' => $s->duration,
                 'price' => $s->price,
                 'images' => $this->serviceImages($s),
             ])->all();
     }
 
-    /** Toàn bộ dịch vụ cho khối menu (lọc theo danh mục ở FE). */
+    /** Toàn bộ dịch vụ cho khối menu (lọc theo danh mục cấp 1 ở FE). */
     protected function menuServices(): array
     {
-        return Service::active()->get()
+        return Service::active()->with('category.parent')->get()
             ->map(fn (Service $s) => [
                 'id' => $s->id,
                 'slug' => $s->slug,
                 'name' => $s->name,
                 'description' => $s->description,
-                'category' => $s->category,
+                'category' => $this->categoryPayload($s),
                 'duration' => $s->duration,
                 'images' => $this->serviceImages($s),
             ])->all();
+    }
+
+    /** Danh mục cấp 1 đang có dịch vụ, dùng làm tab cho khối menu dịch vụ. */
+    protected function menuCategories(): array
+    {
+        return ServiceCategory::active()->roots()->orderBy('order')->get()
+            ->map(fn (ServiceCategory $c) => [
+                'slug' => $c->slug,
+                'name' => $c->name,
+            ])->all();
+    }
+
+    /** Danh mục hiệu lực của dịch vụ: slug riêng + slug cấp 1 (để nhóm tab trên FE). */
+    protected function categoryPayload(Service $s): ?array
+    {
+        if (! $s->category) {
+            return null;
+        }
+
+        return [
+            'slug' => $s->category->slug,
+            'name' => $s->category->name,
+            'root_slug' => $s->category->parent?->slug ?? $s->category->slug,
+        ];
     }
 
     /**

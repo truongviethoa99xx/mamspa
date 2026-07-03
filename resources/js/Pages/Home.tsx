@@ -16,14 +16,25 @@ interface HeroContent {
     service_list_title: Translatable
 }
 
+interface ServiceCategoryItem {
+    slug: string
+    name: Translatable
+    root_slug: string
+}
+
 interface ServiceItem {
     id: number
     slug: string
     name: Translatable
     description: Translatable
-    category: 'massage' | 'facial' | 'head-spa' | 'foot-spa' | 'combo'
+    category: ServiceCategoryItem | null
     duration: number
     price?: number
+}
+
+interface MenuCategoryItem {
+    slug: string
+    name: Translatable
 }
 
 interface BranchItem {
@@ -74,6 +85,7 @@ interface Props {
     hero: HeroContent
     featuredServices: ServiceItem[]
     menuServices: ServiceItem[]
+    menuCategories: MenuCategoryItem[]
     branches: BranchItem[]
     bookingBranches: BookingBranch[]
     bookingServices: BookingService[]
@@ -89,6 +101,7 @@ export default function Home({
     hero,
     featuredServices,
     menuServices,
+    menuCategories,
     branches,
     bookingBranches,
     bookingServices,
@@ -107,7 +120,7 @@ export default function Home({
             {sectionVisibility.featuredServices && (
                 <ServiceListBlock data={{ title: hero.service_list_title, services: featuredServices }} />
             )}
-            <ServiceMenuBlock data={{ services: menuServices }} />
+            <ServiceMenuBlock data={{ services: menuServices, categories: menuCategories }} />
             <BookingFormBlock data={{ branches: bookingBranches, services: bookingServices }} />
             {sectionVisibility.testimonials && <TestimonialBlock data={testimonials} />}
         </PublicLayout>
