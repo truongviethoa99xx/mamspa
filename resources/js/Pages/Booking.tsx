@@ -1,6 +1,5 @@
 import { router } from '@inertiajs/react';
 import { Seo } from '@/Components/Seo';
-import axios from 'axios';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
@@ -11,7 +10,7 @@ import { FancySelect } from '@/Components/FancySelect';
 import { COUNTRY_CODES } from '@/Lib/countryCodes';
 
 interface Branch { id: number; slug: string; name: Record<string, string> | string; address: string; phone: string; open_hours: string }
-interface Service { id: number; slug: string; name: Record<string, string> | string; category: Record<string, string> | string | null; duration: number; price: number; branch_ids: number[] }
+interface Service { id: number; slug: string; name: Record<string, string> | string; category: Record<string, string> | string | null; duration: number; branch_ids: number[] }
 type Gender = 'male' | 'female';
 
 interface Props {
@@ -22,8 +21,6 @@ interface Props {
 
 const DATE_LOCALES: Record<string, string> = { en: 'en-US', ja: 'ja-JP', ko: 'ko-KR', zh: 'zh-CN', vi: 'vi-VN' };
 const TODAY = new Date().toISOString().slice(0, 10);
-
-const money = (n: number, suffix = 'đ') => `${n.toLocaleString('vi-VN')} ${suffix}`;
 
 export default function Booking({ preselect, branches, services }: Props) {
     const { t } = useTranslation();
@@ -37,9 +34,6 @@ export default function Booking({ preselect, branches, services }: Props) {
     const [date, setDate] = useState<string>('');
     const [timeSlot, setTimeSlot] = useState<string>('');
     const [contact, setContact] = useState({ name: '', phone: '', email: '', note: '', channel: 'zalo', value: '', country: 'Việt Nam' });
-    const [voucherCode, setVoucherCode] = useState('');
-    const [voucherDiscount, setVoucherDiscount] = useState(0);
-    const [voucherError, setVoucherError] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -86,21 +80,6 @@ export default function Booking({ preselect, branches, services }: Props) {
         () => generateTimeOptions(branchHours.open, branchHours.close, 30).map((v) => ({ value: v, label: v })),
         [branchHours],
     );
-    const subtotal = guests.reduce((sum, g) => sum + (serviceFor(g.key)?.price ?? 0), 0);
-    const total = Math.max(0, subtotal - voucherDiscount);
-
-    const applyVoucher = async () => {
-        setVoucherError(null);
-        if (!voucherCode || subtotal <= 0) return;
-        try {
-            const { data } = await axios.post('/dat-lich/voucher', { code: voucherCode, order_value: subtotal });
-            setVoucherDiscount(data.data.discount);
-        } catch (e: any) {
-            setVoucherDiscount(0);
-            setVoucherError(e.response?.data?.message ?? '');
-        }
-    };
-
     const canSubmit =
         !!branchId && !!date && !!timeSlot && guests.length > 0 && guests.every((g) => serviceFor(g.key)) && contact.name.trim().length >= 2 && contact.phone.trim().length >= 8;
 
@@ -122,7 +101,6 @@ export default function Booking({ preselect, branches, services }: Props) {
                 contact_channel: contact.channel || undefined,
                 contact_value: contact.value || undefined,
                 note: contact.note || undefined,
-                voucher_code: voucherCode || undefined,
                 payment_method: 'cash',
             },
             {
@@ -357,7 +335,6 @@ export default function Booking({ preselect, branches, services }: Props) {
                                                             </p>
                                                             <p className="text-xs italic text-maha-600">{g.label}</p>
                                                         </div>
-                                                        <span className="whitespace-nowrap font-semibold text-ink">{money(s.price)}</span>
                                                     </div>
                                                 );
                                             })}
@@ -365,45 +342,7 @@ export default function Booking({ preselect, branches, services }: Props) {
                                     </div>
                                 </dl>
 
-                                <div className="my-5 border-t border-dashed border-maha-200" />
-
-                                <div className="space-y-3 text-sm">
-                                    <div className="flex items-center justify-between text-maha-700">
-                                        <span>{t('bookingForm.subtotal')}:</span>
-                                        <span className="font-semibold text-ink">{money(subtotal, 'VNĐ')}</span>
-                                    </div>
-                                    <div>
-                                        <div className="flex items-center justify-between text-maha-700">
-                                            <span>{t('bookingForm.voucher')}:</span>
-                                            <span className="font-semibold text-ink">
-                                                {voucherDiscount > 0 ? `- ${money(voucherDiscount, 'VNĐ')}` : '-'}
-                                            </span>
-                                        </div>
-                                        <div className="mt-2 flex gap-2">
-                                            <input
-                                                value={voucherCode}
-                                                onChange={(e) => setVoucherCode(e.target.value)}
-                                                placeholder="Voucher"
-                                                className="w-full rounded-lg border border-maha-200 bg-white px-3 py-2 text-sm focus:border-[#556B3F] focus:outline-none"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={applyVoucher}
-                                                className="rounded-lg bg-maha-100 px-4 text-sm font-semibold text-maha-700 hover:bg-maha-200"
-                                            >
-                                                {t('common.apply')}
-                                            </button>
-                                        </div>
-                                        {voucherError && <p className="mt-1 text-xs text-red-500">{voucherError}</p>}
-                                    </div>
-                                </div>
-
-                                <div className="mt-5 flex items-baseline justify-between">
-                                    <span className="font-serif text-lg text-heading">{t('bookingForm.total')}:</span>
-                                    <span className="font-serif text-2xl font-bold text-heading">{money(total, 'VNĐ')}</span>
-                                </div>
-
-                                {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
+                                {error && <p className="mt-5 text-sm text-red-500">{error}</p>}
 
                                 <button
                                     type="button"

@@ -12,6 +12,7 @@ import { formatVND, tr } from '@/Lib/utils';
 interface BranchService {
     id: number;
     slug: string;
+    url: string;
     name: string | Record<string, string>;
     category: string | Record<string, string> | null;
     price: number;
@@ -413,7 +414,7 @@ export default function AboutUs({ branch }: Props) {
                     <ul className="grid gap-3 md:grid-cols-2">
                         {branch.services.map((s) => (
                             <li key={s.id}>
-                                <Link href={`/dich-vu/${s.slug}/`}
+                                <Link href={s.url}
                                     className="flex items-center justify-between rounded-lg border border-maha-100 p-4 hover:bg-maha-50">
                                     <div>
                                         <p className="font-semibold text-maha-700">{tr(s.name, locale)}</p>

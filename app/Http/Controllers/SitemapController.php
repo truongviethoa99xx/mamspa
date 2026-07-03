@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BlogPost;
 use App\Models\Branch;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
 
@@ -33,10 +34,19 @@ class SitemapController extends Controller
                 ];
             }
         }
-        if (Schema::hasTable('services')) {
-            foreach (Service::active()->get() as $s) {
+        if (Schema::hasTable('service_categories')) {
+            foreach (ServiceCategory::active()->get() as $c) {
                 $urls[] = [
-                    'loc' => $base.'/dich-vu/'.$s->slug.'/',
+                    'loc' => $base.$c->url,
+                    'lastmod' => $c->updated_at?->toIso8601String(),
+                    'priority' => $c->isRoot() ? '0.8' : '0.7',
+                ];
+            }
+        }
+        if (Schema::hasTable('services')) {
+            foreach (Service::active()->with('category.parent')->get() as $s) {
+                $urls[] = [
+                    'loc' => $base.$s->url,
                     'lastmod' => $s->updated_at?->toIso8601String(),
                     'priority' => '0.8',
                 ];

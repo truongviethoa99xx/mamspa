@@ -48,7 +48,7 @@ class ServiceResource extends Resource
                     ->searchable()
                     ->native(false)
                     ->required(),
-                Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required(),
+                Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required()->columnSpanFull(),
                 Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),

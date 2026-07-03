@@ -14,6 +14,8 @@ interface HeroData {
     cta_link?: string;
 }
 
+const isVideoUrl = (url: string) => /\.(mp4|webm|ogv)$/i.test(url);
+
 export function HeroBlock({ data }: { data: HeroData }) {
     const locale = useLocale();
     const { t } = useTranslation();
@@ -24,6 +26,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
     const ctaText = tr(data.cta_text, locale) || t('common.bookNow');
     const ctaLink = data.cta_link || '/dat-lich/';
     const sectionRef = useRef<HTMLElement>(null);
+    const isVideo = !!data.image && isVideoUrl(data.image);
 
     const handleExplore = (e: MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -33,16 +36,31 @@ export function HeroBlock({ data }: { data: HeroData }) {
 
     return (
         <>
-        {data.image && (
+        {data.image && !isVideo && (
             <Head>
                 <link rel="preload" as="image" href={data.image} fetchPriority="high" />
             </Head>
         )}
         <section
             ref={sectionRef}
-            className="relative isolate flex h-[520px] max-h-[78svh] min-h-[440px] flex-col overflow-hidden bg-[#2F3E2E] bg-cover bg-center sm:h-[72vh] sm:min-h-[500px] md:h-[78vh] lg:h-[88vh] lg:min-h-[560px] lg:max-h-[940px]"
-            style={data.image ? { backgroundImage: `linear-gradient(rgba(47,62,46, 0.58), rgba(47,62,46, 0.58)), url(${data.image})` } : undefined}
+            className="relative isolate flex h-[520px] max-h-[78svh] min-h-[440px] flex-col overflow-hidden bg-[#2F3E2E] sm:h-[72vh] sm:min-h-[500px] md:h-[78vh] lg:h-[88vh] lg:min-h-[560px] lg:max-h-[940px]"
+            style={data.image && !isVideo ? { backgroundImage: `linear-gradient(rgba(47,62,46, 0.58), rgba(47,62,46, 0.58)), url(${data.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
         >
+            {isVideo && (
+                <>
+                    <video
+                        className="absolute inset-0 z-0 h-full w-full object-cover"
+                        src={data.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                    />
+                    <div className="absolute inset-0 z-0 bg-[#2F3E2E]/60" />
+                </>
+            )}
+
             {/* Brand wordmark */}
             <Link
                 href="/"
@@ -52,7 +70,7 @@ export function HeroBlock({ data }: { data: HeroData }) {
             </Link>
 
             {/* Main content */}
-            <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-24 pt-20 sm:px-6 sm:py-16 md:py-20 2xl:max-w-[1440px]">
+            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-24 pt-20 sm:px-6 sm:py-16 md:py-20 2xl:max-w-[1440px]">
                 <p className="font-serif text-sm italic tracking-wide text-maha-100/70 sm:text-lg md:text-xl">
                     {eyebrow}
                 </p>

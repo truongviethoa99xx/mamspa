@@ -206,6 +206,20 @@
             "title": "Mầm Combo packages",
             "bestseller": "Best seller"
         },
+        "results": {
+            "eyebrow": "Search results",
+            "titleWithQuery": "Results for “{{query}}”",
+            "title": "All services",
+            "count": "Found {{count}} matching services",
+            "empty": "No matching services found. Try a different keyword or branch.",
+            "clear": "Clear filters"
+        },
+        "category": {
+            "subcategoriesEyebrow": "Explore more",
+            "subcategoriesTitle": "Sub-categories",
+            "servicesEyebrow": "Featured services",
+            "servicesTitle": "Services in this category"
+        },
         "massage": {
             "title": "Therapeutic massage services",
             "d1": "Effectively releases tension and relieves neck-and-shoulder pain.",

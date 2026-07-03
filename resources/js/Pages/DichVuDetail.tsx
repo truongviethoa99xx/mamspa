@@ -28,6 +28,7 @@ interface ExperienceImage {
 interface Service {
     id: number;
     slug: string;
+    url: string;
     name: Record<string, string> | string;
     description: Record<string, string> | string;
     category: string;
@@ -55,14 +56,21 @@ interface ServicePageContent {
     faqs: Faq[];
 }
 
+interface BreadcrumbEntry {
+    slug: string;
+    name: Record<string, string> | string;
+    url: string;
+}
+
 interface Props {
     service: Service;
+    breadcrumb: BreadcrumbEntry[];
     combos: Service[];
     related: Service[];
     content: ServicePageContent;
 }
 
-export default function DichVuDetail({ service, combos, related, content }: Props) {
+export default function DichVuDetail({ service, breadcrumb, combos, related, content }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
     const [openFaq, setOpenFaq] = useState(0);
@@ -76,7 +84,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
     const bookHref = `/dat-lich/?service=${service.slug}`;
     const heroImage = service.images?.[0];
 
-    const serviceUrl = `${window.location.origin}/dich-vu/${service.slug}`;
+    const serviceUrl = window.location.origin + service.url;
     const schema = [
         serviceSchema({
             name,
@@ -90,6 +98,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
         breadcrumbSchema([
             { name: t('nav.home'), url: window.location.origin },
             { name: t('nav.services'), url: window.location.origin + '/dich-vu/' },
+            ...breadcrumb.map((item) => ({ name: tr(item.name, locale), url: window.location.origin + item.url })),
             { name, url: serviceUrl },
         ]),
         ...(faqs.length > 0 ? [faqSchema(faqs)] : []),
@@ -111,6 +120,14 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                                 <Link href="/dich-vu/" className="transition-colors hover:text-ink">
                                     {t('nav.services')}
                                 </Link>
+                                {breadcrumb.map((item) => (
+                                    <span key={item.slug} className="flex items-center gap-2.5">
+                                        <span className="text-[#8C9A6B]">/</span>
+                                        <Link href={item.url} className="transition-colors hover:text-ink">
+                                            {tr(item.name, locale)}
+                                        </Link>
+                                    </span>
+                                ))}
                                 <span className="text-[#8C9A6B]">/</span>
                                 <span className="font-medium text-[#475934]">{name}</span>
                             </nav>
@@ -330,7 +347,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                             {combos.map((item) => (
                                 <Link
                                     key={item.id}
-                                    href={`/dich-vu/${item.slug}/`}
+                                    href={item.url}
                                     className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
                                 >
                                     <div className="relative aspect-[16/9.6] overflow-hidden rounded-xl bg-[#CDBCA3]">
@@ -464,7 +481,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                             {related.map((item) => (
                                 <Link
                                     key={item.id}
-                                    href={`/dich-vu/${item.slug}/`}
+                                    href={item.url}
                                     className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
                                 >
                                     <div className="aspect-[4/3] rounded-xl bg-[#CDBCA3]" />

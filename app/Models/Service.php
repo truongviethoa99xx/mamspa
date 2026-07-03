@@ -10,6 +10,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @property-read string $url
+ */
 class Service extends Model implements HasMedia
 {
     use HasFactory, HasTranslations, InteractsWithMedia;
@@ -65,5 +68,15 @@ class Service extends Model implements HasMedia
             $categoryQuery->where('slug', $slug)
                 ->orWhereHas('parent', fn ($parentQuery) => $parentQuery->where('slug', $slug));
         });
+    }
+
+    /** URL công khai của dịch vụ: /dich-vu/{category}/{slug}/ (yêu cầu category.parent đã eager-load). */
+    public function getUrlAttribute(): string
+    {
+        if (! $this->category) {
+            return "/dich-vu/{$this->slug}/";
+        }
+
+        return "{$this->category->url}{$this->slug}/";
     }
 }

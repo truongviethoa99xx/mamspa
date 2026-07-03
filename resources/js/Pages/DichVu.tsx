@@ -1,27 +1,16 @@
 import { Link, router } from '@inertiajs/react';
 import { type CSSProperties, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CalendarDays, ChevronRight, MapPin, Search } from 'lucide-react';
+import { CalendarDays, MapPin, Search, X } from 'lucide-react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
+import { ServiceCard, type ServiceCardData } from '@/Components/ServiceCard';
 import { useLocale } from '@/Hooks/useLocale';
-import { formatVND, tr } from '@/Lib/utils';
+import { tr } from '@/Lib/utils';
 
 const CATEGORIES = ['Body Massage', 'Head Spa', 'Facial Care', 'Mother Care'];
 
-interface Service {
-    id: number;
-    slug: string;
-    name: Record<string, string> | string;
-    description: Record<string, string> | string;
-    category: string;
-    duration: number;
-    price: number;
-    is_featured: boolean;
-    ingredients: string[];
-    images?: string[];
-    branches: string[];
-}
+type Service = ServiceCardData & { branches: string[] };
 
 interface Branch {
     slug: string;
@@ -146,7 +135,7 @@ function imageStyle(image?: string): CSSProperties | undefined {
     return image ? { backgroundImage: `url(${image})` } : undefined;
 }
 
-export default function DichVu({ filters, combos, branches, content }: Props) {
+export default function DichVu({ filters, combos, services, branches, content }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
     const categories = content?.listing_categories && content.listing_categories.length > 0 ? content.listing_categories : CATEGORIES;
@@ -156,10 +145,16 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
 
     const [branch, setBranch] = useState(filters.branch ?? branches[0]?.slug ?? '');
     const [query, setQuery] = useState(filters.q ?? '');
+    const searchActive = filters.q.trim().length > 0;
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
         router.get('/dich-vu/', { branch, q: query }, { preserveState: true, preserveScroll: true });
+    };
+
+    const clearSearch = () => {
+        setQuery('');
+        router.get('/dich-vu/', { branch }, { preserveState: true, preserveScroll: true });
     };
 
     return (
@@ -230,6 +225,44 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                 </div>
             </section>
 
+            {searchActive ? (
+                /* Search results — every matching service, across all categories */
+                <section className="bg-maha-50 py-16 md:py-24">
+                    <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
+                            {t('dichvu.results.eyebrow')}
+                        </p>
+                        <h2 className="mt-2 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
+                            {filters.q.trim() ? t('dichvu.results.titleWithQuery', { query: filters.q }) : t('dichvu.results.title')}
+                        </h2>
+                        <p className="mt-4 text-center text-ink/60">
+                            {t('dichvu.results.count', { count: services.length })}
+                        </p>
+                        <span className="mx-auto mt-5 block h-px w-20 bg-[#556B3F]" />
+
+                        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            {services.map((s) => (
+                                <ServiceCard key={s.id} service={s} locale={locale} />
+                            ))}
+                            {services.length === 0 && (
+                                <p className="col-span-full text-center text-ink/60">{t('dichvu.results.empty')}</p>
+                            )}
+                        </div>
+
+                        <div className="mt-10 flex justify-center">
+                            <button
+                                type="button"
+                                onClick={clearSearch}
+                                className="inline-flex items-center gap-2.5 rounded-full border border-ink px-7 py-3 font-serif text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-ink hover:text-maha-50"
+                            >
+                                <X className="h-4 w-4" />
+                                {t('dichvu.results.clear')}
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            ) : (
+                <>
             {/* Combo packages */}
             <section className="bg-maha-50 py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
@@ -244,43 +277,7 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
 
                     <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {combos.map((c) => (
-                            <Link
-                                key={c.id}
-                                href={`/dich-vu/${c.slug}/`}
-                                className="group flex flex-col rounded-3xl bg-white p-4 shadow-md shadow-maha-900/5 transition-transform hover:-translate-y-1"
-                            >
-                                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-maha-200">
-                                    {c.images?.[0] && <img src={c.images[0]} alt={tr(c.name, locale)} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
-                                    {c.is_featured && (
-                                        <span className="absolute left-3 top-3 rounded-full bg-[#718255] px-3 py-1 text-xs font-semibold text-white">
-                                            {t('dichvu.combos.bestseller')}
-                                        </span>
-                                    )}
-                                </div>
-
-                                <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
-                                    <h3 className="font-serif text-2xl text-ink">{tr(c.name, locale)}</h3>
-                                    <p className="mt-1 font-bold text-[#556B3F]">
-                                        {c.duration} {t('blocks.menu.minute')} · {formatVND(c.price)}
-                                    </p>
-                                    {c.ingredients.length > 0 ? (
-                                        <ul className="mt-4 space-y-2 text-sm leading-relaxed text-ink/75">
-                                            {c.ingredients.map((item) => (
-                                                <li key={item}>• {item}</li>
-                                            ))}
-                                        </ul>
-                                    ) : (
-                                        <p className="mt-4 text-sm leading-relaxed text-ink/75">{tr(c.description, locale)}</p>
-                                    )}
-                                    <hr className="my-5 border-maha-200" />
-                                    <div className="mt-auto flex items-center justify-between font-semibold text-ink">
-                                        {t('blocks.menu.book')}
-                                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink text-maha-50 transition-transform group-hover:translate-x-1">
-                                            <ChevronRight className="h-5 w-5" />
-                                        </span>
-                                    </div>
-                                </div>
-                            </Link>
+                            <ServiceCard key={c.id} service={c} locale={locale} />
                         ))}
                         {combos.length === 0 && (
                             <p className="col-span-full text-center text-ink/60">{t('dichvu.empty', 'Chưa có gói combo nào.')}</p>
@@ -452,6 +449,8 @@ export default function DichVu({ filters, combos, branches, content }: Props) {
                     </div>
                 </div>
             </section>
+                </>
+            )}
         </PublicLayout>
     );
 }

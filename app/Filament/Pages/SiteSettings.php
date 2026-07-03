@@ -39,7 +39,7 @@ class SiteSettings extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill(SiteSetting::current()->only([
-            'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links', 'review_widget',
+            'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links',
         ]));
     }
 
@@ -63,7 +63,7 @@ class SiteSettings extends Page implements HasForms
                             ->disk('public')
                             ->directory('branding')
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('tagline')->label('Tagline footer'),
+                        Forms\Components\TextInput::make('tagline')->label('Tagline footer')->columnSpanFull(),
                         Forms\Components\Textarea::make('meta_description')
                             ->label('Mô tả SEO mặc định (meta description)')
                             ->helperText('Dùng cho các trang chưa khai báo mô tả riêng. Nên viết 120-160 ký tự, chứa từ khóa chính (spa, massage, Đà Nẵng...).')
@@ -77,16 +77,6 @@ class SiteSettings extends Page implements HasForms
                         Forms\Components\TextInput::make('chat_url')->label('Link nút chat / Zalo')->url()->columnSpanFull(),
                     ])
                     ->columns(2),
-
-                Forms\Components\Section::make('Widget đánh giá khách hàng (Google / Elfsight)')
-                    ->description('Dán mã nhúng widget đánh giá dùng chung cho cả site. Hiển thị ở mục "Đánh giá khách hàng" trên trang chủ và trang chi nhánh (khi chi nhánh chưa có widget riêng). Để trống thì không hiện.')
-                    ->schema([
-                        Forms\Components\Textarea::make('review_widget')
-                            ->label('Widget đánh giá')
-                            ->helperText('Dán Share Link URL (vd. https://xxxx.elf.site) HOẶC mã nhúng đầy đủ từ tab "Embed Code". Cả hai đều chạy được.')
-                            ->rows(5)
-                            ->columnSpanFull(),
-                    ]),
 
                 Forms\Components\Section::make('Mạng xã hội')
                     ->schema([
@@ -111,21 +101,42 @@ class SiteSettings extends Page implements HasForms
                         Forms\Components\Repeater::make('floating_contact_buttons')
                             ->label('')
                             ->schema([
-                                Forms\Components\Toggle::make('enabled')
-                                    ->label('Hiển thị')
-                                    ->default(true),
-                                Forms\Components\Select::make('type')
-                                    ->label('Icon mặc định')
-                                    ->options([
-                                        'zalo' => 'Zalo',
-                                        'map' => 'Google Maps',
-                                        'phone' => 'Điện thoại',
-                                        'whatsapp' => 'WhatsApp',
-                                        'kakao' => 'KakaoTalk',
-                                        'custom' => 'Custom',
-                                    ])
-                                    ->default('custom')
-                                    ->required(),
+                                Forms\Components\Grid::make(3)
+                                    ->schema([
+                                        Forms\Components\TextInput::make('label')
+                                            ->label('Tên')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('href')
+                                            ->label('Link')
+                                            ->helperText('Ví dụ: https://zalo.me/0865806166, tel:0865806166, https://wa.me/84865806166. Chưa có link thì để "#".')
+                                            ->rules(['regex:/\A(#|https?:\/\/|tel:|mailto:|sms:)/i'])
+                                            ->required(),
+                                        Forms\Components\Toggle::make('enabled')
+                                            ->label('Hiển thị')
+                                            ->default(true)
+                                            ->inline(false),
+                                    ]),
+                                Forms\Components\Grid::make(3)
+                                    ->schema([
+                                        Forms\Components\Select::make('type')
+                                            ->label('Icon mặc định')
+                                            ->options([
+                                                'zalo' => 'Zalo',
+                                                'map' => 'Google Maps',
+                                                'phone' => 'Điện thoại',
+                                                'whatsapp' => 'WhatsApp',
+                                                'kakao' => 'KakaoTalk',
+                                                'custom' => 'Custom',
+                                            ])
+                                            ->default('custom')
+                                            ->required(),
+                                        Forms\Components\ColorPicker::make('background')
+                                            ->label('Màu nền')
+                                            ->default('#ffffff'),
+                                        Forms\Components\ColorPicker::make('color')
+                                            ->label('Màu icon/chữ')
+                                            ->default('#0d8bff'),
+                                    ]),
                                 Forms\Components\FileUpload::make('icon')
                                     ->label('Icon tự tải lên')
                                     ->helperText('Nếu có ảnh ở đây, website sẽ dùng ảnh này thay cho icon mặc định. Ảnh vuông, nền trong suốt, tối thiểu 128×128px.')
@@ -134,23 +145,10 @@ class SiteSettings extends Page implements HasForms
                                     ->maxSize(2048)
                                     ->disk('public')
                                     ->directory('contact-icons')
-                                    ->imageEditor(),
-                                Forms\Components\TextInput::make('label')
-                                    ->label('Tên')
-                                    ->required(),
-                                Forms\Components\TextInput::make('href')
-                                    ->label('Link')
-                                    ->helperText('Ví dụ: https://zalo.me/0865806166, tel:0865806166, https://wa.me/84865806166. Chưa có link thì để "#".')
-                                    ->rules(['regex:/\A(#|https?:\/\/|tel:|mailto:|sms:)/i'])
-                                    ->required(),
-                                Forms\Components\ColorPicker::make('background')
-                                    ->label('Màu nền')
-                                    ->default('#ffffff'),
-                                Forms\Components\ColorPicker::make('color')
-                                    ->label('Màu icon/chữ')
-                                    ->default('#0d8bff'),
+                                    ->imageEditor()
+                                    ->columnSpanFull(),
                             ])
-                            ->columns(3)
+                            ->columns(1)
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible()

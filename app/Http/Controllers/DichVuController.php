@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\ServicePageContent;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -17,6 +19,7 @@ class DichVuController extends Controller
         return [
             'id' => $s->id,
             'slug' => $s->slug,
+            'url' => $s->url,
             'name' => $s->name,
             'description' => $s->description,
             'category' => $s->category?->slug,
@@ -80,10 +83,66 @@ class DichVuController extends Controller
         ]);
     }
 
-    public function show(string $slug): Response
+    /**
+     * Điều hướng cây danh mục 2 cấp dưới /dich-vu/:
+     * - /dich-vu/{root}/                    → trang danh mục cấp 1
+     * - /dich-vu/{root}/{child}/            → trang danh mục cấp 2
+     * - /dich-vu/{root}/{service}/          → chi tiết dịch vụ gắn trực tiếp vào danh mục cấp 1
+     * - /dich-vu/{root}/{child}/{service}/  → chi tiết dịch vụ gắn vào danh mục cấp 2
+     * - /dich-vu/{service}/ (URL cũ, phẳng) → 301 sang URL chuẩn có tiền tố danh mục.
+     */
+    public function browse(string $a, ?string $b = null, ?string $c = null): Response|RedirectResponse
     {
-        $service = Service::active()->with(['branches', 'category.parent'])->where('slug', $slug)->firstOrFail();
+        $root = ServiceCategory::active()->roots()->where('slug', $a)->first();
 
+        if (! $root) {
+            if ($b !== null || $c !== null) {
+                abort(404);
+            }
+
+            $legacyService = Service::active()->with(['branches', 'category.parent'])->where('slug', $a)->first();
+            abort_if(! $legacyService, 404);
+
+            // Dịch vụ chưa gán danh mục thì không có tiền tố để redirect tới — render thẳng tại URL phẳng.
+            if (! $legacyService->category) {
+                return $this->renderService($legacyService, []);
+            }
+
+            return redirect()->away(url(rtrim($legacyService->url, '/')), 301);
+        }
+
+        if ($b === null) {
+            return $this->renderCategory($root);
+        }
+
+        $child = $root->children()->active()->where('slug', $b)->first();
+
+        if ($child) {
+            return $c === null
+                ? $this->renderCategory($child)
+                : $this->renderServiceIn($child, $c);
+        }
+
+        abort_if($c !== null, 404);
+
+        return $this->renderServiceIn($root, $b);
+    }
+
+    private function renderServiceIn(ServiceCategory $category, string $slug): Response
+    {
+        $service = Service::active()
+            ->with(['branches', 'category.parent'])
+            ->where('service_category_id', $category->id)
+            ->where('slug', $slug)
+            ->first();
+
+        abort_if(! $service, 404);
+
+        return $this->renderService($service, $this->categoryBreadcrumb($category));
+    }
+
+    private function renderService(Service $service, array $breadcrumb): Response
+    {
         $related = Service::active()
             ->with(['branches', 'category.parent'])
             ->whereKeyNot($service->getKey())
@@ -104,6 +163,7 @@ class DichVuController extends Controller
 
         return Inertia::render('DichVuDetail', [
             'service' => $this->map($service),
+            'breadcrumb' => $breadcrumb,
             'combos' => $combos->map(fn ($s) => $this->map($s)),
             'related' => $related->map(fn ($s) => $this->map($s)),
             'content' => [
@@ -114,6 +174,54 @@ class DichVuController extends Controller
                 'faqs' => $content->faqs ?? [],
             ],
         ]);
+    }
+
+    /** Trang danh mục: liệt kê danh mục con (nếu $category là gốc) và dịch vụ gắn trực tiếp vào $category. */
+    private function renderCategory(ServiceCategory $category): Response
+    {
+        $services = Service::active()
+            ->with(['branches', 'category.parent'])
+            ->where('service_category_id', $category->id)
+            ->orderByDesc('is_featured')
+            ->get();
+
+        return Inertia::render('DichVuCategory', [
+            'category' => [
+                'slug' => $category->slug,
+                'name' => $category->name,
+                'url' => $category->url,
+                'is_root' => $category->isRoot(),
+            ],
+            'breadcrumb' => $this->categoryAncestors($category),
+            'children' => $category->isRoot()
+                ? $category->children()->active()->get()->map(fn (ServiceCategory $c) => [
+                    'slug' => $c->slug,
+                    'name' => $c->name,
+                    'url' => $c->url,
+                ])->all()
+                : [],
+            'services' => $services->map(fn ($s) => $this->map($s)),
+        ]);
+    }
+
+    /**
+     * Breadcrumb link tới $category (bao gồm chính nó) — dùng cho trang chi tiết dịch vụ,
+     * nơi $category là danh mục trực tiếp của dịch vụ và tên dịch vụ được thêm làm mục cuối ở FE.
+     */
+    private function categoryBreadcrumb(ServiceCategory $category): array
+    {
+        $items = $this->categoryAncestors($category);
+        $items[] = ['name' => $category->name, 'url' => $category->url];
+
+        return $items;
+    }
+
+    /** Breadcrumb chỉ gồm tổ tiên của $category (không gồm chính nó) — dùng cho trang danh mục. */
+    private function categoryAncestors(ServiceCategory $category): array
+    {
+        return $category->parent
+            ? [['name' => $category->parent->name, 'url' => $category->parent->url]]
+            : [];
     }
 
     private function listingContent(): array

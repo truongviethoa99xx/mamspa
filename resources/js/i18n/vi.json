@@ -206,6 +206,20 @@
             "title": "Các gói Mầm Combo",
             "bestseller": "Bán chạy nhất"
         },
+        "results": {
+            "eyebrow": "Kết quả tìm kiếm",
+            "titleWithQuery": "Kết quả cho “{{query}}”",
+            "title": "Tất cả dịch vụ",
+            "count": "Tìm thấy {{count}} dịch vụ phù hợp",
+            "empty": "Không tìm thấy dịch vụ phù hợp. Vui lòng thử từ khoá hoặc chi nhánh khác.",
+            "clear": "Xoá bộ lọc"
+        },
+        "category": {
+            "subcategoriesEyebrow": "Khám phá thêm",
+            "subcategoriesTitle": "Danh mục con",
+            "servicesEyebrow": "Dịch vụ nổi bật",
+            "servicesTitle": "Dịch vụ trong danh mục"
+        },
         "massage": {
             "title": "Dịch vụ Massage trị liệu",
             "d1": "Giải toả căng thẳng, giảm đau nhức vùng cổ vai gáy hiệu quả.",

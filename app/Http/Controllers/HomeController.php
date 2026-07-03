@@ -6,7 +6,6 @@ use App\Models\Branch;
 use App\Models\HomePageContent;
 use App\Models\Service;
 use App\Models\ServiceCategory;
-use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -174,14 +173,10 @@ class HomeController extends Controller
         ];
     }
 
-    /**
-     * Widget đánh giá hiển thị ở mục "Đánh giá khách hàng" trên trang chủ:
-     * ưu tiên widget riêng của từng chi nhánh; nếu không có thì dùng widget
-     * chung cấp site trong Thiết lập chung.
-     */
+    /** Widget đánh giá riêng của từng chi nhánh, hiển thị ở mục "Đánh giá khách hàng" trên trang chủ. */
     protected function branchReviewWidgets(): array
     {
-        $widgets = Branch::where('is_active', true)->orderBy('id')->get()
+        return Branch::where('is_active', true)->orderBy('id')->get()
             ->map(fn (Branch $b) => [
                 'name' => $b->name,
                 'html' => $b->page_content['review_widget'] ?? null,
@@ -189,15 +184,6 @@ class HomeController extends Controller
             ->filter(fn (array $w) => ! empty($w['html']))
             ->values()
             ->all();
-
-        if (empty($widgets)) {
-            $siteWidget = SiteSetting::current()->review_widget;
-            if (! empty($siteWidget)) {
-                $widgets = [['name' => null, 'html' => $siteWidget]];
-            }
-        }
-
-        return $widgets;
     }
 
     /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */

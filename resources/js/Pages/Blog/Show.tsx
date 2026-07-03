@@ -200,7 +200,7 @@ export default function BlogShow({ post, related }: Props) {
                                     </h3>
                                     <p className="mt-3 text-sm leading-relaxed text-maha-100/70">{t('blog.ctaDesc')}</p>
                                     <Link
-                                        href="/dich-vu/?category=head-spa"
+                                        href="/dich-vu/head-spa/"
                                         className="mt-6 inline-flex items-center gap-2 rounded-full bg-maha-50 px-7 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-white"
                                     >
                                         {t('blog.ctaButton')}

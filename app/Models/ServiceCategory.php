@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @property-read string $url
+ */
 class ServiceCategory extends Model
 {
     use HasTranslations;
@@ -50,5 +53,13 @@ class ServiceCategory extends Model
     public function isRoot(): bool
     {
         return $this->parent_id === null;
+    }
+
+    /** URL công khai của danh mục: /dich-vu/{root}/ hoặc /dich-vu/{root}/{child}/. */
+    public function getUrlAttribute(): string
+    {
+        return $this->parent
+            ? "/dich-vu/{$this->parent->slug}/{$this->slug}/"
+            : "/dich-vu/{$this->slug}/";
     }
 }

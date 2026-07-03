@@ -64,11 +64,10 @@ class HomePageSettings extends Page implements HasForms
                         TranslatableField::group('hero_cta_text', label: 'Nút CTA'),
                         Forms\Components\TextInput::make('hero_cta_link')->label('Đường dẫn nút')->placeholder('/dat-lich/'),
                         Forms\Components\FileUpload::make('hero_image')->label('Banner trang chủ')
-                            ->helperText('Ảnh banner toàn màn hình, tỉ lệ ngang 16:9, khuyến nghị tối thiểu 1920×1080px.')
-                            ->image()
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->maxSize(5120)
-                            ->disk('public')->directory('home')->imageEditor(),
+                            ->helperText('Ảnh hoặc video banner toàn màn hình. Ảnh: tỉ lệ ngang 16:9, khuyến nghị tối thiểu 1920×1080px. Video: MP4/WebM, nên nén dưới 15MB để tải nhanh.')
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm'])
+                            ->maxSize(20480)
+                            ->disk('public')->directory('home'),
                     ]),
 
                 Forms\Components\Section::make('Dịch vụ nổi bật')
