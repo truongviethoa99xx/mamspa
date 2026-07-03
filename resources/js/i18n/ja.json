@@ -332,6 +332,8 @@
             "namePlaceholder": "お名前を入力",
             "phone": "電話番号",
             "phonePlaceholder": "電話番号を入力",
+            "phoneCountrySearchPlaceholder": "国名または国番号を検索...",
+            "phoneCountryEmpty": "該当する国が見つかりません",
             "email": "メール (Gmail)",
             "emailPlaceholder": "example@gmail.com",
             "channel": "オンライン連絡手段",

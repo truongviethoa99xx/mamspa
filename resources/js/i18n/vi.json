@@ -333,6 +333,8 @@
             "namePlaceholder": "Nhập tên của bạn",
             "phone": "Số điện thoại",
             "phonePlaceholder": "Nhập số điện thoại",
+            "phoneCountrySearchPlaceholder": "Tìm quốc gia hoặc mã vùng...",
+            "phoneCountryEmpty": "Không tìm thấy quốc gia",
             "email": "Email (Gmail)",
             "emailPlaceholder": "example@gmail.com",
             "channel": "Kênh liên hệ trực tuyến",

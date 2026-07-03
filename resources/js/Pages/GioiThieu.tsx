@@ -1,4 +1,5 @@
 import { usePage } from '@inertiajs/react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Coffee, Flower2, Globe, HandHelping, Heart, Leaf, MapPin, MoreHorizontal, Phone, Play, Quote } from 'lucide-react';
 import PublicLayout from '@/Layouts/PublicLayout';
@@ -12,6 +13,36 @@ const GREEN = '#556B3F';
 const FEATURE_ICONS = [Flower2, HandHelping, Leaf, Coffee] as const;
 
 const DEFAULT_FEATURE_KEYS = ['headSpa', 'bodyMassage', 'herbal', 'tea'] as const;
+
+type VideoEmbed =
+    | { kind: 'youtube'; id: string; src: string }
+    | { kind: 'vimeo'; src: string }
+    | { kind: 'file' };
+
+/** Nhận diện link YouTube/Vimeo hoặc file video trực tiếp để phát nhúng tại chỗ thay vì mở tab mới. */
+function parseVideoEmbed(url: string | null | undefined): VideoEmbed | null {
+    if (! url) return null;
+
+    const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+    if (youtubeMatch) {
+        return {
+            kind: 'youtube',
+            id: youtubeMatch[1],
+            src: `https://www.youtube-nocookie.com/embed/${youtubeMatch[1]}?autoplay=1&rel=0`,
+        };
+    }
+
+    const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (vimeoMatch) {
+        return { kind: 'vimeo', src: `https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1` };
+    }
+
+    if (/\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url)) {
+        return { kind: 'file' };
+    }
+
+    return null;
+}
 
 /** Giá trị đa ngôn ngữ từ CMS: JSON {vi,en,...} hoặc chuỗi thuần (dữ liệu cũ). */
 type Translatable = Record<string, string> | string | null;
@@ -100,6 +131,12 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
     const locale = useLocale();
     const { props } = usePage<SharedProps>();
     const branches = props.branches ?? [];
+    const [videoPlaying, setVideoPlaying] = useState(false);
+    const videoEmbed = parseVideoEmbed(content.review_video_url);
+    // Chưa upload ảnh thumbnail riêng → tự lấy ảnh preview mặc định của YouTube thay vì để nền trống.
+    const videoThumbnail =
+        content.review_video_image ||
+        (videoEmbed?.kind === 'youtube' ? `https://img.youtube.com/vi/${videoEmbed.id}/hqdefault.jpg` : undefined);
 
     const phone = content.contact_phone ?? '';
     const address = content.contact_address ?? '';
@@ -283,7 +320,7 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
 
             {/* Vision & Mission */}
             {sectionVisibility.vision && (
-            <section className="bg-[#E9E2D5] py-16 md:py-24">
+            <section className="bg-[#E9E2D5] py-10 md:py-14">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     {/* Header */}
                     <p className="font-serif text-base italic md:text-lg" style={{ color: GREEN }}>
@@ -293,14 +330,14 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                         {txt(content.vision_title, 'about.vision.title')}
                     </h2>
 
-                    <div className="mt-10 grid items-stretch gap-10 lg:grid-cols-2 lg:gap-16">
+                    <div className="mt-6 grid items-stretch gap-6 lg:grid-cols-2 lg:gap-10">
                         {/* Text card */}
-                        <div className="rounded-[2rem] bg-white/60 p-7 md:p-10">
-                            <div className="space-y-5 leading-relaxed text-ink/75">
+                        <div className="rounded-[2rem] bg-white/60 p-6 md:p-8">
+                            <div className="space-y-3 leading-relaxed text-ink/75">
                                 <p>{txt(content.vision_p1, 'about.vision.p1')}</p>
                                 <p>{txt(content.vision_p2, 'about.vision.p2')}</p>
                             </div>
-                            <ul className="mt-7 space-y-4 text-ink/75">
+                            <ul className="mt-4 space-y-2 text-ink/75">
                                 {bullets.map((b) => (
                                     <li key={b.name} className="leading-relaxed">
                                         <span className="font-bold text-ink">• {b.name}:</span> {b.desc}
@@ -440,28 +477,57 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                     <div className="mt-12 grid gap-6 lg:grid-cols-[1.5fr_0.85fr_0.85fr]">
                         {/* Left: video + quote */}
                         <div className="flex flex-col gap-6">
-                            <a
-                                href={content.review_video_url || undefined}
-                                target={content.review_video_url ? '_blank' : undefined}
-                                rel={content.review_video_url ? 'noreferrer' : undefined}
-                                className="group relative aspect-video overflow-hidden rounded-3xl bg-maha-300 text-left"
-                            >
-                                {content.review_video_image && (
-                                    <img
-                                        src={content.review_video_image}
-                                        alt={txt(content.review_video_caption, 'about.reviews.videoCaption')}
-                                        className="h-full w-full object-cover"
-                                    />
-                                )}
-                                <span className="absolute inset-0 flex items-center justify-center">
-                                    <span className="flex h-16 w-16 items-center justify-center rounded-full bg-ink text-white transition-transform group-hover:scale-110">
-                                        <Play className="ml-1 h-6 w-6 fill-white" />
+                            {videoEmbed && videoPlaying ? (
+                                <div className="relative aspect-video overflow-hidden rounded-3xl bg-black">
+                                    {videoEmbed.kind === 'file' ? (
+                                        <video
+                                            src={content.review_video_url ?? undefined}
+                                            controls
+                                            autoPlay
+                                            className="h-full w-full object-cover"
+                                        />
+                                    ) : (
+                                        <iframe
+                                            src={videoEmbed.src}
+                                            title={txt(content.review_video_caption, 'about.reviews.videoCaption')}
+                                            className="h-full w-full"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        />
+                                    )}
+                                </div>
+                            ) : (
+                                <a
+                                    href={content.review_video_url || undefined}
+                                    target={videoEmbed || ! content.review_video_url ? undefined : '_blank'}
+                                    rel={videoEmbed || ! content.review_video_url ? undefined : 'noreferrer'}
+                                    onClick={
+                                        videoEmbed
+                                            ? (e) => {
+                                                  e.preventDefault();
+                                                  setVideoPlaying(true);
+                                              }
+                                            : undefined
+                                    }
+                                    className="group relative aspect-video overflow-hidden rounded-3xl bg-maha-300 text-left"
+                                >
+                                    {videoThumbnail && (
+                                        <img
+                                            src={videoThumbnail}
+                                            alt={txt(content.review_video_caption, 'about.reviews.videoCaption')}
+                                            className="h-full w-full object-cover"
+                                        />
+                                    )}
+                                    <span className="absolute inset-0 flex items-center justify-center">
+                                        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-ink text-white transition-transform group-hover:scale-110">
+                                            <Play className="ml-1 h-6 w-6 fill-white" />
+                                        </span>
                                     </span>
-                                </span>
-                                <span className="absolute bottom-5 left-5 font-serif text-lg font-semibold text-white drop-shadow">
-                                    {txt(content.review_video_caption, 'about.reviews.videoCaption')}
-                                </span>
-                            </a>
+                                    <span className="absolute bottom-5 left-5 font-serif text-lg font-semibold text-white drop-shadow">
+                                        {txt(content.review_video_caption, 'about.reviews.videoCaption')}
+                                    </span>
+                                </a>
+                            )}
 
                             <figure className="rounded-3xl bg-white p-7 shadow-md shadow-maha-900/5 md:p-9">
                                 <Quote className="h-8 w-8 fill-maha-200 text-maha-200" />
@@ -490,7 +556,7 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                     <img
                                         src={card.image}
                                         alt={card.handle}
-                                        className="-mx-5 -mt-5 mb-5 h-56 rounded-t-3xl object-cover"
+                                        className="-mx-5 -mt-5 mb-5 h-56 w-[calc(100%+2.5rem)] max-w-none rounded-t-3xl object-cover"
                                     />
                                 )}
                                 <div className="flex items-center justify-between">

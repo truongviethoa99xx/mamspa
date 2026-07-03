@@ -332,6 +332,8 @@
             "namePlaceholder": "이름을 입력하세요",
             "phone": "전화번호",
             "phonePlaceholder": "전화번호를 입력하세요",
+            "phoneCountrySearchPlaceholder": "국가 또는 국가번호 검색...",
+            "phoneCountryEmpty": "일치하는 국가가 없습니다",
             "email": "이메일 (Gmail)",
             "emailPlaceholder": "example@gmail.com",
             "channel": "온라인 연락 수단",

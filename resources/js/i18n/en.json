@@ -333,6 +333,8 @@
             "namePlaceholder": "Enter your name",
             "phone": "Phone number",
             "phonePlaceholder": "Enter phone number",
+            "phoneCountrySearchPlaceholder": "Search country or dial code...",
+            "phoneCountryEmpty": "No country found",
             "email": "Email (Gmail)",
             "emailPlaceholder": "example@gmail.com",
             "channel": "Online contact channel",

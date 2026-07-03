@@ -332,6 +332,8 @@
             "namePlaceholder": "请输入您的姓名",
             "phone": "电话号码",
             "phonePlaceholder": "请输入电话号码",
+            "phoneCountrySearchPlaceholder": "搜索国家或区号...",
+            "phoneCountryEmpty": "未找到匹配的国家",
             "email": "邮箱 (Gmail)",
             "emailPlaceholder": "example@gmail.com",
             "channel": "在线联系方式",
