@@ -44,8 +44,10 @@ Route::get('/blog', fn () => redirect()->away(url('/tin-tuc').'/', 301))->name('
 Route::get('/blog/{post:slug}', fn (string $post) => redirect()->away(url("/tin-tuc/{$post}").'/', 301))->name('blog.show');
 Route::get('/promotions', [PromotionController::class, 'index'])->name('promotions.index');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
-Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
+Route::get('/lien-he', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/lien-he', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
+// Legacy EN slug → canonical VI slug (301).
+Route::get('/contact', fn () => redirect()->away(url('/lien-he').'/', 301));
 
 Route::get('/chinh-sach', [PolicyPageController::class, 'index'])->name('chinh-sach.index');
 Route::get('/chinh-sach/{policyPage:slug}', [PolicyPageController::class, 'show'])->name('chinh-sach.show');

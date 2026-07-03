@@ -21,7 +21,7 @@ class SitemapController extends Controller
             ['loc' => $base.'/promotions/', 'priority' => '0.7'],
             ['loc' => $base.'/tin-tuc/', 'priority' => '0.7'],
             ['loc' => $base.'/gallery/', 'priority' => '0.6'],
-            ['loc' => $base.'/contact/', 'priority' => '0.6'],
+            ['loc' => $base.'/lien-he/', 'priority' => '0.6'],
         ];
 
         if (Schema::hasTable('branches')) {

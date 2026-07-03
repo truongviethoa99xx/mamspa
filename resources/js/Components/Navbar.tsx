@@ -110,10 +110,10 @@ export function Navbar() {
                     </li>
                     <li>
                         <Link
-                            href="/tin-tuc/"
+                            href="/lien-he/"
                             className="text-base font-medium tracking-wide text-maha-900 transition-colors hover:text-maha-600"
                         >
-                            {t('nav.blog')}
+                            {t('nav.contact')}
                         </Link>
                     </li>
                 </ul>
@@ -191,8 +191,8 @@ export function Navbar() {
                         </li>
                     ))}
                     <li>
-                        <Link href="/tin-tuc/" className="block py-2 text-base text-maha-900">
-                            {t('nav.blog')}
+                        <Link href="/lien-he/" className="block py-2 text-base text-maha-900">
+                            {t('nav.contact')}
                         </Link>
                     </li>
                     <li className="pt-2 text-sm font-semibold uppercase tracking-wider text-maha-500">

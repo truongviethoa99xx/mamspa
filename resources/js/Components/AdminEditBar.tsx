@@ -11,7 +11,7 @@ function editTarget(path: string) {
         return { label: 'Sửa trang giới thiệu', href: '/admin/about-page-settings' };
     }
 
-    if (path.startsWith('/contact')) {
+    if (path.startsWith('/lien-he') || path.startsWith('/contact')) {
         return { label: 'Sửa trang liên hệ', href: '/admin/contact-page-settings' };
     }
 

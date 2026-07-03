@@ -142,7 +142,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
                                     {t('policy.ctaTitle', 'Liên hệ với chúng tôi')}
                                 </h3>
                                 <Link
-                                    href="/contact/"
+                                    href="/lien-he/"
                                     className="mt-6 inline-flex items-center gap-2 rounded-full bg-maha-50 px-6 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-white"
                                 >
                                     {t('policy.ctaButton', 'Liên hệ ngay')}

@@ -67,7 +67,7 @@ export default function NotFound() {
                                 {t('nav.blog')}
                             </Link>
                             <Link
-                                href="/contact/"
+                                href="/lien-he/"
                                 className="inline-flex items-center gap-1 text-maha-700 underline-offset-4 hover:underline"
                             >
                                 <PhoneCall className="h-3.5 w-3.5" />

@@ -158,7 +158,7 @@ export default function DichVuDetail({ service, combos, related, content }: Prop
                                     {t('common.bookNow')}
                                 </Link>
                                 <Link
-                                    href="/contact/"
+                                    href="/lien-he/"
                                     className="inline-flex min-w-44 items-center justify-center rounded-full border-2 border-ink px-8 py-3.5 font-serif text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-ink hover:text-maha-50"
                                 >
                                     {t('dichvu.detail.consult')}

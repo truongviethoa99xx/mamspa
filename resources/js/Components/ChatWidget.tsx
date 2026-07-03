@@ -20,7 +20,7 @@ const DEFAULT_BUTTONS: ContactButton[] = [
         enabled: true,
         label: 'Google Maps',
         type: 'map',
-        href: '/contact/',
+        href: '/lien-he/',
         background: '#ffffff',
         color: '#4285f4',
     },

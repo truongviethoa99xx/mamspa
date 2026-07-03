@@ -53,7 +53,7 @@ export default function Contact({ content, branches = [] }: Props) {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        post('/contact', { onSuccess: () => reset() });
+        post('/lien-he', { onSuccess: () => reset() });
     };
 
     return (

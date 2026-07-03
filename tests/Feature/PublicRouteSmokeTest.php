@@ -31,7 +31,7 @@ it('serves the main public pages', function () {
         '/dich-vu',
         "/dich-vu/{$service->slug}",
         "/chi-nhanh/{$branch->slug}",
-        '/contact',
+        '/lien-he',
         '/dat-lich',
         '/tin-tuc',
         "/tin-tuc/{$post->slug}",
