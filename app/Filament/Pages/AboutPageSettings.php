@@ -72,6 +72,7 @@ class AboutPageSettings extends Page implements HasForms
                             ->default(true)
                             ->columnSpanFull(),
                         Forms\Components\FileUpload::make('hero_image')->label('Ảnh đầu trang')
+                            ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                         TranslatableField::group('hero_eyebrow', label: 'Dòng giới thiệu (eyebrow)', example: 'Chào mừng đến với Mầm Spa'),
                         TranslatableField::group('hero_title', label: 'Tiêu đề chính', example: 'Về chúng tôi'),
@@ -127,6 +128,7 @@ class AboutPageSettings extends Page implements HasForms
                             ->default(true)
                             ->columnSpanFull(),
                         Forms\Components\FileUpload::make('story_image')->label('Ảnh câu chuyện')
+                            ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                         TranslatableField::group('story_eyebrow', label: 'Dòng giới thiệu (eyebrow)', example: 'Câu chuyện của Mầm'),
                         TranslatableField::group('story_heading', label: 'Tiêu đề khối'),
@@ -144,6 +146,7 @@ class AboutPageSettings extends Page implements HasForms
                             ->default(true)
                             ->columnSpanFull(),
                         Forms\Components\FileUpload::make('vision_image')->label('Ảnh tầm nhìn')
+                            ->helperText('Ảnh vuông (1:1), khuyến nghị tối thiểu 1000×1000px.')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                         TranslatableField::group('vision_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
                         TranslatableField::group('vision_title', label: 'Tiêu đề khối', example: 'Tầm nhìn & Sứ mệnh'),
@@ -177,18 +180,21 @@ class AboutPageSettings extends Page implements HasForms
                         Forms\Components\Grid::make(3)->schema([
                             Forms\Components\Group::make([
                                 Forms\Components\FileUpload::make('value1_image')->label('Ảnh giá trị 1')
+                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 800×600px.')
                                     ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                                 TranslatableField::group('value1_title', label: 'Tiêu đề thẻ 1'),
                                 TranslatableField::group('value1_desc', as: 'textarea', label: 'Mô tả thẻ 1', rows: 3),
                             ]),
                             Forms\Components\Group::make([
                                 Forms\Components\FileUpload::make('value2_image')->label('Ảnh giá trị 2')
+                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 800×600px.')
                                     ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                                 TranslatableField::group('value2_title', label: 'Tiêu đề thẻ 2'),
                                 TranslatableField::group('value2_desc', as: 'textarea', label: 'Mô tả thẻ 2', rows: 3),
                             ]),
                             Forms\Components\Group::make([
                                 Forms\Components\FileUpload::make('value3_image')->label('Ảnh giá trị 3')
+                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 800×600px.')
                                     ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
                                 TranslatableField::group('value3_title', label: 'Tiêu đề thẻ 3'),
                                 TranslatableField::group('value3_desc', as: 'textarea', label: 'Mô tả thẻ 3', rows: 3),
@@ -210,7 +216,9 @@ class AboutPageSettings extends Page implements HasForms
                         Forms\Components\Repeater::make('team')
                             ->label('Danh sách thành viên')
                             ->schema([
-                                Forms\Components\FileUpload::make('photo')->label('Ảnh')->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/team'),
+                                Forms\Components\FileUpload::make('photo')->label('Ảnh')
+                                    ->helperText('Ảnh dọc, tỉ lệ 3:4, khuyến nghị tối thiểu 480×640px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/team'),
                                 Forms\Components\TextInput::make('name')->label('Họ tên')->required(),
                                 TranslatableField::group('role', label: 'Vai trò'),
                                 TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2),
@@ -236,6 +244,7 @@ class AboutPageSettings extends Page implements HasForms
                         TranslatableField::group('reviews_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
                         TranslatableField::group('reviews_title', label: 'Tiêu đề khối', example: 'Khách hàng nói gì'),
                         Forms\Components\FileUpload::make('review_video_image')->label('Ảnh/video thumbnail')
+                            ->helperText('Tỉ lệ ngang 16:9 (khung video), khuyến nghị tối thiểu 1280×720px.')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/reviews')->imageEditor(),
                         Forms\Components\TextInput::make('review_video_url')->label('Link video')->url(),
                         TranslatableField::group('review_video_caption', label: 'Chú thích trên video'),
@@ -248,7 +257,9 @@ class AboutPageSettings extends Page implements HasForms
                         Forms\Components\Repeater::make('review_cards')
                             ->label('Card review / Instagram')
                             ->schema([
-                                Forms\Components\FileUpload::make('image')->label('Ảnh')->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/reviews')->imageEditor(),
+                                Forms\Components\FileUpload::make('image')->label('Ảnh')
+                                    ->helperText('Ảnh dọc kiểu Instagram, tỉ lệ 4:5, khuyến nghị tối thiểu 1080×1350px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/reviews')->imageEditor(),
                                 Forms\Components\TextInput::make('handle')->label('Tên/handle')->required(),
                                 Forms\Components\TextInput::make('link')->label('Link')->url(),
                             ])

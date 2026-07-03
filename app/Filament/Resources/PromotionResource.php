@@ -44,6 +44,7 @@ class PromotionResource extends Resource
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả'),
             Forms\Components\FileUpload::make('image')
                 ->label('Hình ảnh')
+                ->helperText('Ảnh ngang, tỉ lệ 3:2, khuyến nghị tối thiểu 1200×800px.')
                 ->image()
                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                 ->maxSize(5120),

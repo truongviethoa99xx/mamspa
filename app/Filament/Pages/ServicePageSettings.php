@@ -116,7 +116,9 @@ class ServicePageSettings extends Page implements HasForms
                         Forms\Components\Repeater::make('massage_cards')
                             ->label('Card massage')
                             ->schema([
-                                Forms\Components\FileUpload::make('image')->label('Ảnh')->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('services/listing')->imageEditor(),
+                                Forms\Components\FileUpload::make('image')->label('Ảnh')
+                                    ->helperText('Ảnh vuông (1:1), khuyến nghị tối thiểu 600×600px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('services/listing')->imageEditor(),
                                 Forms\Components\TextInput::make('title')->label('Tiêu đề')->required(),
                                 Forms\Components\Textarea::make('description')->label('Mô tả')->rows(3),
                             ])
@@ -136,7 +138,9 @@ class ServicePageSettings extends Page implements HasForms
                         Forms\Components\Repeater::make('head_spa_cards')
                             ->label('Nhóm dịch vụ')
                             ->schema([
-                                Forms\Components\FileUpload::make('image')->label('Ảnh')->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('services/listing')->imageEditor(),
+                                Forms\Components\FileUpload::make('image')->label('Ảnh')
+                                    ->helperText('Ảnh ngang, tỉ lệ ~5:2, khuyến nghị tối thiểu 1200×480px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('services/listing')->imageEditor(),
                                 Forms\Components\TextInput::make('title')->label('Tiêu đề nhóm')->required(),
                                 Forms\Components\Repeater::make('services')
                                     ->label('Dịch vụ trong nhóm')
@@ -168,7 +172,9 @@ class ServicePageSettings extends Page implements HasForms
                         Forms\Components\Repeater::make('other_care_items')
                             ->label('Danh sách dịch vụ khác')
                             ->schema([
-                                Forms\Components\FileUpload::make('image')->label('Ảnh')->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('services/listing')->imageEditor(),
+                                Forms\Components\FileUpload::make('image')->label('Ảnh')
+                                    ->helperText('Ảnh ngang, tỉ lệ 4:3, khuyến nghị tối thiểu 1000×750px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('services/listing')->imageEditor(),
                                 Forms\Components\TextInput::make('title')->label('Tiêu đề')->required(),
                                 Forms\Components\TextInput::make('eyebrow')->label('Dòng phụ'),
                                 Forms\Components\TagsInput::make('paragraphs')

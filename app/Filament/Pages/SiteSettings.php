@@ -128,7 +128,7 @@ class SiteSettings extends Page implements HasForms
                                     ->required(),
                                 Forms\Components\FileUpload::make('icon')
                                     ->label('Icon tự tải lên')
-                                    ->helperText('Nếu có ảnh ở đây, website sẽ dùng ảnh này thay cho icon mặc định.')
+                                    ->helperText('Nếu có ảnh ở đây, website sẽ dùng ảnh này thay cho icon mặc định. Ảnh vuông, nền trong suốt, tối thiểu 128×128px.')
                                     ->image()
                                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                     ->maxSize(2048)

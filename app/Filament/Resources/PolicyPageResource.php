@@ -66,6 +66,7 @@ class PolicyPageResource extends Resource
                         ->schema([
                             Forms\Components\FileUpload::make('featured_image')
                                 ->hiddenLabel()
+                                ->helperText('Ảnh ngang, tỉ lệ 16:9, khuyến nghị tối thiểu 1600×900px.')
                                 ->image()
                                 ->imageEditor()
                                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])

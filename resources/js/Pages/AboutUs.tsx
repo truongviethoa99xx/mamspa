@@ -33,6 +33,7 @@ interface BranchPageContent {
     hero_body_1?: TranslatableText;
     hero_body_2?: TranslatableText;
     hero_cta_label?: TranslatableText;
+    hero_cta_link?: string;
     space_eyebrow?: TranslatableText;
     space_heading?: TranslatableText;
     space_image_1_label?: TranslatableText;
@@ -142,6 +143,7 @@ export default function AboutUs({ branch }: Props) {
     const reviews = content.reviews && content.reviews.length > 0 ? content.reviews : INTERNATIONAL_REVIEWS;
     const heroHeading = text(content.hero_heading, `Mầm Spa - ${label}`);
     const heroCta = text(content.hero_cta_label, `Đến với Mầm ${branchInitials(label)}`);
+    const heroCtaLink = content.hero_cta_link || '/dat-lich/';
     const heroBody1 = text(
         content.hero_body_1,
         `Bỏ lại sau lưng tiếng còi xe và sự nhộn nhịp của con phố ${label}, bước qua cánh cửa gỗ của Mầm, bạn sẽ bước vào một thế giới hoàn toàn khác. Không gian được khơi nguồn cảm hứng từ kiến trúc Đông Dương (Indochine) cổ kính, giao thoa cùng mảng xanh thực vật và hương thảo mộc nồng ấm.`,
@@ -178,21 +180,21 @@ export default function AboutUs({ branch }: Props) {
             />
             <section className="bg-maha-50 py-16 md:py-20">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
-                    <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-20">
-                        <div>
-                            <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold text-[#556B3F] md:text-base">
-                                <Link href="/" className="transition-colors hover:text-ink">
-                                    Trang chủ
-                                </Link>
-                                <span className="text-[#8C9A6B]">/</span>
-                                <Link href="/gioi-thieu/" className="transition-colors hover:text-ink">
-                                    Chi nhánh
-                                </Link>
-                                <span className="text-[#8C9A6B]">/</span>
-                                <span className="font-medium text-[#475934]">{label}</span>
-                            </nav>
+                    <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold text-[#556B3F] md:text-base">
+                        <Link href="/" className="transition-colors hover:text-ink">
+                            Trang chủ
+                        </Link>
+                        <span className="text-[#8C9A6B]">/</span>
+                        <Link href="/gioi-thieu/" className="transition-colors hover:text-ink">
+                            Chi nhánh
+                        </Link>
+                        <span className="text-[#8C9A6B]">/</span>
+                        <span className="font-medium text-[#475934]">{label}</span>
+                    </nav>
 
-                            <p className="mt-16 font-serif text-xl italic leading-relaxed text-[#475934] md:text-2xl">
+                    <div className="mt-6 grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-start lg:gap-20">
+                        <div>
+                            <p className="font-serif text-xl italic leading-relaxed text-[#475934] md:text-2xl">
                                 {text(content.hero_eyebrow, 'Trạm dừng chân bình yên giữa lòng Sài Gòn')}
                             </p>
                             <h1 className="mt-4 font-serif text-5xl uppercase tracking-wide text-ink md:text-6xl">
@@ -205,9 +207,7 @@ export default function AboutUs({ branch }: Props) {
                             </div>
 
                             <a
-                                href={mapUrl(branch)}
-                                target="_blank"
-                                rel="noreferrer"
+                                href={heroCtaLink}
                                 className="mt-14 inline-flex min-w-56 items-center justify-center rounded-full bg-ink px-9 py-4 font-serif text-base font-semibold tracking-wide text-maha-50 transition-colors hover:bg-[#243023]"
                             >
                                 {heroCta}

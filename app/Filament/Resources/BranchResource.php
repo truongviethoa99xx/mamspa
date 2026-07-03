@@ -109,6 +109,7 @@ class BranchResource extends Resource
                             ->schema([
                                 Forms\Components\SpatieMediaLibraryFileUpload::make('images')
                                     ->label('Thư viện ảnh')
+                                    ->helperText('Ảnh 1 & 2 dùng làm ảnh đại diện chi nhánh (dọc/vuông, khuyến nghị tối thiểu 1000×1200px); các ảnh tiếp theo tự do, khuyến nghị tối thiểu 1200×900px.')
                                     ->collection('images')
                                     ->multiple()
                                     ->image()
@@ -134,6 +135,7 @@ class BranchResource extends Resource
                     TranslatableField::group('page_content.hero_body_1', as: 'textarea', label: 'Đoạn 1', rows: 3, example: 'Lạc bước vào không gian Lê Văn Sỹ như trở về một khoảng trời yên tĩnh hiếm hoi.'),
                     TranslatableField::group('page_content.hero_body_2', as: 'textarea', label: 'Đoạn 2', rows: 3, example: 'Một điểm đến lý tưởng để tạm gác lại nhịp sống hối hả và thư giãn sâu.'),
                     TranslatableField::group('page_content.hero_cta_label', label: 'Nút CTA', example: 'Đặt lịch tại chi nhánh'),
+                    Forms\Components\TextInput::make('page_content.hero_cta_link')->label('Đường dẫn nút CTA')->placeholder('/dat-lich/'),
                 ])
                 ->columns(2)
                 ->collapsible(),

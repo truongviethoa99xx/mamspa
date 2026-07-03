@@ -77,6 +77,7 @@ class ServiceResource extends Resource
                                 ->placeholder('15'),
                             Forms\Components\FileUpload::make('image')
                                 ->label('Ảnh của bước')
+                                ->helperText('Ảnh vuông nhỏ, khuyến nghị tối thiểu 400×400px.')
                                 ->image()
                                 ->disk('public')
                                 ->directory('services/steps')
@@ -120,6 +121,7 @@ class ServiceResource extends Resource
                         ->schema([
                             Forms\Components\FileUpload::make('image')
                                 ->label('Ảnh')
+                                ->helperText('Ảnh vuông, khuyến nghị tối thiểu 800×800px.')
                                 ->image()
                                 ->disk('public')
                                 ->directory('services/experience')
@@ -142,14 +144,14 @@ class ServiceResource extends Resource
                 ->schema([
                     Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
                         ->label('Ảnh đại diện')
-                        ->helperText('Ảnh chính hiển thị trên thẻ dịch vụ ở trang chủ & danh sách.')
+                        ->helperText('Ảnh chính hiển thị trên thẻ dịch vụ ở trang chủ & danh sách. Ảnh vuông/dọc chất lượng cao, khuyến nghị tối thiểu 1200×1200px.')
                         ->collection('thumbnail')
                         ->image()
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->maxSize(5120),
                     Forms\Components\SpatieMediaLibraryFileUpload::make('images')
                         ->label('Danh sách ảnh khác')
-                        ->helperText('Các ảnh phụ hiển thị trong trang chi tiết dịch vụ. Kéo thả để sắp xếp.')
+                        ->helperText('Các ảnh phụ hiển thị trong trang chi tiết dịch vụ. Kéo thả để sắp xếp. Khuyến nghị tối thiểu 1200×900px mỗi ảnh.')
                         ->collection('images')
                         ->multiple()
                         ->reorderable()

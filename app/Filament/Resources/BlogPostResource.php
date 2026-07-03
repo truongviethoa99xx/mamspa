@@ -54,6 +54,7 @@ class BlogPostResource extends Resource
                 ->placeholder('Chọn chuyên mục'),
             Forms\Components\FileUpload::make('cover_image')
                 ->label('Ảnh bìa')
+                ->helperText('Ảnh ngang, tỉ lệ 16:9, khuyến nghị tối thiểu 1600×900px.')
                 ->image()
                 ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                 ->maxSize(5120),

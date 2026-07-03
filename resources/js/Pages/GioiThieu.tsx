@@ -556,7 +556,7 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                     <img
                                         src={card.image}
                                         alt={card.handle}
-                                        className="absolute inset-0 h-full w-full object-cover"
+                                        className="absolute inset-0 h-full w-full object-contain"
                                     />
                                 )}
                                 {card.image && (
