@@ -60,7 +60,7 @@ export function BranchesBlock({ data }: { data: { branches?: BranchItem[] } }) {
 
                 {/* Branch tabs */}
                 <div className="mt-6 border-t border-maha-300/50 md:mt-12">
-                    <div className="flex items-center gap-5 overflow-x-auto">
+                    <div className="flex items-center justify-between gap-5 overflow-x-auto">
                         {branches.map((b, i) => (
                             <button
                                 key={b.slug}
