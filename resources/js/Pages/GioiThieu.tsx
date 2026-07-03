@@ -5,7 +5,7 @@ import { Coffee, Flower2, Globe, HandHelping, Heart, Leaf, MapPin, MoreHorizonta
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { cn, tr } from '@/Lib/utils';
 import type { SharedProps } from '@/types';
 
 const GREEN = '#556B3F';
@@ -550,23 +550,36 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                 href={card.link}
                                 target={card.link ? '_blank' : undefined}
                                 rel={card.link ? 'noreferrer' : undefined}
-                                className="flex min-h-[360px] flex-col rounded-3xl bg-maha-300 p-5"
+                                className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-3xl bg-maha-300 p-5"
                             >
                                 {card.image && (
                                     <img
                                         src={card.image}
                                         alt={card.handle}
-                                        className="-mx-5 -mt-5 mb-5 h-56 w-[calc(100%+2.5rem)] max-w-none rounded-t-3xl object-cover"
+                                        className="absolute inset-0 h-full w-full object-cover"
                                     />
                                 )}
-                                <div className="flex items-center justify-between">
+                                {card.image && (
+                                    <div
+                                        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-black/40"
+                                        aria-hidden="true"
+                                    />
+                                )}
+                                <div className="relative z-10 flex items-center justify-between">
                                     <div className="flex items-center gap-2.5">
                                         <span className="h-9 w-9 rounded-full bg-white/70" />
-                                        <span className="text-sm font-medium text-ink/80">{card.handle}</span>
+                                        <span
+                                            className={cn(
+                                                'text-sm font-medium',
+                                                card.image ? 'text-white drop-shadow' : 'text-ink/80',
+                                            )}
+                                        >
+                                            {card.handle}
+                                        </span>
                                     </div>
-                                    <MoreHorizontal className="h-5 w-5 text-ink/50" />
+                                    <MoreHorizontal className={cn('h-5 w-5', card.image ? 'text-white/80' : 'text-ink/50')} />
                                 </div>
-                                <button className="mt-auto inline-flex items-center justify-center gap-2 self-center rounded-full bg-white px-7 py-2.5 text-sm font-bold text-ink shadow-sm transition-transform hover:scale-105">
+                                <button className="relative z-10 mt-auto inline-flex items-center justify-center gap-2 self-center rounded-full bg-white px-7 py-2.5 text-sm font-bold text-ink shadow-sm transition-transform hover:scale-105">
                                     <Heart className="h-4 w-4 fill-red-500 text-red-500" />
                                     {t('about.reviews.like')}
                                 </button>
