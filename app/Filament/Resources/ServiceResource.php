@@ -49,7 +49,6 @@ class ServiceResource extends Resource
                     ->native(false)
                     ->required(),
                 Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required(),
-                Forms\Components\TextInput::make('price')->label('Giá (VND)')->numeric()->required(),
                 Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
@@ -171,7 +170,6 @@ class ServiceResource extends Resource
             Tables\Columns\TextColumn::make('name')->label('Tên dịch vụ')->searchable(),
             Tables\Columns\TextColumn::make('category.name')->label('Danh mục')->badge(),
             Tables\Columns\TextColumn::make('duration')->label('Thời lượng')->suffix(' phút'),
-            Tables\Columns\TextColumn::make('price')->label('Giá')->money('VND'),
             Tables\Columns\IconColumn::make('is_featured')->label('Nổi bật')->boolean(),
             Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
         ])->filters([
