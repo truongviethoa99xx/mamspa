@@ -47,7 +47,8 @@ class ServiceResource extends Resource
                     ->options(fn () => self::categoryOptions())
                     ->searchable()
                     ->native(false)
-                    ->required(),
+                    ->required()
+                    ->exists('service_categories', 'id'),
                 Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required()->columnSpanFull(),
                 Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
                 Forms\Components\Toggle::make('is_combo')->label('Combo'),
