@@ -14,11 +14,18 @@ class ServiceCategory extends Model
 {
     use HasTranslations;
 
-    protected $fillable = ['slug', 'name', 'parent_id', 'order', 'is_active'];
+    protected $fillable = [
+        'slug', 'name', 'parent_id', 'order', 'is_active',
+        'benefits', 'experience_images', 'faqs', 'ideal_for',
+    ];
 
     protected $casts = [
         'order' => 'integer',
         'is_active' => 'boolean',
+        'benefits' => 'array',
+        'experience_images' => 'array',
+        'faqs' => 'array',
+        'ideal_for' => 'array',
     ];
 
     public array $translatable = ['name'];

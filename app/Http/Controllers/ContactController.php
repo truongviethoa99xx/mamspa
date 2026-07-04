@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ContactMessage;
 use App\Models\Branch;
 use App\Models\ContactPageContent;
+use App\Models\ContactSubmission;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -48,7 +49,13 @@ class ContactController extends Controller
             'message' => 'required|string|max:2000',
         ]);
 
-        Mail::to(config('mail.from.address'))->send(new ContactMessage($data));
+        ContactSubmission::create($data);
+
+        try {
+            Mail::to(config('mail.from.address'))->send(new ContactMessage($data));
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         return back()->with('success', 'Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi sớm.');
     }

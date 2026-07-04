@@ -66,6 +66,81 @@ class ServiceCategoryResource extends Resource
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
             TranslatableField::group('name', label: 'Tên danh mục', required: true, example: 'Body Massage'),
+            Forms\Components\Section::make('Lợi ích dịch vụ')
+                ->description('Các lợi ích nổi bật của nhóm dịch vụ này. Hiển thị trên trang chi tiết các dịch vụ thuộc danh mục.')
+                ->schema([
+                    Forms\Components\Repeater::make('benefits')
+                        ->label('')
+                        ->schema([
+                            TranslatableField::group('title', label: 'Tiêu đề lợi ích', example: 'Giảm căng thẳng, thư giãn sâu')
+                                ->columnSpanFull(),
+                            TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2, example: 'Giúp giải tỏa căng cơ, cải thiện tuần hoàn và tinh thần.')
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(1)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->cloneable()
+                        ->itemLabel(fn (array $state): ?string => is_array($state['title'] ?? null) ? ($state['title']['vi'] ?? null) : ($state['title'] ?? null))
+                        ->addActionLabel('+ Thêm lợi ích')
+                        ->columnSpanFull(),
+                ]),
+            Forms\Components\Section::make('Đối tượng phù hợp')
+                ->description('Nhóm khách hàng đặc biệt phù hợp với nhóm dịch vụ này. Hiển thị cùng khối "Lợi ích & đối tượng phù hợp" ở trang chi tiết dịch vụ.')
+                ->schema([
+                    Forms\Components\TagsInput::make('ideal_for')
+                        ->label('')
+                        ->placeholder('Nhập một đối tượng rồi nhấn Enter')
+                        ->columnSpanFull(),
+                ]),
+            Forms\Components\Section::make('Hình ảnh trải nghiệm khách hàng')
+                ->description('Bộ ảnh thực tế khách hàng trải nghiệm nhóm dịch vụ này. Mỗi ảnh có mô tả (alt) cho SEO/khả năng truy cập.')
+                ->schema([
+                    Forms\Components\Repeater::make('experience_images')
+                        ->label('')
+                        ->schema([
+                            Forms\Components\FileUpload::make('image')
+                                ->label('Ảnh')
+                                ->helperText('Ảnh vuông, khuyến nghị tối thiểu 800×800px.')
+                                ->image()
+                                ->disk('public')
+                                ->directory('service-categories/experience')
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                ->maxSize(5120)
+                                ->required(),
+                            Forms\Components\TextInput::make('alt')
+                                ->label('Mô tả ảnh (alt)')
+                                ->placeholder('VD: Khách hàng thư giãn trong phòng trị liệu'),
+                        ])
+                        ->columns(2)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->grid(2)
+                        ->addActionLabel('+ Thêm ảnh')
+                        ->columnSpanFull(),
+                ]),
+            Forms\Components\Section::make('Câu hỏi thường gặp (FAQ)')
+                ->description('FAQ chung của nhóm dịch vụ này, hiển thị ở cuối trang chi tiết các dịch vụ thuộc danh mục.')
+                ->schema([
+                    Forms\Components\Repeater::make('faqs')
+                        ->label('')
+                        ->schema([
+                            TranslatableField::group('question', label: 'Câu hỏi', required: true, example: 'Dịch vụ này có phù hợp với da nhạy cảm không?')
+                                ->columnSpanFull(),
+                            TranslatableField::group('answer', as: 'textarea', label: 'Trả lời', rows: 3, required: true, example: 'Có, liệu trình sử dụng nguyên liệu dịu nhẹ phù hợp với da nhạy cảm.')
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(1)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->cloneable()
+                        ->itemLabel(fn (array $state): ?string => is_array($state['question'] ?? null) ? ($state['question']['vi'] ?? null) : ($state['question'] ?? null))
+                        ->addActionLabel('+ Thêm câu hỏi')
+                        ->columnSpanFull(),
+                ]),
         ]);
     }
 

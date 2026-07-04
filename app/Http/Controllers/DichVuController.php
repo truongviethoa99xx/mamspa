@@ -34,10 +34,11 @@ class DichVuController extends Controller
                     is_array($step) ? $step : [],
                     ['image' => $this->publicUrl($step['image'] ?? null)],
                 ))->all(),
-            'benefits' => $s->benefits ?? [],
-            'ideal_for' => $s->ideal_for ?? [],
-            'faqs' => $s->faqs ?? [],
-            'experience_images' => collect($s->experience_images ?? [])
+            // Lợi ích / đối tượng phù hợp / FAQ / ảnh trải nghiệm giờ quản lý theo danh mục dịch vụ.
+            'benefits' => $s->category?->benefits ?? [],
+            'ideal_for' => $s->category?->ideal_for ?? [],
+            'faqs' => $s->category?->faqs ?? [],
+            'experience_images' => collect($s->category?->experience_images ?? [])
                 ->map(fn ($img) => [
                     'image' => $this->publicUrl($img['image'] ?? null),
                     'alt' => $img['alt'] ?? '',
