@@ -15,4 +15,10 @@ class CreateService extends CreateRecord
 
         return $data;
     }
+
+    /** Sau khi tạo xong quay về danh sách dịch vụ thay vì ở lại trang sửa. */
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
