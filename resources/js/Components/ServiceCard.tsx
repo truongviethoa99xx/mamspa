@@ -8,6 +8,7 @@ export interface ServiceCardData {
     slug: string;
     url: string;
     name: Record<string, string> | string;
+    short_description?: Record<string, string> | string | null;
     description: Record<string, string> | string;
     category?: string | null;
     category_name?: Record<string, string> | string | null;
@@ -60,7 +61,7 @@ export function ServiceCard({ service, locale }: { service: ServiceCardData; loc
                         ))}
                     </ul>
                 ) : (
-                    <p className="mt-4 text-sm leading-relaxed text-ink/75">{tr(service.description, locale)}</p>
+                    <p className="mt-4 text-sm leading-relaxed text-ink/75">{tr(service.short_description, locale)}</p>
                 )}
                 <hr className="my-5 border-maha-200" />
                 <div className="mt-auto flex items-center justify-between font-semibold text-ink">

@@ -18,7 +18,7 @@ class Service extends Model implements HasMedia
     use HasFactory, HasTranslations, InteractsWithMedia;
 
     protected $fillable = [
-        'slug', 'name', 'description', 'service_category_id', 'duration', 'price',
+        'slug', 'name', 'short_description', 'description', 'service_category_id', 'duration', 'price',
         'ingredients', 'steps', 'benefits', 'experience_images', 'faqs', 'ideal_for', 'is_featured', 'is_combo', 'is_active',
     ];
 
@@ -36,7 +36,7 @@ class Service extends Model implements HasMedia
         'price' => 'integer',
     ];
 
-    public array $translatable = ['name', 'description'];
+    public array $translatable = ['name', 'short_description', 'description'];
 
     public function registerMediaCollections(): void
     {

@@ -21,6 +21,7 @@ class DichVuController extends Controller
             'slug' => $s->slug,
             'url' => $s->url,
             'name' => $s->name,
+            'short_description' => $s->short_description,
             'description' => $s->description,
             'category' => $s->category?->slug,
             'category_name' => $s->category?->getTranslations('name'),
@@ -167,11 +168,20 @@ class DichVuController extends Controller
             ->limit(3)
             ->get();
 
+        $categoryServices = $service->service_category_id
+            ? Service::active()
+                ->with(['branches', 'category.parent'])
+                ->where('service_category_id', $service->service_category_id)
+                ->orderByDesc('is_featured')
+                ->get()
+            : collect();
+
         $content = ServicePageContent::current();
 
         return Inertia::render('DichVuDetail', [
             'service' => $this->map($service),
             'breadcrumb' => $breadcrumb,
+            'categoryServices' => $categoryServices->map(fn ($s) => $this->map($s)),
             'combos' => $combos->map(fn ($s) => $this->map($s)),
             'related' => $related->map(fn ($s) => $this->map($s)),
             'content' => [

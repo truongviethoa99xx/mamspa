@@ -37,6 +37,7 @@ interface Service {
     name: Record<string, string> | string;
     description: Record<string, string> | string;
     category: string;
+    category_name?: Record<string, string> | string;
     duration: number;
     price: number;
     is_featured: boolean;
@@ -64,12 +65,13 @@ interface BreadcrumbEntry {
 interface Props {
     service: Service;
     breadcrumb: BreadcrumbEntry[];
+    categoryServices: Service[];
     combos: Service[];
     related: Service[];
     content: ServicePageContent;
 }
 
-export default function DichVuDetail({ service, breadcrumb, combos, related, content }: Props) {
+export default function DichVuDetail({ service, breadcrumb, categoryServices, combos, related, content }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
     const [openFaq, setOpenFaq] = useState(0);
@@ -134,7 +136,7 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                             </nav>
 
                             <h1 className="mt-8 font-serif text-4xl uppercase tracking-wide text-ink sm:text-5xl md:text-6xl">{name}</h1>
-                            <p className="mt-4 font-serif text-xl italic leading-relaxed text-[#475934] md:text-2xl">
+                            <p className="mt-5 w-[90%] text-base leading-relaxed text-[#556B3F] md:text-lg">
                                 {description}
                             </p>
 
@@ -272,31 +274,51 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                 </section>
             )}
 
-            {(service.benefits ?? []).filter((b) => tr(b.title, locale)).length > 0 && (
-                <section className="bg-maha-50 pb-12 md:pb-16">
-                    <div className="mx-auto max-w-4xl px-5 sm:px-6">
+            {categoryServices.length > 0 && (
+                <section className="bg-maha-50 pb-14 md:pb-20">
+                    <div className="mx-auto max-w-5xl px-5 sm:px-6">
                         <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
-                            {t('dichvu.detail.benefitsEyebrow')}
+                            {t('dichvu.detail.categoryServicesEyebrow')}
                         </p>
                         <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
-                            {t('dichvu.detail.benefitsHeading')}
+                            {tr(service.category_name, locale) || service.category}
                         </h2>
-                        <div className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-12">
-                            {(service.benefits ?? [])
-                                .filter((b) => tr(b.title, locale))
-                                .map((b, i) => (
-                                    <div
-                                        key={i}
-                                        className="rounded-2xl border border-maha-100 bg-white p-5 shadow-sm shadow-maha-900/5 md:p-6"
-                                    >
-                                        <h3 className="font-serif text-lg font-bold text-ink">{tr(b.title, locale)}</h3>
-                                        {tr(b.description, locale) && (
-                                            <p className="mt-2 text-sm leading-relaxed text-ink/75">
-                                                {tr(b.description, locale)}
-                                            </p>
+                        <span className="mx-auto mt-3 block h-px w-14 bg-[#556B3F]" />
+
+                        <div className="mt-8 grid gap-6 md:grid-cols-3 md:gap-7">
+                            {categoryServices.map((item) => (
+                                <Link
+                                    key={item.id}
+                                    href={item.url}
+                                    className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
+                                >
+                                    <div className="relative aspect-[16/9.6] overflow-hidden rounded-xl bg-[#CDBCA3]">
+                                        {item.images?.[0] && <img src={item.images[0]} alt={tr(item.name, locale)} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                                        {item.is_featured && (
+                                            <span className="absolute left-3 top-3 rounded-full bg-[#8C9A6B] px-3 py-1 text-xs font-semibold text-white">
+                                                {t('dichvu.combos.bestseller')}
+                                            </span>
                                         )}
                                     </div>
-                                ))}
+
+                                    <div className="flex flex-1 flex-col px-1 pt-6">
+                                        <h3 className="font-serif text-xl font-bold text-ink">{tr(item.name, locale)}</h3>
+                                        <p className="mt-2 font-bold text-[#8C9A6B]">
+                                            {item.duration} {t('blocks.menu.minute')}
+                                        </p>
+                                        <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#475934]">
+                                            {tr(item.description, locale)}
+                                        </p>
+                                        <hr className="my-6 border-maha-100" />
+                                        <div className="mt-auto flex items-center justify-between font-serif text-base font-bold text-ink">
+                                            {t('blocks.menu.book')}
+                                            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-maha-50 transition-transform group-hover:translate-x-1">
+                                                <ChevronRight className="h-5 w-5" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </section>

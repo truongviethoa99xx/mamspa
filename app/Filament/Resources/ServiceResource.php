@@ -54,6 +54,7 @@ class ServiceResource extends Resource
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
             TranslatableField::group('name', label: 'Tên dịch vụ', required: true),
+            TranslatableField::group('short_description', as: 'textarea', label: 'Mô tả ngắn', rows: 2, example: 'Liệu pháp massage thư giãn với tinh dầu thiên nhiên.'),
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 4),
             Forms\Components\TagsInput::make('ingredients')->label('Nguyên liệu'),
             Forms\Components\Select::make('branches')
