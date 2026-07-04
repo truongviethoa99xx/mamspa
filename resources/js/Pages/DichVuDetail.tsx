@@ -1,12 +1,12 @@
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
-import { Check, ChevronRight, Clock3, Minus, Plus, Sparkles, Tag } from 'lucide-react';
+import { Check, ChevronRight, Clock3, Minus, Plus, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
 import { breadcrumbSchema, faqSchema, serviceSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
-import { formatVND, tr } from '@/Lib/utils';
+import { tr } from '@/Lib/utils';
 
 interface ServiceStep {
     name: Record<string, string> | string;
@@ -112,7 +112,7 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                 <div className="mx-auto max-w-5xl px-5 sm:px-6">
                     <div className="grid gap-10 lg:grid-cols-[0.95fr_1fr] lg:items-center lg:gap-12">
                         <div>
-                            <nav className="flex flex-wrap items-center gap-2.5 text-sm font-semibold text-[#556B3F]">
+                            <nav className="flex flex-wrap items-center gap-2.5 text-sm font-semibold text-[#556B3F] md:text-base">
                                 <Link href="/" className="transition-colors hover:text-ink">
                                     {t('nav.home')}
                                 </Link>
@@ -132,7 +132,7 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                                 <span className="font-medium text-[#475934]">{name}</span>
                             </nav>
 
-                            <h1 className="mt-8 font-serif text-4xl uppercase tracking-wide text-ink md:text-5xl">{name}</h1>
+                            <h1 className="mt-8 font-serif text-4xl uppercase tracking-wide text-ink sm:text-5xl md:text-6xl">{name}</h1>
                             <p className="mt-4 font-serif text-xl italic leading-relaxed text-[#475934] md:text-2xl">
                                 {description}
                             </p>
@@ -150,21 +150,13 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                                 </ul>
                             )}
 
-                            <div className="mt-9 grid max-w-lg grid-cols-2 overflow-hidden rounded-2xl border border-maha-100 bg-white shadow-sm shadow-maha-900/5">
-                                <div className="flex items-center gap-3 px-5 py-4">
-                                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#8C9A6B] text-[#8C9A6B]">
-                                        <Clock3 className="h-5 w-5" />
-                                    </span>
-                                    <strong className="font-serif text-xl text-ink">
-                                        {service.duration} {t('blocks.menu.minute')}
-                                    </strong>
-                                </div>
-                                <div className="flex items-center gap-3 border-l border-maha-100 px-5 py-4">
-                                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#8C9A6B] text-[#8C9A6B]">
-                                        <Tag className="h-5 w-5" />
-                                    </span>
-                                    <strong className="font-serif text-xl text-ink">{formatVND(service.price)}</strong>
-                                </div>
+                            <div className="mt-9 inline-flex items-center gap-3 rounded-2xl border border-maha-100 bg-white px-5 py-4 shadow-sm shadow-maha-900/5">
+                                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-[#8C9A6B] text-[#8C9A6B]">
+                                    <Clock3 className="h-5 w-5" />
+                                </span>
+                                <strong className="font-serif text-xl text-ink">
+                                    {service.duration} {t('blocks.menu.minute')}
+                                </strong>
                             </div>
 
                             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
@@ -230,10 +222,10 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
             {(service.steps ?? []).filter((s) => tr(s.name, locale)).length > 0 && (
                 <section className="bg-maha-50 pb-12 md:pb-16">
                     <div className="mx-auto max-w-3xl px-5 sm:px-6">
-                        <p className="text-center font-serif text-sm italic text-[#556B3F] md:text-base">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
                             {t('dichvu.detail.stepsEyebrow', 'Trải nghiệm từng bước')}
                         </p>
-                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                             {t('dichvu.detail.stepsTitle', 'Quy trình liệu trình')}
                         </h2>
                         <ol className="mt-8 space-y-4 md:mt-12">
@@ -282,10 +274,10 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
             {(service.benefits ?? []).filter((b) => tr(b.title, locale)).length > 0 && (
                 <section className="bg-maha-50 pb-12 md:pb-16">
                     <div className="mx-auto max-w-4xl px-5 sm:px-6">
-                        <p className="text-center font-serif text-sm italic text-[#556B3F] md:text-base">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
                             {t('dichvu.detail.benefitsEyebrow')}
                         </p>
-                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                             {t('dichvu.detail.benefitsHeading')}
                         </h2>
                         <div className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-12">
@@ -312,10 +304,10 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
             {(service.experience_images ?? []).length > 0 && (
                 <section className="bg-maha-50 pb-14 md:pb-20">
                     <div className="mx-auto max-w-6xl px-5 sm:px-6">
-                        <p className="text-center font-serif text-sm italic text-[#556B3F] md:text-base">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
                             {t('dichvu.detail.experienceEyebrow', 'Khoảnh khắc tại Mầm Spa')}
                         </p>
-                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                             {t('dichvu.detail.experienceTitle', 'Hình ảnh trải nghiệm khách hàng')}
                         </h2>
                         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:mt-12 lg:grid-cols-4">
@@ -337,8 +329,8 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
             {combos.length > 0 && (
                 <section className="bg-maha-50 pb-14 md:pb-20">
                     <div className="mx-auto max-w-5xl px-5 sm:px-6">
-                        <p className="text-center font-serif text-sm italic text-[#556B3F]">{t('dichvu.combos.eyebrow')}</p>
-                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">{t('dichvu.combos.eyebrow')}</p>
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                             {t('dichvu.combos.title')}
                         </h2>
                         <span className="mx-auto mt-3 block h-px w-14 bg-[#556B3F]" />
@@ -362,7 +354,7 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                                     <div className="flex flex-1 flex-col px-1 pt-6">
                                         <h3 className="font-serif text-xl font-bold text-ink">{tr(item.name, locale)}</h3>
                                         <p className="mt-2 font-bold text-[#8C9A6B]">
-                                            {item.duration} {t('blocks.menu.minute')} · {formatVND(item.price)}
+                                            {item.duration} {t('blocks.menu.minute')}
                                         </p>
                                         <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#475934]">
                                             {tr(item.description, locale)}
@@ -385,10 +377,10 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
             {(benefits.length > 0 || idealFor.length > 0) && (
                 <section className="bg-maha-50 pb-14 md:pb-20">
                     <div className="mx-auto max-w-5xl px-5 sm:px-6">
-                        <p className="text-center font-serif text-sm italic text-[#556B3F]">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
                             {t('dichvu.detail.benefitsEyebrow')}
                         </p>
-                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                             {t('dichvu.detail.benefitsTitle')}
                         </h2>
                         <span className="mx-auto mt-3 block h-px w-14 bg-[#556B3F]" />
@@ -431,8 +423,8 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
             {faqs.length > 0 && (
                 <section className="bg-maha-50 pb-14 md:pb-20">
                     <div className="mx-auto max-w-4xl px-5 sm:px-6">
-                        <p className="text-center font-serif text-sm italic text-[#556B3F]">{t('dichvu.detail.faqEyebrow')}</p>
-                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">{t('dichvu.detail.faqEyebrow')}</p>
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                             {t('dichvu.detail.faqTitle')}
                         </h2>
 
@@ -472,8 +464,8 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
             {related.length > 0 && (
                 <section className="bg-maha-50 pb-14 md:pb-20">
                     <div className="mx-auto max-w-5xl px-5 sm:px-6">
-                        <p className="text-center font-serif text-sm italic text-[#556B3F]">{t('dichvu.detail.relatedEyebrow')}</p>
-                        <h2 className="mt-1.5 text-center font-serif text-2xl uppercase tracking-wide text-ink md:text-3xl">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">{t('dichvu.detail.relatedEyebrow')}</p>
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
                             {t('dichvu.detail.relatedTitle')}
                         </h2>
 

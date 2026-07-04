@@ -108,7 +108,7 @@ class DichVuController extends Controller
                 return $this->renderService($legacyService, []);
             }
 
-            return redirect()->away(url(rtrim($legacyService->url, '/')), 301);
+            return redirect()->away(url(rtrim($legacyService->url, '/')).'/', 301);
         }
 
         if ($b === null) {
@@ -120,15 +120,16 @@ class DichVuController extends Controller
         if ($child) {
             return $c === null
                 ? $this->renderCategory($child)
-                : $this->renderServiceIn($child, $c);
+                : $this->renderServiceIn($child, $c, "/dich-vu/{$a}/{$b}/{$c}/");
         }
 
         abort_if($c !== null, 404);
 
-        return $this->renderServiceIn($root, $b);
+        return $this->renderServiceIn($root, $b, "/dich-vu/{$a}/{$b}/");
     }
 
-    private function renderServiceIn(ServiceCategory $category, string $slug): Response
+    /** Render chi tiết dịch vụ, hoặc 301 sang URL chuẩn nếu $requestedPath không còn là URL chính tắc (VD: danh mục đã collapse còn 1 dịch vụ). */
+    private function renderServiceIn(ServiceCategory $category, string $slug, string $requestedPath): Response|RedirectResponse
     {
         $service = Service::active()
             ->with(['branches', 'category.parent'])
@@ -137,6 +138,10 @@ class DichVuController extends Controller
             ->first();
 
         abort_if(! $service, 404);
+
+        if ($service->url !== $requestedPath) {
+            return redirect()->away(url(rtrim($service->url, '/')).'/', 301);
+        }
 
         return $this->renderService($service, $this->categoryBreadcrumb($category));
     }
@@ -184,6 +189,12 @@ class DichVuController extends Controller
             ->where('service_category_id', $category->id)
             ->orderByDesc('is_featured')
             ->get();
+
+        // Danh mục cấp 2 chỉ có đúng 1 dịch vụ → hiển thị thẳng trang chi tiết dịch vụ đó tại
+        // URL danh mục, tránh trang danh mục thừa chỉ để hiển thị một dịch vụ duy nhất.
+        if (! $category->isRoot() && $services->count() === 1) {
+            return $this->renderService($services->first(), $this->categoryBreadcrumb($category));
+        }
 
         return Inertia::render('DichVuCategory', [
             'category' => [

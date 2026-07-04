@@ -50,6 +50,7 @@ class ServiceResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required()->columnSpanFull(),
                 Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
+                Forms\Components\Checkbox::make('is_combo')->label('Combo'),
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
             TranslatableField::group('name', label: 'Tên dịch vụ', required: true),
@@ -171,11 +172,13 @@ class ServiceResource extends Resource
             Tables\Columns\TextColumn::make('category.name')->label('Danh mục')->badge(),
             Tables\Columns\TextColumn::make('duration')->label('Thời lượng')->suffix(' phút'),
             Tables\Columns\IconColumn::make('is_featured')->label('Nổi bật')->boolean(),
+            Tables\Columns\IconColumn::make('is_combo')->label('Combo')->boolean(),
             Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
         ])->filters([
             Tables\Filters\SelectFilter::make('service_category_id')
                 ->label('Danh mục')
                 ->options(fn () => self::categoryOptions()),
+            Tables\Filters\TernaryFilter::make('is_combo')->label('Combo'),
         ])->actions([
             Tables\Actions\EditAction::make(),
         ]);

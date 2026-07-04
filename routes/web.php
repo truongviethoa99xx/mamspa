@@ -34,7 +34,7 @@ Route::get('/services', fn () => redirect()->away(url('/dich-vu').'/', 301))->na
 Route::get('/services/{service}', function (string $service) {
     $target = Service::with('category.parent')->where('slug', $service)->first()?->url ?? "/dich-vu/{$service}/";
 
-    return redirect()->away(url(rtrim($target, '/')), 301);
+    return redirect()->away(url(rtrim($target, '/')).'/', 301);
 })->name('services.show');
 
 Route::get('/dat-lich', [BookingController::class, 'index'])->name('booking.index');
