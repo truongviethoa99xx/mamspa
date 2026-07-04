@@ -63,17 +63,7 @@ class HandleInertiaRequests extends Middleware
                 'chat_url' => $site?->chat_url,
                 'floating_contact_buttons' => $site?->floating_contact_buttons ?? [],
                 'social_links' => $site?->social_links ?? [],
-                'service_menu' => fn () => Schema::hasTable('service_categories')
-                    ? ServiceCategory::query()
-                        ->roots()
-                        ->active()
-                        ->orderBy('order')
-                        ->get(['slug', 'name', 'parent_id'])
-                        ->map(fn (ServiceCategory $c) => [
-                            'label' => $c->name,
-                            'href' => $c->url,
-                        ])->all()
-                    : [],
+                'service_menu' => fn () => Schema::hasTable('service_categories') ? $this->serviceMenu() : [],
             ],
             'gtm' => [
                 'id' => config('services.gtm.id'),
@@ -82,5 +72,47 @@ class HandleInertiaRequests extends Middleware
                 'location' => $request->url(),
             ],
         ]);
+    }
+
+    /** Menu dịch vụ 2 cấp cho header: danh mục gốc kèm danh mục con. */
+    private function serviceMenu(): array
+    {
+        $roots = ServiceCategory::query()
+            ->roots()
+            ->active()
+            ->orderBy('order')
+            ->with([
+                'children' => fn ($q) => $q->active()->orderBy('order'),
+                'children.services' => fn ($q) => $q->active(),
+                'services' => fn ($q) => $q->active(),
+            ])
+            ->get();
+
+        return $roots->map(function (ServiceCategory $root) {
+            $root->services->each->setRelation('category', $root);
+            $root->children->each(function (ServiceCategory $child) use ($root) {
+                $child->setRelation('parent', $root);
+                $child->services->each->setRelation('category', $child);
+            });
+
+            return [
+                'label' => $root->name,
+                'href' => $this->menuHref($root),
+                'children' => $root->children->map(fn (ServiceCategory $child) => [
+                    'label' => $child->name,
+                    'href' => $this->menuHref($child),
+                ])->values()->all(),
+            ];
+        })->all();
+    }
+
+    /** Danh mục chỉ có đúng 1 dịch vụ (tính cả danh mục con) → link thẳng trang chi tiết dịch vụ đó. */
+    private function menuHref(ServiceCategory $category): string
+    {
+        $services = $category->relationLoaded('children')
+            ? $category->services->concat($category->children->flatMap(fn (ServiceCategory $c) => $c->services))
+            : $category->services;
+
+        return $services->count() === 1 ? $services->first()->url : $category->url;
     }
 }

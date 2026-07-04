@@ -10,6 +10,7 @@ import type { SharedProps } from '@/types';
 interface MenuItem {
     href: string;
     label: string;
+    children?: MenuItem[];
 }
 
 function NavDropdown({ label, items, href }: { label: string; items: MenuItem[]; href?: string }) {
@@ -59,18 +60,46 @@ function NavDropdown({ label, items, href }: { label: string; items: MenuItem[];
             {open && (
                 <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3">
                     <ul className="w-64 rounded-2xl border border-maha-100 bg-white p-2 shadow-xl shadow-maha-900/10">
-                        {items.map((item) => (
-                            <li key={item.href}>
-                                <Link
-                                    href={item.href}
-                                    onClick={() => setOpen(false)}
-                                    className="group/item flex items-center justify-between rounded-xl px-5 py-3 font-serif text-[15px] text-[#475934] transition-colors hover:bg-maha-50 hover:font-bold hover:text-ink"
-                                >
-                                    {item.label}
-                                    <ChevronRight className="h-4 w-4 opacity-0 transition-opacity group-hover/item:opacity-100" />
-                                </Link>
-                            </li>
-                        ))}
+                        {items.map((item) => {
+                            const hasChildren = (item.children?.length ?? 0) > 0;
+
+                            return (
+                                <li key={item.href} className="group/item relative">
+                                    <Link
+                                        href={item.href}
+                                        onClick={() => setOpen(false)}
+                                        className="flex items-center justify-between rounded-xl px-5 py-3 font-serif text-[15px] text-[#475934] transition-colors group-hover/item:bg-maha-50 group-hover/item:font-bold group-hover/item:text-ink"
+                                    >
+                                        {item.label}
+                                        <ChevronRight
+                                            className={cn(
+                                                'h-4 w-4 transition-opacity',
+                                                hasChildren ? 'opacity-60' : 'opacity-0 group-hover/item:opacity-100',
+                                            )}
+                                        />
+                                    </Link>
+
+                                    {hasChildren && (
+                                        <div className="invisible absolute left-full top-0 z-50 pl-2 opacity-0 transition-opacity group-hover/item:visible group-hover/item:opacity-100">
+                                            <ul className="w-64 rounded-2xl border border-maha-100 bg-white p-2 shadow-xl shadow-maha-900/10">
+                                                {item.children!.map((child) => (
+                                                    <li key={child.href}>
+                                                        <Link
+                                                            href={child.href}
+                                                            onClick={() => setOpen(false)}
+                                                            className="group/child flex items-center justify-between rounded-xl px-5 py-3 font-serif text-[15px] text-[#475934] transition-colors hover:bg-maha-50 hover:font-bold hover:text-ink"
+                                                        >
+                                                            {child.label}
+                                                            <ChevronRight className="h-4 w-4 opacity-0 transition-opacity group-hover/child:opacity-100" />
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             )}
@@ -188,6 +217,17 @@ export function Navbar() {
                             <Link href={item.href} className="block py-2 pl-3 text-sm text-maha-800">
                                 {item.label}
                             </Link>
+                            {(item.children?.length ?? 0) > 0 && (
+                                <ul>
+                                    {item.children!.map((child) => (
+                                        <li key={child.href}>
+                                            <Link href={child.href} className="block py-1.5 pl-7 text-sm text-maha-700">
+                                                {child.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </li>
                     ))}
                     <li>

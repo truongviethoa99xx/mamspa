@@ -36,7 +36,7 @@ export interface SiteSettings {
         color?: string;
     }[];
     social_links?: { label: string; href: string }[];
-    service_menu?: { label: string; href: string }[];
+    service_menu?: { label: string; href: string; children?: { label: string; href: string }[] }[];
 }
 
 export interface SharedProps {

@@ -160,13 +160,16 @@ class DichVuController extends Controller
             ->limit(4)
             ->get();
 
-        $combos = Service::active()
-            ->with(['branches', 'category.parent'])
-            ->combo()
-            ->whereKeyNot($service->getKey())
-            ->orderByDesc('is_featured')
-            ->limit(3)
-            ->get();
+        // Khối "Các gói combo" chỉ hiển thị khi chính dịch vụ đang xem là combo.
+        $combos = $this->isCombo($service)
+            ? Service::active()
+                ->with(['branches', 'category.parent'])
+                ->combo()
+                ->whereKeyNot($service->getKey())
+                ->orderByDesc('is_featured')
+                ->limit(3)
+                ->get()
+            : collect();
 
         $categoryServices = $service->service_category_id
             ? Service::active()
