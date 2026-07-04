@@ -50,35 +50,42 @@ const DEFAULT_BUTTONS: ContactButton[] = [
     },
 ];
 
+/** Every icon renders inside this same fixed box so circles look uniform regardless of image vs SVG vs text label. */
+const ICON_BOX = 'flex h-6 w-6 items-center justify-center';
+
 function ButtonIcon({ button }: { button: ContactButton }) {
     const iconUrl = publicAssetUrl(button.icon);
     if (iconUrl) {
-        return <img src={iconUrl} alt="" className="h-[58%] w-[58%] object-contain" loading="lazy" />;
+        return (
+            <span className={ICON_BOX}>
+                <img src={iconUrl} alt="" className="h-full w-full object-contain" loading="lazy" />
+            </span>
+        );
     }
 
     const type = button.type || 'custom';
 
     if (type === 'phone') {
-        return <Phone className="h-[48%] w-[48%]" strokeWidth={2.6} />;
+        return <Phone className="h-6 w-6" strokeWidth={2.6} />;
     }
 
     if (type === 'map') {
-        return <MapPin className="h-[52%] w-[52%]" strokeWidth={2.4} />;
+        return <MapPin className="h-6 w-6" strokeWidth={2.4} />;
     }
 
     if (type === 'zalo') {
-        return <span className="text-[11px] font-extrabold leading-none">Zalo</span>;
+        return <span className={cn(ICON_BOX, 'text-[10px] font-extrabold leading-none')}>Zalo</span>;
     }
 
     if (type === 'whatsapp') {
-        return <span className="text-[16px] font-black leading-none">☎</span>;
+        return <span className={cn(ICON_BOX, 'text-[14px] font-black leading-none')}>☎</span>;
     }
 
     if (type === 'kakao') {
-        return <span className="text-[9px] font-black leading-none">TALK</span>;
+        return <span className={cn(ICON_BOX, 'text-[8px] font-black leading-none')}>TALK</span>;
     }
 
-    return <MessageCircle className="h-[50%] w-[50%]" strokeWidth={2.4} />;
+    return <MessageCircle className="h-6 w-6" strokeWidth={2.4} />;
 }
 
 export function ChatWidget() {

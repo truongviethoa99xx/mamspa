@@ -45,8 +45,8 @@ export function ServiceMenuBlock({ data }: { data: ServiceMenuBlockData }) {
     }
 
     return (
-        <section className="bg-maha-50 py-10 sm:py-14 md:py-16 lg:h-[900px] lg:py-20">
-            <div className="mx-auto grid h-full max-w-7xl grid-cols-1 gap-6 px-5 sm:px-6 lg:grid-cols-[280px_1fr] lg:gap-12 2xl:max-w-[1440px]">
+        <section className="bg-maha-50 py-10 sm:py-14 md:py-16 lg:py-20">
+            <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-5 sm:px-6 lg:grid-cols-[280px_1fr] lg:gap-12 2xl:max-w-[1440px]">
                 {/* Sidebar */}
                 <div>
                     <h2 className="font-serif text-2xl uppercase tracking-wide text-ink sm:text-4xl">
@@ -72,7 +72,7 @@ export function ServiceMenuBlock({ data }: { data: ServiceMenuBlockData }) {
                 </div>
 
                 {/* Service list */}
-                <div className="lg:min-h-0 lg:overflow-y-auto lg:pr-1">
+                <div className="lg:max-h-[900px] lg:overflow-y-auto lg:pr-1">
                     {filtered.length === 0 && (
                         <p className="py-8 text-maha-600">{t('services.empty')}</p>
                     )}

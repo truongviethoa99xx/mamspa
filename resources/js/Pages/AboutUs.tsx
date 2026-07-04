@@ -205,8 +205,8 @@ export default function AboutUs({ branch }: Props) {
                             </a>
                         </div>
 
-                        <div className="relative mx-auto aspect-[1/1.08] w-full max-w-[620px] rounded-b-[1.75rem] rounded-t-full bg-cover bg-center" style={imageStyle(images[0])}>
-                            <div className="absolute -left-[4%] right-[3%] bottom-[2%] top-[10%] rounded-b-[1.75rem] rounded-t-full border-2 border-dashed border-[#8C9A6B]" />
+                        <div className="relative mx-auto aspect-[1/1.08] w-full max-w-[620px] rounded-b-[1.75rem] rounded-t-[3rem] bg-cover bg-center" style={imageStyle(images[0])}>
+                            <div className="absolute -left-[4%] right-[3%] bottom-[2%] top-[10%] rounded-b-[1.75rem] rounded-t-[3rem] border-2 border-dashed border-[#8C9A6B]" />
                             {!images[0] && <div className="absolute inset-x-[6%] bottom-[2%] top-[10%] rounded-b-[1.75rem] rounded-t-full bg-[#CDBCA3]" />}
                         </div>
                     </div>

@@ -155,14 +155,6 @@ class SiteSettings extends Page implements HasForms
                             ->itemLabel(fn (array $state): ?string => $state['label'] ?? null)
                             ->addActionLabel('+ Thêm nút liên hệ'),
                     ]),
-
-                Forms\Components\Section::make('Menu dịch vụ trên navbar')
-                    ->description('Menu dịch vụ tự động lấy từ các dịch vụ đang bật (is_active) trong mục Dịch vụ. Mỗi mục liên kết tới slug riêng của dịch vụ.')
-                    ->schema([
-                        Forms\Components\Placeholder::make('service_menu_note')
-                            ->label('')
-                            ->content('Để chỉnh sửa menu này, vào mục “Dịch vụ” → bật/tắt trạng thái hoạt động hoặc đổi slug của từng dịch vụ.'),
-                    ]),
             ])
             ->statePath('data');
     }
