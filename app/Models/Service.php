@@ -81,19 +81,6 @@ class Service extends Model implements HasMedia
             return "/dich-vu/{$this->slug}/";
         }
 
-        // Danh mục cấp 2 chỉ có đúng 1 dịch vụ → dùng thẳng URL danh mục làm URL dịch vụ,
-        // tránh trùng lặp segment khi slug dịch vụ trùng slug danh mục (VD: .../body/body/).
-        if (! $this->category->isRoot() && $this->isOnlyServiceInCategory()) {
-            return $this->category->url;
-        }
-
         return "{$this->category->url}{$this->slug}/";
-    }
-
-    private function isOnlyServiceInCategory(): bool
-    {
-        static $cache = [];
-
-        return $cache[$this->category->id] ??= $this->category->services()->active()->count() === 1;
     }
 }

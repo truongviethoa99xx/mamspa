@@ -131,7 +131,7 @@ class DichVuController extends Controller
         return $this->renderServiceIn($root, $b, "/dich-vu/{$a}/{$b}/");
     }
 
-    /** Render chi tiết dịch vụ, hoặc 301 sang URL chuẩn nếu $requestedPath không còn là URL chính tắc (VD: danh mục đã collapse còn 1 dịch vụ). */
+    /** Render chi tiết dịch vụ, hoặc 301 sang URL chuẩn nếu $requestedPath không còn là URL chính tắc (VD: dịch vụ đã đổi danh mục). */
     private function renderServiceIn(ServiceCategory $category, string $slug, string $requestedPath): Response|RedirectResponse
     {
         $service = Service::active()
@@ -189,12 +189,6 @@ class DichVuController extends Controller
             ->where('service_category_id', $category->id)
             ->orderByDesc('is_featured')
             ->get();
-
-        // Danh mục cấp 2 chỉ có đúng 1 dịch vụ → hiển thị thẳng trang chi tiết dịch vụ đó tại
-        // URL danh mục, tránh trang danh mục thừa chỉ để hiển thị một dịch vụ duy nhất.
-        if (! $category->isRoot() && $services->count() === 1) {
-            return $this->renderService($services->first(), $this->categoryBreadcrumb($category));
-        }
 
         return Inertia::render('DichVuCategory', [
             'category' => [
