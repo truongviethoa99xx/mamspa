@@ -113,6 +113,14 @@ class ServiceResource extends Resource
                         ->addActionLabel('+ Thêm lợi ích')
                         ->columnSpanFull(),
                 ]),
+            Forms\Components\Section::make('Đối tượng phù hợp')
+                ->description('Nhóm khách hàng đặc biệt phù hợp với dịch vụ này. Hiển thị cùng khối "Lợi ích & đối tượng phù hợp" ở trang chi tiết.')
+                ->schema([
+                    Forms\Components\TagsInput::make('ideal_for')
+                        ->label('')
+                        ->placeholder('Nhập một đối tượng rồi nhấn Enter')
+                        ->columnSpanFull(),
+                ]),
             Forms\Components\Section::make('Hình ảnh trải nghiệm khách hàng')
                 ->description('Bộ ảnh thực tế khách hàng trải nghiệm dịch vụ. Mỗi ảnh có mô tả (alt) cho SEO/khả năng truy cập.')
                 ->schema([

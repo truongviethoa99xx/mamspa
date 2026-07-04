@@ -39,7 +39,7 @@ class ServicePageSettings extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill(ServicePageContent::current()->only([
-            'happy_hours_title', 'happy_hours_desc', 'benefits', 'ideal_for', 'faqs',
+            'happy_hours_title', 'happy_hours_desc',
             'listing_categories', 'massage_cards', 'head_spa_cards', 'other_care_items',
             'massage_eyebrow', 'head_spa_eyebrow', 'head_spa_title',
             'other_care_eyebrow', 'other_care_title',
@@ -62,45 +62,7 @@ class ServicePageSettings extends Page implements HasForms
                             ->placeholder('Giảm ngay …% cho lịch hẹn hoàn tất trước 19:00.'),
                     ]),
 
-                Forms\Components\Section::make('2 · Lợi ích liệu trình')
-                    ->description('Thẻ trắng bên trái khối "Lợi ích & đối tượng phù hợp". Mỗi dòng một lợi ích.')
-                    ->icon('heroicon-o-check-badge')
-                    ->schema([
-                        Forms\Components\TagsInput::make('benefits')
-                            ->label('Danh sách lợi ích')
-                            ->placeholder('Nhập một lợi ích rồi nhấn Enter')
-                            ->columnSpanFull(),
-                    ]),
-
-                Forms\Components\Section::make('3 · Đối tượng phù hợp')
-                    ->description('Thẻ nền đậm bên phải — "Đặc biệt khuyên dùng cho". Mỗi dòng một nhóm.')
-                    ->icon('heroicon-o-user-group')
-                    ->schema([
-                        Forms\Components\TagsInput::make('ideal_for')
-                            ->label('Đặc biệt khuyên dùng cho')
-                            ->placeholder('Nhập một đối tượng rồi nhấn Enter')
-                            ->columnSpanFull(),
-                    ]),
-
-                Forms\Components\Section::make('4 · Câu hỏi thường gặp (FAQ)')
-                    ->description('Khối accordion gần cuối trang chi tiết.')
-                    ->icon('heroicon-o-question-mark-circle')
-                    ->schema([
-                        Forms\Components\Repeater::make('faqs')
-                            ->label('')
-                            ->schema([
-                                Forms\Components\TextInput::make('question')->label('Câu hỏi')->required(),
-                                Forms\Components\Textarea::make('answer')->label('Trả lời')->rows(3)->required(),
-                            ])
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['question'] ?? null)
-                            ->addActionLabel('+ Thêm câu hỏi')
-                            ->columnSpanFull(),
-                    ]),
-
-                Forms\Components\Section::make('5 · Trang danh sách dịch vụ - Danh mục')
+                Forms\Components\Section::make('2 · Trang danh sách dịch vụ - Danh mục')
                     ->description('Các nhãn hiển thị ở phần đầu trang và ô tìm kiếm của /dich-vu.')
                     ->icon('heroicon-o-list-bullet')
                     ->schema([
@@ -110,7 +72,7 @@ class ServicePageSettings extends Page implements HasForms
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('6 · Trang danh sách dịch vụ - Massage')
+                Forms\Components\Section::make('3 · Trang danh sách dịch vụ - Massage')
                     ->schema([
                         Forms\Components\TextInput::make('massage_eyebrow')->label('Dòng giới thiệu'),
                         Forms\Components\Repeater::make('massage_cards')
@@ -131,7 +93,7 @@ class ServicePageSettings extends Page implements HasForms
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('7 · Trang danh sách dịch vụ - Head Spa')
+                Forms\Components\Section::make('4 · Trang danh sách dịch vụ - Head Spa')
                     ->schema([
                         Forms\Components\TextInput::make('head_spa_eyebrow')->label('Dòng giới thiệu'),
                         Forms\Components\TextInput::make('head_spa_title')->label('Tiêu đề'),
@@ -165,7 +127,7 @@ class ServicePageSettings extends Page implements HasForms
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('8 · Trang danh sách dịch vụ - Dịch vụ khác')
+                Forms\Components\Section::make('5 · Trang danh sách dịch vụ - Dịch vụ khác')
                     ->schema([
                         Forms\Components\TextInput::make('other_care_eyebrow')->label('Dòng giới thiệu'),
                         Forms\Components\TextInput::make('other_care_title')->label('Tiêu đề'),

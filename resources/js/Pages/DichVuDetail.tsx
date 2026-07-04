@@ -45,21 +45,14 @@ interface Service {
     benefits?: ServiceBenefit[];
     experience_images?: ExperienceImage[];
     faqs?: ServiceFaq[];
+    ideal_for?: string[];
     images?: string[];
     branches: string[];
-}
-
-interface Faq {
-    question: string;
-    answer: string;
 }
 
 interface ServicePageContent {
     happy_hours_title: string | null;
     happy_hours_desc: string | null;
-    benefits: string[];
-    ideal_for: string[];
-    faqs: Faq[];
 }
 
 interface BreadcrumbEntry {
@@ -81,12 +74,11 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
     const locale = useLocale();
     const [openFaq, setOpenFaq] = useState(0);
 
-    const benefits = content.benefits ?? [];
-    const idealFor = content.ideal_for ?? [];
-    const serviceFaqs = (service.faqs ?? [])
+    const benefitPoints = (service.benefits ?? []).map((b) => tr(b.title, locale)).filter(Boolean);
+    const idealFor = service.ideal_for ?? [];
+    const faqs = (service.faqs ?? [])
         .filter((f) => tr(f.question, locale))
         .map((f) => ({ question: tr(f.question, locale), answer: tr(f.answer, locale) }));
-    const faqs = [...serviceFaqs, ...(content.faqs ?? [])];
 
     const name = tr(service.name, locale);
     const description = tr(service.description, locale);
@@ -383,7 +375,7 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                 </section>
             )}
 
-            {(benefits.length > 0 || idealFor.length > 0) && (
+            {(benefitPoints.length > 0 || idealFor.length > 0) && (
                 <section className="bg-maha-50 pb-14 md:pb-20">
                     <div className="mx-auto max-w-5xl px-5 sm:px-6">
                         <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">
@@ -395,12 +387,12 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
                         <span className="mx-auto mt-3 block h-px w-14 bg-[#556B3F]" />
 
                         <div className="mt-8 grid gap-7 md:grid-cols-2">
-                            {benefits.length > 0 && (
+                            {benefitPoints.length > 0 && (
                                 <article className="rounded-2xl border border-maha-100 bg-white px-7 py-8 shadow-sm shadow-maha-900/5 md:px-9">
                                     <h3 className="font-serif text-2xl font-bold text-ink">{t('dichvu.detail.benefitsHeading')}</h3>
                                     <ul className="mt-7 space-y-6">
-                                        {benefits.map((benefit) => (
-                                            <li key={benefit} className="flex items-start gap-4 text-sm leading-7 text-[#475934] md:text-base">
+                                        {benefitPoints.map((benefit, idx) => (
+                                            <li key={idx} className="flex items-start gap-4 text-sm leading-7 text-[#475934] md:text-base">
                                                 <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-maha-50 text-[#8C9A6B]">
                                                     <Check className="h-4 w-4" />
                                                 </span>

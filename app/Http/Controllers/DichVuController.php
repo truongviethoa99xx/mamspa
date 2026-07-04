@@ -33,6 +33,7 @@ class DichVuController extends Controller
                     ['image' => $this->publicUrl($step['image'] ?? null)],
                 ))->all(),
             'benefits' => $s->benefits ?? [],
+            'ideal_for' => $s->ideal_for ?? [],
             'faqs' => $s->faqs ?? [],
             'experience_images' => collect($s->experience_images ?? [])
                 ->map(fn ($img) => [
@@ -175,9 +176,6 @@ class DichVuController extends Controller
             'content' => [
                 'happy_hours_title' => $content->happy_hours_title,
                 'happy_hours_desc' => $content->happy_hours_desc,
-                'benefits' => $content->benefits ?? [],
-                'ideal_for' => $content->ideal_for ?? [],
-                'faqs' => $content->faqs ?? [],
             ],
         ]);
     }
