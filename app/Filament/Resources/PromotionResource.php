@@ -62,7 +62,8 @@ class PromotionResource extends Resource
             Tables\Columns\TextColumn::make('title')->label('Tiêu đề'),
             Tables\Columns\TextColumn::make('ends_at')->label('Kết thúc')->dateTime(),
             Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
-        ])->actions([Tables\Actions\EditAction::make()]);
+        ])->actions([Tables\Actions\EditAction::make()])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

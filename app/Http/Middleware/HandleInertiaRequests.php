@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Branch;
-use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -63,14 +63,15 @@ class HandleInertiaRequests extends Middleware
                 'chat_url' => $site?->chat_url,
                 'floating_contact_buttons' => $site?->floating_contact_buttons ?? [],
                 'social_links' => $site?->social_links ?? [],
-                'service_menu' => fn () => Schema::hasTable('services')
-                    ? Service::active()
-                        ->orderByDesc('is_featured')
-                        ->orderBy('id')
-                        ->get(['slug', 'name'])
-                        ->map(fn (Service $s) => [
-                            'label' => $s->name,
-                            'href' => "/dich-vu/{$s->slug}",
+                'service_menu' => fn () => Schema::hasTable('service_categories')
+                    ? ServiceCategory::query()
+                        ->roots()
+                        ->active()
+                        ->orderBy('order')
+                        ->get(['slug', 'name', 'parent_id'])
+                        ->map(fn (ServiceCategory $c) => [
+                            'label' => $c->name,
+                            'href' => $c->url,
                         ])->all()
                     : [],
             ],

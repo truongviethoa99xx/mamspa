@@ -553,16 +553,16 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                 className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-3xl bg-maha-300 p-5"
                             >
                                 {card.image && (
-                                    <img
-                                        src={card.image}
-                                        alt={card.handle}
-                                        className="absolute inset-0 h-full w-full object-cover"
-                                    />
-                                )}
-                                {card.image && (
                                     <div
                                         className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-black/40"
                                         aria-hidden="true"
+                                    />
+                                )}
+                                {card.image && (
+                                    <img
+                                        src={card.image}
+                                        alt={card.handle}
+                                        className="absolute inset-0 h-full w-full object-contain"
                                     />
                                 )}
                                 <div className="relative z-10 flex items-center justify-between">

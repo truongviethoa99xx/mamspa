@@ -156,7 +156,8 @@ class TranslationStringResource extends Resource
                         }
                         Notification::make()->title("Đã dịch {$count} ô ngôn ngữ.")->success()->send();
                     }),
-            ]);
+            ])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

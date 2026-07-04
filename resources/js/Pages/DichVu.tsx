@@ -162,7 +162,7 @@ export default function DichVu({ filters, combos, services, branches, content }:
             <Seo title={`${t('nav.services')} | Mầm Spa`} />
 
             {/* Search hero */}
-            <section className="bg-[#8C9A6B] py-20 md:py-28">
+            <section className="bg-[#8A8478] py-20 md:py-28">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
                     <p className="font-serif text-lg italic text-maha-50/80 md:text-xl">
                         {t('dichvu.eyebrow')}

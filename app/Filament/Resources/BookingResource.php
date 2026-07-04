@@ -252,7 +252,8 @@ class BookingResource extends Resource
                     'completed' => 'Hoàn thành', 'cancelled' => 'Đã huỷ',
                 ]),
                 Tables\Filters\SelectFilter::make('branch_id')->label('Chi nhánh')->relationship('branch', 'slug'),
-            ])->actions([Tables\Actions\EditAction::make()]);
+            ])->actions([Tables\Actions\EditAction::make()])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

@@ -99,7 +99,8 @@ class UserResource extends Resource
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make()
                 ->hidden(fn (User $record): bool => auth()->id() === $record->id),
-        ]);
+        ])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getEloquentQuery(): Builder

@@ -94,7 +94,8 @@ class ServiceCategoryResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-            ]);
+            ])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

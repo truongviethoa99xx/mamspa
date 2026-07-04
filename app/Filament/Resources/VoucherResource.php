@@ -61,7 +61,8 @@ class VoucherResource extends Resource
             Tables\Columns\TextColumn::make('expires_at')->label('Hết hạn')->date(),
             Tables\Columns\TextColumn::make('source')->label('Nguồn')->badge(),
             Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
-        ])->actions([Tables\Actions\EditAction::make()]);
+        ])->actions([Tables\Actions\EditAction::make()])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

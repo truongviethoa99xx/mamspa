@@ -85,7 +85,8 @@ class PolicyPageResource extends Resource
             Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable()->color('gray'),
             Tables\Columns\IconColumn::make('is_published')->label('Hiển thị')->boolean(),
             Tables\Columns\TextColumn::make('updated_at')->label('Cập nhật lúc')->dateTime()->color('gray'),
-        ])->actions([Tables\Actions\EditAction::make()]);
+        ])->actions([Tables\Actions\EditAction::make()])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

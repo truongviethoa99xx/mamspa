@@ -82,7 +82,8 @@ class BlogPostResource extends Resource
             Tables\Columns\TextColumn::make('author.name')->label('Tác giả')->placeholder('—'),
             Tables\Columns\IconColumn::make('is_published')->label('Đã xuất bản')->boolean(),
             Tables\Columns\TextColumn::make('published_at')->label('Ngày xuất bản')->dateTime(),
-        ])->actions([Tables\Actions\EditAction::make()]);
+        ])->actions([Tables\Actions\EditAction::make()])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getPages(): array

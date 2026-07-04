@@ -50,7 +50,7 @@ class ServiceResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('duration')->label('Thời lượng (phút)')->numeric()->required()->columnSpanFull(),
                 Forms\Components\Toggle::make('is_featured')->label('Nổi bật'),
-                Forms\Components\Checkbox::make('is_combo')->label('Combo'),
+                Forms\Components\Toggle::make('is_combo')->label('Combo'),
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
             TranslatableField::group('name', label: 'Tên dịch vụ', required: true),
@@ -181,7 +181,8 @@ class ServiceResource extends Resource
             Tables\Filters\TernaryFilter::make('is_combo')->label('Combo'),
         ])->actions([
             Tables\Actions\EditAction::make(),
-        ]);
+        ])
+            ->defaultPaginationPageOption(50);
     }
 
     /** Options nhóm theo danh mục cấp 1: cho phép chọn chính danh mục cấp 1 hoặc một danh mục con cấp 2. */

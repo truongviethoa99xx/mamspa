@@ -129,7 +129,8 @@ class CustomerResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
                     ->hidden(fn (Customer $record): bool => $record->bookings()->exists()),
-            ]);
+            ])
+            ->defaultPaginationPageOption(50);
     }
 
     public static function getEloquentQuery(): Builder
