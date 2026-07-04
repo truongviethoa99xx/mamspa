@@ -62,12 +62,13 @@ class Service extends Model implements HasMedia
         return $q->where('is_featured', true);
     }
 
-    /** Dịch vụ thuộc danh mục có slug $slug — khớp chính danh mục đó hoặc danh mục cấp 1 của nó. */
-    public function scopeInCategorySlug($q, string $slug)
+    /** Dịch vụ là gói combo — qua cờ is_combo hoặc gán vào danh mục có slug "combo". */
+    public function scopeCombo($q)
     {
-        return $q->whereHas('category', function ($categoryQuery) use ($slug) {
-            $categoryQuery->where('slug', $slug)
-                ->orWhereHas('parent', fn ($parentQuery) => $parentQuery->where('slug', $slug));
+        return $q->where(function ($query) {
+            $query->where('is_combo', true)
+                ->orWhereHas('category', fn ($categoryQuery) => $categoryQuery->where('slug', 'combo')
+                    ->orWhereHas('parent', fn ($parentQuery) => $parentQuery->where('slug', 'combo')));
         });
     }
 

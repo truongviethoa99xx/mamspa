@@ -45,10 +45,10 @@ class DichVuController extends Controller
         ];
     }
 
-    /** Dịch vụ thuộc danh mục "combo" (chính nó hoặc danh mục cấp 1 của nó có slug combo). */
+    /** Dịch vụ là gói combo — qua cờ is_combo hoặc thuộc danh mục "combo" (chính nó hoặc danh mục cấp 1 của nó). */
     private function isCombo(Service $s): bool
     {
-        return $s->category && ($s->category->slug === 'combo' || $s->category->parent?->slug === 'combo');
+        return $s->is_combo || ($s->category && ($s->category->slug === 'combo' || $s->category->parent?->slug === 'combo'));
     }
 
     /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
@@ -158,7 +158,7 @@ class DichVuController extends Controller
 
         $combos = Service::active()
             ->with(['branches', 'category.parent'])
-            ->inCategorySlug('combo')
+            ->combo()
             ->whereKeyNot($service->getKey())
             ->orderByDesc('is_featured')
             ->limit(3)
