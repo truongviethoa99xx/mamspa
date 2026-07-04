@@ -66,6 +66,18 @@ class ServiceCategoryResource extends Resource
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
             TranslatableField::group('name', label: 'Tên danh mục', required: true, example: 'Body Massage'),
+            TranslatableField::group('description', as: 'textarea', label: 'Mô tả danh mục', rows: 3, example: 'Liệu pháp massage toàn thân giúp thư giãn sâu và phục hồi năng lượng.'),
+            Forms\Components\Section::make('Ảnh đại diện')
+                ->schema([
+                    Forms\Components\FileUpload::make('image')
+                        ->label('')
+                        ->helperText('Ảnh đại diện của danh mục. Khuyến nghị tối thiểu 1200×900px.')
+                        ->image()
+                        ->disk('public')
+                        ->directory('service-categories')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(5120),
+                ]),
             Forms\Components\Section::make('Lợi ích dịch vụ')
                 ->description('Các lợi ích nổi bật của nhóm dịch vụ này. Hiển thị trên trang chi tiết các dịch vụ thuộc danh mục.')
                 ->schema([

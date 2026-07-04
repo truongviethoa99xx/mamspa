@@ -15,7 +15,7 @@ class ServiceCategory extends Model
     use HasTranslations;
 
     protected $fillable = [
-        'slug', 'name', 'parent_id', 'order', 'is_active',
+        'slug', 'name', 'description', 'image', 'parent_id', 'order', 'is_active',
         'benefits', 'experience_images', 'faqs', 'ideal_for',
     ];
 
@@ -28,7 +28,7 @@ class ServiceCategory extends Model
         'ideal_for' => 'array',
     ];
 
-    public array $translatable = ['name'];
+    public array $translatable = ['name', 'description'];
 
     /** Danh mục cấp 1 (null nếu chính nó là cấp 1). */
     public function parent(): BelongsTo
