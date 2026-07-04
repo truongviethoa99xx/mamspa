@@ -211,10 +211,10 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                         <p className="font-serif text-lg italic" style={{ color: GREEN }}>
                                             {txt(content.hero_eyebrow, 'about.hero.eyebrow')}
                                         </p>
-                                        <h1 className="mt-3 font-serif text-4xl uppercase leading-[1.1] text-ink sm:text-5xl md:text-6xl">
+                                        <h1 className="mt-3 font-serif text-4xl uppercase leading-normal text-ink sm:text-5xl md:text-6xl">
                                             {txt(content.hero_title, 'about.title')}
                                         </h1>
-                                        <p className="mt-5 max-w-md text-base leading-relaxed text-ink/70 md:text-lg">
+                                        <p className="mt-5 w-[90%] text-base leading-relaxed text-ink/70 md:text-lg">
                                             {txt(content.hero_subtitle, 'about.subtitle')}
                                         </p>
                                     </div>
@@ -353,7 +353,7 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                 style={{ borderColor: `${GREEN}80` }}
                                 aria-hidden="true"
                             />
-                            <div className="relative z-10 aspect-square overflow-hidden rounded-[2rem] bg-maha-200 shadow-lg shadow-maha-900/10">
+                            <div className="relative z-10 h-[498px] overflow-hidden rounded-[2rem] bg-maha-200 shadow-lg shadow-maha-900/10">
                                 <img
                                     src={content.vision_image ?? '/images/about-vision.jpg'}
                                     alt={txt(content.vision_title, 'about.vision.title')}
