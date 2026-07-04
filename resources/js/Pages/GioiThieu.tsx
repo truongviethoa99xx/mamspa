@@ -211,10 +211,10 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                         <p className="font-serif text-lg italic" style={{ color: GREEN }}>
                                             {txt(content.hero_eyebrow, 'about.hero.eyebrow')}
                                         </p>
-                                        <h1 className="mt-3 font-serif text-4xl uppercase leading-normal text-ink sm:text-5xl md:text-6xl">
+                                        <h1 className="mt-6 font-serif text-4xl uppercase leading-normal text-ink sm:text-5xl md:text-6xl">
                                             {txt(content.hero_title, 'about.title')}
                                         </h1>
-                                        <p className="mt-5 w-[90%] text-base leading-relaxed text-ink/70 md:text-lg">
+                                        <p className="mt-5 w-[90%] text-base leading-relaxed md:text-lg" style={{ color: GREEN }}>
                                             {txt(content.hero_subtitle, 'about.subtitle')}
                                         </p>
                                     </div>
@@ -556,7 +556,7 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                     <img
                                         src={card.image}
                                         alt={card.handle}
-                                        className="absolute inset-0 h-full w-full object-contain"
+                                        className="absolute inset-0 h-full w-full object-cover"
                                     />
                                 )}
                                 {card.image && (
