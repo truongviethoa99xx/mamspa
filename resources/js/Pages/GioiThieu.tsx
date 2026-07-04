@@ -189,7 +189,7 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
 
             {(sectionVisibility.hero || sectionVisibility.features || sectionVisibility.contactBar) && (
                 <section className="relative overflow-hidden bg-[#E9E2D5]">
-                    <div className="mx-auto max-w-7xl px-5 py-16 sm:px-6 md:py-24 2xl:max-w-[1440px]">
+                    <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 sm:px-6 md:pt-24 md:pb-10 2xl:max-w-[1440px]">
                         {sectionVisibility.hero && (
                             <>
                                 {/* Hero: photo + intro */}
@@ -301,15 +301,15 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                     </div>
 
                     {/* Text */}
-                    <div className="rounded-[2rem] bg-white/50 p-6 md:p-10">
+                    <div className="w-[90%] rounded-[2rem] bg-white/50 p-6 md:p-10">
                         <p className="font-serif text-base font-bold" style={{ color: GREEN }}>
                             {txt(content.story_eyebrow, 'about.story.eyebrow')}
                         </p>
-                        <h2 className="mt-4 font-serif text-3xl leading-snug text-ink sm:text-4xl">
+                        <h2 className="mt-4 font-serif text-3xl leading-normal text-ink sm:text-4xl">
                             {txt(content.story_heading, 'about.story.heading')}
                         </h2>
                         <span className="mt-5 block h-px w-16" style={{ backgroundColor: GREEN }} />
-                        <div className="mt-6 space-y-5 leading-relaxed text-ink/70 md:text-lg">
+                        <div className="mt-6 space-y-5 leading-relaxed md:text-lg" style={{ color: GREEN }}>
                             <p>{txt(content.story_p1, 'about.story.p1')}</p>
                             <p>{txt(content.story_p2, 'about.story.p2')}</p>
                         </div>
@@ -332,15 +332,15 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
 
                     <div className="mt-6 grid items-stretch gap-6 lg:grid-cols-2 lg:gap-10">
                         {/* Text card */}
-                        <div className="rounded-[2rem] bg-white/60 p-6 md:p-8">
-                            <div className="space-y-3 leading-relaxed text-ink/75">
+                        <div className="flex h-full flex-col rounded-[2rem] bg-white/60 p-6 md:p-8" style={{ color: GREEN }}>
+                            <div className="space-y-3 leading-relaxed">
                                 <p>{txt(content.vision_p1, 'about.vision.p1')}</p>
                                 <p>{txt(content.vision_p2, 'about.vision.p2')}</p>
                             </div>
-                            <ul className="mt-4 space-y-2 text-ink/75">
+                            <ul className="mt-4 space-y-2">
                                 {bullets.map((b) => (
                                     <li key={b.name} className="leading-relaxed">
-                                        <span className="font-bold text-ink">• {b.name}:</span> {b.desc}
+                                        <span className="font-bold">• {b.name}:</span> {b.desc}
                                     </li>
                                 ))}
                             </ul>
@@ -402,7 +402,7 @@ export default function GioiThieu({ content, sectionVisibility }: Props) {
                                     <h3 className="font-serif text-xl text-ink md:text-2xl">
                                         {title}
                                     </h3>
-                                    <p className="mt-3 leading-relaxed text-ink/70">
+                                    <p className="mt-3 leading-relaxed" style={{ color: GREEN }}>
                                         {txt(content.value_descs?.[i], `about.values.d${n}`)}
                                     </p>
                                 </div>
