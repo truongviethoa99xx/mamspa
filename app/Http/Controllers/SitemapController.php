@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\BlogPost;
 use App\Models\Branch;
 use App\Models\Service;
-use App\Models\ServiceCategory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Schema;
 
@@ -31,15 +30,6 @@ class SitemapController extends Controller
                     'loc' => $base.'/chi-nhanh/'.$b->slug.'/',
                     'lastmod' => $b->updated_at?->toIso8601String(),
                     'priority' => '0.8',
-                ];
-            }
-        }
-        if (Schema::hasTable('service_categories')) {
-            foreach (ServiceCategory::active()->get() as $c) {
-                $urls[] = [
-                    'loc' => $base.$c->url,
-                    'lastmod' => $c->updated_at?->toIso8601String(),
-                    'priority' => $c->isRoot() ? '0.8' : '0.7',
                 ];
             }
         }

@@ -89,9 +89,9 @@ class DichVuController extends Controller
     }
 
     /**
-     * Điều hướng cây danh mục 2 cấp dưới /dich-vu/:
-     * - /dich-vu/{root}/                    → trang danh mục cấp 1
-     * - /dich-vu/{root}/{child}/            → trang danh mục cấp 2
+     * Điều hướng cây danh mục 2 cấp dưới /dich-vu/ (không còn trang danh mục riêng):
+     * - /dich-vu/{root}/                    → 301 về danh sách /dich-vu/
+     * - /dich-vu/{root}/{child}/            → 301 về danh sách /dich-vu/
      * - /dich-vu/{root}/{service}/          → chi tiết dịch vụ gắn trực tiếp vào danh mục cấp 1
      * - /dich-vu/{root}/{child}/{service}/  → chi tiết dịch vụ gắn vào danh mục cấp 2
      * - /dich-vu/{service}/ (URL cũ, phẳng) → 301 sang URL chuẩn có tiền tố danh mục.
@@ -117,14 +117,14 @@ class DichVuController extends Controller
         }
 
         if ($b === null) {
-            return $this->renderCategory($root);
+            return $this->redirectToListing();
         }
 
         $child = $root->children()->active()->where('slug', $b)->first();
 
         if ($child) {
             return $c === null
-                ? $this->renderCategory($child)
+                ? $this->redirectToListing()
                 : $this->renderServiceIn($child, $c, "/dich-vu/{$a}/{$b}/{$c}/");
         }
 
@@ -195,32 +195,10 @@ class DichVuController extends Controller
         ]);
     }
 
-    /** Trang danh mục: liệt kê danh mục con (nếu $category là gốc) và dịch vụ gắn trực tiếp vào $category. */
-    private function renderCategory(ServiceCategory $category): Response
+    /** Trang danh mục đã bỏ — URL danh mục chuyển hướng vĩnh viễn về danh sách dịch vụ. */
+    private function redirectToListing(): RedirectResponse
     {
-        $services = Service::active()
-            ->with(['branches', 'category.parent'])
-            ->where('service_category_id', $category->id)
-            ->orderByDesc('is_featured')
-            ->get();
-
-        return Inertia::render('DichVuCategory', [
-            'category' => [
-                'slug' => $category->slug,
-                'name' => $category->name,
-                'url' => $category->url,
-                'is_root' => $category->isRoot(),
-            ],
-            'breadcrumb' => $this->categoryAncestors($category),
-            'children' => $category->isRoot()
-                ? $category->children()->active()->get()->map(fn (ServiceCategory $c) => [
-                    'slug' => $c->slug,
-                    'name' => $c->name,
-                    'url' => $c->url,
-                ])->all()
-                : [],
-            'services' => $services->map(fn ($s) => $this->map($s)),
-        ]);
+        return redirect()->away(url('/dich-vu').'/', 301);
     }
 
     /**
