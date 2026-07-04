@@ -2,7 +2,7 @@ import { router } from '@inertiajs/react';
 import { Seo } from '@/Components/Seo';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, Minus, Plus } from 'lucide-react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
 import { generateTimeOptions, parseOpenHours, tr } from '@/Lib/utils';
@@ -205,12 +205,18 @@ export default function Booking({ preselect, branches, services }: Props) {
                                         {!date && <p className="text-sm text-maha-600">{t('bookingForm.pickDate')}</p>}
                                         {date && (
                                             <>
-                                                <FancySelect
-                                                    value={timeSlot}
-                                                    onChange={setTimeSlot}
-                                                    placeholder={t('bookingForm.timePlaceholder')}
-                                                    options={timeOptions}
-                                                />
+                                                <div className="relative">
+                                                    <input
+                                                        type="time"
+                                                        value={timeSlot}
+                                                        onChange={(e) => setTimeSlot(e.target.value)}
+                                                        min={branchHours.open}
+                                                        max={branchHours.close}
+                                                        step={3600}
+                                                        className="w-full rounded-lg border border-maha-200 bg-white px-3 py-3 pr-10 text-sm text-ink transition-colors focus:border-maha-500 focus:outline-none focus:ring-2 focus:ring-maha-500/10 sm:px-4 sm:py-3.5 sm:text-base"
+                                                    />
+                                                    <Clock className="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-maha-500 sm:right-4" />
+                                                </div>
                                                 <p className="mt-3 text-xs text-maha-500">
                                                     {t('bookingForm.timeHint', branchHours)}
                                                 </p>
