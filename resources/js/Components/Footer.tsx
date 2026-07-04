@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Mail } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
-import type { FooterBranch, SharedProps } from '@/types';
+import { googleMapsSearchUrl } from '@/Lib/maps';
+import type { SharedProps } from '@/types';
 
 const DEFAULT_HOTLINE = '(+84) 965 80 6166';
 const DEFAULT_EMAIL = 'info@mamspa.vn';
@@ -12,11 +13,6 @@ const DEFAULT_SOCIALS = [
     { label: 'Instagram', href: 'https://instagram.com/mahaspa.danang' },
     { label: 'Zalo OA', href: 'https://zalo.me/0865806166' },
 ];
-
-function mapUrl(branch: FooterBranch): string {
-    const query = branch.lat && branch.lng ? `${branch.lat},${branch.lng}` : branch.address;
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-}
 
 export function Footer() {
     const { t } = useTranslation();
@@ -100,7 +96,7 @@ export function Footer() {
                             </p>
 
                             <a
-                                href={mapUrl(b)}
+                                href={googleMapsSearchUrl(b.name, b.address)}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="mt-6 block rounded-full border border-ink py-3 text-center text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-maha-50"

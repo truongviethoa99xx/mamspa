@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import type { SharedProps } from '@/types';
 import { tr } from '@/Lib/utils';
+import { googleMapsSearchUrl, googleMapsEmbedUrl } from '@/Lib/maps';
 import { useLocale } from '@/Hooks/useLocale';
 
 interface ContactBranch {
@@ -26,16 +27,6 @@ interface ContactContent {
 interface Props {
     content?: ContactContent;
     branches?: ContactBranch[];
-}
-
-function mapUrl(branch: ContactBranch): string {
-    const query = branch.lat && branch.lng ? `${branch.lat},${branch.lng}` : branch.address;
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-}
-
-function mapEmbedUrl(branch: ContactBranch): string {
-    const query = branch.lat && branch.lng ? `${branch.lat},${branch.lng}` : branch.address;
-    return `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
 }
 
 export default function Contact({ content, branches = [] }: Props) {
@@ -85,7 +76,7 @@ export default function Contact({ content, branches = [] }: Props) {
                                     <iframe
                                         title={`Bản đồ ${tr(branch.name, locale)}`}
                                         className="h-40 w-full grayscale-[15%]"
-                                        src={mapEmbedUrl(branch)}
+                                        src={googleMapsEmbedUrl(tr(branch.name, locale), branch.address)}
                                         loading="lazy"
                                     />
                                 )}
@@ -104,7 +95,7 @@ export default function Contact({ content, branches = [] }: Props) {
                                         <a href={`tel:${branch.phone}`} className="hover:text-maha-700">{branch.phone}</a>
                                     </p>
                                     <a
-                                        href={mapUrl(branch)}
+                                        href={googleMapsSearchUrl(tr(branch.name, locale), branch.address)}
                                         target="_blank"
                                         rel="noreferrer"
                                         className="inline-flex items-center gap-1 text-sm font-semibold text-maha-700 underline-offset-4 hover:underline"

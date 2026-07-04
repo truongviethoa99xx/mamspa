@@ -201,11 +201,20 @@ export default function Booking({ preselect, branches, services }: Props) {
                                 <h2 className="font-serif text-2xl text-heading">2. {t('bookingForm.sectionDatetime')}</h2>
                                 <div className="mt-6 grid gap-6 md:grid-cols-2">
                                     <Calendar value={date} min={TODAY} locale={dateLocale} onChange={setDate} />
-                                    <div className="rounded-2xl border border-maha-200 bg-white p-5">
+                                    <div>
                                         {!date && <p className="text-sm text-maha-600">{t('bookingForm.pickDate')}</p>}
                                         {date && (
                                             <>
-                                                <div className="flex flex-wrap gap-2">
+                                                <FancySelect
+                                                    value={timeSlot}
+                                                    onChange={setTimeSlot}
+                                                    placeholder={t('bookingForm.timePlaceholder')}
+                                                    options={timeOptions}
+                                                />
+                                                <p className="mt-3 text-xs text-maha-500">
+                                                    {t('bookingForm.timeHint', branchHours)}
+                                                </p>
+                                                <div className="mt-4 flex flex-wrap gap-2">
                                                     {timeOptions.map((opt) => (
                                                         <button
                                                             key={opt.value}
@@ -215,16 +224,13 @@ export default function Booking({ preselect, branches, services }: Props) {
                                                                 'rounded-full border px-4 py-2 text-sm font-medium transition-colors ' +
                                                                 (timeSlot === opt.value
                                                                     ? 'border-ink bg-ink text-maha-50'
-                                                                    : 'border-maha-200 text-ink hover:border-[#556B3F] hover:text-[#556B3F]')
+                                                                    : 'border-maha-200 bg-white text-ink hover:border-[#556B3F] hover:text-[#556B3F]')
                                                             }
                                                         >
                                                             {opt.label}
                                                         </button>
                                                     ))}
                                                 </div>
-                                                <p className="mt-4 text-xs text-maha-500">
-                                                    {t('bookingForm.timeHint', branchHours)}
-                                                </p>
                                             </>
                                         )}
                                     </div>

@@ -8,6 +8,7 @@ import { ReviewEmbed } from '@/Components/ReviewEmbed';
 import { localBusinessSchema, breadcrumbSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
 import { formatVND, tr } from '@/Lib/utils';
+import { googleMapsSearchUrl, googleMapsEmbedUrl } from '@/Lib/maps';
 
 interface BranchService {
     id: number;
@@ -104,17 +105,6 @@ const INTERNATIONAL_REVIEWS = [
         content: 'Mọi thứ đều chỉn chu từ hương thơm đến âm nhạc. Chắc chắn tôi sẽ quay lại khi đến Việt Nam.',
     },
 ] as const;
-
-function mapUrl(branch: Props['branch']): string {
-    const query = branch.lat && branch.lng ? `${branch.lat},${branch.lng}` : branch.address;
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-}
-
-/** Google Maps embed không cần API key (?output=embed). */
-function mapEmbedUrl(branch: Props['branch']): string {
-    const query = branch.lat && branch.lng ? `${branch.lat},${branch.lng}` : branch.address;
-    return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=16&hl=vi&output=embed`;
-}
 
 function branchLabel(name: string): string {
     return name.replace(/^Mầm Spa\s*-?\s*/i, '').trim() || name;
@@ -389,14 +379,14 @@ export default function AboutUs({ branch }: Props) {
                         <div className="relative min-h-[330px] overflow-hidden rounded-3xl bg-[#E9E2D5] md:min-h-[390px]">
                             <iframe
                                 title={`Bản đồ ${branchLabel(tr(branch.name, locale))}`}
-                                src={mapEmbedUrl(branch)}
+                                src={googleMapsEmbedUrl(tr(branch.name, locale), branch.address)}
                                 className="absolute inset-0 h-full w-full border-0"
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
                                 allowFullScreen
                             />
                             <a
-                                href={mapUrl(branch)}
+                                href={googleMapsSearchUrl(tr(branch.name, locale), branch.address)}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="absolute bottom-8 left-8 z-10 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 font-serif text-sm font-bold text-ink shadow-lg transition-transform hover:-translate-y-0.5"
