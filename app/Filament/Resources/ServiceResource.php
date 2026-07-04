@@ -185,7 +185,7 @@ class ServiceResource extends Resource
             ->defaultPaginationPageOption(50);
     }
 
-    /** Options nhóm theo danh mục cấp 1: cho phép chọn chính danh mục cấp 1 hoặc một danh mục con cấp 2. */
+    /** Danh sách phẳng: cho phép chọn chính danh mục cấp 1 hoặc một danh mục con cấp 2 (thụt vào để thấy phân cấp). */
     protected static function categoryOptions(): array
     {
         return ServiceCategory::query()
@@ -194,14 +194,13 @@ class ServiceResource extends Resource
             ->with(['children' => fn ($q) => $q->active()->orderBy('order')])
             ->orderBy('order')
             ->get()
-            ->mapWithKeys(function (ServiceCategory $root) {
-                $rootLabel = $root->getTranslation('name', 'vi');
-                $options = [$root->id => "{$rootLabel} (danh mục gốc)"];
+            ->flatMap(function (ServiceCategory $root) {
+                $options = [$root->id => $root->getTranslation('name', 'vi')];
                 foreach ($root->children as $child) {
-                    $options[$child->id] = $child->getTranslation('name', 'vi');
+                    $options[$child->id] = '— '.$child->getTranslation('name', 'vi');
                 }
 
-                return [$rootLabel => $options];
+                return $options;
             })
             ->all();
     }
