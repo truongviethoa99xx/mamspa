@@ -114,7 +114,7 @@ export function BranchesBlock({ data }: { data: { branches?: BranchItem[] } }) {
                             {heading}
                         </p>
 
-                        <div className="mt-5 space-y-3 text-sm leading-relaxed text-ink/80 sm:text-base md:mt-8 md:space-y-5 md:text-lg">
+                        <div className="mt-5 space-y-3 text-sm leading-relaxed text-[#556B3F] sm:text-base md:mt-8 md:space-y-5 md:text-lg">
                             {paragraphs.map((p, i) => (
                                 <p key={i}>{p}</p>
                             ))}

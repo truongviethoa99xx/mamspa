@@ -356,6 +356,8 @@
             "channelPlaceholder": "SĐT / ID Tài khoản",
             "date": "Ngày",
             "time": "Thời gian",
+            "timeSearchPlaceholder": "Tìm khung giờ...",
+            "timeSearchEmpty": "Không tìm thấy khung giờ",
             "guests": "Tổng số khách",
             "total": "Tổng",
             "people": "Người",

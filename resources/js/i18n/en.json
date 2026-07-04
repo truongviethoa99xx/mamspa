@@ -356,6 +356,8 @@
             "channelPlaceholder": "Phone / Account ID",
             "date": "Date",
             "time": "Time",
+            "timeSearchPlaceholder": "Search time slot...",
+            "timeSearchEmpty": "No time slot found",
             "guests": "Number of guests",
             "total": "Total",
             "people": "People",

@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr, cn } from '@/Lib/utils';
+import { tr, cn, firstSentence } from '@/Lib/utils';
 
 interface MenuCategory {
     slug: string;
@@ -95,8 +95,8 @@ export function ServiceMenuBlock({ data }: { data: ServiceMenuBlockData }) {
                             {/* Detail */}
                             <div className="flex flex-col">
                                 <h3 className="font-serif text-xl text-ink md:text-3xl">{tr(s.name, locale)}</h3>
-                                <p className="mt-2 max-w-md text-sm leading-relaxed text-maha-700 sm:text-base md:mt-3">
-                                    {tr(s.description, locale)}
+                                <p className="mt-2 max-w-[80%] text-sm leading-relaxed text-maha-700 sm:text-base md:mt-3">
+                                    {firstSentence(tr(s.description, locale))}
                                 </p>
                                 <p className="mt-3 font-serif text-base font-bold text-ink sm:text-lg md:mt-4">
                                     {s.duration} {t('blocks.menu.minute')}

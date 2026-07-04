@@ -20,6 +20,12 @@ export function publicAssetUrl(path?: string | null): string | null {
     return `/storage/${path}`;
 }
 
+/** Câu đầu tiên của một đoạn văn bản (tính đến dấu `.`, `!` hoặc `?` đầu tiên). */
+export function firstSentence(text: string): string {
+    const match = text.match(/^.*?[.!?](?=\s|$)/);
+    return match ? match[0] : text;
+}
+
 export function tr(value: unknown, locale: string = 'vi'): string {
     if (typeof value === 'string') return value;
     if (value && typeof value === 'object' && locale in value) {

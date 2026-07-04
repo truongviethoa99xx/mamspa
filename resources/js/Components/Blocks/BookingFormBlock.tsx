@@ -465,7 +465,7 @@ export function BookingFormBlock({
     return (
         <>
         <section className="bg-maha-50 py-10 sm:py-14 md:py-20 lg:py-24">
-            <div className="mx-auto max-w-3xl px-5 sm:px-6">
+            <div className="mx-auto max-w-[60rem] px-5 sm:px-6">
                 <form
                     onSubmit={handleSubmit}
                     className="rounded-2xl bg-white p-4 shadow-xl shadow-maha-900/5 sm:p-6 md:rounded-3xl md:p-12"
@@ -589,6 +589,9 @@ export function BookingFormBlock({
                                 onChange={setTime}
                                 placeholder="--:--"
                                 options={TIME_SLOTS}
+                                searchable
+                                searchPlaceholder={t('blocks.bookingForm.timeSearchPlaceholder')}
+                                emptyText={t('blocks.bookingForm.timeSearchEmpty')}
                             />
                         </div>
                     </div>
