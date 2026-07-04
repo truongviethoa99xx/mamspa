@@ -10,6 +10,7 @@ export interface ServiceCardData {
     name: Record<string, string> | string;
     description: Record<string, string> | string;
     category?: string | null;
+    category_name?: Record<string, string> | string | null;
     duration: number;
     price: number;
     is_featured: boolean;
@@ -41,9 +42,11 @@ export function ServiceCard({ service, locale }: { service: ServiceCardData; loc
             </div>
 
             <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
-                {service.category && (
+                {(service.category_name || service.category) && (
                     <span className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-[#8C9A6B]">
-                        {t(`services.category.${service.category}`, service.category)}
+                        {service.category_name
+                            ? tr(service.category_name, locale)
+                            : t(`services.category.${service.category}`, service.category ?? '')}
                     </span>
                 )}
                 <h3 className="font-serif text-2xl text-ink">{tr(service.name, locale)}</h3>

@@ -23,6 +23,7 @@ class DichVuController extends Controller
             'name' => $s->name,
             'description' => $s->description,
             'category' => $s->category?->slug,
+            'category_name' => $s->category?->getTranslations('name'),
             'duration' => $s->duration,
             'price' => $s->price,
             'is_featured' => $s->is_featured,
