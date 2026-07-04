@@ -36,20 +36,22 @@ class VoucherResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make('code')->label('Mã')->required()->unique(ignoreRecord: true),
-            Forms\Components\Select::make('type')->label('Loại')->options([
-                'fixed' => 'Số tiền cố định (VND)',
-                'percent' => 'Phần trăm (%)',
-                'service' => 'Dịch vụ miễn phí',
-            ])->required(),
-            Forms\Components\TextInput::make('value')->label('Giá trị')->numeric()->required(),
-            Forms\Components\TextInput::make('min_order_value')->label('Giá trị đơn tối thiểu')->numeric()->default(0),
-            Forms\Components\DateTimePicker::make('expires_at')->label('Hết hạn'),
-            Forms\Components\Select::make('source')->label('Nguồn')->options([
-                'internal' => 'Nội bộ', 'klook' => 'Klook', 'traveloka' => 'Traveloka',
-            ])->default('internal'),
-            Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
-        ])->columns(2);
+            Forms\Components\Section::make('Thông tin voucher')->schema([
+                Forms\Components\TextInput::make('code')->label('Mã')->required()->unique(ignoreRecord: true),
+                Forms\Components\Select::make('type')->label('Loại')->options([
+                    'fixed' => 'Số tiền cố định (VND)',
+                    'percent' => 'Phần trăm (%)',
+                    'service' => 'Dịch vụ miễn phí',
+                ])->required(),
+                Forms\Components\TextInput::make('value')->label('Giá trị')->numeric()->required(),
+                Forms\Components\TextInput::make('min_order_value')->label('Giá trị đơn tối thiểu')->numeric()->default(0),
+                Forms\Components\DateTimePicker::make('expires_at')->label('Hết hạn'),
+                Forms\Components\Select::make('source')->label('Nguồn')->options([
+                    'internal' => 'Nội bộ', 'klook' => 'Klook', 'traveloka' => 'Traveloka',
+                ])->default('internal'),
+                Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
+            ])->columns(2),
+        ]);
     }
 
     public static function table(Table $table): Table
