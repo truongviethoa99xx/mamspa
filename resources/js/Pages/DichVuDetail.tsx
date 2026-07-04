@@ -116,7 +116,7 @@ export default function DichVuDetail({ service, breadcrumb, categoryServices, co
                 <div className="mx-auto max-w-5xl px-5 sm:px-6">
                     <div className="grid gap-10 lg:grid-cols-[0.95fr_1fr] lg:items-center lg:gap-12">
                         <div>
-                            <nav className="flex flex-wrap items-center gap-2.5 text-sm font-semibold text-[#556B3F] md:text-base">
+                            <nav className="flex items-center gap-2.5 overflow-x-auto whitespace-nowrap text-sm font-semibold text-[#556B3F] md:text-base">
                                 <Link href="/" className="transition-colors hover:text-ink">
                                     {t('nav.home')}
                                 </Link>

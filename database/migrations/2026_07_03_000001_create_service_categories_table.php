@@ -49,6 +49,10 @@ return new class extends Migration
                 DB::table('services')->where('category', $slug)->update(['service_category_id' => $categoryId]);
             }
 
+            // SQLite không tự xoá index khi drop column → phải xoá index trước.
+            Schema::table('services', function (Blueprint $table) {
+                $table->dropIndex('services_category_index');
+            });
             Schema::table('services', function (Blueprint $table) {
                 $table->dropColumn('category');
             });

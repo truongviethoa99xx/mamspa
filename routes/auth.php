@@ -18,11 +18,14 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-    Route::get('my-bookings', [MyBookingController::class, 'index'])->name('my-bookings.index');
-    Route::post('my-bookings/{booking}/cancel', [MyBookingController::class, 'cancel'])->name('my-bookings.cancel');
-
-    Route::get('payment/vnpay/{booking}', [PaymentController::class, 'vnpay'])->name('payment.vnpay');
 });
+
+// Mở cho cả khách chưa đăng nhập: controller tự kiểm tra quyền sở hữu
+// qua user_id hoặc cookie guest_bookings (App\Support\GuestBookings).
+Route::get('my-bookings', [MyBookingController::class, 'index'])->name('my-bookings.index');
+Route::post('my-bookings/{booking}/cancel', [MyBookingController::class, 'cancel'])
+    ->middleware('throttle:10,1')->name('my-bookings.cancel');
+
+Route::get('payment/vnpay/{booking}', [PaymentController::class, 'vnpay'])->name('payment.vnpay');
 
 Route::get('payment/vnpay/return', [PaymentController::class, 'vnpayReturn'])->name('payment.vnpay.return');

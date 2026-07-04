@@ -226,6 +226,10 @@
             "experienceEyebrow": "Mầm Spa 的时刻",
             "experienceTitle": "顾客体验照片",
             "categoryServicesEyebrow": "完整的呵护之旅"
+        },
+        "category": {
+            "servicesEyebrow": "精选服务",
+            "servicesTitle": "服务套餐"
         }
     },
     "booking": {

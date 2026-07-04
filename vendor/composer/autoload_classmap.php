@@ -139,6 +139,7 @@ return array(
     'App\\Services\\Translation\\TranslatorContract' => $baseDir . '/app/Services/Translation/TranslatorContract.php',
     'App\\Services\\VNPayService' => $baseDir . '/app/Services/VNPayService.php',
     'App\\Services\\VoucherService' => $baseDir . '/app/Services/VoucherService.php',
+    'App\\Support\\GuestBookings' => $baseDir . '/app/Support/GuestBookings.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'BladeUI\\Heroicons\\BladeHeroiconsServiceProvider' => $vendorDir . '/blade-ui-kit/blade-heroicons/src/BladeHeroiconsServiceProvider.php',
     'BladeUI\\Icons\\BladeIconsServiceProvider' => $vendorDir . '/blade-ui-kit/blade-icons/src/BladeIconsServiceProvider.php',

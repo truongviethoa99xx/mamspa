@@ -43,10 +43,16 @@ class ContactController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:100',
-            'email' => ['required', 'email', 'not_regex:/[\r\n]/'],
-            'phone' => 'nullable|string|max:20',
+            'email' => ['nullable', 'email', 'not_regex:/[\r\n]/'],
+            'phone' => ['nullable', 'regex:/^0\d{8,10}$/'],
             'subject' => 'required|string|max:200',
             'message' => 'required|string|max:2000',
+        ], [
+            'name.required' => 'Vui lòng nhập họ tên.',
+            'email.email' => 'Email không hợp lệ.',
+            'phone.regex' => 'Số điện thoại không hợp lệ (bắt đầu bằng 0, gồm 9-11 chữ số).',
+            'subject.required' => 'Vui lòng nhập chủ đề.',
+            'message.required' => 'Vui lòng nhập nội dung lời nhắn.',
         ]);
 
         ContactSubmission::create($data);

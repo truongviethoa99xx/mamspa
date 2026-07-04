@@ -2,7 +2,7 @@
 # Liên hệ mới từ website
 
 - **Họ tên:** {{ $p['name'] }}
-- **Email:** {{ $p['email'] }}
+- **Email:** {{ $p['email'] ?? '(không có)' }}
 - **SĐT:** {{ $p['phone'] ?? '(không có)' }}
 - **Chủ đề:** {{ $p['subject'] }}
 

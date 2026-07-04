@@ -171,7 +171,7 @@ export default function AboutUs({ branch }: Props) {
             />
             <section className="bg-maha-50 py-16 md:py-20">
                 <div className="mx-auto max-w-7xl px-5 sm:px-6 2xl:max-w-[1440px]">
-                    <nav className="flex flex-wrap items-center gap-3 text-sm font-semibold text-[#556B3F] md:text-base">
+                    <nav className="flex items-center gap-3 overflow-x-auto whitespace-nowrap text-sm font-semibold text-[#556B3F] md:text-base">
                         <Link href="/" className="transition-colors hover:text-ink">
                             Trang chủ
                         </Link>

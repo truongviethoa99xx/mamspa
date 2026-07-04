@@ -9,6 +9,7 @@ use App\Models\Branch;
 use App\Models\Service;
 use App\Services\BookingService;
 use App\Services\VoucherService;
+use App\Support\GuestBookings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -73,6 +74,11 @@ class BookingController extends Controller
             ]);
         } catch (BookingException $e) {
             return back()->with('error', $e->getMessage())->withInput();
+        }
+
+        // Khách chưa đăng nhập: nhớ mã booking qua cookie để xem lại ở "Lịch của tôi".
+        if (! $request->user()) {
+            GuestBookings::remember($request, $booking->code);
         }
 
         // Inline forms (e.g. the home page block) show a success modal in place

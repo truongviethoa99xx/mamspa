@@ -226,6 +226,10 @@
             "experienceEyebrow": "Mầm Spa での瞬間",
             "experienceTitle": "お客様の体験ギャラリー",
             "categoryServicesEyebrow": "満ち足りたケアの旅"
+        },
+        "category": {
+            "servicesEyebrow": "おすすめサービス",
+            "servicesTitle": "サービスパッケージ"
         }
     },
     "booking": {

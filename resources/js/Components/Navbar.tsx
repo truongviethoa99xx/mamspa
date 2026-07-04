@@ -180,12 +180,20 @@ export function Navbar() {
                             </button>
                         </>
                     ) : (
-                        <Link
-                            href="/dat-lich/"
-                            className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
-                        >
-                            {t('common.bookNow')}
-                        </Link>
+                        <>
+                            <Link
+                                href="/my-bookings/"
+                                className="text-sm font-medium tracking-wide text-maha-700 transition-colors hover:text-maha-900"
+                            >
+                                {t('nav.myBookings')}
+                            </Link>
+                            <Link
+                                href="/dat-lich/"
+                                className="rounded-lg bg-maha-900 px-6 py-3 text-sm font-semibold tracking-wide text-maha-50 transition-colors hover:bg-maha-800"
+                            >
+                                {t('common.bookNow')}
+                            </Link>
+                        </>
                     )}
                 </div>
 
@@ -266,14 +274,21 @@ export function Navbar() {
                             </li>
                         </>
                     ) : (
-                        <li className="mt-3">
-                            <Link
-                                href="/dat-lich/"
-                                className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
-                            >
-                                {t('common.bookNow')}
-                            </Link>
-                        </li>
+                        <>
+                            <li>
+                                <Link href="/my-bookings/" className="block py-2 text-base text-maha-900">
+                                    {t('nav.myBookings')}
+                                </Link>
+                            </li>
+                            <li className="mt-3">
+                                <Link
+                                    href="/dat-lich/"
+                                    className="block rounded-lg bg-maha-900 px-6 py-3 text-center text-sm font-semibold tracking-wide text-maha-50"
+                                >
+                                    {t('common.bookNow')}
+                                </Link>
+                            </li>
+                        </>
                     )}
                     <li className="border-t border-maha-100 pt-3">
                         <LanguageSwitcher />

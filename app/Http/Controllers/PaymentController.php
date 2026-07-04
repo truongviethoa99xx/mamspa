@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Services\VNPayService;
+use App\Support\GuestBookings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,12 @@ class PaymentController extends Controller
 {
     public function vnpay(Request $request, Booking $booking, VNPayService $svc): RedirectResponse
     {
-        abort_unless($booking->user_id === $request->user()?->id, 403);
+        $user = $request->user();
+        abort_unless(
+            ($user && $booking->user_id === $user->id)
+                || GuestBookings::owns($request, $booking->code),
+            403
+        );
 
         $url = $svc->createPaymentUrl($booking, config('services.vnpay.return_url'));
 

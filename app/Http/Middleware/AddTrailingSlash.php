@@ -19,8 +19,11 @@ class AddTrailingSlash
     {
         $path = $request->getPathInfo();
 
+        // Bỏ qua khi chạy test: TestCase::get() luôn cắt "/" cuối của URL
+        // nên mọi GET sẽ bị 301 vô hạn nếu vẫn áp rule này.
         if (
             $request->isMethod('GET')
+            && ! app()->runningUnitTests()
             && $path !== '/'
             && ! str_ends_with($path, '/')
             && ! preg_match('#\.[a-zA-Z0-9]+$#', $path)

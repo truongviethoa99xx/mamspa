@@ -145,19 +145,24 @@ export default function Contact({ content, branches = [] }: Props) {
                             <div>
                                 <input
                                     className="w-full rounded-lg border border-maha-100 px-4 py-2.5 text-sm transition focus:border-maha-400 focus:outline-none focus:ring-2 focus:ring-maha-100"
-                                    placeholder={t('contact.form.email') + ' *'}
+                                    placeholder={t('contact.form.email')}
                                     value={data.email}
                                     onChange={(e) => setData('email', e.target.value)}
                                 />
                                 {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
                             </div>
                         </div>
-                        <input
-                            className="w-full rounded-lg border border-maha-100 px-4 py-2.5 text-sm transition focus:border-maha-400 focus:outline-none focus:ring-2 focus:ring-maha-100"
-                            placeholder={t('contact.form.phone')}
-                            value={data.phone}
-                            onChange={(e) => setData('phone', e.target.value)}
-                        />
+                        <div>
+                            <input
+                                className="w-full rounded-lg border border-maha-100 px-4 py-2.5 text-sm transition focus:border-maha-400 focus:outline-none focus:ring-2 focus:ring-maha-100"
+                                placeholder={t('contact.form.phone')}
+                                inputMode="numeric"
+                                maxLength={11}
+                                value={data.phone}
+                                onChange={(e) => setData('phone', e.target.value.replace(/\D/g, ''))}
+                            />
+                            {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
+                        </div>
                         <div>
                             <input
                                 className="w-full rounded-lg border border-maha-100 px-4 py-2.5 text-sm transition focus:border-maha-400 focus:outline-none focus:ring-2 focus:ring-maha-100"

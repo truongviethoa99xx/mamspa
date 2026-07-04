@@ -842,6 +842,7 @@ class ComposerStaticInit2b126a37d885fe015385edb9b6b5ff3e
         'App\\Services\\Translation\\TranslatorContract' => __DIR__ . '/../..' . '/app/Services/Translation/TranslatorContract.php',
         'App\\Services\\VNPayService' => __DIR__ . '/../..' . '/app/Services/VNPayService.php',
         'App\\Services\\VoucherService' => __DIR__ . '/../..' . '/app/Services/VoucherService.php',
+        'App\\Support\\GuestBookings' => __DIR__ . '/../..' . '/app/Support/GuestBookings.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'BladeUI\\Heroicons\\BladeHeroiconsServiceProvider' => __DIR__ . '/..' . '/blade-ui-kit/blade-heroicons/src/BladeHeroiconsServiceProvider.php',
         'BladeUI\\Icons\\BladeIconsServiceProvider' => __DIR__ . '/..' . '/blade-ui-kit/blade-icons/src/BladeIconsServiceProvider.php',

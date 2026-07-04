@@ -217,6 +217,16 @@ class DichVuController extends Controller
                 'description' => $category->getTranslations('description'),
                 'image' => $this->publicUrl($category->image),
                 'url' => $category->url,
+                'benefits' => $category->benefits ?? [],
+                'ideal_for' => $category->ideal_for ?? [],
+                'faqs' => $category->faqs ?? [],
+                'experience_images' => collect($category->experience_images ?? [])
+                    ->map(fn ($img) => [
+                        'image' => $this->publicUrl($img['image'] ?? null),
+                        'alt' => $img['alt'] ?? '',
+                    ])
+                    ->filter(fn ($img) => ! empty($img['image']))
+                    ->values()->all(),
             ],
             'breadcrumb' => $this->categoryAncestors($category),
             'services' => $services->map(fn ($s) => $this->map($s)),

@@ -76,7 +76,7 @@ export default function ChinhSachShow({ page, other }: ChinhSachShowProps) {
 
             <div className="bg-maha-50">
                 <div className="mx-auto max-w-6xl px-4 py-10 md:py-14">
-                    <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-maha-600">
+                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 overflow-x-auto whitespace-nowrap text-sm text-maha-600">
                         <Link href="/" className="transition-colors hover:text-[#556B3F]">
                             {t('nav.home')}
                         </Link>
