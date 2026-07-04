@@ -222,7 +222,7 @@ class ServiceResource extends Resource
             ->with(['children' => fn ($q) => $q->active()->orderBy('order')])
             ->orderBy('order')
             ->get()
-            ->flatMap(function (ServiceCategory $root) {
+            ->mapWithKeys(function (ServiceCategory $root) {
                 $options = [$root->id => $root->getTranslation('name', 'vi')];
                 foreach ($root->children as $child) {
                     $options[$child->id] = '— '.$child->getTranslation('name', 'vi');
