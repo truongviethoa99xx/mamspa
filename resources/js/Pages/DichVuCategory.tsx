@@ -31,6 +31,7 @@ interface BreadcrumbEntry {
 }
 
 interface CategoryDetail {
+    id: number;
     slug: string;
     name: Record<string, string> | string;
     description?: Record<string, string> | string | null;

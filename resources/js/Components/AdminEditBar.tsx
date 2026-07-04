@@ -2,7 +2,12 @@ import { Edit3, ExternalLink, Languages, Settings, Users } from 'lucide-react';
 import { usePage } from '@inertiajs/react';
 import type { SharedProps } from '@/types';
 
-function editTarget(path: string) {
+interface EditableProps {
+    category?: { id?: number };
+    service?: { id?: number };
+}
+
+function editTarget(path: string, component: string, props: EditableProps) {
     if (path === '/') {
         return { label: 'Sửa trang chủ', href: '/admin/home-page-settings' };
     }
@@ -13,6 +18,16 @@ function editTarget(path: string) {
 
     if (path.startsWith('/lien-he') || path.startsWith('/contact')) {
         return { label: 'Sửa trang liên hệ', href: '/admin/contact-page-settings' };
+    }
+
+    // Trang danh mục / chi tiết dịch vụ: sửa đúng bản ghi đang xem
+    // (lợi ích, đối tượng phù hợp, FAQ, ảnh trải nghiệm nằm ở cấp danh mục).
+    if (component === 'DichVuCategory' && props.category?.id) {
+        return { label: 'Sửa danh mục này', href: `/admin/service-categories/${props.category.id}/edit` };
+    }
+
+    if (component === 'DichVuDetail' && props.service?.id) {
+        return { label: 'Sửa dịch vụ này', href: `/admin/services/${props.service.id}/edit` };
     }
 
     if (path.startsWith('/dich-vu')) {
@@ -47,7 +62,7 @@ export function AdminEditBar() {
     }
 
     const path = page.url.split('?')[0] || '/';
-    const target = editTarget(path);
+    const target = editTarget(path, page.component, page.props as EditableProps);
 
     return (
         <div className="fixed bottom-6 left-6 z-50 flex max-w-[calc(100vw-2rem)] flex-wrap items-center gap-2 rounded-full border border-[#CDBCA3] bg-white/95 p-2 text-sm font-semibold text-[#2F3E2E] shadow-[0_10px_30px_rgba(47,62,46,0.18)] backdrop-blur">

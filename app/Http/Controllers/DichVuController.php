@@ -212,6 +212,7 @@ class DichVuController extends Controller
 
         return Inertia::render('DichVuCategory', [
             'category' => [
+                'id' => $category->id,
                 'slug' => $category->slug,
                 'name' => $category->getTranslations('name'),
                 'description' => $category->getTranslations('description'),
