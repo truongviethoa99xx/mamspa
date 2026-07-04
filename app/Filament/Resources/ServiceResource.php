@@ -161,6 +161,26 @@ class ServiceResource extends Resource
                         ->maxSize(5120),
                 ])
                 ->columns(2),
+            Forms\Components\Section::make('Câu hỏi thường gặp (FAQ)')
+                ->description('FAQ riêng của dịch vụ này, hiển thị ở cuối trang chi tiết dịch vụ.')
+                ->schema([
+                    Forms\Components\Repeater::make('faqs')
+                        ->label('')
+                        ->schema([
+                            TranslatableField::group('question', label: 'Câu hỏi', required: true, example: 'Dịch vụ này có phù hợp với da nhạy cảm không?')
+                                ->columnSpanFull(),
+                            TranslatableField::group('answer', as: 'textarea', label: 'Trả lời', rows: 3, required: true, example: 'Có, liệu trình sử dụng nguyên liệu dịu nhẹ phù hợp với da nhạy cảm.')
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(1)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->cloneable()
+                        ->itemLabel(fn (array $state): ?string => is_array($state['question'] ?? null) ? ($state['question']['vi'] ?? null) : ($state['question'] ?? null))
+                        ->addActionLabel('+ Thêm câu hỏi')
+                        ->columnSpanFull(),
+                ]),
         ]);
     }
 

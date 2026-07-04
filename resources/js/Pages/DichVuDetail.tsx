@@ -25,6 +25,11 @@ interface ExperienceImage {
     alt?: string;
 }
 
+interface ServiceFaq {
+    question: Record<string, string> | string;
+    answer: Record<string, string> | string;
+}
+
 interface Service {
     id: number;
     slug: string;
@@ -39,6 +44,7 @@ interface Service {
     steps?: ServiceStep[];
     benefits?: ServiceBenefit[];
     experience_images?: ExperienceImage[];
+    faqs?: ServiceFaq[];
     images?: string[];
     branches: string[];
 }
@@ -77,7 +83,10 @@ export default function DichVuDetail({ service, breadcrumb, combos, related, con
 
     const benefits = content.benefits ?? [];
     const idealFor = content.ideal_for ?? [];
-    const faqs = content.faqs ?? [];
+    const serviceFaqs = (service.faqs ?? [])
+        .filter((f) => tr(f.question, locale))
+        .map((f) => ({ question: tr(f.question, locale), answer: tr(f.answer, locale) }));
+    const faqs = [...serviceFaqs, ...(content.faqs ?? [])];
 
     const name = tr(service.name, locale);
     const description = tr(service.description, locale);

@@ -33,6 +33,7 @@ class DichVuController extends Controller
                     ['image' => $this->publicUrl($step['image'] ?? null)],
                 ))->all(),
             'benefits' => $s->benefits ?? [],
+            'faqs' => $s->faqs ?? [],
             'experience_images' => collect($s->experience_images ?? [])
                 ->map(fn ($img) => [
                     'image' => $this->publicUrl($img['image'] ?? null),

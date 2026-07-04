@@ -19,7 +19,7 @@ class Service extends Model implements HasMedia
 
     protected $fillable = [
         'slug', 'name', 'description', 'service_category_id', 'duration', 'price',
-        'ingredients', 'steps', 'benefits', 'experience_images', 'is_featured', 'is_combo', 'is_active',
+        'ingredients', 'steps', 'benefits', 'experience_images', 'faqs', 'is_featured', 'is_combo', 'is_active',
     ];
 
     protected $casts = [
@@ -27,6 +27,7 @@ class Service extends Model implements HasMedia
         'steps' => 'array',
         'benefits' => 'array',
         'experience_images' => 'array',
+        'faqs' => 'array',
         'is_featured' => 'boolean',
         'is_combo' => 'boolean',
         'is_active' => 'boolean',

@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { formatVND, tr } from '@/Lib/utils';
+import { tr } from '@/Lib/utils';
 
 export interface ServiceCardData {
     id: number | string;
@@ -48,7 +48,7 @@ export function ServiceCard({ service, locale }: { service: ServiceCardData; loc
                 )}
                 <h3 className="font-serif text-2xl text-ink">{tr(service.name, locale)}</h3>
                 <p className="mt-1 font-bold text-[#556B3F]">
-                    {service.duration} {t('blocks.menu.minute')} · {formatVND(service.price)}
+                    {service.duration} {t('blocks.menu.minute')}
                 </p>
                 {service.ingredients.length > 0 ? (
                     <ul className="mt-4 space-y-2 text-sm leading-relaxed text-ink/75">
