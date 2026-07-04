@@ -89,9 +89,9 @@ class DichVuController extends Controller
     }
 
     /**
-     * Điều hướng cây danh mục 2 cấp dưới /dich-vu/ (không còn trang danh mục riêng):
-     * - /dich-vu/{root}/                    → 301 về danh sách /dich-vu/
-     * - /dich-vu/{root}/{child}/            → 301 về danh sách /dich-vu/
+     * Điều hướng cây danh mục 2 cấp dưới /dich-vu/:
+     * - /dich-vu/{root}/                    → trang danh mục cấp 1
+     * - /dich-vu/{root}/{child}/            → trang danh mục cấp 2
      * - /dich-vu/{root}/{service}/          → chi tiết dịch vụ gắn trực tiếp vào danh mục cấp 1
      * - /dich-vu/{root}/{child}/{service}/  → chi tiết dịch vụ gắn vào danh mục cấp 2
      * - /dich-vu/{service}/ (URL cũ, phẳng) → 301 sang URL chuẩn có tiền tố danh mục.
@@ -117,14 +117,14 @@ class DichVuController extends Controller
         }
 
         if ($b === null) {
-            return $this->redirectToListing();
+            return $this->renderCategory($root);
         }
 
         $child = $root->children()->active()->where('slug', $b)->first();
 
         if ($child) {
             return $c === null
-                ? $this->redirectToListing()
+                ? $this->renderCategory($child)
                 : $this->renderServiceIn($child, $c, "/dich-vu/{$a}/{$b}/{$c}/");
         }
 
@@ -195,10 +195,32 @@ class DichVuController extends Controller
         ]);
     }
 
-    /** Trang danh mục đã bỏ — URL danh mục chuyển hướng vĩnh viễn về danh sách dịch vụ. */
-    private function redirectToListing(): RedirectResponse
+    /** Trang danh mục: hero lấy tên/mô tả/ảnh danh mục, bên dưới là card dịch vụ (gồm cả dịch vụ của danh mục con nếu là cấp 1). */
+    private function renderCategory(ServiceCategory $category): Response
     {
-        return redirect()->away(url('/dich-vu').'/', 301);
+        $categoryIds = [$category->id];
+
+        if ($category->isRoot()) {
+            $categoryIds = array_merge($categoryIds, $category->children()->active()->pluck('id')->all());
+        }
+
+        $services = Service::active()
+            ->with(['branches', 'category.parent'])
+            ->whereIn('service_category_id', $categoryIds)
+            ->orderByDesc('is_featured')
+            ->get();
+
+        return Inertia::render('DichVuCategory', [
+            'category' => [
+                'slug' => $category->slug,
+                'name' => $category->getTranslations('name'),
+                'description' => $category->getTranslations('description'),
+                'image' => $this->publicUrl($category->image),
+                'url' => $category->url,
+            ],
+            'breadcrumb' => $this->categoryAncestors($category),
+            'services' => $services->map(fn ($s) => $this->map($s)),
+        ]);
     }
 
     /**

@@ -136,7 +136,7 @@ export default function DichVuDetail({ service, breadcrumb, categoryServices, co
                                 <span className="font-medium text-[#475934]">{name}</span>
                             </nav>
 
-                            <h1 className="mt-8 font-serif text-4xl uppercase tracking-wide text-ink sm:text-5xl md:text-6xl">{name}</h1>
+                            <h1 className="mt-8 font-serif text-4xl uppercase leading-snug tracking-wide text-ink sm:text-5xl sm:leading-snug md:text-6xl md:leading-snug">{name}</h1>
                             <p className="mt-5 w-[90%] text-base leading-relaxed text-[#556B3F] md:text-lg">
                                 {description}
                             </p>

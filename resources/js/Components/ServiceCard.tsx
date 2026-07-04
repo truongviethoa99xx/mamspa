@@ -19,12 +19,19 @@ export interface ServiceCardData {
     images?: string[];
 }
 
-export function ServiceCard({ service, locale }: { service: ServiceCardData; locale: string }) {
+interface ServiceCardProps {
+    service: ServiceCardData;
+    locale: string;
+    /** Link tuỳ chỉnh — mặc định là trang chi tiết dịch vụ. */
+    href?: string;
+}
+
+export function ServiceCard({ service, locale, href }: ServiceCardProps) {
     const { t } = useTranslation();
 
     return (
         <Link
-            href={service.url}
+            href={href ?? service.url}
             className="group flex flex-col rounded-3xl bg-white p-4 shadow-md shadow-maha-900/5 transition-transform hover:-translate-y-1"
         >
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-maha-200">

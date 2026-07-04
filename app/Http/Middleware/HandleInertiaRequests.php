@@ -106,16 +106,13 @@ class HandleInertiaRequests extends Middleware
         })->all();
     }
 
-    /**
-     * Danh mục chỉ có đúng 1 dịch vụ (tính cả danh mục con) → link thẳng trang chi tiết dịch vụ đó.
-     * Trang danh mục đã bỏ nên các trường hợp còn lại link về danh sách dịch vụ.
-     */
+    /** Danh mục chỉ có đúng 1 dịch vụ (tính cả danh mục con) → link thẳng trang chi tiết dịch vụ đó. */
     private function menuHref(ServiceCategory $category): string
     {
         $services = $category->relationLoaded('children')
             ? $category->services->concat($category->children->flatMap(fn (ServiceCategory $c) => $c->services))
             : $category->services;
 
-        return $services->count() === 1 ? $services->first()->url : '/dich-vu/';
+        return $services->count() === 1 ? $services->first()->url : $category->url;
     }
 }
