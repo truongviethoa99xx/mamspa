@@ -770,6 +770,7 @@ class ComposerStaticInit2b126a37d885fe015385edb9b6b5ff3e
         'App\\Filament\\Resources\\VoucherResource\\Pages\\CreateVoucher' => __DIR__ . '/../..' . '/app/Filament/Resources/VoucherResource/Pages/CreateVoucher.php',
         'App\\Filament\\Resources\\VoucherResource\\Pages\\EditVoucher' => __DIR__ . '/../..' . '/app/Filament/Resources/VoucherResource/Pages/EditVoucher.php',
         'App\\Filament\\Resources\\VoucherResource\\Pages\\ListVouchers' => __DIR__ . '/../..' . '/app/Filament/Resources/VoucherResource/Pages/ListVouchers.php',
+        'App\\Filament\\Support\\DeleteGuard' => __DIR__ . '/../..' . '/app/Filament/Support/DeleteGuard.php',
         'App\\Filament\\Widgets\\DashboardGreeting' => __DIR__ . '/../..' . '/app/Filament/Widgets/DashboardGreeting.php',
         'App\\Filament\\Widgets\\DashboardStats' => __DIR__ . '/../..' . '/app/Filament/Widgets/DashboardStats.php',
         'App\\Filament\\Widgets\\RecentBookings' => __DIR__ . '/../..' . '/app/Filament/Widgets/RecentBookings.php',

@@ -20,6 +20,17 @@ class ServiceResource extends Resource
 
     protected static ?string $model = Service::class;
 
+    public static function deleteBlockReason(Service $record): ?string
+    {
+        $bookingCount = $record->bookings()->count() + $record->bookingItems()->count();
+
+        if ($bookingCount > 0) {
+            return "Dịch vụ này đang được dùng trong {$bookingCount} lịch đặt. Vui lòng xử lý hết lịch đặt trước khi xóa, hoặc tắt \"Kích hoạt\" để ẩn dịch vụ.";
+        }
+
+        return null;
+    }
+
     protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
     protected static ?string $navigationGroup = 'Nội dung';

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Concerns\RestrictsFilamentAccess;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\ServiceCategoryResource\Pages;
+use App\Filament\Support\DeleteGuard;
 use App\Models\ServiceCategory;
 use App\Models\User;
 use Filament\Forms;
@@ -93,9 +94,29 @@ class ServiceCategoryResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                DeleteGuard::apply(
+                    Tables\Actions\DeleteAction::make(),
+                    fn (ServiceCategory $record) => static::deleteBlockReason($record),
+                ),
             ])
             ->defaultPaginationPageOption(50);
+    }
+
+    public static function deleteBlockReason(ServiceCategory $record): ?string
+    {
+        $childCount = $record->children()->count();
+
+        if ($childCount > 0) {
+            return "Danh mục này đang có {$childCount} danh mục con. Vui lòng xóa hoặc chuyển các danh mục con sang danh mục khác trước.";
+        }
+
+        $serviceCount = $record->services()->count();
+
+        if ($serviceCount > 0) {
+            return "Danh mục này đang có {$serviceCount} dịch vụ. Vui lòng chuyển các dịch vụ sang danh mục khác trước khi xóa.";
+        }
+
+        return null;
     }
 
     public static function getPages(): array

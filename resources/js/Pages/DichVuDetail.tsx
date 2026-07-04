@@ -36,6 +36,7 @@ interface Service {
     url: string;
     name: Record<string, string> | string;
     description: Record<string, string> | string;
+    short_description?: Record<string, string> | string | null;
     category: string;
     category_name?: Record<string, string> | string;
     duration: number;
@@ -306,11 +307,11 @@ export default function DichVuDetail({ service, breadcrumb, categoryServices, co
                                         <p className="mt-2 font-bold text-[#8C9A6B]">
                                             {item.duration} {t('blocks.menu.minute')}
                                         </p>
-                                        <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#475934]">
+                                        <p className="mb-6 mt-4 line-clamp-3 text-sm leading-6 text-[#475934]">
                                             {tr(item.description, locale)}
                                         </p>
-                                        <hr className="my-6 border-maha-100" />
-                                        <div className="mt-auto flex items-center justify-between font-serif text-base font-bold text-ink">
+                                        <hr className="mt-auto border-maha-100" />
+                                        <div className="mt-6 flex items-center justify-between font-serif text-base font-bold text-ink">
                                             {t('blocks.menu.book')}
                                             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-maha-50 transition-transform group-hover:translate-x-1">
                                                 <ChevronRight className="h-5 w-5" />
@@ -379,11 +380,11 @@ export default function DichVuDetail({ service, breadcrumb, categoryServices, co
                                         <p className="mt-2 font-bold text-[#8C9A6B]">
                                             {item.duration} {t('blocks.menu.minute')}
                                         </p>
-                                        <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#475934]">
+                                        <p className="mb-6 mt-4 line-clamp-3 text-sm leading-6 text-[#475934]">
                                             {tr(item.description, locale)}
                                         </p>
-                                        <hr className="my-6 border-maha-100" />
-                                        <div className="mt-auto flex items-center justify-between font-serif text-base font-bold text-ink">
+                                        <hr className="mt-auto border-maha-100" />
+                                        <div className="mt-6 flex items-center justify-between font-serif text-base font-bold text-ink">
                                             {t('blocks.menu.book')}
                                             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-maha-50 transition-transform group-hover:translate-x-1">
                                                 <ChevronRight className="h-5 w-5" />
@@ -499,14 +500,16 @@ export default function DichVuDetail({ service, breadcrumb, categoryServices, co
                                     href={item.url}
                                     className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
                                 >
-                                    <div className="aspect-[4/3] rounded-xl bg-[#CDBCA3]" />
+                                    <div className="aspect-[4/3] overflow-hidden rounded-xl bg-[#CDBCA3]">
+                                        {item.images?.[0] && <img src={item.images[0]} alt={tr(item.name, locale)} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                                    </div>
                                     <div className="flex flex-1 flex-col px-1 pt-6">
                                         <h3 className="font-serif text-xl font-bold text-ink">{tr(item.name, locale)}</h3>
-                                        <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#475934]">
-                                            {tr(item.description, locale)}
+                                        <p className="mb-5 mt-2 line-clamp-2 text-sm leading-6 text-[#475934]">
+                                            {tr(item.short_description, locale) || tr(item.description, locale)}
                                         </p>
-                                        <hr className="my-5 border-maha-100" />
-                                        <div className="mt-auto flex items-center justify-between font-serif text-base font-bold text-ink">
+                                        <hr className="mt-auto border-maha-100" />
+                                        <div className="mt-5 flex items-center justify-between font-serif text-base font-bold text-ink">
                                             Khám phá
                                             <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                                         </div>

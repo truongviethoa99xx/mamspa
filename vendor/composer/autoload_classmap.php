@@ -67,6 +67,7 @@ return array(
     'App\\Filament\\Resources\\VoucherResource\\Pages\\CreateVoucher' => $baseDir . '/app/Filament/Resources/VoucherResource/Pages/CreateVoucher.php',
     'App\\Filament\\Resources\\VoucherResource\\Pages\\EditVoucher' => $baseDir . '/app/Filament/Resources/VoucherResource/Pages/EditVoucher.php',
     'App\\Filament\\Resources\\VoucherResource\\Pages\\ListVouchers' => $baseDir . '/app/Filament/Resources/VoucherResource/Pages/ListVouchers.php',
+    'App\\Filament\\Support\\DeleteGuard' => $baseDir . '/app/Filament/Support/DeleteGuard.php',
     'App\\Filament\\Widgets\\DashboardGreeting' => $baseDir . '/app/Filament/Widgets/DashboardGreeting.php',
     'App\\Filament\\Widgets\\DashboardStats' => $baseDir . '/app/Filament/Widgets/DashboardStats.php',
     'App\\Filament\\Widgets\\RecentBookings' => $baseDir . '/app/Filament/Widgets/RecentBookings.php',

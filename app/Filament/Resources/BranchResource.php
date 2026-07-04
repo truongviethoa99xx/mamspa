@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Concerns\RestrictsFilamentAccess;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\BranchResource\Pages;
+use App\Filament\Support\DeleteGuard;
 use App\Models\Branch;
 use App\Models\User;
 use Filament\Forms;
@@ -229,9 +230,23 @@ class BranchResource extends Resource
             Tables\Columns\IconColumn::make('is_active')->label('Hiển thị')->boolean(),
         ])->actions([
             Tables\Actions\EditAction::make(),
-            Tables\Actions\DeleteAction::make(),
+            DeleteGuard::apply(
+                Tables\Actions\DeleteAction::make(),
+                fn (Branch $record) => static::deleteBlockReason($record),
+            ),
         ])
             ->defaultPaginationPageOption(50);
+    }
+
+    public static function deleteBlockReason(Branch $record): ?string
+    {
+        $bookingCount = $record->bookings()->count();
+
+        if ($bookingCount > 0) {
+            return "Chi nhánh này đang có {$bookingCount} lịch đặt. Vui lòng xử lý hết lịch đặt trước khi xóa, hoặc tắt \"Hiển thị\" để ẩn chi nhánh.";
+        }
+
+        return null;
     }
 
     public static function getPages(): array
