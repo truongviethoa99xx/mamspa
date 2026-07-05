@@ -86,8 +86,6 @@ class ServiceCategoryResource extends Resource
                         ->schema([
                             TranslatableField::group('title', label: 'Tiêu đề lợi ích', example: 'Giảm căng thẳng, thư giãn sâu')
                                 ->columnSpanFull(),
-                            TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2, example: 'Giúp giải tỏa căng cơ, cải thiện tuần hoàn và tinh thần.')
-                                ->columnSpanFull(),
                         ])
                         ->columns(1)
                         ->defaultItems(0)
