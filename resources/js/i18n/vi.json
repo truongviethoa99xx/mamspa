@@ -68,7 +68,6 @@
         "booking": "Đặt lịch",
         "voucher": "Voucher",
         "gallery": "Thư viện",
-        "promotions": "Khuyến mãi",
         "blog": "Tin tức",
         "contact": "Liên hệ",
         "myBookings": "Lịch của tôi",
@@ -326,9 +325,6 @@
             "title": "Gửi lời nhắn",
             "subtitle": "Mầm sẽ phản hồi bạn trong thời gian sớm nhất."
         }
-    },
-    "promotions": {
-        "endsAt": "Đến: {{date}}"
     },
     "blocks": {
         "services": {

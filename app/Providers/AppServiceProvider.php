@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\BlogPost;
 use App\Models\Branch;
-use App\Models\Promotion;
 use App\Models\Service;
 use App\Observers\AutoTranslateObserver;
 use Illuminate\Console\Scheduling\Schedule;
@@ -23,7 +22,6 @@ class AppServiceProvider extends ServiceProvider
 
         Branch::observe(AutoTranslateObserver::class);
         Service::observe(AutoTranslateObserver::class);
-        Promotion::observe(AutoTranslateObserver::class);
         BlogPost::observe(AutoTranslateObserver::class);
 
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {

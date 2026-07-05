@@ -54,7 +54,6 @@ mahaspa/
 │   │   ├── User.php
 │   │   ├── Voucher.php
 │   │   ├── Slot.php
-│   │   ├── Promotion.php
 │   │   ├── BlogPost.php
 │   │   ├── Page.php                # CMS page (chứa nhiều block)
 │   │   └── Block.php               # CMS block (hero, gallery, cta...)
@@ -65,7 +64,6 @@ mahaspa/
 │   │   │   ├── ServiceController.php
 │   │   │   ├── BookingController.php
 │   │   │   ├── VoucherController.php
-│   │   │   ├── PromotionController.php
 │   │   │   ├── BlogController.php
 │   │   │   └── Auth/...
 │   │   ├── Requests/               # Form requests (validation)
@@ -79,7 +77,6 @@ mahaspa/
 │   │   │   ├── ServiceResource.php
 │   │   │   ├── BookingResource.php
 │   │   │   ├── VoucherResource.php
-│   │   │   ├── PromotionResource.php
 │   │   │   ├── BlogPostResource.php
 │   │   │   ├── PageResource.php    # CRUD page + repeater block
 │   │   │   └── UserResource.php
@@ -117,7 +114,6 @@ mahaspa/
 │   │   │   ├── Booking.tsx
 │   │   │   ├── Voucher.tsx
 │   │   │   ├── Gallery.tsx
-│   │   │   ├── Promotions.tsx
 │   │   │   ├── Blog/
 │   │   │   │   ├── Index.tsx
 │   │   │   │   └── Show.tsx
@@ -235,7 +231,6 @@ mahaspa/
 | Module | Route | Mô tả |
 |--------|-------|--------|
 | **Gallery** | `/gallery` | Lightbox ảnh không gian 2 chi nhánh |
-| **Khuyến mãi** | `/promotions` | Ưu đãi theo mùa, Tết, Holiday |
 | **Blog** | `/blog` | Bài viết wellness, press coverage |
 | **Blog chi tiết** | `/blog/{post:slug}` | Bài viết đầy đủ, SEO meta per-article |
 ---
@@ -367,7 +362,7 @@ protected $translatable = ['title'];
 ### 🤖 Auto-translate (100% văn bản đều tuỳ biến từ dashboard)
 - **Provider:** chọn qua `TRANSLATE_PROVIDER` (`null` | `google` | `deepl` | `openai`)
 - **`TranslationManager::translate()`** có cache 7 ngày → tránh gọi API trùng
-- **Trên mọi Filament Resource có field translatable** (Branch, Service, Promotion, BlogPost, Page): mỗi cặp field VI/EN có nút "Dịch tự động từ VI →" qua helper `TranslatableField::group()`
+- **Trên mọi Filament Resource có field translatable** (Branch, Service, BlogPost, Page): mỗi cặp field VI/EN có nút "Dịch tự động từ VI →" qua helper `TranslatableField::group()`
 - **UI strings:** Filament Translation Manager (`/admin/translation-strings`) → bulk action "Auto-translate EN còn trống"
 - **CLI:**
   - `php artisan translate:scan` quét toàn bộ `.tsx`/`.ts` tìm `t('group.key')` chưa có trong DB → tự insert (kèm `--auto-translate` để dịch luôn VI→EN). Dev thêm chuỗi mới chỉ cần dùng `t('foo.bar')` → chạy scan → admin chỉnh trong dashboard.
@@ -428,7 +423,7 @@ protected $translatable = ['title'];
 Khi được yêu cầu scaffold project, ưu tiên thứ tự:
 1. `composer create-project laravel/laravel .` + cài Laravel Breeze (Inertia + React + TypeScript preset)
 2. Cài packages: `filament/filament`, `spatie/laravel-translatable`, `spatie/laravel-permission`, `spatie/laravel-medialibrary`
-3. Tạo migrations + models (Branch, Service, Booking, User, Voucher, Slot, Promotion, BlogPost, Page, Block)
+3. Tạo migrations + models (Branch, Service, Booking, User, Voucher, Slot, BlogPost, Page, Block)
 4. Seed data mẫu (2 branches, 5-10 services, 3 slots/ngày, 1 trang Home với các block)
 5. Build Filament admin: Resources cho từng model, Page resource có repeater block
 6. Tạo Inertia pages + components ở `resources/js/Pages/`

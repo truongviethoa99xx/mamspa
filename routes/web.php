@@ -9,7 +9,6 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GioiThieuController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PolicyPageController;
-use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TranslationController;
 use App\Models\Service;
@@ -50,7 +49,6 @@ Route::get('/tin-tuc/{post:slug}', [BlogController::class, 'show'])->name('tin-t
 // Legacy EN slugs → canonical VI slugs (301).
 Route::get('/blog', fn () => redirect()->away(url('/tin-tuc').'/', 301))->name('blog.index');
 Route::get('/blog/{post:slug}', fn (string $post) => redirect()->away(url("/tin-tuc/{$post}").'/', 301))->name('blog.show');
-Route::get('/promotions', [PromotionController::class, 'index'])->name('promotions.index');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/lien-he', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/lien-he', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');

@@ -68,7 +68,6 @@
         "booking": "Book Now",
         "voucher": "Voucher",
         "gallery": "Gallery",
-        "promotions": "Promotions",
         "blog": "Blog",
         "contact": "Contact",
         "myBookings": "My Bookings",
@@ -326,9 +325,6 @@
             "title": "Send us a message",
             "subtitle": "Mầm will get back to you as soon as possible."
         }
-    },
-    "promotions": {
-        "endsAt": "Ends: {{date}}"
     },
     "blocks": {
         "services": {

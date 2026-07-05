@@ -46,10 +46,6 @@ function editTarget(path: string, component: string, props: EditableProps) {
         return { label: 'Sửa bài viết', href: '/admin/blog-posts' };
     }
 
-    if (path.startsWith('/promotions')) {
-        return { label: 'Sửa khuyến mãi', href: '/admin/promotions' };
-    }
-
     return { label: 'Mở CMS', href: '/admin' };
 }
 

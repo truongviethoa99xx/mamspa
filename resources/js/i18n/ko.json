@@ -67,7 +67,6 @@
         "booking": "예약하기",
         "voucher": "바우처",
         "gallery": "갤러리",
-        "promotions": "프로모션",
         "blog": "블로그",
         "contact": "문의",
         "myBookings": "예약 내역",
@@ -314,9 +313,6 @@
             "title": "메시지 보내기",
             "subtitle": "Mầm이 최대한 빨리 답변드리겠습니다."
         }
-    },
-    "promotions": {
-        "endsAt": "종료: {{date}}"
     },
     "blocks": {
         "services": {

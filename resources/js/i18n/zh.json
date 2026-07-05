@@ -67,7 +67,6 @@
         "booking": "立即预约",
         "voucher": "优惠券",
         "gallery": "图片展示",
-        "promotions": "优惠活动",
         "blog": "博客",
         "contact": "联系我们",
         "myBookings": "我的预约",
@@ -314,9 +313,6 @@
             "title": "给我们留言",
             "subtitle": "Mầm 会尽快回复您。"
         }
-    },
-    "promotions": {
-        "endsAt": "截止日期: {{date}}"
     },
     "blocks": {
         "services": {

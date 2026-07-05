@@ -67,7 +67,6 @@
         "booking": "予約する",
         "voucher": "バウチャー",
         "gallery": "ギャラリー",
-        "promotions": "キャンペーン",
         "blog": "ブログ",
         "contact": "お問い合わせ",
         "myBookings": "予約履歴",
@@ -314,9 +313,6 @@
             "title": "メッセージを送る",
             "subtitle": "Mầm よりできるだけ早くご返信いたします。"
         }
-    },
-    "promotions": {
-        "endsAt": "終了: {{date}}"
     },
     "blocks": {
         "services": {

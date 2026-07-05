@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\BlogPost;
 use App\Models\Branch;
-use App\Models\Promotion;
 use App\Models\Service;
 use App\Models\TranslationString;
 use App\Services\Translation\TranslationManager;
@@ -22,7 +21,6 @@ class TranslateMissingCommand extends Command
     private array $modelFields = [
         Branch::class => ['name'],
         Service::class => ['name', 'description'],
-        Promotion::class => ['title', 'description'],
         BlogPost::class => ['title', 'excerpt', 'body'],
     ];
 
