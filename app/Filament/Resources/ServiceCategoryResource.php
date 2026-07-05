@@ -92,7 +92,8 @@ class ServiceCategoryResource extends Resource
                         ->reorderable()
                         ->collapsible()
                         ->cloneable()
-                        ->itemLabel(fn (array $state): ?string => is_array($state['title'] ?? null) ? ($state['title']['vi'] ?? null) : ($state['title'] ?? null))
+                        ->itemLabel('Lợi ích')
+                        ->itemNumbers()
                         ->addActionLabel('+ Thêm lợi ích')
                         ->columnSpanFull(),
                 ]),
