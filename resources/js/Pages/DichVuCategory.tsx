@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
-import { Check, Minus, Plus } from 'lucide-react';
+import { Check, ChevronRight, Minus, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
@@ -47,9 +47,10 @@ interface Props {
     category: CategoryDetail;
     breadcrumb: BreadcrumbEntry[];
     services: ServiceCardData[];
+    related: ServiceCardData[];
 }
 
-export default function DichVuCategory({ category, breadcrumb, services }: Props) {
+export default function DichVuCategory({ category, breadcrumb, services, related }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
     const [openFaq, setOpenFaq] = useState(0);
@@ -262,6 +263,42 @@ export default function DichVuCategory({ category, breadcrumb, services }: Props
                                     </button>
                                 );
                             })}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {related.length > 0 && (
+                <section className="bg-maha-50 pb-14 md:pb-20">
+                    <div className="mx-auto max-w-5xl px-5 sm:px-6">
+                        <p className="text-center font-serif text-base italic text-[#556B3F] md:text-lg">{t('dichvu.detail.relatedEyebrow')}</p>
+                        <h2 className="mt-1.5 text-center font-serif text-3xl uppercase tracking-wide text-ink sm:text-4xl md:text-5xl">
+                            {t('dichvu.detail.relatedTitle')}
+                        </h2>
+
+                        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                            {related.map((item) => (
+                                <Link
+                                    key={item.id}
+                                    href={item.url}
+                                    className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
+                                >
+                                    <div className="aspect-[4/3] overflow-hidden rounded-xl bg-[#CDBCA3]">
+                                        {item.images?.[0] && <img src={item.images[0]} alt={tr(item.name, locale)} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                                    </div>
+                                    <div className="flex flex-1 flex-col px-1 pt-6">
+                                        <h3 className="font-serif text-xl font-bold text-ink">{tr(item.name, locale)}</h3>
+                                        <p className="mb-5 mt-2 line-clamp-2 text-sm leading-6 text-[#475934]">
+                                            {tr(item.short_description, locale) || tr(item.description, locale)}
+                                        </p>
+                                        <hr className="mt-auto border-maha-100" />
+                                        <div className="mt-5 flex items-center justify-between font-serif text-base font-bold text-ink">
+                                            Khám phá
+                                            <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </section>
