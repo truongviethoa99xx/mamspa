@@ -214,6 +214,12 @@ class BranchResource extends Resource
                     TranslatableField::group('page_content.map_pin_label', label: 'Nhãn pin bản đồ', example: 'Mầm Spa'),
                     TranslatableField::group('page_content.map_cta_label', label: 'Nút xem bản đồ', example: 'Xem trên Google Maps'),
                     TranslatableField::group('page_content.services_heading', label: 'Tiêu đề danh sách dịch vụ', example: 'Dịch vụ tại chi nhánh'),
+                    Forms\Components\Select::make('services')
+                        ->label('Dịch vụ hiển thị tại chi nhánh')
+                        ->relationship('services', 'slug')
+                        ->multiple()
+                        ->preload()
+                        ->columnSpanFull(),
                 ])
                 ->columns(2)
                 ->collapsible()
