@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Service;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,10 +31,30 @@ class BranchController extends Controller
                     'alt' => $media->name,
                 ])->all(),
                 'services' => $branch->services->map(fn ($s) => [
-                    'id' => $s->id, 'slug' => $s->slug, 'url' => $s->url, 'name' => $s->name,
-                    'category' => $s->category?->name, 'price' => $s->price, 'duration' => $s->duration,
+                    'id' => $s->id,
+                    'slug' => $s->slug,
+                    'url' => $s->url,
+                    'name' => $s->name,
+                    'short_description' => $s->short_description,
+                    'description' => $s->description,
+                    'category' => $s->category?->slug,
+                    'category_name' => $s->category?->getTranslations('name'),
+                    'duration' => $s->duration,
+                    'price' => $s->price,
+                    'is_featured' => $s->is_featured,
+                    'ingredients' => $s->ingredients ?? [],
+                    'images' => $this->serviceImages($s),
                 ])->all(),
             ],
         ]);
+    }
+
+    /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
+    private function serviceImages(Service $s): array
+    {
+        $thumbnail = $s->getMedia('thumbnail')->first()?->getUrl();
+        $gallery = $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all();
+
+        return array_values(array_filter([$thumbnail, ...$gallery]));
     }
 }

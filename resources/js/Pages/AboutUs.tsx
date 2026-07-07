@@ -5,20 +5,13 @@ import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
 import { ReviewEmbed } from '@/Components/ReviewEmbed';
+import { ServiceCard, type ServiceCardData } from '@/Components/ServiceCard';
 import { localBusinessSchema, breadcrumbSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
-import { formatVND, tr } from '@/Lib/utils';
+import { tr } from '@/Lib/utils';
 import { googleMapsSearchUrl, googleMapsEmbedUrl } from '@/Lib/maps';
 
-interface BranchService {
-    id: number;
-    slug: string;
-    url: string;
-    name: string | Record<string, string>;
-    category: string | Record<string, string> | null;
-    price: number;
-    duration: number;
-}
+type BranchService = ServiceCardData;
 
 type TranslatableText = string | Record<string, string>;
 
@@ -401,20 +394,11 @@ export default function AboutUs({ branch }: Props) {
             <section className="py-12">
                 <div className="mx-auto max-w-5xl px-4">
                     <h2 className="mb-6 font-serif text-2xl text-maha-700">{text(content.services_heading, t('about.servicesAtBranch'))}</h2>
-                    <ul className="grid gap-3 md:grid-cols-2">
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {branch.services.map((s) => (
-                            <li key={s.id}>
-                                <Link href={s.url}
-                                    className="flex items-center justify-between rounded-lg border border-maha-100 p-4 hover:bg-maha-50">
-                                    <div>
-                                        <p className="font-semibold text-maha-700">{tr(s.name, locale)}</p>
-                                        <p className="text-xs text-gray-500">{s.duration} {t('common.minute')} · {tr(s.category, locale)}</p>
-                                    </div>
-                                    <span className="font-semibold">{formatVND(s.price)}</span>
-                                </Link>
-                            </li>
+                            <ServiceCard key={s.id} service={s} locale={locale} />
                         ))}
-                    </ul>
+                    </div>
                 </div>
             </section>
         </PublicLayout>
