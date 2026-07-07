@@ -5,13 +5,10 @@ import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
 import { ReviewEmbed } from '@/Components/ReviewEmbed';
-import { ServiceCard, type ServiceCardData } from '@/Components/ServiceCard';
 import { localBusinessSchema, breadcrumbSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
 import { googleMapsSearchUrl, googleMapsEmbedUrl } from '@/Lib/maps';
-
-type BranchService = ServiceCardData;
 
 type TranslatableText = string | Record<string, string>;
 
@@ -48,7 +45,6 @@ interface BranchPageContent {
     map_road_label?: TranslatableText;
     map_pin_label?: TranslatableText;
     map_cta_label?: TranslatableText;
-    services_heading?: TranslatableText;
 }
 
 interface BranchImage {
@@ -68,7 +64,6 @@ interface Props {
         lng: number | null;
         page_content?: BranchPageContent;
         images?: BranchImage[];
-        services: BranchService[];
     };
 }
 
@@ -388,16 +383,6 @@ export default function AboutUs({ branch }: Props) {
                                 {text(content.map_cta_label, 'Xem bản đồ lớn')}
                             </a>
                         </div>
-                    </div>
-                </div>
-            </section>
-            <section className="py-12">
-                <div className="mx-auto max-w-5xl px-4">
-                    <h2 className="mb-6 font-serif text-2xl text-maha-700">{text(content.services_heading, t('about.servicesAtBranch'))}</h2>
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {branch.services.map((s) => (
-                            <ServiceCard key={s.id} service={s} locale={locale} />
-                        ))}
                     </div>
                 </div>
             </section>

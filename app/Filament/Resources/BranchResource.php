@@ -201,7 +201,7 @@ class BranchResource extends Resource
                 ->collapsed(),
             Forms\Components\Section::make('Liên hệ & bản đồ')
                 ->icon('heroicon-o-map-pin')
-                ->description('Nội dung khối liên hệ, bản đồ minh họa và danh sách dịch vụ trên trang chi nhánh.')
+                ->description('Nội dung khối liên hệ và bản đồ minh họa trên trang chi nhánh.')
                 ->schema([
                     TranslatableField::group('page_content.contact_eyebrow', label: 'Dòng giới thiệu', example: 'Ghé thăm chúng tôi'),
                     TranslatableField::group('page_content.contact_heading', label: 'Tiêu đề', example: 'Liên hệ & đặt lịch'),
@@ -213,13 +213,6 @@ class BranchResource extends Resource
                     TranslatableField::group('page_content.map_road_label', label: 'Tên đường trên bản đồ minh họa', example: 'Đường Lê Văn Sỹ'),
                     TranslatableField::group('page_content.map_pin_label', label: 'Nhãn pin bản đồ', example: 'Mầm Spa'),
                     TranslatableField::group('page_content.map_cta_label', label: 'Nút xem bản đồ', example: 'Xem trên Google Maps'),
-                    TranslatableField::group('page_content.services_heading', label: 'Tiêu đề danh sách dịch vụ', example: 'Dịch vụ tại chi nhánh'),
-                    Forms\Components\Select::make('services')
-                        ->label('Dịch vụ hiển thị tại chi nhánh')
-                        ->relationship('services', 'slug')
-                        ->multiple()
-                        ->preload()
-                        ->columnSpanFull(),
                 ])
                 ->columns(2)
                 ->collapsible()
