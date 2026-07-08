@@ -210,12 +210,13 @@ class DichVuController extends Controller
             ->orderByDesc('is_featured')
             ->get();
 
-        // "Tham khảo dịch vụ khác": gợi ý dịch vụ nổi bật thuộc các danh mục khác.
-        $related = Service::active()
-            ->with(['branches', 'category.parent'])
-            ->whereNotIn('service_category_id', $categoryIds)
-            ->orderByDesc('is_featured')
-            ->limit(4)
+        // "Tham khảo dịch vụ khác": các danh mục bậc 1, trừ danh mục (gốc) đang xem.
+        $currentRootId = $category->isRoot() ? $category->id : $category->parent_id;
+
+        $related = ServiceCategory::active()
+            ->roots()
+            ->where('id', '!=', $currentRootId)
+            ->orderBy('order')
             ->get();
 
         return Inertia::render('DichVuCategory', [
@@ -239,7 +240,14 @@ class DichVuController extends Controller
             ],
             'breadcrumb' => $this->categoryAncestors($category),
             'services' => $services->map(fn ($s) => $this->map($s)),
-            'related' => $related->map(fn ($s) => $this->map($s)),
+            'related' => $related->map(fn (ServiceCategory $c) => [
+                'id' => $c->id,
+                'slug' => $c->slug,
+                'name' => $c->getTranslations('name'),
+                'description' => $c->getTranslations('description'),
+                'url' => $c->url,
+                'image' => $this->publicUrl($c->image),
+            ])->all(),
         ]);
     }
 

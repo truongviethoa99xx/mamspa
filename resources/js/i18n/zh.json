@@ -299,6 +299,8 @@
         "name": "姓名",
         "phone": "手机号码",
         "remember": "记住我",
+        "orContinueWith": "或继续使用",
+        "loginWithGoogle": "使用 Google 登录",
         "noAccount": "还没有账号？",
         "haveAccount": "已有账号？"
     },

@@ -43,11 +43,20 @@ interface CategoryDetail {
     experience_images?: ExperienceImage[];
 }
 
+interface RelatedCategory {
+    id: number;
+    slug: string;
+    name: Record<string, string> | string;
+    description?: Record<string, string> | string | null;
+    url: string;
+    image?: string | null;
+}
+
 interface Props {
     category: CategoryDetail;
     breadcrumb: BreadcrumbEntry[];
     services: ServiceCardData[];
-    related: ServiceCardData[];
+    related: RelatedCategory[];
 }
 
 export default function DichVuCategory({ category, breadcrumb, services, related }: Props) {
@@ -284,12 +293,12 @@ export default function DichVuCategory({ category, breadcrumb, services, related
                                     className="group flex flex-col rounded-2xl border border-maha-100 bg-white p-4 shadow-sm shadow-maha-900/5 transition-transform hover:-translate-y-1"
                                 >
                                     <div className="aspect-[4/3] overflow-hidden rounded-xl bg-[#CDBCA3]">
-                                        {item.images?.[0] && <img src={item.images[0]} alt={tr(item.name, locale)} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
+                                        {item.image && <img src={item.image} alt={tr(item.name, locale)} className="h-full w-full object-cover transition-transform group-hover:scale-105" />}
                                     </div>
                                     <div className="flex flex-1 flex-col px-1 pt-6">
                                         <h3 className="font-serif text-xl font-bold text-ink">{tr(item.name, locale)}</h3>
                                         <p className="mb-5 mt-2 line-clamp-2 text-sm leading-6 text-[#475934]">
-                                            {tr(item.short_description, locale) || tr(item.description, locale)}
+                                            {tr(item.description, locale)}
                                         </p>
                                         <hr className="mt-auto border-maha-100" />
                                         <div className="mt-5 flex items-center justify-between font-serif text-base font-bold text-ink">

@@ -311,6 +311,8 @@
         "name": "Họ tên",
         "phone": "Số điện thoại",
         "remember": "Ghi nhớ đăng nhập",
+        "orContinueWith": "Hoặc tiếp tục với",
+        "loginWithGoogle": "Đăng nhập bằng Google",
         "noAccount": "Chưa có tài khoản?",
         "haveAccount": "Đã có tài khoản?"
     },

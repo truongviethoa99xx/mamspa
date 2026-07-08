@@ -3,6 +3,7 @@ import { FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import AuthLayout from '@/Layouts/AuthLayout';
 import { Seo } from '@/Components/Seo';
+import { GoogleIcon } from '@/Components/GoogleIcon';
 
 export default function Login({ status }: { status?: string }) {
     const { t } = useTranslation();
@@ -37,6 +38,16 @@ export default function Login({ status }: { status?: string }) {
                     className="w-full rounded-full bg-maha-700 py-2.5 text-white disabled:bg-gray-300">
                     {t('auth.login')}
                 </button>
+                <div className="flex items-center gap-3 py-1">
+                    <span className="h-px flex-1 bg-gray-200" />
+                    <span className="text-xs text-gray-500">{t('auth.orContinueWith')}</span>
+                    <span className="h-px flex-1 bg-gray-200" />
+                </div>
+                <a href="/auth/google/redirect/"
+                    className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    <GoogleIcon />
+                    {t('auth.loginWithGoogle')}
+                </a>
                 <p className="text-center text-sm text-gray-600">
                     {t('auth.noAccount')} <Link href="/register/" className="text-maha-700 underline">{t('auth.register')}</Link>
                 </p>
