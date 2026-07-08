@@ -171,10 +171,9 @@ class BranchResource extends Resource
                 ->icon('heroicon-o-chat-bubble-left-right')
                 ->description('Các đánh giá hiển thị trong trang chi nhánh.')
                 ->schema([
-                    Forms\Components\Textarea::make('page_content.review_widget')
-                        ->label('Widget đánh giá (Elfsight / Google)')
-                        ->helperText('Dán Share Link URL (vd. https://xxxx.elf.site) HOẶC toàn bộ mã nhúng (Embed Code, gồm thẻ <script>). Hiển thị ở mục "Đánh giá khách hàng" trên trang chủ và trang chi tiết chi nhánh. Để trống thì không hiện widget.')
-                        ->rows(4)
+                    Forms\Components\TextInput::make('google_place_id')
+                        ->label('Google Place ID')
+                        ->helperText('Lấy tại developers.google.com/maps/documentation/places/web-service/place-id (công cụ "Place ID Finder"), tìm đúng địa điểm trên Google Maps rồi copy Place ID. Có giá trị này, hệ thống tự lấy review thật từ Google Maps hiển thị ở mục "Đánh giá khách hàng" trên trang chủ và trang chi tiết chi nhánh.')
                         ->columnSpanFull(),
                     TranslatableField::group('page_content.reviews_eyebrow', label: 'Dòng giới thiệu', example: 'Cảm nhận của khách hàng'),
                     TranslatableField::group('page_content.reviews_heading', label: 'Tiêu đề', example: 'Được yêu thích bởi khách quốc tế'),

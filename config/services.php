@@ -11,6 +11,13 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI'),
+        // Redirect URI riêng cho luồng admin kết nối Google Business Profile (scope business.manage),
+        // khác với redirect URI đăng nhập khách hàng ở trên — phải khai báo thêm trên Google Cloud Console.
+        'business_redirect' => env('GOOGLE_BUSINESS_REDIRECT_URI'),
+    ],
+
+    'google_places' => [
+        'api_key' => env('GOOGLE_PLACES_API_KEY'),
     ],
 
     'postmark' => [

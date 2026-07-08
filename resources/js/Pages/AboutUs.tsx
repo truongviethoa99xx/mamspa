@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Clock, MapPin, Navigation, Phone } from 'luc
 import { useTranslation } from 'react-i18next';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Seo } from '@/Components/Seo';
-import { ReviewEmbed } from '@/Components/ReviewEmbed';
+import { GoogleReviewCard, Stars, type GoogleReviewItem } from '@/Components/GoogleReviewCard';
 import { localBusinessSchema, breadcrumbSchema } from '@/Lib/buildSchema';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
@@ -34,7 +34,6 @@ interface BranchPageContent {
     reviews_eyebrow?: TranslatableText;
     reviews_heading?: TranslatableText;
     reviews?: BranchReview[];
-    review_widget?: string;
     contact_eyebrow?: TranslatableText;
     contact_heading?: TranslatableText;
     address_heading?: TranslatableText;
@@ -52,6 +51,13 @@ interface BranchImage {
     alt?: string | null;
 }
 
+interface GoogleReviews {
+    rating: number;
+    total: number;
+    url: string | null;
+    reviews: GoogleReviewItem[];
+}
+
 interface Props {
     branch: {
         id: number;
@@ -63,6 +69,7 @@ interface Props {
         lat: number | null;
         lng: number | null;
         page_content?: BranchPageContent;
+        google_reviews?: GoogleReviews | null;
         images?: BranchImage[];
     };
 }
@@ -302,8 +309,31 @@ export default function AboutUs({ branch }: Props) {
                         ))}
                     </div>
 
-                    {content.review_widget && (
-                        <ReviewEmbed html={content.review_widget} className="mt-10" />
+                    {branch.google_reviews && branch.google_reviews.reviews.length > 0 && (
+                        <div className="mt-10">
+                            <div className="mb-6 flex flex-wrap items-center gap-3">
+                                <span className="font-serif text-2xl font-bold text-ink">
+                                    {branch.google_reviews.rating.toFixed(1)}
+                                </span>
+                                <Stars count={Math.round(branch.google_reviews.rating)} />
+                                <span className="text-sm text-maha-600">({branch.google_reviews.total})</span>
+                                {branch.google_reviews.url && (
+                                    <a
+                                        href={branch.google_reviews.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="ml-auto text-sm font-semibold text-maha-700 underline-offset-4 hover:underline"
+                                    >
+                                        Xem tất cả trên Google
+                                    </a>
+                                )}
+                            </div>
+                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                                {branch.google_reviews.reviews.map((r, i) => (
+                                    <GoogleReviewCard key={i} item={r} />
+                                ))}
+                            </div>
+                        </div>
                     )}
                 </div>
             </section>

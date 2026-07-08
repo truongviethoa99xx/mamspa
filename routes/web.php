@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\GoogleBusinessAuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BranchController;
@@ -63,6 +64,12 @@ Route::get('/luu-y-dich-vu', fn () => Inertia::render('PaymentGuide'))->name('se
 Route::get('/huong-dan-thanh-toan', fn () => redirect()->away(url('/luu-y-dich-vu').'/', 301));
 
 require __DIR__.'/auth.php';
+
+// Kết nối Google Business Profile (chỉ admin/staff, tách khỏi OAuth login khách hàng ở auth.php).
+Route::middleware('auth')->prefix('admin/integrations/google-business')->group(function () {
+    Route::get('redirect', [GoogleBusinessAuthController::class, 'redirect'])->name('google-business.redirect');
+    Route::get('callback', [GoogleBusinessAuthController::class, 'callback'])->name('google-business.callback');
+});
 
 // Catch-all for URLs that don't match any route above. Defined here (rather
 // than only in the exception handler) so it runs through the full `web`

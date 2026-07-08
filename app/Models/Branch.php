@@ -15,7 +15,8 @@ class Branch extends Model implements HasMedia
     use HasFactory, HasTranslations, InteractsWithMedia;
 
     protected $fillable = [
-        'slug', 'name', 'address', 'phone', 'open_hours', 'lat', 'lng', 'is_active', 'page_content',
+        'slug', 'name', 'address', 'phone', 'open_hours', 'lat', 'lng',
+        'google_place_id', 'google_location_id', 'is_active', 'page_content',
     ];
 
     protected $casts = [
@@ -40,5 +41,10 @@ class Branch extends Model implements HasMedia
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function googleReviews(): HasMany
+    {
+        return $this->hasMany(GoogleReview::class);
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Branch;
 use App\Models\HomePageContent;
 use App\Models\Service;
 use App\Models\ServiceCategory;
+use App\Services\GooglePlacesService;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -161,29 +162,76 @@ class HomeController extends Controller
             ])->all();
     }
 
-    /** Đánh giá khách hàng (tĩnh — đồng bộ Google reviews). */
+    /**
+     * Đánh giá khách hàng: ưu tiên review thật lấy từ Google Maps (chi nhánh có
+     * google_place_id); chưa chi nhánh nào cấu hình thì dùng danh sách nhập
+     * tay trong HomePageSettings làm dự phòng.
+     */
     protected function testimonials(HomePageContent $content): array
     {
+        $google = $this->googleReviews();
+
         return [
-            'rating' => $content->testimonial_rating ?: 5,
-            'review_count' => $content->testimonial_review_count ?: 0,
+            'rating' => $google['rating'] ?? ($content->testimonial_rating ?: 5),
+            'review_count' => $google['total'] ?? ($content->testimonial_review_count ?: 0),
             'source' => $content->testimonial_source ?: 'google',
-            'items' => $content->testimonials ?: [],
-            'widgets' => $this->branchReviewWidgets(),
+            'items' => $google['items'] ?? ($content->testimonials ?: []),
         ];
     }
 
-    /** Widget đánh giá riêng của từng chi nhánh, hiển thị ở mục "Đánh giá khách hàng" trên trang chủ. */
-    protected function branchReviewWidgets(): array
+    /**
+     * Gộp review thật từ mọi chi nhánh — ưu tiên review đã đồng bộ qua Google
+     * Business Profile (toàn bộ), dự phòng Places API (tối đa 5 review) khi
+     * chi nhánh chưa đồng bộ.
+     */
+    protected function googleReviews(): ?array
     {
-        return Branch::where('is_active', true)->orderBy('id')->get()
-            ->map(fn (Branch $b) => [
-                'name' => $b->name,
-                'html' => $b->page_content['review_widget'] ?? null,
-            ])
-            ->filter(fn (array $w) => ! empty($w['html']))
-            ->values()
-            ->all();
+        $service = app(GooglePlacesService::class);
+
+        $items = [];
+        $ratings = [];
+        $total = 0;
+
+        foreach (Branch::where('is_active', true)->orderBy('id')->get() as $b) {
+            $data = $this->branchReviews($b, $service);
+            if (! $data) {
+                continue;
+            }
+
+            $items = array_merge($items, $data['reviews']);
+            $ratings[] = $data['rating'];
+            $total += $data['total'];
+        }
+
+        if ($items === []) {
+            return null;
+        }
+
+        return [
+            'items' => $items,
+            'rating' => round(array_sum($ratings) / count($ratings), 1),
+            'total' => $total,
+        ];
+    }
+
+    private function branchReviews(Branch $branch, GooglePlacesService $service): ?array
+    {
+        $synced = $branch->googleReviews()->orderByDesc('review_time')->get();
+
+        if ($synced->isNotEmpty()) {
+            return [
+                'rating' => round($synced->avg('rating'), 1),
+                'total' => $synced->count(),
+                'reviews' => $synced->map(fn ($review) => [
+                    'name' => $review->reviewer_name,
+                    'content' => $review->comment ?? '',
+                    'rating' => $review->rating,
+                    'time' => $review->review_time?->diffForHumans(),
+                ])->all(),
+            ];
+        }
+
+        return $branch->google_place_id ? $service->reviews($branch->google_place_id) : null;
     }
 
     /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
