@@ -5,6 +5,7 @@ import type { SharedProps } from '@/types';
 interface EditableProps {
     category?: { id?: number };
     service?: { id?: number };
+    branch?: { id?: number };
 }
 
 function editTarget(path: string, component: string, props: EditableProps) {
@@ -39,6 +40,10 @@ function editTarget(path: string, component: string, props: EditableProps) {
     }
 
     if (path.startsWith('/chi-nhanh')) {
+        if (props.branch?.id) {
+            return { label: 'Sửa chi nhánh này', href: `/admin/branches/${props.branch.id}/edit` };
+        }
+
         return { label: 'Sửa chi nhánh', href: '/admin/branches' };
     }
 

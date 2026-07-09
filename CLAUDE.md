@@ -36,7 +36,7 @@
 ### DevOps / Infra
 - **Protocol:** HTTP/2 + HTTPS
 - **Charset:** UTF-8
-- **Analytics:** Google Tag Manager (GTM-TTGB95P9) + GA4
+- **Analytics:** Google Tag Manager (GTM-W6NJ4P3S) + GA4 (G-Z290RGPXMG)
 - **Hosting:** VPS Ubuntu 22.04 + Nginx + PHP-FPM + MySQL (VN region)
 - **Cache:** Redis
 - **Storage:** Local hoặc S3-compatible (Cloudflare R2)
@@ -250,7 +250,7 @@ mahaspa/
 ### ⑦ Analytics & Admin
 | Module | Route | Mô tả |
 |--------|-------|--------|
-| **Google Tag Manager** | GTM-TTGB95P9 | GA4, conversion tracking, Facebook Pixel |
+| **Google Tag Manager** | GTM-W6NJ4P3S | GA4 (G-Z290RGPXMG), conversion tracking, Facebook Pixel |
 | **Admin Panel (Filament)** | `/admin` (private) | CRUD services, branches, bookings, vouchers, pages/blocks, staff |
 | **REST API** | `/api/v1/...` | Sanctum auth (cho mobile/external) |
 | **i18n** | `?lang=vi\|en` | spatie/laravel-translatable + react-i18next |
@@ -390,7 +390,7 @@ protected $translatable = ['title'];
 | Instagram | @mahaspa.danang |
 | Klook | Có listing — nhận voucher từ Klook |
 | Google Maps | 2 chi nhánh có pin riêng |
-| Google Tag Manager | GTM-TTGB95P9 |
+| Google Tag Manager | GTM-W6NJ4P3S |
 | Zalo | Floating chat widget |
 ---
 ## ✅ Coding Conventions

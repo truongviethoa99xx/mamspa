@@ -7,6 +7,7 @@ import type { SharedProps } from '@/types';
 import { tr } from '@/Lib/utils';
 import { googleMapsSearchUrl, googleMapsEmbedUrl } from '@/Lib/maps';
 import { useLocale } from '@/Hooks/useLocale';
+import { trackContactClick } from '@/Lib/analytics';
 
 interface ContactBranch {
     slug: string;
@@ -44,7 +45,12 @@ export default function Contact({ content, branches = [] }: Props) {
 
     const submit = (e: React.FormEvent) => {
         e.preventDefault();
-        post('/lien-he', { onSuccess: () => reset() });
+        post('/lien-he', {
+            onSuccess: () => {
+                trackContactClick('form_submit', 'contact_page');
+                reset();
+            },
+        });
     };
 
     return (
@@ -92,7 +98,13 @@ export default function Contact({ content, branches = [] }: Props) {
                                         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-maha-50 text-maha-700">
                                             <Phone className="h-3.5 w-3.5" />
                                         </span>
-                                        <a href={`tel:${branch.phone}`} className="hover:text-maha-700">{branch.phone}</a>
+                                        <a
+                                            href={`tel:${branch.phone}`}
+                                            onClick={() => trackContactClick('phone', 'contact_page')}
+                                            className="hover:text-maha-700"
+                                        >
+                                            {branch.phone}
+                                        </a>
                                     </p>
                                     <a
                                         href={googleMapsSearchUrl(tr(branch.name, locale), branch.address)}

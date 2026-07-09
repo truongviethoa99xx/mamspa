@@ -4,6 +4,7 @@ import { Mail } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
 import { googleMapsSearchUrl } from '@/Lib/maps';
+import { trackContactClick } from '@/Lib/analytics';
 import type { SharedProps } from '@/types';
 
 const DEFAULT_HOTLINE = '(+84) 965 80 6166';
@@ -45,12 +46,14 @@ export function Footer() {
                         </p>
                         <a
                             href={`tel:${hotline.replace(/[^\d+]/g, '')}`}
+                            onClick={() => trackContactClick('phone', 'footer')}
                             className="mt-2 block font-serif text-4xl tracking-wide text-maha-50 transition-opacity hover:opacity-80"
                         >
                             {hotline}
                         </a>
                         <a
                             href={`mailto:${email}`}
+                            onClick={() => trackContactClick('email', 'footer')}
                             className="mt-3 inline-flex items-center gap-2 text-maha-100/80 transition-colors hover:text-maha-50"
                         >
                             <Mail className="h-4 w-4" />
@@ -66,6 +69,7 @@ export function Footer() {
                                     href={s.href}
                                     target="_blank"
                                     rel="noreferrer"
+                                    onClick={() => trackContactClick(s.label.toLowerCase(), 'footer_social')}
                                     className="font-medium text-maha-100 transition-colors hover:text-maha-50"
                                 >
                                     {s.label}

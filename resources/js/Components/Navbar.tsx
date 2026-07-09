@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight, LogOut, Menu, X } from 'lucide-react';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn, publicAssetUrl, tr } from '@/Lib/utils';
 import { useLocale } from '@/Hooks/useLocale';
+import { trackContactClick } from '@/Lib/analytics';
 import type { SharedProps } from '@/types';
 
 interface MenuItem {
@@ -140,6 +141,7 @@ export function Navbar() {
                     <li>
                         <Link
                             href="/lien-he/"
+                            onClick={() => trackContactClick('nav_link', 'navbar')}
                             className="text-base font-medium tracking-wide text-maha-900 transition-colors hover:text-maha-600"
                         >
                             {t('nav.contact')}
@@ -239,7 +241,11 @@ export function Navbar() {
                         </li>
                     ))}
                     <li>
-                        <Link href="/lien-he/" className="block py-2 text-base text-maha-900">
+                        <Link
+                            href="/lien-he/"
+                            onClick={() => trackContactClick('nav_link', 'navbar_mobile')}
+                            className="block py-2 text-base text-maha-900"
+                        >
                             {t('nav.contact')}
                         </Link>
                     </li>

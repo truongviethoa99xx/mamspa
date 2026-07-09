@@ -18,3 +18,6 @@ export const trackBeginCheckout = (booking: { service: string; total: number }) 
 
 export const trackPurchase = (booking: { code: string; total: number }) =>
     trackEvent('purchase', { transaction_id: booking.code, value: booking.total, currency: 'VND' });
+
+export const trackContactClick = (channel: string, location: string) =>
+    trackEvent('contact_click', { contact_channel: channel, contact_location: location });

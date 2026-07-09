@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { usePage } from '@inertiajs/react';
 import type { SharedProps } from '@/types';
 import { cn, publicAssetUrl } from '@/Lib/utils';
+import { trackContactClick } from '@/Lib/analytics';
 
 type ContactButton = NonNullable<SharedProps['site']>['floating_contact_buttons'][number];
 
@@ -125,7 +126,10 @@ export function ChatWidget() {
                         aria-label={button.label || t('common.chat')}
                         title={button.label || t('common.chat')}
                         tabIndex={isOpen ? 0 : -1}
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                            trackContactClick(button.type || 'custom', 'chat_widget');
+                            setIsOpen(false);
+                        }}
                     >
                         <ButtonIcon button={button} />
                     </a>
