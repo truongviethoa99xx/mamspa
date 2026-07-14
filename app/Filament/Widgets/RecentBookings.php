@@ -69,11 +69,6 @@ class RecentBookings extends Widget
 
     private function avatarColor(string $name): string
     {
-        $hash = 0;
-        foreach (str_split($name) as $ch) {
-            $hash = ord($ch) + (($hash << 5) - $hash);
-        }
-
-        return self::AVATAR_COLORS[abs($hash) % count(self::AVATAR_COLORS)];
+        return self::AVATAR_COLORS[crc32($name) % count(self::AVATAR_COLORS)];
     }
 }
