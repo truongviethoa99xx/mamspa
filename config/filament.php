@@ -16,16 +16,10 @@ return [
 
     'broadcasting' => [
 
-        'echo' => [
-            'broadcaster' => 'reverb',
-            'key' => env('REVERB_APP_KEY'),
-            'wsHost' => env('REVERB_HOST'),
-            'wsPort' => env('REVERB_PORT', 80),
-            'wssPort' => env('REVERB_PORT', 443),
-            'authEndpoint' => '/broadcasting/auth',
-            'enabledTransports' => ['ws', 'wss'],
-            'forceTLS' => env('REVERB_SCHEME', 'https') === 'https',
-        ],
+        // Tạm tắt: không có Reverb server chạy ở local nên trình duyệt cứ liên tục
+        // retry kết nối websocket và spam lỗi console. Bật lại (đưa block config cũ
+        // vào 'echo') khi thật sự chạy `php artisan reverb:start` ở môi trường này.
+        'echo' => null,
 
     ],
 
