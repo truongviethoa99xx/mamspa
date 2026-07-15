@@ -15,13 +15,14 @@ class ServiceCategory extends Model
     use HasTranslations;
 
     protected $fillable = [
-        'slug', 'name', 'description', 'image', 'parent_id', 'order', 'is_active',
+        'slug', 'name', 'description', 'image', 'parent_id', 'order', 'is_active', 'show_in_menu',
         'benefits', 'experience_images', 'faqs', 'ideal_for',
     ];
 
     protected $casts = [
         'order' => 'integer',
         'is_active' => 'boolean',
+        'show_in_menu' => 'boolean',
         'benefits' => 'array',
         'experience_images' => 'array',
         'faqs' => 'array',
@@ -55,6 +56,11 @@ class ServiceCategory extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeShowInMenu($query)
+    {
+        return $query->where('show_in_menu', true);
     }
 
     public function isRoot(): bool

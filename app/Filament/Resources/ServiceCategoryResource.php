@@ -50,6 +50,7 @@ class ServiceCategoryResource extends Resource
                     ->unique(ignoreRecord: true),
                 Forms\Components\Select::make('parent_id')
                     ->label('Danh mục cấp 1')
+                    ->live()
                     ->options(fn (?ServiceCategory $record) => ServiceCategory::query()
                         ->roots()
                         ->when($record, fn ($query) => $query->whereKeyNot($record->getKey()))
@@ -64,6 +65,11 @@ class ServiceCategoryResource extends Resource
                         : 'Để trống nếu đây là danh mục cấp 1. Chỉ chọn được danh mục cấp 1 khác làm cha (tối đa 2 cấp).'),
                 Forms\Components\TextInput::make('order')->label('Thứ tự')->numeric()->default(0),
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
+                Forms\Components\Toggle::make('show_in_menu')
+                    ->label('Hiện ở menu')
+                    ->default(true)
+                    ->helperText('Ẩn thì trang danh mục vẫn hoạt động bình thường, chỉ không xuất hiện trong menu header.')
+                    ->visible(fn (Forms\Get $get) => blank($get('parent_id'))),
             ])->columns(2),
             TranslatableField::group('name', label: 'Tên danh mục', required: true, example: 'Body Massage'),
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả danh mục', rows: 3, example: 'Liệu pháp massage toàn thân giúp thư giãn sâu và phục hồi năng lượng.'),
@@ -140,7 +146,7 @@ class ServiceCategoryResource extends Resource
                         ->schema([
                             TranslatableField::group('question', label: 'Câu hỏi', required: true, example: 'Dịch vụ này có phù hợp với da nhạy cảm không?')
                                 ->columnSpanFull(),
-                            TranslatableField::group('answer', as: 'textarea', label: 'Trả lời', rows: 3, required: true, example: 'Có, liệu trình sử dụng nguyên liệu dịu nhẹ phù hợp với da nhạy cảm.')
+                            TranslatableField::group('answer', as: 'textarea', label: 'Trả lời', rows: 8, required: true, example: 'Có, liệu trình sử dụng nguyên liệu dịu nhẹ phù hợp với da nhạy cảm.')
                                 ->columnSpanFull(),
                         ])
                         ->columns(1)

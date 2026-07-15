@@ -80,6 +80,7 @@ class HandleInertiaRequests extends Middleware
         $roots = ServiceCategory::query()
             ->roots()
             ->active()
+            ->showInMenu()
             ->orderBy('order')
             ->with([
                 'children' => fn ($q) => $q->active()->orderBy('order'),
