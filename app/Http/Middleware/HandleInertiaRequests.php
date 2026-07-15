@@ -56,6 +56,8 @@ class HandleInertiaRequests extends Middleware
             'site' => [
                 'brand_name' => $site?->brand_name,
                 'logo_path' => $site?->logo_path,
+                'header_background_color' => $site?->header_background_color ?: '#F6F3EF',
+                'header_text_color' => $site?->header_text_color ?: '#2F3E2E',
                 'tagline' => $site?->tagline,
                 'meta_description' => $site?->meta_description,
                 'hotline' => $site?->hotline,

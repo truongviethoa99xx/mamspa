@@ -9,6 +9,8 @@ class SiteSetting extends Model
     protected $fillable = [
         'brand_name',
         'logo_path',
+        'header_background_color',
+        'header_text_color',
         'tagline',
         'meta_description',
         'hotline',
