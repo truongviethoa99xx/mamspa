@@ -1,25 +1,9 @@
 import { Head } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
-import { Hero } from '@/Components/Hero';
-
-interface HeroCta {
-    text: string;
-    link: string;
-    background_color: string;
-    text_color: string;
-    border_color: string;
-}
-
-interface HeroContent {
-    heading: unknown;
-    subtitle: unknown;
-    image: string | null;
-    cta: HeroCta;
-    secondary_cta: HeroCta;
-}
+import { Hero, type HeroData } from '@/Components/Hero';
 
 interface Props {
-    hero: HeroContent;
+    hero: HeroData;
     sectionVisibility: {
         hero: boolean;
     };

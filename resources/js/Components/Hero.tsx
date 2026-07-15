@@ -2,15 +2,15 @@ import { Link } from '@inertiajs/react';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
 
-interface HeroCta {
-    text: string;
+export interface HeroCta {
+    text: unknown;
     link: string;
     background_color: string;
     text_color: string;
     border_color: string;
 }
 
-interface HeroData {
+export interface HeroData {
     heading?: unknown;
     subtitle?: unknown;
     image?: string | null;
@@ -25,6 +25,8 @@ export function Hero({ data }: { data: HeroData }) {
     const locale = useLocale();
     const heading = tr(data.heading, locale);
     const subtitle = tr(data.subtitle, locale);
+    const ctaText = tr(data.cta?.text, locale);
+    const secondaryCtaText = tr(data.secondary_cta?.text, locale);
     const image = data.image;
     const isVideo = !!image && isVideoUrl(image);
 
@@ -71,7 +73,7 @@ export function Hero({ data }: { data: HeroData }) {
                 )}
 
                 <div className="mt-8 flex flex-wrap items-center gap-4">
-                    {data.cta?.text && (
+                    {ctaText && data.cta && (
                         <Link
                             href={data.cta.link || '#'}
                             className="rounded-md border px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-opacity hover:opacity-90"
@@ -81,10 +83,10 @@ export function Hero({ data }: { data: HeroData }) {
                                 borderColor: data.cta.border_color,
                             }}
                         >
-                            {data.cta.text}
+                            {ctaText}
                         </Link>
                     )}
-                    {data.secondary_cta?.text && (
+                    {secondaryCtaText && data.secondary_cta && (
                         <Link
                             href={data.secondary_cta.link || '#'}
                             className="rounded-md border px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-opacity hover:opacity-90"
@@ -94,7 +96,7 @@ export function Hero({ data }: { data: HeroData }) {
                                 borderColor: data.secondary_cta.border_color,
                             }}
                         >
-                            {data.secondary_cta.text}
+                            {secondaryCtaText}
                         </Link>
                     )}
                 </div>
