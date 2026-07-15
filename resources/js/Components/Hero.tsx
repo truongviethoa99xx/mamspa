@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { tr, cn } from '@/Lib/utils';
 
 export interface HeroCta {
     text: unknown;
@@ -29,10 +29,14 @@ export function Hero({ data }: { data: HeroData }) {
     const secondaryCtaText = tr(data.secondary_cta?.text, locale);
     const image = data.image;
     const isVideo = !!image && isVideoUrl(image);
+    const hasImage = !!image;
 
     return (
         <section
-            className="relative isolate flex min-h-[560px] flex-col justify-end overflow-hidden bg-[#2F3E2E] px-6 pb-16 pt-32 sm:px-10 sm:pb-20 md:min-h-[680px] md:pt-40 lg:min-h-[760px]"
+            className={cn(
+                'relative isolate flex min-h-[560px] flex-col justify-end overflow-hidden px-6 pb-16 pt-32 sm:px-10 sm:pb-20 md:min-h-[680px] md:pt-40 lg:min-h-[760px]',
+                hasImage ? 'bg-[#2F3E2E]' : 'bg-maha-200',
+            )}
             style={
                 image && !isVideo
                     ? {
@@ -61,13 +65,19 @@ export function Hero({ data }: { data: HeroData }) {
             <div className="relative z-10 max-w-2xl">
                 {heading && (
                     <div
-                        className="rich-content font-serif text-4xl leading-tight text-white sm:text-5xl md:text-6xl"
+                        className={cn(
+                            'rich-content font-serif text-4xl leading-tight sm:text-5xl md:text-6xl',
+                            hasImage ? 'text-white' : 'text-ink',
+                        )}
                         dangerouslySetInnerHTML={{ __html: heading }}
                     />
                 )}
                 {subtitle && (
                     <div
-                        className="rich-content mt-4 text-base text-white/85 sm:text-lg"
+                        className={cn(
+                            'rich-content mt-4 text-base sm:text-lg',
+                            hasImage ? 'text-white/85' : 'text-ink/80',
+                        )}
                         dangerouslySetInnerHTML={{ __html: subtitle }}
                     />
                 )}
