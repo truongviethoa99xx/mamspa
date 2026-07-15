@@ -75,7 +75,7 @@ interface Props {
 export default function DichVuDetail({ service, breadcrumb, categoryServices, combos, related, content }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
-    const [openFaq, setOpenFaq] = useState(0);
+    const [openFaq, setOpenFaq] = useState(-1);
 
     const benefitPoints = (service.benefits ?? []).map((b) => tr(b.title, locale)).filter(Boolean);
     const idealFor = service.ideal_for ?? [];

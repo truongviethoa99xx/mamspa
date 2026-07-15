@@ -62,7 +62,7 @@ interface Props {
 export default function DichVuCategory({ category, breadcrumb, services, related }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
-    const [openFaq, setOpenFaq] = useState(0);
+    const [openFaq, setOpenFaq] = useState(-1);
 
     const name = tr(category.name, locale);
     const description = tr(category.description, locale);
