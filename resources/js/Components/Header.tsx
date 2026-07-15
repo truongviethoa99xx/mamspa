@@ -26,6 +26,9 @@ export function Header() {
     const textColor = site.header_text_color || '#2F3E2E';
     const configuredBackground = site.header_background_color || '#F6F3EF';
     const headerBackground = isTransparent ? 'transparent' : configuredBackground;
+    const ctaText = site.header_cta_text || 'Đặt lịch ngay';
+    const ctaBackground = site.header_cta_background_color || '#2F3E2E';
+    const ctaTextColor = site.header_cta_text_color || '#FFFFFF';
     const currentPath = url.split('?')[0];
 
     return (
@@ -66,9 +69,9 @@ export function Header() {
             <Link
                 href="/dat-lich/"
                 className="shrink-0 rounded-md px-5 py-2.5 text-sm font-semibold uppercase tracking-wide transition-opacity hover:opacity-90"
-                style={{ backgroundColor: textColor, color: configuredBackground }}
+                style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
             >
-                Đặt lịch ngay
+                {ctaText}
             </Link>
         </header>
     );

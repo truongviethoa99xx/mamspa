@@ -24,6 +24,9 @@ export interface SiteSettings {
     header_background_color?: string | null;
     header_text_color?: string | null;
     header_transparent?: boolean | null;
+    header_cta_text?: string | null;
+    header_cta_background_color?: string | null;
+    header_cta_text_color?: string | null;
     tagline?: string | null;
     meta_description?: string | null;
     hotline?: string | null;

@@ -41,6 +41,7 @@ class HeaderSettings extends Page implements HasForms
     {
         $this->form->fill(SiteSetting::current()->only([
             'logo_path', 'header_background_color', 'header_text_color', 'header_transparent',
+            'header_cta_text', 'header_cta_background_color', 'header_cta_text_color',
         ]));
     }
 
@@ -72,6 +73,22 @@ class HeaderSettings extends Page implements HasForms
                             ->helperText('Bật để header trong suốt, nổi đè lên nội dung phía dưới (vd. banner đầu trang) thay vì chiếm khoảng riêng. Khi bật, màu nền ở trên sẽ bị vô hiệu hoá (không dùng).')
                             ->live()
                             ->columnSpanFull(),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Nút "Đặt lịch ngay"')
+                    ->schema([
+                        Forms\Components\TextInput::make('header_cta_text')
+                            ->label('Chữ trên nút')
+                            ->required()
+                            ->maxLength(40)
+                            ->columnSpanFull(),
+                        Forms\Components\ColorPicker::make('header_cta_background_color')
+                            ->label('Màu nền nút')
+                            ->required(),
+                        Forms\Components\ColorPicker::make('header_cta_text_color')
+                            ->label('Màu chữ nút')
+                            ->required(),
                     ])
                     ->columns(2),
             ])
