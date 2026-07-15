@@ -475,7 +475,7 @@ export default function DichVuDetail({ service, breadcrumb, categoryServices, co
                                     </div>
 
                                     {isOpen && (
-                                        <p className="mt-5 text-sm leading-7 text-[#475934] md:text-base">{faq.answer}</p>
+                                        <p className="mt-5 whitespace-pre-line text-sm leading-7 text-[#475934] md:text-base">{faq.answer}</p>
                                     )}
                                 </button>
                             );
