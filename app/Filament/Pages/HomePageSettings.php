@@ -40,11 +40,11 @@ class HomePageSettings extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill(HomePageContent::current()->only([
-            'hero_subtitle', 'hero_eyebrow', 'hero_image', 'hero_visible',
+            'hero_subtitle', 'hero_eyebrow', 'hero_image', 'hero_image_alt', 'hero_visible',
             'hero_cta_text', 'hero_cta_link', 'hero_cta_background_color', 'hero_cta_text_color', 'hero_cta_border_color',
             'hero_secondary_cta_text', 'hero_secondary_cta_link', 'hero_secondary_cta_background_color',
             'hero_secondary_cta_text_color', 'hero_secondary_cta_border_color',
-            'story_eyebrow', 'story_body', 'story_image', 'story_visible',
+            'story_eyebrow', 'story_body', 'story_image', 'story_image_alt', 'story_visible',
             'story_cta_text', 'story_cta_link', 'story_cta_text_color',
             'service_list_title', 'featured_services_visible',
         ]));
@@ -70,6 +70,7 @@ class HomePageSettings extends Page implements HasForms
                             ->maxSize(20480)
                             ->disk('public')->directory('home')
                             ->columnSpanFull(),
+                        TranslatableField::group('hero_image_alt', label: 'Alt text ảnh (mô tả ảnh cho SEO/accessibility)', example: 'Không gian trị liệu Mầm Spa'),
                     ]),
 
                 Forms\Components\Section::make('Nút "Đặt lịch ngay" (Banner)')
@@ -107,6 +108,7 @@ class HomePageSettings extends Page implements HasForms
                             ->helperText('Chiếm khoảng 2/3 chiều rộng banner, bên phải khối chữ.')
                             ->image()->disk('public')->directory('home')
                             ->columnSpanFull(),
+                        TranslatableField::group('story_image_alt', label: 'Alt text ảnh (mô tả ảnh cho SEO/accessibility)', example: 'Không gian Mầm Spa'),
                     ]),
 
                 Forms\Components\Section::make('Nút "Về Mầm Spa" (Banner 2)')

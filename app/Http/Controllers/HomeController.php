@@ -46,6 +46,7 @@ class HomeController extends Controller
             'heading' => $content->hero_eyebrow ?: ['vi' => '<p>Hành trình chữa lành từ thiên nhiên</p>', 'en' => '<p>A healing journey from nature</p>'],
             'subtitle' => $content->hero_subtitle ?: ['vi' => '<p>Một khoảng lặng giữa nhịp sống thành phố.</p>', 'en' => '<p>A quiet pause amid the rhythm of city life.</p>'],
             'image' => $this->publicUrl($content->hero_image),
+            'image_alt' => $content->hero_image_alt ?: ['vi' => 'Không gian trị liệu Mầm Spa', 'en' => 'Mầm Spa treatment space'],
             'service_list_title' => $content->service_list_title ?: ['vi' => 'Dịch vụ nổi bật', 'en' => 'Featured Services'],
             'cta' => [
                 'text' => $content->hero_cta_text ?: 'Đặt lịch ngay',
@@ -77,6 +78,7 @@ class HomeController extends Controller
                 'en' => "<p>Amid the city's constant motion,<br>Mầm is where the body rests,<br>the mind settles,<br>and Vietnamese healing values are preserved.</p>",
             ],
             'image' => $this->publicUrl($content->story_image),
+            'image_alt' => $content->story_image_alt ?: ['vi' => 'Không gian Mầm Spa', 'en' => 'Mầm Spa space'],
             'cta' => [
                 'text' => $content->story_cta_text ?: 'Về Mầm Spa',
                 'link' => $content->story_cta_link ?: '/gioi-thieu/',

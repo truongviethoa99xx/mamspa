@@ -13,6 +13,7 @@ export interface StoryData {
     heading?: unknown;
     caption?: unknown;
     image?: string | null;
+    image_alt?: unknown;
     cta?: StoryCta;
 }
 
@@ -25,6 +26,7 @@ export function Story({ data }: { data: StoryData }) {
     const heading = tr(data.heading, locale);
     const caption = tr(data.caption, locale);
     const ctaText = tr(data.cta?.text, locale);
+    const imageAlt = tr(data.image_alt, locale);
 
     return (
         <section className="bg-maha-50">
@@ -55,7 +57,7 @@ export function Story({ data }: { data: StoryData }) {
                 </div>
 
                 <div className="aspect-[4/3] bg-maha-200 md:aspect-auto md:min-h-[420px] lg:min-h-[520px]">
-                    {data.image && <img src={data.image} alt="" className="h-full w-full object-cover" />}
+                    {data.image && <img src={data.image} alt={imageAlt} className="h-full w-full object-cover" />}
                 </div>
             </div>
         </section>

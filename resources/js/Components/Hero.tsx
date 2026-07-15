@@ -14,6 +14,7 @@ export interface HeroData {
     heading?: unknown;
     subtitle?: unknown;
     image?: string | null;
+    image_alt?: unknown;
     cta?: HeroCta;
     secondary_cta?: HeroCta;
 }
@@ -28,6 +29,7 @@ export function Hero({ data }: { data: HeroData }) {
     const ctaText = tr(data.cta?.text, locale);
     const secondaryCtaText = tr(data.secondary_cta?.text, locale);
     const image = data.image;
+    const imageAlt = tr(data.image_alt, locale);
     const isVideo = !!image && isVideoUrl(image);
     const hasImage = !!image;
 
@@ -37,29 +39,31 @@ export function Hero({ data }: { data: HeroData }) {
                 'relative isolate flex h-[75vh] flex-col justify-end overflow-hidden pb-16 pl-[150px] pr-6 pt-32 sm:pb-20 md:pt-40',
                 hasImage ? 'bg-[#2F3E2E]' : 'bg-maha-200',
             )}
-            style={
-                image && !isVideo
-                    ? {
-                          backgroundImage: `linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.55)), url(${image})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
-                      }
-                    : undefined
-            }
         >
+            {/* Real <img>/<video> (not CSS background-image) so the banner has proper alt
+                text — a decorative gradient overlay sits on top for text legibility. Using
+                role="img" on the section itself would've hidden the heading/links below
+                from screen readers, so the alt lives on the image element instead. */}
+            {hasImage && !isVideo && (
+                <img src={image} alt={imageAlt} className="absolute inset-0 z-0 h-full w-full object-cover" />
+            )}
             {isVideo && image && (
-                <>
-                    <video
-                        className="absolute inset-0 z-0 h-full w-full object-cover"
-                        src={image}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                    />
-                    <div className="absolute inset-0 z-0 bg-black/40" />
-                </>
+                <video
+                    className="absolute inset-0 z-0 h-full w-full object-cover"
+                    src={image}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    aria-label={imageAlt}
+                />
+            )}
+            {hasImage && (
+                <div
+                    className="absolute inset-0 z-0"
+                    style={{ background: 'linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.55))' }}
+                />
             )}
 
             <div className="relative z-10 max-w-2xl">
