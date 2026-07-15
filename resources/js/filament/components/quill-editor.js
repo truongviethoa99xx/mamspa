@@ -13,7 +13,9 @@ export default function quillEditorFormComponent({ state, placeholder }) {
                 modules: {
                     toolbar: [
                         [{ header: [2, 3, false] }],
+                        [{ size: ['small', false, 'large', 'huge'] }],
                         ['bold', 'italic', 'underline', 'strike'],
+                        [{ color: [] }, { background: [] }],
                         [{ list: 'ordered' }, { list: 'bullet' }],
                         ['blockquote', 'link', 'image'],
                         ['clean'],

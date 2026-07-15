@@ -7,6 +7,27 @@
     .input-base {
         @apply w-full rounded-xl border border-maha-200 bg-white px-4 py-3 text-ink shadow-sm transition-colors placeholder:text-maha-400 focus:border-[#556B3F] focus:outline-none;
     }
+
+    /* Wrapper for HTML authored via the admin Quill editor (hero, blog, policy pages...).
+       Headings inherit their color from the wrapper instead of the global h1-h6 palette,
+       so admin-picked inline colors (or a plain white hero) aren't fought by base.css —
+       and .ql-size-* classes get real font sizes since the public site doesn't load Quill's own CSS. */
+    .rich-content :is(h1, h2, h3, h4, h5, h6) {
+        color: inherit;
+        font-weight: inherit;
+    }
+    .rich-content p {
+        margin: 0;
+    }
+    .rich-content .ql-size-small {
+        font-size: 0.75em;
+    }
+    .rich-content .ql-size-large {
+        font-size: 1.5em;
+    }
+    .rich-content .ql-size-huge {
+        font-size: 2.5em;
+    }
 }
 
 @layer base {

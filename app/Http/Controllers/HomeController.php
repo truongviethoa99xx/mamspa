@@ -37,17 +37,28 @@ class HomeController extends Controller
         ]);
     }
 
-    /** Nội dung banner đầu trang (tĩnh, đa ngôn ngữ). */
+    /** Nội dung banner đầu trang (tĩnh, đa ngôn ngữ, rich text qua Quill). */
     protected function hero(HomePageContent $content): array
     {
         return [
-            'eyebrow' => $content->hero_eyebrow,
-            'title' => $content->hero_title ?: ['vi' => 'Hành trình cân bằng Thân – Tâm – Trí', 'en' => 'The Journey to Balance Body – Mind – Spirit'],
-            'subtitle' => $content->hero_subtitle ?: ['vi' => 'Mầm Spa — Trải nghiệm spa truyền thống Việt giữa lòng Đà Nẵng', 'en' => 'Traditional Vietnamese spa experience in Da Nang'],
-            'cta_text' => $content->hero_cta_text ?: 'Đặt lịch ngay',
-            'cta_link' => $content->hero_cta_link ?: '/dat-lich/',
+            'heading' => $content->hero_eyebrow ?: ['vi' => '<p>Hành trình chữa lành từ thiên nhiên</p>', 'en' => '<p>A healing journey from nature</p>'],
+            'subtitle' => $content->hero_subtitle ?: ['vi' => '<p>Một khoảng lặng giữa nhịp sống thành phố.</p>', 'en' => '<p>A quiet pause amid the rhythm of city life.</p>'],
             'image' => $this->publicUrl($content->hero_image),
             'service_list_title' => $content->service_list_title ?: ['vi' => 'Dịch vụ nổi bật', 'en' => 'Featured Services'],
+            'cta' => [
+                'text' => $content->hero_cta_text ?: 'Đặt lịch ngay',
+                'link' => $content->hero_cta_link ?: '/dat-lich/',
+                'background_color' => $content->hero_cta_background_color ?: '#2F3E2E',
+                'text_color' => $content->hero_cta_text_color ?: '#FFFFFF',
+                'border_color' => $content->hero_cta_border_color ?: '#2F3E2E',
+            ],
+            'secondary_cta' => [
+                'text' => $content->hero_secondary_cta_text ?: 'Khám phá dịch vụ',
+                'link' => $content->hero_secondary_cta_link ?: '/dich-vu/',
+                'background_color' => $content->hero_secondary_cta_background_color ?: 'transparent',
+                'text_color' => $content->hero_secondary_cta_text_color ?: '#FFFFFF',
+                'border_color' => $content->hero_secondary_cta_border_color ?: '#FFFFFF',
+            ],
         ];
     }
 
