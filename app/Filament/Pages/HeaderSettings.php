@@ -48,7 +48,7 @@ class HeaderSettings extends Page implements HasForms
         return $form
             ->schema([
                 Forms\Components\Section::make('Header')
-                    ->description('Thanh header hiển thị trên cùng mọi trang công khai — full chiều rộng, cao cố định 150px.')
+                    ->description('Thanh header hiển thị trên cùng mọi trang công khai — full chiều rộng, cao cố định 100px.')
                     ->schema([
                         Forms\Components\FileUpload::make('logo_path')
                             ->label('Logo')
