@@ -45,6 +45,51 @@ export default function quillEditorFormComponent({ state, placeholder }) {
 
                 this.state = html === '<p><br></p>' ? '' : html
             })
+
+            addCustomColorInput(quill, 'color', 'Màu chữ tuỳ chỉnh (mã hex bất kỳ)')
+            addCustomColorInput(quill, 'background', 'Màu nền tuỳ chỉnh (mã hex bất kỳ)')
         },
     }
+}
+
+/**
+ * Quill's built-in [{ color: [] }] toolbar button only offers a fixed 40-swatch
+ * palette — no way to type/pick an arbitrary hex value. Append a native
+ * <input type="color"> (which the browser itself lets you enter any hex code)
+ * next to it, wired to Quill's formatText API.
+ *
+ * Native color inputs steal focus from the editor as soon as they're clicked,
+ * which collapses/clears Quill's selection before the "input" event fires — so
+ * the current range is captured on mousedown (before focus moves) and applied
+ * explicitly via formatText/format instead of relying on the live selection.
+ */
+function addCustomColorInput(quill, format, title) {
+    const wrapper = document.createElement('span')
+    wrapper.className = 'ql-formats ql-custom-color-formats'
+
+    const input = document.createElement('input')
+    input.type = 'color'
+    input.title = title
+    input.className = 'ql-custom-color'
+    input.value = '#000000'
+
+    let savedRange = null
+
+    input.addEventListener('mousedown', () => {
+        savedRange = quill.getSelection()
+    })
+
+    input.addEventListener('input', () => {
+        if (!savedRange) return
+
+        if (savedRange.length > 0) {
+            quill.formatText(savedRange.index, savedRange.length, format, input.value, 'user')
+        } else {
+            quill.setSelection(savedRange.index, 0)
+            quill.format(format, input.value, 'user')
+        }
+    })
+
+    wrapper.appendChild(input)
+    quill.getModule('toolbar').container.appendChild(wrapper)
 }

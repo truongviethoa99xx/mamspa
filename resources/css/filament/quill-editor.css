@@ -16,6 +16,22 @@
     min-height: 12rem;
 }
 
+/* Custom hex color inputs appended next to the preset color/background swatches. */
+.fi-quill-editor .ql-custom-color-formats {
+    display: inline-flex;
+    align-items: center;
+}
+
+.fi-quill-editor .ql-custom-color {
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 2px;
+    border: 1px solid rgb(228 228 231);
+    border-radius: 0.375rem;
+    background: white;
+    cursor: pointer;
+}
+
 /* Reserve space for the toolbar + editor before Quill finishes mounting
    (lazy-loaded via Alpine's x-load) so whatever follows in the form —
    e.g. the "Dịch tự động" action button — never renders into that space
