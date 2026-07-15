@@ -1,0 +1,52 @@
+# ── Secrets & môi trường (KHÔNG BAO GIỜ commit) ──
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.cache
+.phpunit.result.cache
+auth.json
+
+# ── Dependencies build ở local, KHÔNG commit ──
+/node_modules
+
+# ── Runtime / cache (sinh ra lúc chạy, KHÔNG commit) ──
+/storage/*.key
+/storage/pail
+/storage/app/public
+/storage/app/livewire-tmp
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*.php
+/bootstrap/ssr
+
+# ── Dev artifact: hot = trỏ Vite dev server, lên prod sẽ trắng trang ──
+/public/hot
+# Symlink tạo bằng `php artisan storage:link` trên server
+/public/storage
+
+# ── IDE / OS ──
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+.DS_Store
+
+# ════════════════════════════════════════════════════════════════════
+#  CỐ Ý commit cho deploy cPanel (Git pull, không Composer/Node trên host):
+#    vendor/            ← composer install --no-dev --optimize-autoloader
+#    public/build/      ← npm run build
+#    composer.lock
+#    package-lock.json
+#  → KHÔNG thêm /vendor hay /public/build vào danh sách ignore phía trên.
+# ════════════════════════════════════════════════════════════════════
+
+# log production tải về để debug — không commit
+/laravel.log

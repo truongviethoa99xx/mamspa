@@ -1,0 +1,53 @@
+{
+    "name": "mahaspa",
+    "private": true,
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build && npm run build:filament-assets",
+        "build:ssr": "vite build && vite build --ssr",
+        "build:filament-assets": "node bin/build-filament-quill.js",
+        "lint": "eslint resources/js --ext .ts,.tsx",
+        "format": "prettier --write resources/js"
+    },
+    "devDependencies": {
+        "@inertiajs/react": "^1.0.14",
+        "@types/node": "^20.11.30",
+        "@types/react": "^18.2.73",
+        "@types/react-dom": "^18.2.23",
+        "@typescript-eslint/eslint-plugin": "^7.4.0",
+        "@typescript-eslint/parser": "^7.4.0",
+        "@vitejs/plugin-react": "^4.2.1",
+        "autoprefixer": "^10.4.19",
+        "axios": "^1.6.8",
+        "concurrently": "^9.2.1",
+        "esbuild": "^0.28.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.34.1",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "laravel-vite-plugin": "^1.0.2",
+        "postcss": "^8.4.38",
+        "prettier": "^3.2.5",
+        "prettier-plugin-tailwindcss": "^0.5.13",
+        "tailwindcss": "^3.4.3",
+        "typescript": "^5.4.3",
+        "vite": "^5.2.6"
+    },
+    "dependencies": {
+        "@headlessui/react": "^2.0.0",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.0",
+        "date-fns": "^3.6.0",
+        "i18next": "^23.10.1",
+        "i18next-browser-languagedetector": "^7.2.1",
+        "lucide-react": "^0.363.0",
+        "quill": "^2.0.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-i18next": "^14.1.0",
+        "tailwind-merge": "^2.2.2",
+        "yet-another-react-lightbox": "^3.17.2",
+        "zustand": "^4.5.2"
+    }
+}

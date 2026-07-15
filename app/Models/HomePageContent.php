@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class HomePageContent extends Model
+{
+    protected $fillable = [
+        'hero_title',
+        'hero_subtitle',
+        'hero_eyebrow',
+        'hero_cta_text',
+        'hero_cta_link',
+        'hero_image',
+        'hero_visible',
+        'service_list_title',
+        'featured_services_visible',
+        'branch_intro_title',
+        'branch_intro_eyebrow',
+        'branch_intro_subheading',
+        'branch_intro_heading',
+        'branch_intro_body_1',
+        'branch_intro_body_2',
+        'branch_intro_cta',
+        'branch_intro_caption',
+        'testimonial_rating',
+        'testimonial_review_count',
+        'testimonial_source',
+        'testimonials',
+        'testimonials_visible',
+        'testimonial_video_url',
+        'story_eyebrow',
+        'story_body',
+        'story_cta_text',
+        'story_image',
+        'story_visible',
+        'philosophy_eyebrow',
+        'philosophy_quote',
+        'philosophy_visible',
+        'art_banner_eyebrow',
+        'art_banner_heading',
+        'art_banner_body',
+        'art_banner_cta_text',
+        'art_banner_image',
+        'art_banner_visible',
+        'why_us_items',
+        'why_us_visible',
+        'gallery_visible',
+        'final_cta_heading',
+        'final_cta_cta_text',
+        'final_cta_cta_link',
+        'final_cta_image',
+        'final_cta_visible',
+    ];
+
+    protected $casts = [
+        'hero_title' => 'array',
+        'hero_subtitle' => 'array',
+        'hero_eyebrow' => 'array',
+        'hero_cta_text' => 'array',
+        'hero_visible' => 'boolean',
+        'service_list_title' => 'array',
+        'featured_services_visible' => 'boolean',
+        'branch_intro_title' => 'array',
+        'branch_intro_eyebrow' => 'array',
+        'branch_intro_subheading' => 'array',
+        'branch_intro_heading' => 'array',
+        'branch_intro_body_1' => 'array',
+        'branch_intro_body_2' => 'array',
+        'branch_intro_cta' => 'array',
+        'branch_intro_caption' => 'array',
+        'testimonial_rating' => 'integer',
+        'testimonial_review_count' => 'integer',
+        'testimonials' => 'array',
+        'testimonials_visible' => 'boolean',
+        'story_eyebrow' => 'array',
+        'story_body' => 'array',
+        'story_cta_text' => 'array',
+        'story_visible' => 'boolean',
+        'philosophy_eyebrow' => 'array',
+        'philosophy_quote' => 'array',
+        'philosophy_visible' => 'boolean',
+        'art_banner_eyebrow' => 'array',
+        'art_banner_heading' => 'array',
+        'art_banner_body' => 'array',
+        'art_banner_cta_text' => 'array',
+        'art_banner_visible' => 'boolean',
+        'why_us_items' => 'array',
+        'why_us_visible' => 'boolean',
+        'gallery_visible' => 'boolean',
+        'final_cta_heading' => 'array',
+        'final_cta_cta_text' => 'array',
+        'final_cta_visible' => 'boolean',
+    ];
+
+    public static function current(): self
+    {
+        return static::first() ?? static::create([
+            'testimonials' => [],
+        ]);
+    }
+}

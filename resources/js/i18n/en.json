@@ -1,0 +1,458 @@
+{
+    "blog": {
+        "story": "Stories from nature",
+        "readArticle": "Read article",
+        "readMore": "Read more",
+        "loadMore": "Load more",
+        "loading": "Loading...",
+        "empty": "No posts yet.",
+        "author": "Mầm Spa Expert",
+        "minRead": "{{count}} min read",
+        "related": "Featured articles",
+        "ctaEyebrow": "Real experience",
+        "ctaTitle": "Head Spa Service",
+        "ctaDesc": "Awaken your hair's healthy shine with our in-depth herbal scalp treatment.",
+        "ctaButton": "Learn more"
+    },
+    "bookingForm": {
+        "eyebrow": "Reserve your moment of peace",
+        "title": "Book Your Experience",
+        "thankYou": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
+        "sectionLocation": "Choose Location & Services",
+        "sectionDatetime": "Choose Date & Time",
+        "sectionContact": "Contact Information",
+        "selectBranch": "Select a branch",
+        "guestCount": "Total guests",
+        "guestTotal": "Total",
+        "people": "Guests",
+        "male": "Male",
+        "female": "Female",
+        "choosePerGuest": "Please choose a service for each guest:",
+        "guestMale": "Male guest",
+        "guestFemale": "Female guest",
+        "chooseService": "Choose a service",
+        "morning": "Morning",
+        "afternoon": "Afternoon",
+        "evening": "Evening",
+        "pickDate": "Please pick a date to see available times.",
+        "noSlots": "No available time slots for this date.",
+        "timePlaceholder": "--:--",
+        "timeHint": "Branch hours: {{open}} - {{close}}",
+        "name": "Full name",
+        "namePlaceholder": "Enter your name",
+        "phone": "Phone number",
+        "phonePlaceholder": "Enter your phone number",
+        "email": "Email (Gmail)",
+        "emailPlaceholder": "Enter your Gmail",
+        "contactChannel": "Online contact method",
+        "contactValuePlaceholder": "Phone / Account ID",
+        "note": "Note for the spa (optional)",
+        "notePlaceholder": "Health conditions, therapist requests, pregnancy notes...",
+        "summaryTitle": "Booking summary",
+        "summaryPlace": "Location",
+        "summaryDatetime": "Time",
+        "summaryCustomers": "Customers",
+        "subtotal": "Subtotal",
+        "voucher": "Promotion / Voucher",
+        "total": "Total",
+        "confirm": "Confirm booking",
+        "processing": "Processing...",
+        "channelZalo": "Zalo",
+        "channelWhatsapp": "WhatsApp",
+        "channelPhone": "Phone"
+    },
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "booking": "Book Now",
+        "voucher": "Voucher",
+        "gallery": "Gallery",
+        "blog": "Blog",
+        "contact": "Contact",
+        "myBookings": "My Bookings",
+        "login": "Sign In",
+        "register": "Sign Up",
+        "logout": "Sign Out",
+        "toggleMenu": "Toggle menu"
+    },
+    "common": {
+        "loading": "Loading...",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "save": "Save",
+        "back": "Back",
+        "next": "Next",
+        "viewMore": "View more",
+        "bookNow": "Book now",
+        "readMore": "Read more",
+        "all": "All",
+        "processing": "Processing...",
+        "minute": "min",
+        "closeBanner": "Close banner",
+        "chat": "Chat",
+        "apply": "Apply"
+    },
+    "home": {
+        "hero": {
+            "eyebrow": "Rooted in Vietnamese Healing Traditions",
+            "title": "The Journey to Balance Body - Mind - Spirit",
+            "heading": "A healing journey\nrooted in nature",
+            "body": "Set aside the rush of everyday life and step into a serene\nIndochine space to listen to your body and soothe your soul.",
+            "explore": "Explore",
+            "subtitle": "Mầm Spa — Traditional Vietnamese spa experience in Da Nang"
+        }
+    },
+    "footer": {
+        "tagline": "The Beginning of the Journey to Balance Body - Mind - Spirit",
+        "branches": "Branches",
+        "contact": "Contact",
+        "follow": "Follow us",
+        "hotline": "Booking hotline",
+        "address": "Address",
+        "hours": "Opening hours",
+        "holiday": "(Open on holidays & Tet)",
+        "viewMap": "View directions",
+        "privacy": "Privacy policy",
+        "terms": "Terms of service",
+        "support": "Customer support",
+        "rights": "© {{year}} Mầm Spa. All rights reserved.",
+        "paymentGuide": "Payment Guide"
+    },
+    "services": {
+        "category": {
+            "all": "All",
+            "massage": "Body Massage",
+            "facial": "Facial",
+            "head-spa": "Head Spa",
+            "foot-spa": "Foot Spa",
+            "combo": "Combo"
+        },
+        "allBranches": "All branches",
+        "empty": "No matching services.",
+        "ingredients": "Ingredients"
+    },
+    "about": {
+        "title": "A journey to balance",
+        "subtitle": "A small pause amid the rush of Saigon",
+        "features": {
+            "headSpa": "Deep relaxation, nourishing the scalp.",
+            "bodyMassage": "Relieve tension, restore energy.",
+            "herbal": "Natural herbs, balancing body & mind.",
+            "tea": "Warm herbal tea to end the relaxing journey."
+        },
+        "story": {
+            "eyebrow": "Mầm Spa — Brand story",
+            "heading": "The origin of a Body – Mind – Spirit healing journey",
+            "p1": "Born from a belief in the deep connection between people and nature, Mầm Spa was created as a \"small pause amid the rush of Saigon\" — a place where everyday worries dissolve into profound calm.",
+            "p2": "With two distinctive spaces — Lê Văn Sỹ echoing the rustic charm of old Saigon, and Lê Thị Riêng modern and private — Mầm promises a perfect restorative experience through every touchpoint, with dedication and finesse."
+        },
+        "vision": {
+            "title": "Vision & Mission",
+            "p1": "Born from the aspiration to create a true healing space in the heart of a bustling city, Mầm Spa strives to be an ideal \"small pause\" for those seeking calm and restoration.",
+            "p2": "We believe relaxation is not only about easing physical fatigue, but a journey of complete Body - Mind - Spirit care that returns you to your most natural balance. At Mầm, you are free to choose the healing mood that suits you:",
+            "b1": "Where the rustic charm of old Saigon meets — for those who love simplicity, warmth and connection.",
+            "b2": "A serene, modern space with deeply restorative, highly personalised experiences.",
+            "eyebrow": "Rooted in Vietnamese Healing Traditions"
+        },
+        "values": {
+            "title": "Core values",
+            "t1": "Dedication & Professionalism",
+            "d1": "Our therapists are rigorously trained, with deep knowledge of acupressure and traditional healing methods, giving you complete peace of mind.",
+            "t2": "Personalised experience",
+            "d2": "We always listen to your body. Every treatment is flexibly tailored to each guest's condition and unique recovery needs.",
+            "t3": "Refined in every touch",
+            "d3": "Care shows in every detail — from the warm welcome tea and subtle herbal scent to the serene space entirely apart from the noisy city.",
+            "eyebrow": "Rooted in Vietnamese Healing Traditions"
+        },
+        "team": {
+            "eyebrow": "The people who deliver serenity",
+            "title": "A dedicated care team",
+            "m1Role": "Lead Therapist",
+            "m1Desc": "Over 10 years of experience in traditional massage and deep-recovery therapies.",
+            "m2Role": "Herbal Specialist",
+            "m2Desc": "Devoted to researching and developing Mầm Spa's exclusive tea and herbal oil formulas.",
+            "m3Role": "Head Spa Specialist",
+            "m3Desc": "A deep understanding of scalp care and wellness hair-washing techniques for complete relaxation."
+        },
+        "reviews": {
+            "eyebrow": "Words from those we cherish",
+            "title": "What our guests say",
+            "videoCaption": "A healing experience at Mầm",
+            "quote": "A truly peaceful space in the heart of Saigon. The therapists are so dedicated — I had the best sleep after the massage and hair wash. Thank you, Mầm Spa!",
+            "author": "Ms. Vivian – Loyal customer",
+            "like": "Like"
+        },
+        "hero": {
+            "eyebrow": "A Vietnamese Healing Journey",
+            "retreat": "A retreat for body, mind & soul."
+        },
+        "featureTitles": {
+            "headSpa": "Head Spa Therapy",
+            "bodyMassage": "Body Massage",
+            "herbal": "Herbal Therapy",
+            "tea": "Tea Ritual"
+        }
+    },
+    "dichvu": {
+        "eyebrow": "A journey to balance your body, mind & soul",
+        "title": "Service Menu",
+        "searchPlaceholder": "Search a service (e.g. Herbal head spa, Neck & shoulder therapy...)",
+        "searchButton": "Search",
+        "combos": {
+            "eyebrow": "A complete care journey",
+            "title": "Mầm Combo packages",
+            "bestseller": "Best seller"
+        },
+        "results": {
+            "eyebrow": "Search results",
+            "titleWithQuery": "Results for “{{query}}”",
+            "title": "All services",
+            "count": "Found {{count}} matching services",
+            "empty": "No matching services found. Try a different keyword or branch.",
+            "clear": "Clear filters"
+        },
+        "category": {
+            "subcategoriesEyebrow": "Explore more",
+            "subcategoriesTitle": "Sub-categories",
+            "servicesEyebrow": "Featured services",
+            "servicesTitle": "Service packages"
+        },
+        "massage": {
+            "title": "Therapeutic massage services",
+            "d1": "Effectively releases tension and relieves neck-and-shoulder pain.",
+            "d2": "Foot reflexology that stimulates circulation and restores vitality.",
+            "d3": "Deep full-body therapy that melts muscle fatigue and clears the mind."
+        },
+        "detail": {
+            "consult": "Get a consultation",
+            "getOffer": "Claim the offer",
+            "benefitsEyebrow": "Understand your body, choose the right therapy",
+            "benefitsTitle": "Benefits & who it's for",
+            "benefitsHeading": "Treatment benefits",
+            "idealHeading": "Especially recommended for:",
+            "faqEyebrow": "Mầm answers your questions",
+            "faqTitle": "Frequently asked questions",
+            "relatedEyebrow": "Continue your healing journey",
+            "relatedTitle": "Explore other services",
+            "stepsEyebrow": "A step-by-step experience",
+            "stepsTitle": "Treatment process",
+            "experienceEyebrow": "Moments at Mầm Spa",
+            "experienceTitle": "Customer experience gallery",
+            "categoryServicesEyebrow": "A complete care journey"
+        }
+    },
+    "booking": {
+        "steps": {
+            "branch": "Branch",
+            "service": "Service",
+            "datetime": "Date & time",
+            "info": "Your info",
+            "confirm": "Confirm"
+        },
+        "selectBranch": "Select a branch",
+        "selectService": "Select a service",
+        "selectDateTime": "Pick date & time",
+        "contactInfo": "Contact information",
+        "confirmTitle": "Confirm your booking",
+        "field": {
+            "name": "Full name",
+            "phone": "Phone number",
+            "email": "Email",
+            "note": "Note",
+            "voucher": "Voucher",
+            "paymentMethod": "Payment method"
+        },
+        "voucher": {
+            "apply": "Apply",
+            "discount": "Discount {{amount}}"
+        },
+        "payment": {
+            "cash": "Pay at the spa",
+            "vnpay": "VNPay",
+            "momo": "MoMo",
+            "card": "Visa/Master card"
+        },
+        "summary": {
+            "branch": "Branch",
+            "service": "Service",
+            "date": "Date",
+            "time": "Time",
+            "guest": "Guest",
+            "total": "Total"
+        },
+        "confirm": "Confirm booking",
+        "slotsAvailable": "{{available}}/{{capacity}} available"
+    },
+    "bookingSuccess": {
+        "title": "Booking successful!",
+        "code": "Booking code",
+        "emailSent": "A confirmation email has been sent.",
+        "backHome": "Back to home"
+    },
+    "myBookings": {
+        "empty": "You have no bookings yet.",
+        "bookOne": "Book now",
+        "confirmCancel": "Cancel booking {{code}}?",
+        "payVnpay": "Pay with VNPay",
+        "status": {
+            "pending": "Pending",
+            "confirmed": "Confirmed",
+            "completed": "Completed",
+            "cancelled": "Cancelled"
+        }
+    },
+    "auth": {
+        "login": "Sign In",
+        "register": "Sign Up",
+        "email": "Email",
+        "password": "Password",
+        "passwordConfirm": "Confirm password",
+        "name": "Name",
+        "phone": "Phone",
+        "remember": "Remember me",
+        "orContinueWith": "Or continue with",
+        "loginWithGoogle": "Sign in with Google",
+        "noAccount": "No account yet?",
+        "haveAccount": "Already have an account?"
+    },
+    "contact": {
+        "form": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "subject": "Subject",
+            "message": "Message",
+            "title": "Send us a message",
+            "subtitle": "Mầm will get back to you as soon as possible."
+        }
+    },
+    "blocks": {
+        "services": {
+            "eyebrow": "Healing in every detail"
+        },
+        "testimonial": {
+            "eyebrow": "Hear real experiences",
+            "title": "Customer reviews",
+            "ratingLabel": "Excellent",
+            "basedOn": "Based on {{count}} reviews",
+            "readMore": "Read more",
+            "video": "Customer video review"
+        },
+        "bookingForm": {
+            "title": "Booking request",
+            "branch": "Mầm Spa branch",
+            "branchPlaceholder": "Select a branch",
+            "name": "Customer name",
+            "namePlaceholder": "Enter your name",
+            "phone": "Phone number",
+            "phonePlaceholder": "Enter phone number",
+            "phoneCountrySearchPlaceholder": "Search country or dial code...",
+            "phoneCountryEmpty": "No country found",
+            "email": "Email (Gmail)",
+            "emailPlaceholder": "example@gmail.com",
+            "channel": "Online contact channel",
+            "channelPlaceholder": "Phone / Account ID",
+            "date": "Date",
+            "time": "Time",
+            "timeSearchPlaceholder": "Search time slot...",
+            "timeSearchEmpty": "No time slot found",
+            "guests": "Number of guests",
+            "total": "Total",
+            "people": "People",
+            "male": "Male",
+            "female": "Female",
+            "chooseService": "Choose a service for each guest",
+            "guestMale": "Male guest",
+            "guestFemale": "Female guest",
+            "servicePlaceholder": "Select a service",
+            "serviceSearchPlaceholder": "Search services...",
+            "serviceEmpty": "No services found",
+            "serviceRequired": "Please choose a service for each guest.",
+            "note": "Additional note (optional)",
+            "notePlaceholder": "Health conditions, therapist requests, or any notes...",
+            "submit": "Complete booking",
+            "success": {
+                "title": "Your request has been sent!",
+                "message": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
+                "codeLabel": "Your request code",
+                "home": "Back to home"
+            }
+        },
+        "menu": {
+            "title": "Service Menu",
+            "book": "Book now",
+            "minute": "Min",
+            "cat": {
+                "combo": "Signature Combo",
+                "massage": "Massage Therapies",
+                "head-spa": "Head Spa",
+                "facial": "Facial Treatments",
+                "foot-spa": "Others"
+            }
+        },
+        "branches": {
+            "title": "Explore the Mầm Spa spaces",
+            "spaceLabel": "CN{{index}}",
+            "eyebrow": "A retreat for body, mind & soul",
+            "subheading": "A healing space",
+            "heading": "The beauty of old Saigon.",
+            "p1": "Step into the Lê Văn Sỹ space and return to a rare moment of stillness. Here, the rustic charm of traditional architecture is preserved with warm wood, natural light and the faint scent of herbs.",
+            "p2": "An ideal destination to set aside the rush of life, relax deeply and reconnect with yourself.",
+            "cta": "Explore in detail"
+        },
+        "whyUs": {
+            "eyebrow": "Why Mầm Spa"
+        },
+        "gallery": {
+            "eyebrow": "Gallery",
+            "viewMore": "View more photos"
+        }
+    },
+    "paymentGuide": {
+        "eyebrow": "Mầm Spa",
+        "title": "Payment Guide",
+        "subtitle": "A few gentle notes on payment, so your journey at Mầm stays light and complete.",
+        "metaDescription": "Payment guide at Mầm Spa: cash, bank transfer, Visa/Mastercard/JCB cards, MoMo/VNPay/ZaloPay e-wallets and VAT invoices.",
+        "sections": {
+            "methods": {
+                "title": "Payment methods",
+                "p1": "So your moment of calm stays whole until you leave, Mầm offers several ways to pay — at your own ease.",
+                "p2": "You may pay by cash, bank transfer, card or e-wallet — whichever feels most convenient to you.",
+                "p3": "Every transaction is handled gently and clearly, right at the reception."
+            },
+            "cards": {
+                "title": "Cards & E-wallets",
+                "p1": "Mầm warmly welcomes most international cards: Visa, Mastercard, JCB, American Express, UnionPay and Apple Pay.",
+                "p2": "For those who prefer e-wallets, Mầm is also ready with MoMo, VNPay and ZaloPay.",
+                "p3": "Just one tap and payment is done, so you keep that feeling of calm to carry home."
+            },
+            "transfer": {
+                "title": "Bank transfer",
+                "p1": "If you'd like to transfer, our reception will kindly share Mầm's account details with you.",
+                "p2": "Simply note your name and booking phone number in the transfer, so Mầm can reconcile it quickly.",
+                "p3": "Once the transfer is complete, Mầm will confirm with you so you can be fully at ease."
+            },
+            "invoice": {
+                "title": "VAT invoice",
+                "p1": "Mầm is always happy to issue a VAT invoice whenever you need one.",
+                "p2": "Just share your invoicing details before payment, so Mầm can prepare everything accurately and completely."
+            },
+            "fees": {
+                "title": "Surcharges & Refunds",
+                "p1": "Mầm wishes everything to be transparent, so there is no surcharge for any payment method.",
+                "p2": "On public holidays there may be a small surcharge — Mầm will always let you know in advance.",
+                "p3": "If a refund is ever needed, please let our reception know — Mầm will listen and help you with the utmost care."
+            }
+        }
+    },
+    "notFound": {
+        "title": "Page not found",
+        "heading": "404",
+        "description": "Sorry, the page you're looking for doesn't exist or has been moved.",
+        "backHome": "Back to home",
+        "suggestionsTitle": "You might be looking for:",
+        "exploreServices": "Explore services",
+        "contact": "Contact Mầm Spa"
+    }
+}

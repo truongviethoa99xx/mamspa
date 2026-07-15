@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  php:
+    name: PHP — Pint + Pest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_mysql, redis, gd
+          coverage: none
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+      - name: Copy .env
+        run: cp .env.example .env
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Pint (style check)
+        run: ./vendor/bin/pint --test
+      - name: Pest
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: ./vendor/bin/pest
+
+  js:
+    name: JS — ESLint + Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build:client

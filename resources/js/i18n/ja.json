@@ -1,0 +1,398 @@
+{
+    "blog": {
+        "story": "自然からの物語",
+        "readArticle": "記事を読む",
+        "readMore": "続きを読む",
+        "loadMore": "もっと見る",
+        "loading": "読み込み中...",
+        "empty": "まだ投稿がありません。",
+        "author": "Mầm Spa スペシャリスト",
+        "minRead": "約{{count}}分で読めます",
+        "related": "注目の記事",
+        "ctaEyebrow": "実際の体験",
+        "ctaTitle": "ヘッドスパサービス",
+        "ctaDesc": "本格的なハーブ頭皮トリートメントで髪の健やかなツヤを呼び覚まします。",
+        "ctaButton": "詳しく見る"
+    },
+    "bookingForm": {
+        "eyebrow": "Reserve your moment of peace",
+        "title": "ご予約",
+        "thankYou": "ご予約リクエストありがとうございます。Mầm Spa のスタッフがまもなくご連絡し、ご予約の確認と最高の体験のための準備をいたします。",
+        "sectionLocation": "店舗とサービスの選択",
+        "sectionDatetime": "日付と時間の選択",
+        "sectionContact": "連絡先情報",
+        "selectBranch": "店舗を選択",
+        "guestCount": "合計人数",
+        "guestTotal": "合計",
+        "people": "名",
+        "male": "男性",
+        "female": "女性",
+        "choosePerGuest": "各ゲストのサービスをお選びください：",
+        "guestMale": "男性ゲスト",
+        "guestFemale": "女性ゲスト",
+        "chooseService": "サービスを選択",
+        "morning": "午前",
+        "afternoon": "午後",
+        "evening": "夜",
+        "pickDate": "日付を選択すると空き時間が表示されます。",
+        "noSlots": "この日に空き時間はありません。",
+        "name": "お名前",
+        "namePlaceholder": "お名前を入力",
+        "phone": "電話番号",
+        "phonePlaceholder": "電話番号を入力",
+        "email": "メール (Gmail)",
+        "emailPlaceholder": "Gmail を入力",
+        "contactChannel": "オンライン連絡方法",
+        "contactValuePlaceholder": "電話 / アカウントID",
+        "note": "スパへのご要望（任意）",
+        "notePlaceholder": "健康状態、セラピストのご希望、妊娠中の注意点など…",
+        "summaryTitle": "予約内容",
+        "summaryPlace": "店舗",
+        "summaryDatetime": "日時",
+        "summaryCustomers": "お客様",
+        "subtotal": "小計",
+        "voucher": "プロモーション / バウチャー",
+        "total": "合計",
+        "confirm": "予約を確定する",
+        "processing": "処理中...",
+        "channelZalo": "Zalo",
+        "channelMessenger": "Messenger",
+        "channelWhatsapp": "WhatsApp",
+        "channelPhone": "電話"
+    },
+    "nav": {
+        "home": "ホーム",
+        "about": "について",
+        "services": "サービス",
+        "booking": "予約する",
+        "voucher": "バウチャー",
+        "gallery": "ギャラリー",
+        "blog": "ブログ",
+        "contact": "お問い合わせ",
+        "myBookings": "予約履歴",
+        "login": "ログイン",
+        "register": "新規登録",
+        "logout": "ログアウト",
+        "toggleMenu": "メニュー"
+    },
+    "common": {
+        "loading": "読み込み中...",
+        "submit": "送信",
+        "cancel": "キャンセル",
+        "save": "保存",
+        "back": "戻る",
+        "next": "次へ",
+        "viewMore": "もっと見る",
+        "bookNow": "今すぐ予約",
+        "readMore": "続きを読む",
+        "all": "すべて",
+        "processing": "処理中...",
+        "minute": "分",
+        "closeBanner": "閉じる",
+        "chat": "チャット",
+        "apply": "適用"
+    },
+    "home": {
+        "hero": {
+            "eyebrow": "Rooted in Vietnamese Healing Traditions",
+            "title": "身体・心・精神のバランスへの旅",
+            "heading": "自然がもたらす癒やしの旅",
+            "body": "慌ただしい日常を離れ、静かなインドシナ空間で身体に耳を傾け、心をやさしく癒やすひとときへ。",
+            "explore": "探索",
+            "subtitle": "マハスパ — ダナンで体験するベトナム伝統スパ"
+        }
+    },
+    "footer": {
+        "tagline": "身体・心・精神のバランスへの旅の始まり",
+        "branches": "店舗",
+        "contact": "お問い合わせ",
+        "follow": "フォローする",
+        "hotline": "予約ホットライン",
+        "address": "住所",
+        "hours": "営業時間",
+        "holiday": "（祝日・テト営業）",
+        "viewMap": "地図・ルートを見る",
+        "privacy": "プライバシーポリシー",
+        "terms": "利用規約",
+        "support": "カスタマーサポート",
+        "rights": "© {{year}} Mầm Spa. 無断転載禁止。"
+    },
+    "services": {
+        "category": {
+            "all": "すべて",
+            "massage": "ボディマッサージ",
+            "facial": "フェイシャル",
+            "head-spa": "ヘッドスパ",
+            "foot-spa": "フットスパ",
+            "combo": "コンボ"
+        },
+        "allBranches": "全店舗",
+        "empty": "該当するサービスがありません。",
+        "ingredients": "使用素材"
+    },
+    "about": {
+        "title": "バランスへの旅",
+        "subtitle": "慌ただしいサイゴンの中の小さな休息",
+        "features": {
+            "headSpa": "深いリラックスと頭皮ケア。",
+            "bodyMassage": "コリをほぐし、エネルギーを回復。",
+            "herbal": "天然ハーブで心身を整える。",
+            "tea": "温かいハーブティーで癒やしの締めくくり。"
+        },
+        "story": {
+            "eyebrow": "Mầm Spa — ブランドストーリー",
+            "heading": "心・身体・精神を癒やす旅のはじまり",
+            "p1": "人と自然の深いつながりへの信念から生まれた Mầm Spa は、「慌ただしいサイゴンの中の小さな休息」として誕生しました。日常の悩みが消え、深い安らぎに満たされる場所です。",
+            "p2": "個性豊かな2つの空間——古きサイゴンの素朴さを宿すレ・ヴァン・シー店と、モダンでプライベートなレ・ティ・リエン店。Mầm は真心と繊細さで、一つひとつの瞬間に完璧な回復体験をお届けします。"
+        },
+        "vision": {
+            "title": "ビジョンとミッション",
+            "p1": "賑やかな街の中心に本物の癒やしの空間をつくりたいという想いから、Mầm Spa は安らぎと回復を求める人のための理想の「小さな休息」を目指します。",
+            "p2": "リラクゼーションは身体の疲れを癒やすだけでなく、心・身体・精神を丸ごと整え、最も自然なバランスへと導く旅だと私たちは信じています。Mầm では、自分に合った癒やしのスタイルを選べます：",
+            "b1": "古きサイゴンの素朴さが交わる場所。素朴さ、温もり、つながりを愛する方へ。",
+            "b2": "静かでモダンな空間。深く、高度にパーソナライズされた回復体験を。",
+            "eyebrow": "ベトナムの伝統的な癒しに根ざして"
+        },
+        "values": {
+            "title": "コアバリュー",
+            "t1": "誠心と専門性",
+            "d1": "当店のセラピストは入念な研修を受け、経穴や伝統的な施術法に精通。安心してお寛ぎいただけます。",
+            "t2": "パーソナライズ体験",
+            "d2": "お客様の身体に常に耳を傾けます。各施術は体調と回復ニーズに合わせて柔軟に調整します。",
+            "t3": "細部まで繊細に",
+            "d3": "温かいウェルカムティー、ほのかなハーブの香り、街の喧騒から離れた静寂な空間まで、細部に心を込めて。",
+            "eyebrow": "ベトナムの伝統的な癒しに根ざして"
+        },
+        "team": {
+            "eyebrow": "安らぎを届ける人々",
+            "title": "心を込めたケアチーム",
+            "m1Role": "チーフセラピスト",
+            "m1Desc": "伝統的なマッサージと深部回復療法において10年以上の経験。",
+            "m2Role": "ハーブスペシャリスト",
+            "m2Desc": "Mầm Spa 独自のお茶とハーブオイルの処方を研究・開発。",
+            "m3Role": "ヘッドスパスペシャリスト",
+            "m3Desc": "頭皮ケアと養生シャンプー技術に精通し、完全なリラックスへ導きます。"
+        },
+        "reviews": {
+            "eyebrow": "大切な方々からの声",
+            "title": "お客様の声",
+            "videoCaption": "Mầm での癒やし体験",
+            "quote": "サイゴンの中心とは思えない、本当に穏やかな空間。セラピストの方々がとても丁寧で、マッサージとヘッドスパの後はぐっすり眠れました。Mầm Spa さん、ありがとう！",
+            "author": "Vivian 様 – 常連のお客様",
+            "like": "いいね"
+        },
+        "hero": {
+            "eyebrow": "ベトナムの癒しの旅",
+            "retreat": "身体・心・精神のためのリトリート。"
+        },
+        "featureTitles": {
+            "headSpa": "ヘッドスパセラピー",
+            "bodyMassage": "ボディマッサージ",
+            "herbal": "ハーブセラピー",
+            "tea": "ティーセレモニー"
+        }
+    },
+    "dichvu": {
+        "eyebrow": "A journey to balance your body, mind & soul",
+        "title": "サービスメニュー",
+        "searchPlaceholder": "サービスを検索（例：ハーブヘッドスパ、首・肩の施術…）",
+        "searchButton": "検索",
+        "combos": {
+            "eyebrow": "まるごと癒やしの旅",
+            "title": "Mầm コンボパッケージ",
+            "bestseller": "人気No.1"
+        },
+        "massage": {
+            "title": "セラピーマッサージ",
+            "d1": "首・肩のこりと痛みを効果的に和らげます。",
+            "d2": "足裏のツボ押しで血行を促進し、活力を回復。",
+            "d3": "全身の深部ケアで筋肉の疲れを溶かし、心を整えます。"
+        },
+        "detail": {
+            "consult": "相談する",
+            "getOffer": "今すぐ特典を受け取る",
+            "benefitsEyebrow": "身体を理解し、最適な施術を選ぶ",
+            "benefitsTitle": "効果と対象となる方",
+            "benefitsHeading": "施術の効果",
+            "idealHeading": "特におすすめの方：",
+            "faqEyebrow": "Mầm がお答えします",
+            "faqTitle": "よくある質問",
+            "relatedEyebrow": "癒しの旅を続ける",
+            "relatedTitle": "他のサービスを見る",
+            "stepsEyebrow": "ステップごとの体験",
+            "stepsTitle": "施術の流れ",
+            "experienceEyebrow": "Mầm Spa での瞬間",
+            "experienceTitle": "お客様の体験ギャラリー",
+            "categoryServicesEyebrow": "満ち足りたケアの旅"
+        },
+        "category": {
+            "servicesEyebrow": "おすすめサービス",
+            "servicesTitle": "サービスパッケージ"
+        }
+    },
+    "booking": {
+        "steps": {
+            "branch": "店舗",
+            "service": "サービス",
+            "datetime": "日時",
+            "info": "お客様情報",
+            "confirm": "確認"
+        },
+        "selectBranch": "店舗を選択",
+        "selectService": "サービスを選択",
+        "selectDateTime": "日時を選択",
+        "contactInfo": "連絡先情報",
+        "confirmTitle": "予約内容の確認",
+        "field": {
+            "name": "お名前",
+            "phone": "電話番号",
+            "email": "メールアドレス",
+            "note": "備考",
+            "voucher": "バウチャー",
+            "paymentMethod": "支払い方法"
+        },
+        "voucher": {
+            "apply": "適用",
+            "discount": "割引 {{amount}}"
+        },
+        "payment": {
+            "cash": "店舗でのお支払い",
+            "vnpay": "VNPay",
+            "momo": "MoMo",
+            "card": "Visa/マスターカード"
+        },
+        "summary": {
+            "branch": "店舗",
+            "service": "サービス",
+            "date": "日付",
+            "time": "時間",
+            "guest": "お客様",
+            "total": "合計"
+        },
+        "confirm": "予約を確定する",
+        "slotsAvailable": "{{available}}/{{capacity}} 空き"
+    },
+    "bookingSuccess": {
+        "title": "予約が完了しました！",
+        "code": "予約コード",
+        "emailSent": "確認メールを送信しました。",
+        "backHome": "ホームに戻る"
+    },
+    "myBookings": {
+        "empty": "予約履歴がありません。",
+        "bookOne": "今すぐ予約",
+        "confirmCancel": "予約 {{code}} をキャンセルしますか？",
+        "payVnpay": "VNPayで支払う",
+        "status": {
+            "pending": "保留中",
+            "confirmed": "確認済み",
+            "completed": "完了",
+            "cancelled": "キャンセル済み"
+        }
+    },
+    "auth": {
+        "login": "ログイン",
+        "register": "新規登録",
+        "email": "メールアドレス",
+        "password": "パスワード",
+        "passwordConfirm": "パスワード確認",
+        "name": "お名前",
+        "phone": "電話番号",
+        "remember": "ログイン状態を保持",
+        "orContinueWith": "または次で続ける",
+        "loginWithGoogle": "Googleでログイン",
+        "noAccount": "アカウントをお持ちでない方",
+        "haveAccount": "すでにアカウントをお持ちの方"
+    },
+    "contact": {
+        "form": {
+            "name": "お名前",
+            "email": "メールアドレス",
+            "phone": "電話番号",
+            "subject": "件名",
+            "message": "メッセージ",
+            "title": "メッセージを送る",
+            "subtitle": "Mầm よりできるだけ早くご返信いたします。"
+        }
+    },
+    "blocks": {
+        "services": {
+            "eyebrow": "Healing in every detail"
+        },
+        "testimonial": {
+            "eyebrow": "お客様の生の声",
+            "title": "お客様の口コミ",
+            "ratingLabel": "非常に良い",
+            "basedOn": "{{count}} 件のレビューに基づく",
+            "readMore": "続きを読む"
+        },
+        "bookingForm": {
+            "title": "ご予約リクエスト",
+            "branch": "Mầm Spa 店舗",
+            "branchPlaceholder": "店舗を選択",
+            "name": "お客様のお名前",
+            "namePlaceholder": "お名前を入力",
+            "phone": "電話番号",
+            "phonePlaceholder": "電話番号を入力",
+            "phoneCountrySearchPlaceholder": "国名または国番号を検索...",
+            "phoneCountryEmpty": "該当する国が見つかりません",
+            "email": "メール (Gmail)",
+            "emailPlaceholder": "example@gmail.com",
+            "channel": "オンライン連絡手段",
+            "channelPlaceholder": "電話番号 / アカウントID",
+            "date": "日付",
+            "time": "時間",
+            "guests": "ご来店人数",
+            "total": "合計",
+            "people": "名",
+            "male": "男性",
+            "female": "女性",
+            "chooseService": "各お客様のサービスを選択",
+            "guestMale": "男性のお客様",
+            "guestFemale": "女性のお客様",
+            "servicePlaceholder": "サービスを選択",
+            "serviceSearchPlaceholder": "サービスを検索...",
+            "serviceEmpty": "サービスが見つかりません",
+            "serviceRequired": "各お客様のサービスを選択してください。",
+            "note": "備考（任意）",
+            "notePlaceholder": "健康状態、セラピストのご希望、その他ご要望など...",
+            "submit": "予約を完了する",
+            "success": {
+                "title": "リクエストを送信しました！",
+                "message": "ありがとうございます。Mầm Spa のスタッフが、ご予約の確認と最高の体験のご準備のため、まもなくご連絡いたします。",
+                "codeLabel": "お客様のリクエストコード",
+                "home": "ホームに戻る"
+            }
+        },
+        "menu": {
+            "title": "サービスメニュー",
+            "book": "予約する",
+            "minute": "分",
+            "cat": {
+                "combo": "Signature Combo",
+                "massage": "Massage Therapies",
+                "head-spa": "Head Spa",
+                "facial": "Facial Treatments",
+                "foot-spa": "Others"
+            }
+        },
+        "branches": {
+            "title": "Mầm Spa の空間を巡る",
+            "eyebrow": "A retreat for body, mind & soul",
+            "subheading": "癒やしの空間",
+            "heading": "古きサイゴンの趣。",
+            "p1": "レ・ヴァン・シー店に足を踏み入れると、希少な静寂のひとときへ。温かみのある木材、自然光、ほのかなハーブの香りが、伝統建築の素朴な趣をそのままに残しています。",
+            "p2": "慌ただしい日常を離れ、深くリラックスし、自分自身とつながり直すための理想的な場所です。",
+            "cta": "詳しく見る"
+        }
+    },
+    "notFound": {
+        "title": "ページが見つかりません",
+        "heading": "404",
+        "description": "申し訳ございません。お探しのページは存在しないか、移動された可能性があります。",
+        "backHome": "ホームに戻る",
+        "suggestionsTitle": "こちらもご覧ください：",
+        "exploreServices": "サービスを見る",
+        "contact": "お問い合わせ"
+    }
+}

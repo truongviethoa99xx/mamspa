@@ -1,0 +1,17 @@
+.fi-quill-editor .ql-toolbar.ql-snow {
+    border-color: rgb(228 228 231);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background-color: rgb(250 250 249);
+}
+
+.fi-quill-editor .ql-container.ql-snow {
+    border-color: rgb(228 228 231);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.fi-quill-editor .ql-editor {
+    min-height: 12rem;
+}
