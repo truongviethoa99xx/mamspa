@@ -16,6 +16,25 @@
     min-height: 12rem;
 }
 
+/* Quill's snow.css only has text labels baked in for its default small/large/huge size
+   presets — any other data-value (our numeric px whitelist) silently falls back to a
+   generic "Normal" label. Show the actual value instead, both in the closed dropdown
+   button and in the open list of options. */
+.fi-quill-editor .ql-picker.ql-size .ql-picker-label[data-value]::before,
+.fi-quill-editor .ql-picker.ql-size .ql-picker-item[data-value]::before {
+    content: attr(data-value);
+}
+
+.fi-quill-editor .ql-picker.ql-size .ql-picker-options {
+    max-height: 16rem;
+    overflow-y: auto;
+}
+
+.fi-quill-editor .ql-picker.ql-size {
+    width: auto;
+    min-width: 4.5rem;
+}
+
 /* Custom hex color pickers appended next to the preset color/background swatches.
    Styled to match Quill's own toolbar buttons (24x24, gray icon, hover highlight) so
    they read as toolbar actions instead of two unlabeled black squares — the native

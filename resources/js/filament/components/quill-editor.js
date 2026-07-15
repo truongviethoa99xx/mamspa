@@ -1,5 +1,14 @@
 import Quill from 'quill'
 
+// Quill's default `size` format only supports the vague small/normal/large/huge presets
+// (mapped to CSS classes). Register a style-based Size attributor with an explicit px
+// whitelist instead, so the toolbar dropdown shows real numeric sizes (14px, 24px...)
+// and applies them as an inline `font-size` style — no extra CSS needed to render it.
+const FONT_SIZES = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px', '64px']
+const SizeStyle = Quill.import('attributors/style/size')
+SizeStyle.whitelist = FONT_SIZES
+Quill.register(SizeStyle, true)
+
 export default function quillEditorFormComponent({ state, placeholder }) {
     // Kept OUTSIDE the returned (Alpine-reactive) object on purpose: Quill keeps a lot of
     // internal mutable state (Parchment blots, Selection/Range bookkeeping) that breaks in
@@ -18,7 +27,7 @@ export default function quillEditorFormComponent({ state, placeholder }) {
                 modules: {
                     toolbar: [
                         [{ header: [2, 3, false] }],
-                        [{ size: ['small', false, 'large', 'huge'] }],
+                        [{ size: [false, ...FONT_SIZES] }],
                         ['bold', 'italic', 'underline', 'strike'],
                         [{ color: [] }, { background: [] }],
                         [{ list: 'ordered' }, { list: 'bullet' }],
