@@ -44,6 +44,8 @@ class HomePageSettings extends Page implements HasForms
             'hero_cta_text', 'hero_cta_link', 'hero_cta_background_color', 'hero_cta_text_color', 'hero_cta_border_color',
             'hero_secondary_cta_text', 'hero_secondary_cta_link', 'hero_secondary_cta_background_color',
             'hero_secondary_cta_text_color', 'hero_secondary_cta_border_color',
+            'story_eyebrow', 'story_body', 'story_image', 'story_visible',
+            'story_cta_text', 'story_cta_link', 'story_cta_text_color',
             'service_list_title', 'featured_services_visible',
         ]));
     }
@@ -89,6 +91,29 @@ class HomePageSettings extends Page implements HasForms
                             ->helperText('Để trống = nền trong suốt (chỉ hiện viền + chữ).'),
                         Forms\Components\ColorPicker::make('hero_secondary_cta_text_color')->label('Màu chữ')->required(),
                         Forms\Components\ColorPicker::make('hero_secondary_cta_border_color')->label('Màu viền')->required(),
+                    ])
+                    ->columns(3),
+
+                Forms\Components\Section::make('Banner 2 — "A Place To Pause"')
+                    ->description('Banner giới thiệu thương hiệu, ảnh chỉ chiếm khoảng 2/3 chiều rộng (2 cột: chữ trái, ảnh phải) — không full-bleed như banner chính.')
+                    ->schema([
+                        Forms\Components\Toggle::make('story_visible')
+                            ->label('Hiển thị khối này trên trang chủ')
+                            ->default(true)
+                            ->columnSpanFull(),
+                        TranslatableField::group('story_eyebrow', as: 'quill', label: 'Heading 2'),
+                        TranslatableField::group('story_body', as: 'quill', label: 'Chú thích'),
+                        Forms\Components\FileUpload::make('story_image')->label('Ảnh minh hoạ')
+                            ->helperText('Chiếm khoảng 2/3 chiều rộng banner, bên phải khối chữ.')
+                            ->image()->disk('public')->directory('home')
+                            ->columnSpanFull(),
+                    ]),
+
+                Forms\Components\Section::make('Nút "Về Mầm Spa" (Banner 2)')
+                    ->schema([
+                        TranslatableField::group('story_cta_text', label: 'Chữ trên nút'),
+                        Forms\Components\TextInput::make('story_cta_link')->label('Đường dẫn nút')->placeholder('/gioi-thieu/'),
+                        Forms\Components\ColorPicker::make('story_cta_text_color')->label('Màu chữ')->required(),
                     ])
                     ->columns(3),
 

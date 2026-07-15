@@ -23,6 +23,7 @@ class HomeController extends Controller
 
         return Inertia::render('Home', [
             'hero' => $this->hero($content),
+            'story' => $this->story($content),
             'featuredServices' => $this->featuredServices(),
             'menuServices' => $this->menuServices(),
             'menuCategories' => $this->menuCategories(),
@@ -32,6 +33,7 @@ class HomeController extends Controller
             // Cờ ẩn/hiện từng khối trên trang chủ, chỉnh trong /admin/home-page-settings.
             'sectionVisibility' => [
                 'hero' => (bool) $content->hero_visible,
+                'story' => (bool) $content->story_visible,
                 'featuredServices' => (bool) $content->featured_services_visible,
             ],
         ]);
@@ -58,6 +60,27 @@ class HomeController extends Controller
                 'background_color' => $content->hero_secondary_cta_background_color ?: 'transparent',
                 'text_color' => $content->hero_secondary_cta_text_color ?: '#FFFFFF',
                 'border_color' => $content->hero_secondary_cta_border_color ?: '#FFFFFF',
+            ],
+        ];
+    }
+
+    /**
+     * Banner 2 "A Place To Pause" — 2 cột (chữ trái, ảnh phải ~2/3 chiều rộng),
+     * rich text qua Quill. Nút chỉ có màu chữ + link, không nền/viền.
+     */
+    protected function story(HomePageContent $content): array
+    {
+        return [
+            'heading' => $content->story_eyebrow ?: ['vi' => '<p>Một khoảng lặng để nghỉ ngơi</p>', 'en' => '<p>A place to pause</p>'],
+            'caption' => $content->story_body ?: [
+                'vi' => '<p>Giữa những chuyển động không ngừng của thành phố,<br>Mầm là nơi cơ thể được nghỉ ngơi,<br>tâm trí được lắng lại<br>và những giá trị trị liệu Việt được gìn giữ.</p>',
+                'en' => "<p>Amid the city's constant motion,<br>Mầm is where the body rests,<br>the mind settles,<br>and Vietnamese healing values are preserved.</p>",
+            ],
+            'image' => $this->publicUrl($content->story_image),
+            'cta' => [
+                'text' => $content->story_cta_text ?: 'Về Mầm Spa',
+                'link' => $content->story_cta_link ?: '/gioi-thieu/',
+                'text_color' => $content->story_cta_text_color ?: '#2F3E2E',
             ],
         ];
     }

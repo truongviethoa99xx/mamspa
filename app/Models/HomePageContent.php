@@ -41,6 +41,8 @@ class HomePageContent extends Model
         'story_eyebrow',
         'story_body',
         'story_cta_text',
+        'story_cta_link',
+        'story_cta_text_color',
         'story_image',
         'story_visible',
         'philosophy_eyebrow',
