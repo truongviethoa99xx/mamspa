@@ -11,6 +11,7 @@ class SiteSetting extends Model
         'logo_path',
         'header_background_color',
         'header_text_color',
+        'header_transparent',
         'tagline',
         'meta_description',
         'hotline',
@@ -25,6 +26,7 @@ class SiteSetting extends Model
         'floating_contact_buttons' => 'array',
         'social_links' => 'array',
         'service_menu' => 'array',
+        'header_transparent' => 'boolean',
     ];
 
     public static function current(): self

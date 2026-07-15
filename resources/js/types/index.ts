@@ -23,6 +23,7 @@ export interface SiteSettings {
     logo_path?: string | null;
     header_background_color?: string | null;
     header_text_color?: string | null;
+    header_transparent?: boolean | null;
     tagline?: string | null;
     meta_description?: string | null;
     hotline?: string | null;

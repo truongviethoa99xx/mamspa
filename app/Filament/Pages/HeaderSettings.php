@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 
@@ -39,7 +40,7 @@ class HeaderSettings extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill(SiteSetting::current()->only([
-            'logo_path', 'header_background_color', 'header_text_color',
+            'logo_path', 'header_background_color', 'header_text_color', 'header_transparent',
         ]));
     }
 
@@ -61,10 +62,16 @@ class HeaderSettings extends Page implements HasForms
                             ->columnSpanFull(),
                         Forms\Components\ColorPicker::make('header_background_color')
                             ->label('Màu nền header')
-                            ->required(),
+                            ->required()
+                            ->disabled(fn (Get $get) => (bool) $get('header_transparent')),
                         Forms\Components\ColorPicker::make('header_text_color')
                             ->label('Màu chữ header')
                             ->required(),
+                        Forms\Components\Toggle::make('header_transparent')
+                            ->label('Nền trong suốt')
+                            ->helperText('Bật để header trong suốt, nổi đè lên nội dung phía dưới (vd. banner đầu trang) thay vì chiếm khoảng riêng. Khi bật, màu nền ở trên sẽ bị vô hiệu hoá (không dùng).')
+                            ->live()
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
             ])
