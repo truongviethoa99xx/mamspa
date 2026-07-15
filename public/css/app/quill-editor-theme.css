@@ -15,3 +15,13 @@
 .fi-quill-editor .ql-editor {
     min-height: 12rem;
 }
+
+/* Reserve space for the toolbar + editor before Quill finishes mounting
+   (lazy-loaded via Alpine's x-load) so whatever follows in the form —
+   e.g. the "Dịch tự động" action button — never renders into that space
+   and ends up visually overlapping the editor once it mounts. */
+.fi-quill-editor {
+    display: block;
+    min-height: 16rem;
+    margin-bottom: 0.5rem;
+}

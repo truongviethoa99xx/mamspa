@@ -102,7 +102,7 @@ class TranslatableField
                                         ->success()
                                         ->send();
                                 }),
-                        ]);
+                        ])->extraAttributes(['class' => 'mt-4']);
                     }
 
                     if ($locale !== 'vi') {
@@ -140,7 +140,7 @@ class TranslatableField
                                         ->success()
                                         ->send();
                                 }),
-                        ]);
+                        ])->extraAttributes(['class' => 'mt-4']);
                     }
 
                     return Forms\Components\Tabs\Tab::make(self::localeLabel($locale))->schema($schema);
