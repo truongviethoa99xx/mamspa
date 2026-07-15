@@ -34,7 +34,7 @@ export function Hero({ data }: { data: HeroData }) {
     return (
         <section
             className={cn(
-                'relative isolate flex h-[75vh] flex-col justify-end overflow-hidden pb-16 pl-[100px] pr-6 pt-32 sm:pb-20 md:pt-40',
+                'relative isolate flex h-[75vh] flex-col justify-end overflow-hidden pb-16 pl-[150px] pr-6 pt-32 sm:pb-20 md:pt-40',
                 hasImage ? 'bg-[#2F3E2E]' : 'bg-maha-200',
             )}
             style={
