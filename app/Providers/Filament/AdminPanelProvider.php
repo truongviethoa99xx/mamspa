@@ -28,11 +28,21 @@ class AdminPanelProvider extends PanelProvider
 {
     public function boot(): void
     {
+        $quillJsPath = __DIR__.'/../../../resources/js/filament/dist/components/quill-editor.js';
+        $quillCssPath = __DIR__.'/../../../resources/css/filament/quill-editor.css';
+
+        // Filament's own asset versioning (Asset::getVersion()) falls back to the installed
+        // filament/support package version when appVersion() isn't set — which never changes
+        // between edits, so browsers cache these 'app'-package assets forever and rebuilds
+        // silently never reach the browser. Tie the version to the source files' mtime instead
+        // (same pattern already used for css/admin-theme.css below), so every rebuild busts cache.
+        FilamentAsset::appVersion((string) max(filemtime($quillJsPath), filemtime($quillCssPath)));
+
         // Quill.js dùng cho field QuillEditor (thay RichEditor mặc định) — xem app/Filament/Forms/Components/QuillEditor.php.
         FilamentAsset::register([
             Css::make('quill-editor', __DIR__.'/../../../node_modules/quill/dist/quill.snow.css')->loadedOnRequest(),
-            Css::make('quill-editor-theme', __DIR__.'/../../../resources/css/filament/quill-editor.css')->loadedOnRequest(),
-            AlpineComponent::make('quill-editor', __DIR__.'/../../../resources/js/filament/dist/components/quill-editor.js'),
+            Css::make('quill-editor-theme', $quillCssPath)->loadedOnRequest(),
+            AlpineComponent::make('quill-editor', $quillJsPath),
         ]);
     }
 
