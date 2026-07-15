@@ -1,4 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import { publicAssetUrl, cn } from '@/Lib/utils';
 import type { SharedProps } from '@/types';
 
@@ -16,9 +18,12 @@ const NAV_ITEMS = [
  * Header dùng chung cho toàn site — full width, cao cố định 100px.
  * Nền/màu chữ/logo/chế độ trong suốt quản lý ở /admin (Quản lý header).
  * Khi trong suốt, header nổi đè lên nội dung phía dưới thay vì chiếm khoảng riêng.
+ * Dưới lg: menu chính thu vào nút hamburger, mở ra thành panel xổ xuống dưới header
+ * (không đổi chiều cao header cố định).
  */
 export function Header() {
     const { props, url } = usePage<SharedProps>();
+    const [mobileOpen, setMobileOpen] = useState(false);
     const site = props.site ?? {};
     const brandName = site.brand_name || 'Mầm Spa';
     const logoUrl = publicAssetUrl(site.logo_path);
@@ -33,46 +38,97 @@ export function Header() {
 
     return (
         <header
-            className={cn(
-                'flex w-full items-center justify-between gap-6 px-6 sm:px-10',
-                isTransparent ? 'absolute inset-x-0 top-0 z-30' : 'relative shrink-0',
-            )}
-            style={{ height: HEADER_HEIGHT, backgroundColor: headerBackground, color: textColor }}
+            className={cn('w-full', isTransparent ? 'absolute inset-x-0 top-0 z-30' : 'relative shrink-0')}
         >
-            <Link href="/" className="flex shrink-0 items-center gap-3">
-                {logoUrl && <img src={logoUrl} alt={brandName} className="h-14 w-14 object-contain" />}
-                <span className="font-serif text-xl uppercase tracking-[0.12em]" style={{ color: textColor }}>
-                    {brandName}
-                </span>
-            </Link>
-
-            <nav className="hidden items-center gap-8 lg:flex">
-                {NAV_ITEMS.map((item) => {
-                    const active = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
-
-                    return (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={cn(
-                                'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
-                                active && 'border-b-2 opacity-100',
-                            )}
-                            style={active ? { borderColor: textColor, color: textColor } : { color: textColor }}
-                        >
-                            {item.label}
-                        </Link>
-                    );
-                })}
-            </nav>
-
-            <Link
-                href="/dat-lich/"
-                className="shrink-0 rounded-md px-5 py-2.5 text-sm font-semibold uppercase tracking-wide transition-opacity hover:opacity-90"
-                style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
+            <div
+                className="flex items-center justify-between gap-3 px-5 sm:gap-6 sm:px-10"
+                style={{ height: HEADER_HEIGHT, backgroundColor: headerBackground, color: textColor }}
             >
-                {ctaText}
-            </Link>
+                <Link href="/" className="flex shrink-0 items-center gap-2 sm:gap-3">
+                    {logoUrl && <img src={logoUrl} alt={brandName} className="h-11 w-11 object-contain sm:h-14 sm:w-14" />}
+                    <span
+                        className="font-serif text-base uppercase tracking-[0.1em] sm:text-xl sm:tracking-[0.12em]"
+                        style={{ color: textColor }}
+                    >
+                        {brandName}
+                    </span>
+                </Link>
+
+                <nav className="hidden items-center gap-8 lg:flex">
+                    {NAV_ITEMS.map((item) => {
+                        const active = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={cn(
+                                    'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
+                                    active && 'border-b-2 opacity-100',
+                                )}
+                                style={active ? { borderColor: textColor, color: textColor } : { color: textColor }}
+                            >
+                                {item.label}
+                            </Link>
+                        );
+                    })}
+                </nav>
+
+                <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+                    <Link
+                        href="/dat-lich/"
+                        className="hidden shrink-0 rounded-md px-5 py-2.5 text-sm font-semibold uppercase tracking-wide transition-opacity hover:opacity-90 sm:inline-block"
+                        style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
+                    >
+                        {ctaText}
+                    </Link>
+
+                    <button
+                        type="button"
+                        onClick={() => setMobileOpen((open) => !open)}
+                        aria-label={mobileOpen ? 'Đóng menu' : 'Mở menu'}
+                        aria-expanded={mobileOpen}
+                        className="flex h-10 w-10 items-center justify-center rounded-md lg:hidden"
+                        style={{ color: textColor }}
+                    >
+                        {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    </button>
+                </div>
+            </div>
+
+            {mobileOpen && (
+                <div
+                    className="flex flex-col gap-1 border-t px-5 py-4 shadow-lg lg:hidden"
+                    style={{ backgroundColor: configuredBackground, borderColor: `${textColor}22` }}
+                >
+                    {NAV_ITEMS.map((item) => {
+                        const active = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={() => setMobileOpen(false)}
+                                className={cn(
+                                    'rounded-md px-3 py-3 text-sm font-medium uppercase tracking-wide transition-opacity',
+                                    active ? 'opacity-100' : 'opacity-80',
+                                )}
+                                style={{ color: textColor }}
+                            >
+                                {item.label}
+                            </Link>
+                        );
+                    })}
+                    <Link
+                        href="/dat-lich/"
+                        onClick={() => setMobileOpen(false)}
+                        className="mt-2 rounded-md px-5 py-3 text-center text-sm font-semibold uppercase tracking-wide"
+                        style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
+                    >
+                        {ctaText}
+                    </Link>
+                </div>
+            )}
         </header>
     );
 }
