@@ -24,7 +24,15 @@ export default function quillEditorFormComponent({ state, placeholder }) {
             })
 
             if (this.state) {
-                this.quill.clipboard.dangerouslyPasteHTML(this.state)
+                // Fields migrated from a plain text/textarea input (e.g. hero_eyebrow before it
+                // became a Quill field) can hold bare text with no block-level tag. Pasting that
+                // straight in leaves Quill's internal Parchment tree without a proper block blot,
+                // which later crashes ("Cannot read properties of null (reading 'offset')") the
+                // moment the user clicks or types. Wrap it in <p> first so it's always valid.
+                const isBlockHtml = /^\s*<(p|h[1-6]|ul|ol|blockquote|div)[\s>]/i.test(this.state)
+                const html = isBlockHtml ? this.state : `<p>${this.state}</p>`
+
+                this.quill.clipboard.dangerouslyPasteHTML(html)
             }
 
             this.quill.on('text-change', () => {
