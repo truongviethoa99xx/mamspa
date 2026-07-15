@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\NotifyAdminsOfContactSubmission;
 use App\Mail\ContactMessage;
 use App\Models\Branch;
 use App\Models\ContactPageContent;
@@ -55,7 +56,9 @@ class ContactController extends Controller
             'message.required' => 'Vui lòng nhập nội dung lời nhắn.',
         ]);
 
-        ContactSubmission::create($data);
+        $submission = ContactSubmission::create($data);
+
+        NotifyAdminsOfContactSubmission::dispatch($submission->id);
 
         try {
             Mail::to(config('mail.from.address'))->send(new ContactMessage($data));

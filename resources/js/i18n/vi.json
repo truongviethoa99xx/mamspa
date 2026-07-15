@@ -370,10 +370,10 @@
             "serviceRequired": "Vui lòng chọn dịch vụ cho từng khách.",
             "note": "Ghi chú thêm (Không bắt buộc)",
             "notePlaceholder": "Tình trạng sức khỏe, yêu cầu kỹ thuật viên, hoặc bất kỳ lưu ý nào...",
-            "submit": "Hoàn tất đặt lịch",
+            "submit": "Gửi yêu cầu đặt lịch",
             "success": {
                 "title": "Yêu cầu đã được gửi!",
-                "message": "Cảm ơn quý khách. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của bạn.",
+                "message": "Cảm ơn quý khách đã gửi yêu cầu đặt lịch. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của quý khách.",
                 "codeLabel": "Mã yêu cầu của bạn",
                 "home": "Trở về trang chủ"
             }

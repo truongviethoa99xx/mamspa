@@ -537,11 +537,8 @@ export function BookingFormBlock({
                     {/* Email + Channel */}
                     <div className="mb-5 grid gap-5 md:mb-6 md:grid-cols-2 md:gap-6">
                         <div>
-                            <label className={labelCls}>
-                                {t('blocks.bookingForm.email')} <span className="text-red-600">*</span>
-                            </label>
+                            <label className={labelCls}>{t('blocks.bookingForm.email')}</label>
                             <input
-                                required
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}

@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('7.5rem')
             ->favicon(asset('images/favicon.ico'))
             ->sidebarWidth('15rem')
+            ->databaseNotifications()
             // Luôn ở chế độ sáng cho giao diện ấm, thoáng.
             ->darkMode(false)
             // Font Quicksand (rounded sans) — đồng bộ website, hợp cảm giác "cửa hàng".

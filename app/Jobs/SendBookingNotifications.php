@@ -2,9 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Filament\Resources\BookingResource;
 use App\Mail\BookingConfirmation;
 use App\Models\Booking;
+use App\Models\User;
 use App\Services\SmsService;
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -39,5 +43,24 @@ class SendBookingNotifications implements ShouldQueue
             );
             $sms->send($booking->guest_phone, $msg);
         }
+
+        $admins = User::role(User::adminRoles())->get();
+        Notification::make()
+            ->title('Đặt lịch mới #'.$booking->code)
+            ->body(sprintf(
+                '%s — %s %s tại %s',
+                $booking->guest_name,
+                $booking->date->format('d/m/Y'),
+                $booking->time_slot,
+                $booking->branch->getTranslation('name', 'vi'),
+            ))
+            ->icon('heroicon-o-calendar')
+            ->actions([
+                Action::make('view')
+                    ->label('Xem')
+                    ->url(BookingResource::getUrl('edit', ['record' => $booking])),
+            ])
+            ->sendToDatabase($admins)
+            ->broadcast($admins);
     }
 }
