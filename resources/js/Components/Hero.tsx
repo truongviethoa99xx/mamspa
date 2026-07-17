@@ -21,8 +21,15 @@ export interface HeroData {
 
 const isVideoUrl = (url: string) => /\.(mp4|webm|ogv)$/i.test(url);
 
+interface HeroProps {
+    data: HeroData;
+    heightClassName?: string;
+    /** Gạch chân mảnh giữa tiêu đề và mô tả — tắt mặc định để không đổi giao diện các banner hiện có. */
+    showDivider?: boolean;
+}
+
 /** Banner đầu trang chủ — nằm ngay dưới header (header trong suốt sẽ nổi đè lên phần trên của banner). */
-export function Hero({ data }: { data: HeroData }) {
+export function Hero({ data, heightClassName, showDivider }: HeroProps) {
     const locale = useLocale();
     const heading = tr(data.heading, locale);
     const subtitle = tr(data.subtitle, locale);
@@ -36,7 +43,8 @@ export function Hero({ data }: { data: HeroData }) {
     return (
         <section
             className={cn(
-                'relative isolate flex h-[85vh] min-h-[440px] flex-col justify-end overflow-hidden px-5 pb-12 pt-28 sm:h-[75vh] sm:px-10 sm:pb-16 sm:pt-32 md:pb-20 md:pt-40 lg:pl-[150px] lg:pr-6',
+                'relative isolate flex flex-col justify-end overflow-hidden px-5 pb-12 pt-28 sm:px-10 sm:pb-16 sm:pt-32 md:pb-20 md:pt-40 lg:pl-[150px] lg:pr-6',
+                heightClassName ?? 'h-[85vh] min-h-[440px] sm:h-[75vh]',
                 hasImage ? 'bg-[#2F3E2E]' : 'bg-maha-200',
             )}
         >
@@ -76,6 +84,7 @@ export function Hero({ data }: { data: HeroData }) {
                         dangerouslySetInnerHTML={{ __html: heading }}
                     />
                 )}
+                {showDivider && <span className="mt-4 block h-px w-14 bg-[#3d3f29]" aria-hidden="true" />}
                 {subtitle && (
                     <div
                         className={cn(

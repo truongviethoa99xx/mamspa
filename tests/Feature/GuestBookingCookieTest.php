@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Booking;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Support\GuestBookings;
@@ -27,24 +26,11 @@ function createGuestCookieService(): Service
     ]);
 }
 
-function createGuestCookieBranch(): Branch
-{
-    return Branch::create([
-        'slug' => 'guest-cookie-branch',
-        'name' => ['vi' => 'Chi nhánh kiểm thử'],
-        'address' => '123 Test',
-        'phone' => '0900000000',
-        'open_hours' => '09:00 - 21:00',
-        'is_active' => true,
-    ]);
-}
-
 function createGuestCookieBooking(): Booking
 {
     return Booking::create([
         'guest_name' => 'Cookie Guest',
         'guest_phone' => '+84900000001',
-        'branch_id' => createGuestCookieBranch()->id,
         'service_id' => createGuestCookieService()->id,
         'date' => now()->addDays(3)->format('Y-m-d'),
         'time_slot' => '10:00',
@@ -55,11 +41,9 @@ function createGuestCookieBooking(): Booking
 }
 
 it('remembers a guest booking in the cookie after booking', function () {
-    $branch = createGuestCookieBranch();
     $service = createGuestCookieService();
 
     $response = $this->post('/dat-lich', [
-        'branch_id' => $branch->id,
         'service_id' => $service->id,
         'date' => now()->addDay()->format('Y-m-d'),
         'time_slot' => '10:00',

@@ -64,14 +64,6 @@ class BookingResource extends Resource
                         ->label('Khung giờ')
                         ->placeholder('09:00')
                         ->required(),
-                    Forms\Components\Select::make('branch_id')
-                        ->label('Chi nhánh')
-                        ->relationship('branch', 'slug')
-                        ->getOptionLabelFromRecordUsing(fn ($record): string => static::displayName($record->name ?? $record->slug))
-                        ->searchable()
-                        ->preload()
-                        ->native(false)
-                        ->required(),
                 ])
                 ->columns([
                     'default' => 1,
@@ -217,10 +209,10 @@ class BookingResource extends Resource
     private static function displayName(mixed $value): string
     {
         if (is_array($value)) {
-            return $value['vi'] ?? $value['en'] ?? collect($value)->filter()->first() ?? '';
+            return strip_tags($value['vi'] ?? $value['en'] ?? collect($value)->filter()->first() ?? '');
         }
 
-        return (string) $value;
+        return strip_tags((string) $value);
     }
 
     public static function table(Table $table): Table
@@ -233,7 +225,6 @@ class BookingResource extends Resource
                 ->placeholder('—'),
             Tables\Columns\TextColumn::make('guest_name')->label('Tên khách')->searchable(),
             Tables\Columns\TextColumn::make('guest_phone')->label('Số điện thoại'),
-            Tables\Columns\TextColumn::make('branch.slug')->label('Chi nhánh'),
             Tables\Columns\TextColumn::make('service.slug')->label('Dịch vụ'),
             Tables\Columns\TextColumn::make('items_count')->counts('items')->label('Khách')->badge(),
             Tables\Columns\TextColumn::make('date')->label('Ngày')->date(),
@@ -251,7 +242,6 @@ class BookingResource extends Resource
                     'pending' => 'Chờ xác nhận', 'confirmed' => 'Đã xác nhận',
                     'completed' => 'Hoàn thành', 'cancelled' => 'Đã huỷ',
                 ]),
-                Tables\Filters\SelectFilter::make('branch_id')->label('Chi nhánh')->relationship('branch', 'slug'),
             ])->actions([Tables\Actions\EditAction::make()])
             ->defaultPaginationPageOption(50);
     }

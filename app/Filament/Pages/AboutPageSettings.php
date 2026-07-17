@@ -40,59 +40,102 @@ class AboutPageSettings extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill(AboutPageContent::current()->only([
-            'contact_phone', 'contact_address', 'contact_website',
-            'hero_image', 'story_image', 'vision_image',
-            'value1_image', 'value2_image', 'value3_image',
-            'team', 'instagram_handles', 'review_video_url', 'review_video_image', 'review_cards',
-            'hero_eyebrow', 'hero_title', 'hero_subtitle', 'hero_retreat', 'hero_visible',
-            'features', 'features_visible',
-            'contact_bar_visible',
-            'story_eyebrow', 'story_heading', 'story_p1', 'story_p2', 'story_visible',
-            'vision_eyebrow', 'vision_title', 'vision_p1', 'vision_p2', 'vision_bullets', 'vision_visible',
-            'values_eyebrow', 'values_title',
-            'value1_title', 'value1_desc', 'value2_title', 'value2_desc', 'value3_title', 'value3_desc', 'values_visible',
-            'team_eyebrow', 'team_title', 'team_visible',
-            'reviews_eyebrow', 'reviews_title', 'review_video_caption', 'review_quote', 'review_quote_author', 'reviews_visible',
+            'hero_image', 'hero_image_alt', 'hero_eyebrow', 'hero_title', 'hero_subtitle', 'hero_visible',
+            'features', 'features_eyebrow', 'features_visible',
+            'story_image', 'story_image_alt', 'story_heading', 'story_p1', 'story_visible',
+            'philosophy_heading', 'philosophy_title', 'philosophy_p1', 'philosophy_image', 'philosophy_image_alt', 'philosophy_visible',
+            'approach_image', 'approach_image_alt', 'approach_title', 'approach_p1', 'approach_features', 'approach_visible',
+            'spaces_title', 'spaces_intro', 'spaces', 'spaces_visible',
+            'people_image', 'people_image_alt', 'people_title', 'people_p1', 'people_visible',
+            'experiences_title', 'experiences_intro', 'testimonials', 'experiences_visible',
+            'mission_vision_title', 'mission_title', 'mission_desc', 'vision_title', 'vision_desc', 'mission_vision_visible',
+            'journey_title', 'journey_intro', 'journey_images', 'journey_visible',
+            'invitation_image', 'invitation_image_alt', 'invitation_title', 'invitation_p1', 'invitation_p2',
+            'invitation_button_text', 'invitation_button_url', 'invitation_visible',
         ]));
     }
 
     public function form(Form $form): Form
     {
-        // Các khối dưới đây xếp đúng thứ tự xuất hiện trên trang Giới thiệu.
+        // Các khối dưới đây xếp đúng thứ tự xuất hiện trên trang Giới thiệu (bố cục Mầm Spa mới).
         // Field chữ để trống → FE fallback về chuỗi dịch nhóm about.* như cũ.
         return $form
             ->schema([
-                Forms\Components\Section::make('1 · Phần đầu trang')
-                    ->description('Ảnh lớn + dòng giới thiệu, tiêu đề, mô tả và câu kết (retreat).')
+                Forms\Components\Section::make('1 · Phần đầu trang (Hero)')
+                    ->description('Banner đầu trang — cùng kiểu dáng với banner trang chủ (ảnh/video full-bleed, tiêu đề lớn, không nút CTA).')
                     ->icon('heroicon-o-photo')
                     ->schema([
                         Forms\Components\Toggle::make('hero_visible')
                             ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn toàn bộ ảnh + dòng giới thiệu + câu kết khỏi trang công khai.')
+                            ->helperText('Tắt sẽ ẩn toàn bộ banner đầu trang khỏi trang công khai.')
                             ->default(true)
                             ->columnSpanFull(),
-                        Forms\Components\FileUpload::make('hero_image')->label('Ảnh đầu trang')
-                            ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
-                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
-                        TranslatableField::group('hero_eyebrow', label: 'Dòng giới thiệu (eyebrow)', example: 'Chào mừng đến với Mầm Spa'),
-                        TranslatableField::group('hero_title', label: 'Tiêu đề chính', example: 'Về chúng tôi'),
-                        TranslatableField::group('hero_subtitle', as: 'textarea', label: 'Mô tả ngắn', rows: 3),
-                        TranslatableField::group('hero_retreat', as: 'textarea', label: 'Câu kết (dòng nghiêng giữa trang)', rows: 2),
+                        TranslatableField::group('hero_title', as: 'quill', label: 'Heading 1'),
+                        TranslatableField::group('hero_subtitle', as: 'quill', label: 'Mô tả'),
+                        Forms\Components\FileUpload::make('hero_image')->label('Ảnh/video nền banner')
+                            ->helperText('Ảnh phủ theo chiều cao trình duyệt nên trên desktop bị crop khá rộng (~21:9) — chọn ảnh ngang, chủ thể căn giữa khung hình, khuyến nghị tối thiểu 2400×1000px. Video: MP4/WebM, nên nén dưới 15MB để tải nhanh.')
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm'])
+                            ->maxSize(20480)
+                            ->disk('public')->directory('about')
+                            ->columnSpanFull(),
+                        TranslatableField::group('hero_image_alt', label: 'Alt text ảnh (mô tả ảnh cho SEO/accessibility)', example: 'Về Mầm Spa'),
+                        TranslatableField::group('hero_eyebrow', label: 'Dòng giới thiệu (eyebrow, chưa dùng ở banner mới)', example: 'Chào mừng đến với Mầm Spa'),
                     ]),
 
-                Forms\Components\Section::make('1b · Bốn ưu điểm nổi bật')
-                    ->description('Bốn trụ cột dưới phần đầu trang. Để trống dùng nội dung mặc định; icon gán theo thứ tự: Hoa · Bàn tay · Lá · Trà.')
+                Forms\Components\Section::make('2 · Our Story')
+                    ->description('Khối "Our Story" — ảnh bên phải, chữ bên trái.')
+                    ->icon('heroicon-o-book-open')
+                    ->schema([
+                        Forms\Components\Toggle::make('story_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Our Story" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('story_image')->label('Ảnh câu chuyện')
+                            ->helperText('Trên điện thoại hiển thị tỉ lệ 4:3; trên desktop ảnh giãn ngang hơn (~2:1) để lấp đầy cột ảnh cao 360px — chủ thể nên căn giữa khung hình, khuyến nghị tối thiểu 1600×900px.')
+                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
+                        TranslatableField::group('story_image_alt', label: 'Alt text ảnh', example: 'Không gian trị liệu tại Mầm Spa'),
+                        TranslatableField::group('story_heading', label: 'Tiêu đề khối', example: 'Our Story'),
+                        TranslatableField::group('story_p1', as: 'quill', label: 'Đoạn văn'),
+                    ]),
+
+                Forms\Components\Section::make('3 · Our Philosophy')
+                    ->description('Khối nhãn nhỏ "Our Philosophy" + tiêu đề lớn kiểu triết lý + 1 đoạn văn. Chiều cao section co giãn theo nội dung, có thể thêm ảnh nền.')
                     ->icon('heroicon-o-sparkles')
+                    ->schema([
+                        Forms\Components\Toggle::make('philosophy_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Our Philosophy" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('philosophy_image')->label('Ảnh nền (tuỳ chọn)')
+                            ->helperText('Ảnh nền phủ toàn bộ section, chiều cao tự co theo nội dung chữ nên tỉ lệ thực tế sẽ thay đổi tuỳ nội dung — chọn ảnh ngang, chủ thể căn giữa để không bị crop mất phần quan trọng, khuyến nghị tối thiểu 1920×1080px.')
+                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(10240)->disk('public')->directory('about')
+                            ->columnSpanFull(),
+                        TranslatableField::group('philosophy_image_alt', label: 'Alt text ảnh (bỏ trống nếu ảnh chỉ mang tính trang trí)'),
+                        TranslatableField::group('philosophy_heading', label: 'Nhãn nhỏ', example: 'Our Philosophy'),
+                        TranslatableField::group('philosophy_title', as: 'quill', label: 'Tiêu đề lớn'),
+                        TranslatableField::group('philosophy_p1', as: 'quill', label: 'Đoạn văn'),
+                    ]),
+
+                Forms\Components\Section::make('4 · 4 Healing Journeys')
+                    ->description('Nhãn khối + bốn hành trình chữa lành — mỗi thẻ gồm ảnh, tiêu đề, mô tả ngắn.')
+                    ->icon('heroicon-o-squares-2x2')
                     ->schema([
                         Forms\Components\Toggle::make('features_visible')
                             ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn toàn bộ khối 4 ưu điểm khỏi trang công khai.')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "4 Healing Journeys" khỏi trang công khai.')
                             ->default(true)
                             ->columnSpanFull(),
+                        TranslatableField::group('features_eyebrow', label: 'Tiêu đề khối', example: '4 Healing Journeys'),
                         Forms\Components\Repeater::make('features')
                             ->label('')
                             ->schema([
-                                TranslatableField::group('title', label: 'Tiêu đề', example: 'Head Spa'),
+                                Forms\Components\FileUpload::make('image')->label('Ảnh')
+                                    ->helperText('Ảnh NGANG, tỉ lệ 4:3, khuyến nghị tối thiểu 1000×750px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/journeys')->imageEditor(),
+                                TranslatableField::group('image_alt', label: 'Alt text ảnh'),
+                                TranslatableField::group('title', label: 'Tiêu đề', example: 'Vietnamese Healing Therapy'),
                                 TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2),
                             ])
                             ->defaultItems(0)
@@ -100,176 +143,214 @@ class AboutPageSettings extends Page implements HasForms
                             ->reorderable()
                             ->collapsible()
                             ->itemLabel(fn (array $state): ?string => $state['title']['vi'] ?? null)
-                            ->addActionLabel('+ Thêm ưu điểm (tối đa 4)')
+                            ->addActionLabel('+ Thêm hành trình (tối đa 4)')
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('2 · Thanh liên hệ')
-                    ->description('Dòng điện thoại · địa chỉ · website ngay dưới phần đầu trang.')
-                    ->icon('heroicon-o-phone')
+                Forms\Components\Section::make('5 · Our Approach')
+                    ->description('Khối "Our Approach" — ảnh bên trái, chữ bên phải.')
+                    ->icon('heroicon-o-hand-raised')
                     ->schema([
-                        Forms\Components\Toggle::make('contact_bar_visible')
+                        Forms\Components\Toggle::make('approach_visible')
                             ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn dòng điện thoại · địa chỉ · website khỏi trang công khai.')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Our Approach" khỏi trang công khai.')
                             ->default(true)
                             ->columnSpanFull(),
-                        Forms\Components\TextInput::make('contact_phone')->label('Điện thoại')->tel(),
-                        Forms\Components\TextInput::make('contact_website')->label('Website')->placeholder('mahaspa.vn'),
-                        Forms\Components\TextInput::make('contact_address')->label('Địa chỉ')->columnSpanFull(),
-                    ])->columns(2),
-
-                Forms\Components\Section::make('3 · Câu chuyện thương hiệu')
-                    ->description('Khối "Câu chuyện" — ảnh bên trái, chữ bên phải.')
-                    ->icon('heroicon-o-book-open')
-                    ->schema([
-                        Forms\Components\Toggle::make('story_visible')
-                            ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Câu chuyện thương hiệu" khỏi trang công khai.')
-                            ->default(true)
-                            ->columnSpanFull(),
-                        Forms\Components\FileUpload::make('story_image')->label('Ảnh câu chuyện')
-                            ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
+                        Forms\Components\FileUpload::make('approach_image')->label('Ảnh minh hoạ')
+                            ->helperText('Ảnh VUÔNG (tỉ lệ 1:1), khuyến nghị tối thiểu 900×900px.')
                             ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
-                        TranslatableField::group('story_eyebrow', label: 'Dòng giới thiệu (eyebrow)', example: 'Câu chuyện của Mầm'),
-                        TranslatableField::group('story_heading', label: 'Tiêu đề khối'),
-                        TranslatableField::group('story_p1', as: 'textarea', label: 'Đoạn văn 1', rows: 4),
-                        TranslatableField::group('story_p2', as: 'textarea', label: 'Đoạn văn 2', rows: 4),
-                    ]),
-
-                Forms\Components\Section::make('4 · Tầm nhìn & Sứ mệnh')
-                    ->description('Khối "Tầm nhìn" — chữ bên trái, ảnh bên phải.')
-                    ->icon('heroicon-o-eye')
-                    ->schema([
-                        Forms\Components\Toggle::make('vision_visible')
-                            ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Tầm nhìn & Sứ mệnh" khỏi trang công khai.')
-                            ->default(true)
-                            ->columnSpanFull(),
-                        Forms\Components\FileUpload::make('vision_image')->label('Ảnh tầm nhìn')
-                            ->helperText('Ảnh vuông (1:1), khuyến nghị tối thiểu 1000×1000px.')
-                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
-                        TranslatableField::group('vision_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
-                        TranslatableField::group('vision_title', label: 'Tiêu đề khối', example: 'Tầm nhìn & Sứ mệnh'),
-                        TranslatableField::group('vision_p1', as: 'textarea', label: 'Đoạn văn 1', rows: 4),
-                        TranslatableField::group('vision_p2', as: 'textarea', label: 'Đoạn văn 2', rows: 4),
-                        Forms\Components\Repeater::make('vision_bullets')
-                            ->label('Danh sách gạch đầu dòng (chi nhánh)')
+                        TranslatableField::group('approach_image_alt', label: 'Alt text ảnh'),
+                        TranslatableField::group('approach_title', as: 'quill', label: 'Tiêu đề khối'),
+                        TranslatableField::group('approach_p1', as: 'quill', label: 'Đoạn văn chính'),
+                        Forms\Components\Repeater::make('approach_features')
+                            ->label('Hàng biểu tượng bên dưới đoạn văn')
                             ->schema([
-                                Forms\Components\TextInput::make('name')->label('Tên (in đậm)')->required(),
-                                TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2),
+                                Forms\Components\Select::make('icon')
+                                    ->label('Biểu tượng')
+                                    ->options([
+                                        'heart-hands' => 'Bàn tay ôm trái tim',
+                                        'leaf' => 'Chiếc lá',
+                                        'graduation-cap' => 'Mũ tốt nghiệp',
+                                        'flower' => 'Hoa',
+                                        'sparkles' => 'Lấp lánh',
+                                        'droplet' => 'Giọt nước',
+                                    ])
+                                    ->default('leaf')
+                                    ->required(),
+                                TranslatableField::group('title', label: 'Nhãn', example: 'Lắng nghe cơ thể'),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(0)
+                            ->maxItems(3)
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['title']['vi'] ?? null)
+                            ->addActionLabel('+ Thêm biểu tượng (tối đa 3)')
+                            ->columnSpanFull(),
+                    ]),
+
+                Forms\Components\Section::make('6 · Our Spaces')
+                    ->description('Khối "Our Spaces" — tiêu đề chung + danh sách không gian/chi nhánh (ảnh, tên, mô tả, link).')
+                    ->icon('heroicon-o-building-storefront')
+                    ->schema([
+                        Forms\Components\Toggle::make('spaces_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Our Spaces" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
+                        TranslatableField::group('spaces_title', as: 'quill', label: 'Tiêu đề khối'),
+                        TranslatableField::group('spaces_intro', as: 'quill', label: 'Mô tả chung'),
+                        Forms\Components\Repeater::make('spaces')
+                            ->label('Danh sách không gian')
+                            ->schema([
+                                Forms\Components\FileUpload::make('image')->label('Ảnh')
+                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 900×675px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/spaces')->imageEditor()
+                                    ->columnSpanFull(),
+                                TranslatableField::group('image_alt', label: 'Alt text ảnh'),
+                                TranslatableField::group('title', as: 'quill', label: 'Tên không gian'),
+                                TranslatableField::group('description', as: 'quill', label: 'Mô tả'),
+                                TranslatableField::group('link_text', label: 'Nhãn nút xem thêm', example: 'Xem chi nhánh'),
+                                Forms\Components\TextInput::make('link_url')->label('Link')->url()->columnSpanFull(),
                             ])
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
-                            ->addActionLabel('+ Thêm dòng')
+                            ->itemLabel(fn (array $state): ?string => $state['title']['vi'] ?? null)
+                            ->addActionLabel('+ Thêm không gian')
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('5 · Giá trị cốt lõi')
-                    ->description('Tiêu đề khối + ba thẻ giá trị (trái → phải), mỗi thẻ gồm ảnh, tiêu đề, mô tả.')
-                    ->icon('heroicon-o-squares-2x2')
+                Forms\Components\Section::make('7 · Our People')
+                    ->description('Khối tiêu đề lớn "Đội ngũ Mầm", ảnh nhóm + đoạn giới thiệu đội ngũ.')
+                    ->icon('heroicon-o-user-group')
                     ->schema([
-                        Forms\Components\Toggle::make('values_visible')
+                        Forms\Components\Toggle::make('people_visible')
                             ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Giá trị cốt lõi" khỏi trang công khai.')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Our People" khỏi trang công khai.')
                             ->default(true)
                             ->columnSpanFull(),
-                        TranslatableField::group('values_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
-                        TranslatableField::group('values_title', label: 'Tiêu đề khối', example: 'Giá trị cốt lõi'),
-                        Forms\Components\Grid::make(3)->schema([
+                        Forms\Components\FileUpload::make('people_image')->label('Ảnh nhóm')
+                            ->helperText('Ảnh ngang, tỉ lệ rộng ~21:10, khuyến nghị tối thiểu 1680×800px.')
+                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
+                        TranslatableField::group('people_image_alt', label: 'Alt text ảnh', example: 'Đội ngũ Mầm Spa'),
+                        TranslatableField::group('people_title', as: 'quill', label: 'Tiêu đề lớn'),
+                        TranslatableField::group('people_p1', as: 'quill', label: 'Đoạn văn giới thiệu'),
+                    ]),
+
+                Forms\Components\Section::make('8 · Customer Experiences')
+                    ->description('Khối "Customer Experiences" — mô tả chung + danh sách đánh giá/trích dẫn khách hàng.')
+                    ->icon('heroicon-o-star')
+                    ->schema([
+                        Forms\Components\Toggle::make('experiences_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Customer Experiences" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
+                        TranslatableField::group('experiences_title', as: 'quill', label: 'Tiêu đề khối'),
+                        TranslatableField::group('experiences_intro', as: 'quill', label: 'Mô tả chung'),
+                        Forms\Components\Repeater::make('testimonials')
+                            ->label('Danh sách đánh giá / trích dẫn')
+                            ->schema([
+                                Forms\Components\Select::make('source')
+                                    ->label('Nguồn')
+                                    ->options([
+                                        'google' => 'Google',
+                                        'tripadvisor' => 'TripAdvisor',
+                                        'quote' => 'Trích dẫn khách hàng',
+                                    ])
+                                    ->default('quote')
+                                    ->required(),
+                                Forms\Components\Select::make('rating')
+                                    ->label('Số sao (tuỳ chọn)')
+                                    ->options([
+                                        1 => '1 sao',
+                                        2 => '2 sao',
+                                        3 => '3 sao',
+                                        4 => '4 sao',
+                                        5 => '5 sao',
+                                    ]),
+                                TranslatableField::group('quote', as: 'quill', label: 'Nội dung đánh giá'),
+                                Forms\Components\TextInput::make('author_name')->label('Tên khách hàng')->required()->columnSpanFull(),
+                                TranslatableField::group('author_meta', as: 'quill', label: 'Ghi chú'),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['author_name'] ?? null)
+                            ->addActionLabel('+ Thêm đánh giá')
+                            ->columnSpanFull(),
+                    ]),
+
+                Forms\Components\Section::make('9 · Mission & Vision')
+                    ->description('Khối "Mission & Vision" — hai khối nhỏ song song, không cần ảnh.')
+                    ->icon('heroicon-o-eye')
+                    ->schema([
+                        Forms\Components\Toggle::make('mission_vision_visible')
+                            ->label('Hiển thị khối này trên trang Giới thiệu')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Mission & Vision" khỏi trang công khai.')
+                            ->default(true)
+                            ->columnSpanFull(),
+                        TranslatableField::group('mission_vision_title', as: 'quill', label: 'Tiêu đề khối'),
+                        Forms\Components\Grid::make(2)->schema([
                             Forms\Components\Group::make([
-                                Forms\Components\FileUpload::make('value1_image')->label('Ảnh giá trị 1')
-                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 800×600px.')
-                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
-                                TranslatableField::group('value1_title', label: 'Tiêu đề thẻ 1'),
-                                TranslatableField::group('value1_desc', as: 'textarea', label: 'Mô tả thẻ 1', rows: 3),
+                                TranslatableField::group('mission_title', as: 'quill', label: 'Tiêu đề Mission'),
+                                TranslatableField::group('mission_desc', as: 'quill', label: 'Mô tả Mission'),
                             ]),
                             Forms\Components\Group::make([
-                                Forms\Components\FileUpload::make('value2_image')->label('Ảnh giá trị 2')
-                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 800×600px.')
-                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
-                                TranslatableField::group('value2_title', label: 'Tiêu đề thẻ 2'),
-                                TranslatableField::group('value2_desc', as: 'textarea', label: 'Mô tả thẻ 2', rows: 3),
-                            ]),
-                            Forms\Components\Group::make([
-                                Forms\Components\FileUpload::make('value3_image')->label('Ảnh giá trị 3')
-                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 800×600px.')
-                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
-                                TranslatableField::group('value3_title', label: 'Tiêu đề thẻ 3'),
-                                TranslatableField::group('value3_desc', as: 'textarea', label: 'Mô tả thẻ 3', rows: 3),
+                                TranslatableField::group('vision_title', as: 'quill', label: 'Tiêu đề Vision'),
+                                TranslatableField::group('vision_desc', as: 'quill', label: 'Mô tả Vision'),
                             ]),
                         ]),
                     ]),
 
-                Forms\Components\Section::make('6 · Đội ngũ')
-                    ->description('Tiêu đề khối + danh sách nhân sự hiển thị ở khối "Đội ngũ".')
-                    ->icon('heroicon-o-user-group')
+                Forms\Components\Section::make('10 · Our Journey')
+                    ->description('Khối "Our Journey" — mô tả chung + dải ảnh hành trình (ảnh + chú thích).')
+                    ->icon('heroicon-o-map')
                     ->schema([
-                        Forms\Components\Toggle::make('team_visible')
+                        Forms\Components\Toggle::make('journey_visible')
                             ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Đội ngũ" khỏi trang công khai.')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Our Journey" khỏi trang công khai.')
                             ->default(true)
                             ->columnSpanFull(),
-                        TranslatableField::group('team_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
-                        TranslatableField::group('team_title', label: 'Tiêu đề khối', example: 'Đội ngũ của chúng tôi'),
-                        Forms\Components\Repeater::make('team')
-                            ->label('Danh sách thành viên')
+                        TranslatableField::group('journey_title', as: 'quill', label: 'Tiêu đề khối'),
+                        TranslatableField::group('journey_intro', as: 'quill', label: 'Mô tả chung'),
+                        Forms\Components\Repeater::make('journey_images')
+                            ->label('Dải ảnh hành trình')
                             ->schema([
-                                Forms\Components\FileUpload::make('photo')->label('Ảnh')
-                                    ->helperText('Ảnh dọc, tỉ lệ 3:4, khuyến nghị tối thiểu 480×640px.')
-                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/team'),
-                                Forms\Components\TextInput::make('name')->label('Họ tên')->required(),
-                                TranslatableField::group('role', label: 'Vai trò'),
-                                TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2),
+                                Forms\Components\FileUpload::make('image')->label('Ảnh')
+                                    ->helperText('Ảnh dọc, tỉ lệ 3:4, khuyến nghị tối thiểu 900×1200px.')
+                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/journey')->imageEditor(),
+                                TranslatableField::group('image_alt', label: 'Alt text ảnh'),
+                                TranslatableField::group('caption', as: 'quill', label: 'Chú thích (tuỳ chọn)'),
                             ])
                             ->columns(2)
                             ->defaultItems(0)
                             ->reorderable()
                             ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
-                            ->addActionLabel('+ Thêm thành viên')
+                            ->addActionLabel('+ Thêm ảnh')
                             ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Section::make('7 · Đánh giá khách hàng (Instagram)')
-                    ->description('Tiêu đề khối, video, trích dẫn và các card review cuối trang.')
-                    ->icon('heroicon-o-heart')
+                Forms\Components\Section::make('11 · A Gentle Invitation')
+                    ->description('Khối "A Gentle Invitation" — banner ảnh full-bleed khép lại trang (cùng kiểu banner đầu trang, chiều cao khác) + lời mời + câu kết ngắn + nút CTA.')
+                    ->icon('heroicon-o-envelope-open')
                     ->schema([
-                        Forms\Components\Toggle::make('reviews_visible')
+                        Forms\Components\Toggle::make('invitation_visible')
                             ->label('Hiển thị khối này trên trang Giới thiệu')
-                            ->helperText('Tắt sẽ ẩn toàn bộ khối "Đánh giá khách hàng" khỏi trang công khai.')
+                            ->helperText('Tắt sẽ ẩn toàn bộ khối "A Gentle Invitation" khỏi trang công khai.')
                             ->default(true)
                             ->columnSpanFull(),
-                        TranslatableField::group('reviews_eyebrow', label: 'Dòng giới thiệu (eyebrow)'),
-                        TranslatableField::group('reviews_title', label: 'Tiêu đề khối', example: 'Khách hàng nói gì'),
-                        Forms\Components\FileUpload::make('review_video_image')->label('Ảnh/video thumbnail')
-                            ->helperText('Tỉ lệ ngang 16:9 (khung video), khuyến nghị tối thiểu 1280×720px.')
-                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/reviews')->imageEditor(),
-                        Forms\Components\TextInput::make('review_video_url')->label('Link video')->url(),
-                        TranslatableField::group('review_video_caption', label: 'Chú thích trên video'),
-                        TranslatableField::group('review_quote', as: 'textarea', label: 'Trích dẫn khách hàng', rows: 3),
-                        TranslatableField::group('review_quote_author', label: 'Tên người trích dẫn'),
-                        Forms\Components\TagsInput::make('instagram_handles')
-                            ->label('Tài khoản Instagram')
-                            ->placeholder('@tài_khoản rồi nhấn Enter')
-                            ->columnSpanFull(),
-                        Forms\Components\Repeater::make('review_cards')
-                            ->label('Card review / Instagram')
-                            ->schema([
-                                Forms\Components\FileUpload::make('image')->label('Ảnh')
-                                    ->helperText('Ảnh dọc kiểu Instagram, tỉ lệ 4:5, khuyến nghị tối thiểu 1080×1350px.')
-                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/reviews')->imageEditor(),
-                                Forms\Components\TextInput::make('handle')->label('Tên/handle')->required(),
-                                Forms\Components\TextInput::make('link')->label('Link')->url(),
-                            ])
-                            ->columns(2)
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['handle'] ?? null)
-                            ->addActionLabel('+ Thêm card')
-                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('invitation_image')->label('Ảnh nền banner')
+                            ->helperText('Banner thấp và rất rộng (~3:1) — chọn ảnh ngang, chủ thể căn giữa; ảnh dọc/chân dung sẽ bị crop mất nhiều phần trên dưới. Khuyến nghị tối thiểu 2400×800px.')
+                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about')->imageEditor(),
+                        TranslatableField::group('invitation_image_alt', label: 'Alt text ảnh'),
+                        TranslatableField::group('invitation_title', as: 'quill', label: 'Tiêu đề khối'),
+                        TranslatableField::group('invitation_p1', as: 'quill', label: 'Đoạn văn chính'),
+                        TranslatableField::group('invitation_p2', as: 'quill', label: 'Câu kết ngắn (trước nút CTA, có thể in đậm chữ "Mầm")'),
+                        TranslatableField::group('invitation_button_text', as: 'quill', label: 'Nhãn nút CTA'),
+                        Forms\Components\TextInput::make('invitation_button_url')->label('Link nút CTA')->url(),
                     ]),
             ])
             ->statePath('data');

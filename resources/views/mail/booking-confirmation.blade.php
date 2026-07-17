@@ -7,14 +7,16 @@
 Mã booking: **{{ $b->code }}**
 
 - **Khách hàng:** {{ $b->guest_name }} — {{ $b->guest_phone }}
-- **Chi nhánh:** {{ $b->branch->getTranslation('name', 'vi') }} — {{ $b->branch->address }}
+@if($site->address)
+- **Địa chỉ:** {{ $site->address }}
+@endif
 - **Ngày:** {{ $b->date->format('d/m/Y') }} · **Giờ:** {{ $b->time_slot }}
 
 **Dịch vụ ({{ $b->items->count() ?: 1 }} khách):**
 @forelse($b->items as $item)
-- {{ $item->service->getTranslation('name', 'vi') }} ({{ $item->service->duration }} phút)@if($item->gender) — {{ $item->gender === 'male' ? 'Khách Nam' : 'Khách Nữ' }}@endif — {{ number_format($item->price, 0, ',', '.') }} VND
+- {{ strip_tags($item->service->getTranslation('name', 'vi')) }} ({{ $item->service->duration }} phút)@if($item->gender) — {{ $item->gender === 'male' ? 'Khách Nam' : 'Khách Nữ' }}@endif — {{ number_format($item->price, 0, ',', '.') }} VND
 @empty
-- {{ $b->service->getTranslation('name', 'vi') }} ({{ $b->service->duration }} phút)
+- {{ strip_tags($b->service->getTranslation('name', 'vi')) }} ({{ $b->service->duration }} phút)
 @endforelse
 
 - **Tổng tiền:** {{ number_format($b->total_price, 0, ',', '.') }} VND

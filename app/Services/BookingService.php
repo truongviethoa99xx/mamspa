@@ -18,7 +18,7 @@ class BookingService
 
     /**
      * @param array{
-     *     branch_id:int, items:array<int, array{service_id:int, gender?:string|null}>,
+     *     items:array<int, array{service_id:int, gender?:string|null}>,
      *     date:string, time_slot:string,
      *     guest_name:string, guest_phone:string, guest_email?:string,
      *     contact_channel?:string|null, contact_value?:string|null, note?:string,
@@ -34,7 +34,7 @@ class BookingService
             $guestCount = count($items);
 
             $skipSlotCheck = $data['skip_slot_check'] ?? false;
-            if (! $skipSlotCheck && ! $this->slots->isSlotAvailable($data['branch_id'], $data['date'], $data['time_slot'], $guestCount)) {
+            if (! $skipSlotCheck && ! $this->slots->isSlotAvailable($data['date'], $data['time_slot'], $guestCount)) {
                 throw new BookingException('BOOKING_SLOT_UNAVAILABLE', 'Khung giờ này đã hết chỗ.');
             }
 
@@ -84,7 +84,6 @@ class BookingService
                 'contact_channel' => $data['contact_channel'] ?? null,
                 'contact_value' => $data['contact_value'] ?? null,
                 'note' => $data['note'] ?? null,
-                'branch_id' => $data['branch_id'],
                 // Primary service keeps single-service code paths working.
                 'service_id' => $items[0]['service_id'],
                 'date' => $data['date'],
@@ -130,7 +129,7 @@ class BookingService
 
     public function reschedule(Booking $booking, string $date, string $timeSlot): Booking
     {
-        if (! $this->slots->isSlotAvailable($booking->branch_id, $date, $timeSlot)) {
+        if (! $this->slots->isSlotAvailable($date, $timeSlot)) {
             throw new BookingException('BOOKING_SLOT_UNAVAILABLE', 'Khung giờ này đã hết chỗ.');
         }
         $booking->update(['date' => $date, 'time_slot' => $timeSlot]);

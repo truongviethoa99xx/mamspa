@@ -35,7 +35,6 @@ class TranslationStringSeeder extends Seeder
 
     /** Bỏ qua mọi key bắt đầu bằng các tiền tố này. */
     private const HIDDEN_PREFIXES = [
-        'blocks.branches.',
     ];
 
     public function run(): void

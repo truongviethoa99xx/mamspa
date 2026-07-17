@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Booking;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Services\BookingService;
@@ -10,16 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    // Không còn seeder mẫu (chi nhánh/dịch vụ do admin tự thêm) → tạo trực tiếp.
-    $this->branch = Branch::create([
-        'slug' => 'flow-branch',
-        'name' => ['vi' => 'Chi nhánh kiểm thử'],
-        'address' => '123 Flow',
-        'phone' => '0900000000',
-        'open_hours' => '09:00 - 21:00',
-        'is_active' => true,
-    ]);
-
+    // Không còn seeder mẫu (dịch vụ do admin tự thêm) → tạo trực tiếp.
     $category = ServiceCategory::create([
         'slug' => 'flow-category',
         'name' => ['vi' => 'Danh mục kiểm thử'],
@@ -43,7 +33,6 @@ it('creates a booking when slot is available', function () {
     $service = $this->services[0];
 
     $booking = app(BookingService::class)->create([
-        'branch_id' => $this->branch->id,
         'service_id' => $service->id,
         'date' => now()->addDay()->format('Y-m-d'),
         'time_slot' => '10:00',
@@ -66,7 +55,6 @@ it('creates a booking when slot is available', function () {
 
 it('creates a booking and customer from the public booking endpoint', function () {
     $response = $this->from('/')->post('/dat-lich', [
-        'branch_id' => $this->branch->id,
         'service_id' => $this->services[0]->id,
         'items' => [
             ['service_id' => $this->services[0]->id, 'gender' => 'male'],

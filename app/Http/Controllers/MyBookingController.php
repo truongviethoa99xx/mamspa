@@ -22,7 +22,7 @@ class MyBookingController extends Controller
             return Inertia::render('MyBookings', ['bookings' => []]);
         }
 
-        $bookings = Booking::with(['branch', 'service'])
+        $bookings = Booking::with(['service'])
             ->where(function ($query) use ($user, $guestCodes) {
                 if ($user) {
                     $query->orWhere('user_id', $user->id);
@@ -42,7 +42,6 @@ class MyBookingController extends Controller
                 'status' => $b->status,
                 'total_price' => $b->total_price,
                 'payment_status' => $b->payment_status,
-                'branch' => ['slug' => $b->branch->slug, 'name' => $b->branch->name],
                 'service' => ['slug' => $b->service->slug, 'name' => $b->service->name, 'duration' => $b->service->duration],
             ]);
 

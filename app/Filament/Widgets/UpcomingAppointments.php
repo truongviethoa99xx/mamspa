@@ -36,7 +36,7 @@ class UpcomingAppointments extends Widget
             ->map(fn (Booking $b) => [
                 'time' => $b->time_slot ?: '--:--',
                 'name' => $b->guest_name ?: ($b->user?->name ?? 'Khách lẻ'),
-                'service' => $b->service ? (string) $b->service->getTranslation('name', $locale) : '—',
+                'service' => $b->service ? strip_tags((string) $b->service->getTranslation('name', $locale)) : '—',
                 'pending' => $b->status === 'pending',
             ]);
 

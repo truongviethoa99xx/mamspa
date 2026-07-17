@@ -8,16 +8,6 @@ export interface User {
     can_manage_staff?: boolean;
 }
 
-export interface FooterBranch {
-    slug: string;
-    name: string;
-    address: string;
-    phone?: string;
-    open_hours: string;
-    lat: number | null;
-    lng: number | null;
-}
-
 export interface SiteSettings {
     brand_name?: string | null;
     logo_path?: string | null;
@@ -32,6 +22,11 @@ export interface SiteSettings {
     hotline?: string | null;
     email?: string | null;
     chat_url?: string | null;
+    address?: string | null;
+    phone?: string | null;
+    open_hours?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     floating_contact_buttons?: {
         enabled?: boolean;
         label?: string;
@@ -50,7 +45,6 @@ export interface SharedProps {
     locale: 'vi' | 'en' | 'ja' | 'ko' | 'zh';
     availableLocales: string[];
     flash: { success?: string; error?: string; booking_code?: string };
-    branches: FooterBranch[];
     site?: SiteSettings;
     gtm: { id?: string };
 }
@@ -58,18 +52,6 @@ export interface SharedProps {
 export type Locale = 'vi' | 'en' | 'ja' | 'ko' | 'zh';
 
 export type Translatable = string | { vi: string; en: string };
-
-export interface Branch {
-    id: number;
-    slug: string;
-    name: string;
-    address: string;
-    phone: string;
-    open_hours: string;
-    lat: number | null;
-    lng: number | null;
-    images: string[];
-}
 
 export interface Service {
     id: number;
@@ -81,5 +63,4 @@ export interface Service {
     price: number;
     ingredients: string[];
     images: string[];
-    branches?: Branch[];
 }

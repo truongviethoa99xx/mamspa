@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\BlogPost;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Models\TranslationString;
 use App\Services\Translation\TranslationManager;
@@ -19,7 +18,6 @@ class TranslateMissingCommand extends Command
     protected $description = 'Auto-translate tất cả translatable field đang còn rỗng ở ngôn ngữ đích.';
 
     private array $modelFields = [
-        Branch::class => ['name'],
         Service::class => ['name', 'description'],
         BlogPost::class => ['title', 'excerpt', 'body'],
     ];

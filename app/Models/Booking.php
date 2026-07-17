@@ -15,7 +15,7 @@ class Booking extends Model
     protected $fillable = [
         'code', 'user_id', 'customer_id', 'guest_name', 'guest_phone', 'guest_email', 'note',
         'contact_channel', 'contact_value',
-        'branch_id', 'service_id', 'date', 'time_slot',
+        'service_id', 'date', 'time_slot',
         'status', 'total_price', 'voucher_code', 'payment_method', 'payment_status',
     ];
 
@@ -41,11 +41,6 @@ class Booking extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function branch(): BelongsTo
-    {
-        return $this->belongsTo(Branch::class);
     }
 
     public function service(): BelongsTo

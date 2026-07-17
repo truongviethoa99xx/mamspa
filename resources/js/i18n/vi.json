@@ -18,10 +18,9 @@
         "eyebrow": "Reserve your moment of peace",
         "title": "Đặt lịch trải nghiệm",
         "thankYou": "Cảm ơn quý khách đã gửi yêu cầu. Đội ngũ Mầm Spa sẽ liên hệ trong thời gian sớm nhất để xác nhận lịch hẹn và chuẩn bị chu đáo cho trải nghiệm của quý khách.",
-        "sectionLocation": "Lựa chọn Địa điểm & Dịch vụ",
+        "sectionLocation": "Số khách & Dịch vụ",
         "sectionDatetime": "Chọn ngày & Giờ trải nghiệm",
         "sectionContact": "Thông tin liên hệ",
-        "selectBranch": "Chọn chi nhánh",
         "guestCount": "Tổng số khách",
         "guestTotal": "Tổng",
         "people": "Người",
@@ -37,7 +36,7 @@
         "pickDate": "Vui lòng chọn ngày để xem khung giờ.",
         "noSlots": "Không có khung giờ trống cho ngày này.",
         "timePlaceholder": "--:--",
-        "timeHint": "Chi nhánh mở cửa {{open}} - {{close}}",
+        "timeHint": "Mở cửa {{open}} - {{close}}",
         "name": "Họ và tên",
         "namePlaceholder": "Nhập tên của bạn",
         "phone": "Số điện thoại",
@@ -91,7 +90,8 @@
         "minute": "phút",
         "closeBanner": "Đóng banner",
         "chat": "Chat",
-        "apply": "Áp dụng"
+        "apply": "Áp dụng",
+        "backToTop": "Lên đầu trang"
     },
     "home": {
         "hero": {
@@ -105,7 +105,6 @@
     },
     "footer": {
         "tagline": "The Beginning of the Journey to Balance Body - Mind - Spirit",
-        "branches": "Chi nhánh",
         "contact": "Liên hệ",
         "follow": "Theo dõi chúng tôi",
         "hotline": "Tổng đài đặt lịch",
@@ -128,7 +127,6 @@
             "foot-spa": "Foot Spa",
             "combo": "Combo"
         },
-        "allBranches": "Tất cả chi nhánh",
         "empty": "Không có dịch vụ phù hợp.",
         "ingredients": "Nguyên liệu"
     },
@@ -209,7 +207,7 @@
             "titleWithQuery": "Kết quả cho “{{query}}”",
             "title": "Tất cả dịch vụ",
             "count": "Tìm thấy {{count}} dịch vụ phù hợp",
-            "empty": "Không tìm thấy dịch vụ phù hợp. Vui lòng thử từ khoá hoặc chi nhánh khác.",
+            "empty": "Không tìm thấy dịch vụ phù hợp. Vui lòng thử từ khoá khác.",
             "clear": "Xoá bộ lọc"
         },
         "category": {
@@ -244,13 +242,11 @@
     },
     "booking": {
         "steps": {
-            "branch": "Chi nhánh",
             "service": "Dịch vụ",
             "datetime": "Ngày giờ",
             "info": "Thông tin",
             "confirm": "Xác nhận"
         },
-        "selectBranch": "Chọn chi nhánh",
         "selectService": "Chọn dịch vụ",
         "selectDateTime": "Chọn ngày & khung giờ",
         "contactInfo": "Thông tin liên hệ",
@@ -274,7 +270,6 @@
             "card": "Thẻ Visa/Master"
         },
         "summary": {
-            "branch": "Chi nhánh",
             "service": "Dịch vụ",
             "date": "Ngày",
             "time": "Giờ",
@@ -341,8 +336,6 @@
         },
         "bookingForm": {
             "title": "Yêu cầu đặt lịch",
-            "branch": "Chi nhánh Mầm Spa",
-            "branchPlaceholder": "Chọn chi nhánh",
             "name": "Tên khách hàng",
             "namePlaceholder": "Nhập tên của bạn",
             "phone": "Số điện thoại",
@@ -390,16 +383,6 @@
                 "facial": "Facial Treatments",
                 "foot-spa": "Others"
             }
-        },
-        "branches": {
-            "title": "Khám phá các không gian Mầm Spa",
-            "spaceLabel": "CN{{index}}",
-            "eyebrow": "A retreat for body, mind & soul",
-            "subheading": "Không gian chữa lành",
-            "heading": "Nét đẹp của Sài Gòn xưa.",
-            "p1": "Lạc bước vào không gian Lê Văn Sỹ như trở về một khoảng trời yên tĩnh hiếm hoi. Nơi đây giữ trọn nét mộc mạc của kiến trúc truyền thống với gỗ ấm, ánh sáng tự nhiên và hương thảo mộc phảng phất.",
-            "p2": "Một điểm đến lý tưởng để tạm gác lại nhịp sống hối hả, thư giãn sâu và kết nối lại với chính mình.",
-            "cta": "Khám phá chi tiết"
         },
         "whyUs": {
             "eyebrow": "Vì sao chọn Mầm Spa"

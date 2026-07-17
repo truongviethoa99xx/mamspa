@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Models\BlogPost;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Observers\AutoTranslateObserver;
 use Illuminate\Console\Scheduling\Schedule;
@@ -20,7 +19,6 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        Branch::observe(AutoTranslateObserver::class);
         Service::observe(AutoTranslateObserver::class);
         BlogPost::observe(AutoTranslateObserver::class);
 

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Branch;
 use App\Models\HomePageContent;
 use App\Models\Service;
 use App\Models\ServiceCategory;
@@ -19,39 +18,6 @@ class DemoHomeContentSeeder extends Seeder
 {
     public function run(): void
     {
-        $branchIntro = [
-            'home_intro_title' => ['vi' => 'Khám phá các không gian Mầm Spa', 'en' => 'Explore the Mầm Spa spaces'],
-            'home_intro_eyebrow' => ['vi' => 'A retreat for body, mind & soul', 'en' => 'A retreat for body, mind & soul'],
-            'home_intro_subheading' => ['vi' => 'Không gian chữa lành', 'en' => 'A healing space'],
-            'home_intro_cta' => ['vi' => 'Khám phá không gian', 'en' => 'Explore the space'],
-        ];
-
-        $phuNhuan = Branch::updateOrCreate(['slug' => 'phu-nhuan'], [
-            'name' => ['vi' => 'Phú Nhuận', 'en' => 'Phú Nhuận'],
-            'address' => '12 Lê Văn Sỹ, Phường Phú Nhuận, TP. Hồ Chí Minh',
-            'phone' => '(+84) 965 80 6166',
-            'open_hours' => '09:00 - 21:00',
-            'is_active' => true,
-            'page_content' => $branchIntro + [
-                'home_intro_heading' => ['vi' => 'Một góc bình yên trong lòng phố.', 'en' => 'A peaceful corner in the city.'],
-                'home_intro_body_1' => ['vi' => 'Một không gian ấm cúng trong con hẻm nhỏ, dễ tìm về sự bình yên giữa nhịp sống hối hả.', 'en' => 'A cosy space tucked in a small alley, easy to find peace amid the rush of city life.'],
-                'home_intro_body_2' => ['vi' => 'Nơi mọi giác quan được đánh thức nhẹ nhàng bởi hương thảo mộc và ánh sáng tự nhiên.', 'en' => 'A place where every sense is gently awakened by herbal scents and natural light.'],
-            ],
-        ]);
-
-        $benThanh = Branch::updateOrCreate(['slug' => 'ben-thanh'], [
-            'name' => ['vi' => 'Bến Thành', 'en' => 'Bến Thành'],
-            'address' => '45 Phạm Ngũ Lão, Phường Bến Thành, TP. Hồ Chí Minh',
-            'phone' => '(+84) 965 80 6166',
-            'open_hours' => '09:00 - 21:00',
-            'is_active' => true,
-            'page_content' => $branchIntro + [
-                'home_intro_heading' => ['vi' => 'Nét thanh tĩnh giữa lòng thành phố.', 'en' => 'Quiet elegance in the heart of the city.'],
-                'home_intro_body_1' => ['vi' => 'Không gian thanh tịnh giữa lòng thành phố, nơi từng chi tiết đều được chăm chút.', 'en' => 'A serene space in the heart of the city, where every detail is thoughtfully cared for.'],
-                'home_intro_body_2' => ['vi' => 'Một điểm dừng chân lý tưởng để tạm gác lại nhịp sống hối hả.', 'en' => 'An ideal stop to set aside the rush of daily life.'],
-            ],
-        ]);
-
         // "Four Healing Journeys" — gán vào 4 danh mục gốc đã có sẵn từ migration.
         $journeys = [
             'massage' => [
@@ -80,7 +46,7 @@ class DemoHomeContentSeeder extends Seeder
 
             $category->update(['description' => $info['description']]);
 
-            $service = Service::updateOrCreate(['slug' => $slug.'-signature'], [
+            Service::updateOrCreate(['slug' => $slug.'-signature'], [
                 'name' => $info['service'],
                 'short_description' => $info['description'],
                 'description' => $info['description'],
@@ -90,8 +56,6 @@ class DemoHomeContentSeeder extends Seeder
                 'is_featured' => true,
                 'is_active' => true,
             ]);
-
-            $service->branches()->sync([$phuNhuan->id, $benThanh->id]);
         }
 
         // Cập nhật hero cho khớp tinh thần bản mockup (vẫn giữ thương hiệu Mầm Spa).

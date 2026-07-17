@@ -12,7 +12,8 @@ class BlogPost extends Model
     use HasFactory, HasTranslations;
 
     protected $fillable = [
-        'slug', 'category', 'title', 'excerpt', 'body', 'cover_image',
+        'slug', 'category', 'title', 'excerpt', 'body', 'cover_image', 'cover_image_alt',
+        'seo_title', 'seo_description', 'seo_focus_keyword',
         'author_id', 'seo_meta', 'is_published', 'published_at',
     ];
 
@@ -22,7 +23,10 @@ class BlogPost extends Model
         'published_at' => 'datetime',
     ];
 
-    public array $translatable = ['title', 'excerpt', 'body'];
+    public array $translatable = [
+        'title', 'excerpt', 'body', 'cover_image_alt',
+        'seo_title', 'seo_description', 'seo_focus_keyword',
+    ];
 
     public function author(): BelongsTo
     {

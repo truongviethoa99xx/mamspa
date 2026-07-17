@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -20,30 +19,34 @@ class Service extends Model implements HasMedia
 
     protected $fillable = [
         'slug', 'name', 'short_description', 'description', 'service_category_id', 'duration', 'price',
+        'thumbnail_alt',
         'ingredients', 'steps', 'is_featured', 'is_combo', 'is_active',
+        'pillars_heading', 'pillars', 'pillars_image', 'pillars_image_alt', 'treatment_scope_note', 'treatment_scope_image', 'treatment_scope_image_alt', 'tools_used', 'tiers',
+        'tiers_heading', 'tiers_subtitle',
     ];
 
     protected $casts = [
         'ingredients' => 'array',
         'steps' => 'array',
+        'pillars' => 'array',
+        'tools_used' => 'array',
+        'tiers' => 'array',
         'is_featured' => 'boolean',
         'is_combo' => 'boolean',
         'is_active' => 'boolean',
         'duration' => 'integer',
         'price' => 'integer',
+        'thumbnail_alt' => 'array',
+        'pillars_image_alt' => 'array',
+        'treatment_scope_image_alt' => 'array',
     ];
 
-    public array $translatable = ['name', 'short_description', 'description'];
+    public array $translatable = ['name', 'short_description', 'description', 'pillars_heading', 'treatment_scope_note', 'tiers_heading', 'tiers_subtitle'];
 
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('thumbnail')->singleFile();
         $this->addMediaCollection('images');
-    }
-
-    public function branches(): BelongsToMany
-    {
-        return $this->belongsToMany(Branch::class, 'service_branch');
     }
 
     public function category(): BelongsTo

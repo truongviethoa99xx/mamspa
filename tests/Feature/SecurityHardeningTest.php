@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Booking;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\User;
@@ -12,14 +11,6 @@ uses(RefreshDatabase::class);
 
 function createSecurityTestBooking(?User $user = null): Booking
 {
-    $branch = Branch::create([
-        'slug' => 'security-branch',
-        'name' => ['vi' => 'Chi nhánh kiểm thử'],
-        'address' => '123 Test',
-        'phone' => '0900000000',
-        'is_active' => true,
-    ]);
-
     $category = ServiceCategory::create([
         'slug' => 'security-category',
         'name' => ['vi' => 'Danh mục kiểm thử'],
@@ -39,7 +30,6 @@ function createSecurityTestBooking(?User $user = null): Booking
         'user_id' => $user?->id,
         'guest_name' => 'Nguyen Van A',
         'guest_phone' => '0900000000',
-        'branch_id' => $branch->id,
         'service_id' => $service->id,
         'date' => now()->addDays(2)->format('Y-m-d'),
         'time_slot' => '09:00',

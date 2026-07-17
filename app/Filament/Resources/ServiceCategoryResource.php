@@ -55,7 +55,7 @@ class ServiceCategoryResource extends Resource
                         ->when($record, fn ($query) => $query->whereKeyNot($record->getKey()))
                         ->orderBy('order')
                         ->get()
-                        ->mapWithKeys(fn (ServiceCategory $category) => [$category->id => $category->getTranslation('name', 'vi')]))
+                        ->mapWithKeys(fn (ServiceCategory $category) => [$category->id => strip_tags($category->getTranslation('name', 'vi'))]))
                     ->native(false)
                     ->searchable()
                     ->disabled(fn (?ServiceCategory $record) => $record && $record->children()->exists())
@@ -65,21 +65,116 @@ class ServiceCategoryResource extends Resource
                 Forms\Components\TextInput::make('order')->label('Thứ tự')->numeric()->default(0),
                 Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
             ])->columns(2),
-            TranslatableField::group('name', label: 'Tên danh mục', required: true, example: 'Body Massage'),
+            TranslatableField::group('name', as: 'quill', label: 'Tên danh mục', required: true),
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả danh mục', rows: 3, example: 'Liệu pháp massage toàn thân giúp thư giãn sâu và phục hồi năng lượng.'),
             Forms\Components\Section::make('Ảnh đại diện')
+                ->description('Ảnh dùng làm ảnh banner (hero) ở đầu trang danh mục.')
                 ->schema([
                     Forms\Components\FileUpload::make('image')
                         ->label('')
-                        ->helperText('Ảnh đại diện của danh mục. Khuyến nghị tối thiểu 1200×900px.')
+                        ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
                         ->image()
                         ->disk('public')
                         ->directory('service-categories')
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                         ->maxSize(5120),
+                    TranslatableField::group('image_alt', label: 'Alt text ảnh (mô tả ảnh cho SEO/accessibility)', example: 'Massage trị liệu tại Mầm Spa'),
+                ]),
+            Forms\Components\Section::make('Giới thiệu chăm sóc theo nhu cầu')
+                ->description('Khối giới thiệu ngay dưới banner — ảnh minh hoạ bên trái, tiêu đề + đoạn giới thiệu + 3 điểm nổi bật (pillars) bên phải.')
+                ->schema([
+                    Forms\Components\FileUpload::make('intro_image')
+                        ->label('Ảnh minh hoạ')
+                        ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
+                        ->image()
+                        ->disk('public')
+                        ->directory('service-categories/intro')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(5120),
+                    TranslatableField::group('intro_image_alt', label: 'Alt text ảnh'),
+                    TranslatableField::group('intro_heading', as: 'quill', label: 'Tiêu đề khối', example: 'Chăm sóc theo nhu cầu, không theo khuôn mẫu'),
+                    TranslatableField::group('intro_body', as: 'quill', label: 'Đoạn giới thiệu'),
+                    Forms\Components\Repeater::make('pillars')
+                        ->label('3 điểm nổi bật')
+                        ->schema([
+                            Forms\Components\Select::make('icon')
+                                ->label('Icon')
+                                ->options([
+                                    'HandHeart' => 'Bàn tay ôm trái tim (Lắng nghe cơ thể)',
+                                    'Leaf' => 'Lá cây (Thảo mộc thiên nhiên)',
+                                    'GraduationCap' => 'Mũ tốt nghiệp (Đội ngũ được đào tạo)',
+                                    'Sprout' => 'Mầm cây (Sprout)',
+                                    'Heart' => 'Trái tim (Heart)',
+                                    'ShieldCheck' => 'Khiên xác nhận (Trusted)',
+                                    'Sparkles' => 'Lấp lánh (Thoughtful)',
+                                ])
+                                ->required()
+                                ->native(false),
+                            TranslatableField::group('title', as: 'quill', label: 'Tiêu đề', example: 'Lắng nghe cơ thể'),
+                        ])
+                        ->columns(2)
+                        ->defaultItems(0)
+                        ->maxItems(3)
+                        ->reorderable()
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => strip_tags($state['title']['vi'] ?? '') ?: null)
+                        ->addActionLabel('+ Thêm điểm nổi bật (tối đa 3)')
+                        ->columnSpanFull(),
+                ]),
+            Forms\Components\Section::make('Trích dẫn nổi bật')
+                ->description('Khối trích dẫn lớn chính giữa trang, phía trên khối "Trải nghiệm theo tầng".')
+                ->schema([
+                    TranslatableField::group('quote', as: 'quill', label: 'Nội dung trích dẫn', example: 'Massage không đơn thuần là kỹ thuật. Đó là sự thấu hiểu cơ thể thông qua từng chuyển động.'),
+                ]),
+            Forms\Components\Section::make('Trải nghiệm theo tầng')
+                ->description('Khối "Mỗi tầng trải nghiệm được thiết kế khác nhau về" — ảnh minh hoạ bên trái, tiêu đề + checklist + đoạn mô tả bên phải.')
+                ->schema([
+                    Forms\Components\FileUpload::make('experience_note_image')
+                        ->label('Ảnh minh hoạ')
+                        ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
+                        ->image()
+                        ->disk('public')
+                        ->directory('service-categories/experience-note')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(5120),
+                    TranslatableField::group('experience_note_image_alt', label: 'Alt text ảnh'),
+                    TranslatableField::group('experience_note_title', as: 'quill', label: 'Tiêu đề khối', example: 'Mỗi tầng trải nghiệm được thiết kế khác nhau về'),
+                    Forms\Components\Repeater::make('experience_checklist')
+                        ->label('Checklist (mỗi dòng 1 ý ngắn)')
+                        ->schema([
+                            TranslatableField::group('text', label: 'Nội dung', example: 'Mức độ thư giãn')
+                                ->columnSpanFull(),
+                        ])
+                        ->columns(1)
+                        ->defaultItems(0)
+                        ->reorderable()
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => is_array($state['text'] ?? null) ? ($state['text']['vi'] ?? null) : ($state['text'] ?? null))
+                        ->addActionLabel('+ Thêm dòng')
+                        ->columnSpanFull(),
+                    TranslatableField::group('experience_note_body', as: 'quill', label: 'Đoạn mô tả'),
+                ]),
+            Forms\Components\Section::make('Lưới liệu pháp con')
+                ->description('Tiêu đề khối lưới các dịch vụ con.')
+                ->schema([
+                    TranslatableField::group('therapy_heading', as: 'quill', label: 'Tiêu đề khối', example: 'Nhóm liệu pháp'),
+                ]),
+            Forms\Components\Section::make('Banner khép lại trang (riêng cho danh mục này)')
+                ->description('Tuỳ chọn — để trống toàn bộ thì dùng chung banner mặc định ở /admin/service-page-settings. Điền vào đây nếu muốn danh mục này có banner CTA riêng.')
+                ->collapsed()
+                ->schema([
+                    Forms\Components\FileUpload::make('closing_image')->label('Ảnh nền (tuỳ chọn)')
+                        ->helperText('Ảnh nền banner CTA hiển thị rõ nét, không có lớp phủ — nên chọn ảnh tông sáng để chữ tối vẫn đọc rõ. Chiều cao tự co theo nội dung chữ, chọn ảnh ngang chủ thể căn giữa, khuyến nghị tối thiểu 1600×900px.')
+                        ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('service-categories/closing')->imageEditor(),
+                    TranslatableField::group('closing_image_alt', label: 'Alt text ảnh (bỏ trống nếu ảnh chỉ mang tính trang trí)'),
+                    TranslatableField::group('closing_heading', as: 'quill', label: 'Tiêu đề'),
+                    TranslatableField::group('closing_body', as: 'quill', label: 'Mô tả'),
+                    TranslatableField::group('closing_cta_text', as: 'quill', label: 'Nhãn nút CTA'),
+                    Forms\Components\TextInput::make('closing_cta_link')->label('Link nút CTA')->url(),
                 ]),
             Forms\Components\Section::make('Lợi ích dịch vụ')
                 ->description('Các lợi ích nổi bật của nhóm dịch vụ này. Hiển thị trên trang chi tiết các dịch vụ thuộc danh mục.')
+                ->hidden()
                 ->schema([
                     Forms\Components\Repeater::make('benefits')
                         ->label('')
@@ -99,6 +194,7 @@ class ServiceCategoryResource extends Resource
                 ]),
             Forms\Components\Section::make('Đối tượng phù hợp')
                 ->description('Nhóm khách hàng đặc biệt phù hợp với nhóm dịch vụ này. Hiển thị cùng khối "Lợi ích & đối tượng phù hợp" ở trang chi tiết dịch vụ.')
+                ->hidden()
                 ->schema([
                     Forms\Components\TagsInput::make('ideal_for')
                         ->label('')
@@ -107,6 +203,7 @@ class ServiceCategoryResource extends Resource
                 ]),
             Forms\Components\Section::make('Hình ảnh trải nghiệm khách hàng')
                 ->description('Bộ ảnh thực tế khách hàng trải nghiệm nhóm dịch vụ này. Mỗi ảnh có mô tả (alt) cho SEO/khả năng truy cập.')
+                ->hidden()
                 ->schema([
                     Forms\Components\Repeater::make('experience_images')
                         ->label('')
@@ -134,6 +231,7 @@ class ServiceCategoryResource extends Resource
                 ]),
             Forms\Components\Section::make('Câu hỏi thường gặp (FAQ)')
                 ->description('FAQ chung của nhóm dịch vụ này, hiển thị ở cuối trang chi tiết các dịch vụ thuộc danh mục.')
+                ->hidden()
                 ->schema([
                     Forms\Components\Repeater::make('faqs')
                         ->label('')
@@ -166,7 +264,7 @@ class ServiceCategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên danh mục')
                     ->searchable()
-                    ->formatStateUsing(fn (ServiceCategory $record, $state) => $record->isRoot() ? $state : '— '.$state),
+                    ->formatStateUsing(fn (ServiceCategory $record, $state) => ($record->isRoot() ? '' : '— ').strip_tags($state)),
                 Tables\Columns\TextColumn::make('slug')->label('Slug')->searchable(),
                 Tables\Columns\TextColumn::make('parent.slug')->label('Thuộc danh mục')->placeholder('— Cấp 1 —'),
                 Tables\Columns\TextColumn::make('order')->label('Thứ tự')->sortable(),

@@ -10,7 +10,11 @@ const NAV_ITEMS = [
     { label: 'Trang chủ', href: '/' },
     { label: 'Về Mầm', href: '/gioi-thieu/' },
     { label: 'Dịch vụ', href: '/dich-vu/' },
+    // Tạm ẩn "Ưu đãi" khỏi menu header — trang vẫn truy cập được trực tiếp qua /uu-dai/.
+    // { label: 'Ưu đãi', href: '/uu-dai/' },
     { label: 'Blog', href: '/tin-tuc/' },
+    // Tạm ẩn "Customer Experience" khỏi menu header — trang vẫn truy cập được trực tiếp qua /trai-nghiem-khach-hang/.
+    // { label: 'Customer Experience', href: '/trai-nghiem-khach-hang/' },
     { label: 'Liên hệ', href: '/lien-he/' },
 ];
 

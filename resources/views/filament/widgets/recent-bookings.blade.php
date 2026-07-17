@@ -11,7 +11,6 @@
                     <th>Mã đơn</th>
                     <th>Khách hàng</th>
                     <th>Dịch vụ</th>
-                    <th>Chi nhánh</th>
                     <th>Giá trị</th>
                     <th>Trạng thái</th>
                 </tr>
@@ -27,13 +26,6 @@
                             </div>
                         </td>
                         <td>{{ $r['service'] }}</td>
-                        <td>
-                            @if ($r['branch'])
-                                <span class="maha-tag maha-tag--branch">{{ $r['branch'] }}</span>
-                            @else
-                                —
-                            @endif
-                        </td>
                         <td class="maha-money">{{ $r['price'] }}</td>
                         <td><span class="maha-status maha-status--{{ $r['status'] }}">{{ $r['statusLabel'] }}</span></td>
                     </tr>

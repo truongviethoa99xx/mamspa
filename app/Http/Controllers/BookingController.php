@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Exceptions\BookingException;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Services\BookingService;
+use App\Services\SlotService;
 use App\Services\VoucherService;
 use App\Support\GuestBookings;
 use Illuminate\Http\RedirectResponse;
@@ -17,24 +17,18 @@ use Inertia\Response;
 
 class BookingController extends Controller
 {
-    public function index(Request $request): Response
+    public function index(Request $request, SlotService $slots): Response
     {
         $serviceSlug = $request->query('service');
-        $branchSlug = $request->query('branch');
 
         return Inertia::render('Booking', [
             'preselect' => [
                 'service' => $serviceSlug,
-                'branch' => $branchSlug,
             ],
-            'branches' => Branch::where('is_active', true)->get()->map(fn ($b) => [
-                'id' => $b->id, 'slug' => $b->slug, 'name' => $b->name,
-                'address' => $b->address, 'phone' => $b->phone, 'open_hours' => $b->open_hours,
-            ])->all(),
-            'services' => Service::active()->with(['branches', 'category'])->get()->map(fn ($s) => [
+            'openHours' => $slots->openHours(),
+            'services' => Service::active()->with('category')->get()->map(fn ($s) => [
                 'id' => $s->id, 'slug' => $s->slug, 'name' => $s->name,
                 'category' => $s->category?->name, 'duration' => $s->duration, 'price' => $s->price,
-                'branch_ids' => $s->branches->pluck('id'),
             ])->all(),
         ]);
     }
@@ -94,7 +88,7 @@ class BookingController extends Controller
 
     public function success(string $code): Response
     {
-        $booking = Booking::with(['branch', 'service', 'items.service'])
+        $booking = Booking::with(['service', 'items.service'])
             ->where('code', $code)->firstOrFail();
 
         $user = request()->user();
@@ -110,7 +104,6 @@ class BookingController extends Controller
                 'guest_name' => $booking->guest_name,
                 'date' => $booking->date->format('Y-m-d'),
                 'time_slot' => $booking->time_slot,
-                'branch' => ['name' => $booking->branch->name, 'address' => $booking->branch->address],
                 'service' => ['name' => $booking->service->name, 'duration' => $booking->service->duration],
                 'items' => $booking->items->map(fn ($it) => [
                     'name' => $it->service->name,

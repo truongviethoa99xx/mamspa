@@ -18,10 +18,9 @@
         "eyebrow": "Reserve your moment of peace",
         "title": "Book Your Experience",
         "thankYou": "Thank you for your booking request. Our team will contact you shortly to confirm your reservation and ensure every detail of your experience is thoughtfully prepared.",
-        "sectionLocation": "Choose Location & Services",
+        "sectionLocation": "Guests & Services",
         "sectionDatetime": "Choose Date & Time",
         "sectionContact": "Contact Information",
-        "selectBranch": "Select a branch",
         "guestCount": "Total guests",
         "guestTotal": "Total",
         "people": "Guests",
@@ -37,7 +36,7 @@
         "pickDate": "Please pick a date to see available times.",
         "noSlots": "No available time slots for this date.",
         "timePlaceholder": "--:--",
-        "timeHint": "Branch hours: {{open}} - {{close}}",
+        "timeHint": "Open hours: {{open}} - {{close}}",
         "name": "Full name",
         "namePlaceholder": "Enter your name",
         "phone": "Phone number",
@@ -91,7 +90,8 @@
         "minute": "min",
         "closeBanner": "Close banner",
         "chat": "Chat",
-        "apply": "Apply"
+        "apply": "Apply",
+        "backToTop": "Back to top"
     },
     "home": {
         "hero": {
@@ -105,7 +105,6 @@
     },
     "footer": {
         "tagline": "The Beginning of the Journey to Balance Body - Mind - Spirit",
-        "branches": "Branches",
         "contact": "Contact",
         "follow": "Follow us",
         "hotline": "Booking hotline",
@@ -128,7 +127,6 @@
             "foot-spa": "Foot Spa",
             "combo": "Combo"
         },
-        "allBranches": "All branches",
         "empty": "No matching services.",
         "ingredients": "Ingredients"
     },
@@ -209,7 +207,7 @@
             "titleWithQuery": "Results for “{{query}}”",
             "title": "All services",
             "count": "Found {{count}} matching services",
-            "empty": "No matching services found. Try a different keyword or branch.",
+            "empty": "No matching services found. Try a different keyword.",
             "clear": "Clear filters"
         },
         "category": {
@@ -244,13 +242,11 @@
     },
     "booking": {
         "steps": {
-            "branch": "Branch",
             "service": "Service",
             "datetime": "Date & time",
             "info": "Your info",
             "confirm": "Confirm"
         },
-        "selectBranch": "Select a branch",
         "selectService": "Select a service",
         "selectDateTime": "Pick date & time",
         "contactInfo": "Contact information",
@@ -274,7 +270,6 @@
             "card": "Visa/Master card"
         },
         "summary": {
-            "branch": "Branch",
             "service": "Service",
             "date": "Date",
             "time": "Time",
@@ -341,8 +336,6 @@
         },
         "bookingForm": {
             "title": "Booking request",
-            "branch": "Mầm Spa branch",
-            "branchPlaceholder": "Select a branch",
             "name": "Customer name",
             "namePlaceholder": "Enter your name",
             "phone": "Phone number",
@@ -390,16 +383,6 @@
                 "facial": "Facial Treatments",
                 "foot-spa": "Others"
             }
-        },
-        "branches": {
-            "title": "Explore the Mầm Spa spaces",
-            "spaceLabel": "CN{{index}}",
-            "eyebrow": "A retreat for body, mind & soul",
-            "subheading": "A healing space",
-            "heading": "The beauty of old Saigon.",
-            "p1": "Step into the Lê Văn Sỹ space and return to a rare moment of stillness. Here, the rustic charm of traditional architecture is preserved with warm wood, natural light and the faint scent of herbs.",
-            "p2": "An ideal destination to set aside the rush of life, relax deeply and reconnect with yourself.",
-            "cta": "Explore in detail"
         },
         "whyUs": {
             "eyebrow": "Why Mầm Spa"

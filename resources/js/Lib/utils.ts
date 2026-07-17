@@ -26,6 +26,22 @@ export function firstSentence(text: string): string {
     return match ? match[0] : text;
 }
 
+/** Định dạng ngày ISO 8601 thành "dd.MM.yyyy" (dùng cho ngày đăng bài viết). */
+export function formatDate(iso: string | null | undefined): string {
+    if (!iso) return '';
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return '';
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    return `${day}.${month}.${date.getFullYear()}`;
+}
+
+/** Bỏ toàn bộ thẻ HTML — dùng khi nội dung Quill cần hiển thị dạng chữ thường (title, alt, breadcrumb...). */
+export function stripTags(html: string): string {
+    return html.replace(/<[^>]+>/g, '');
+}
+
 export function tr(value: unknown, locale: string = 'vi'): string {
     if (typeof value === 'string') return value;
     if (value && typeof value === 'object' && locale in value) {

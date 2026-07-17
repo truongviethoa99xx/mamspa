@@ -71,6 +71,10 @@ class ContactSubmissionResource extends Resource
                         ->label('Số điện thoại')
                         ->disabled()
                         ->placeholder('—'),
+                    Forms\Components\TextInput::make('branch')
+                        ->label('Chi nhánh quan tâm')
+                        ->disabled()
+                        ->placeholder('—'),
                     Forms\Components\TextInput::make('subject')
                         ->label('Chủ đề')
                         ->disabled(),
@@ -110,6 +114,9 @@ class ContactSubmissionResource extends Resource
                 ->searchable(),
             Tables\Columns\TextColumn::make('phone')
                 ->label('Số điện thoại')
+                ->placeholder('—'),
+            Tables\Columns\TextColumn::make('branch')
+                ->label('Chi nhánh quan tâm')
                 ->placeholder('—'),
             Tables\Columns\TextColumn::make('subject')
                 ->label('Chủ đề')

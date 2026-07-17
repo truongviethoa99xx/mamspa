@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServicePageContent;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -23,6 +21,7 @@ class DichVuController extends Controller
             'name' => $s->name,
             'short_description' => $s->short_description,
             'description' => $s->description,
+            'thumbnail_alt' => $s->thumbnail_alt,
             'category' => $s->category?->slug,
             'category_name' => $s->category?->getTranslations('name'),
             'duration' => $s->duration,
@@ -46,8 +45,28 @@ class DichVuController extends Controller
                 ->filter(fn ($img) => ! empty($img['image']))
                 ->values()->all(),
             'images' => $this->serviceImages($s),
-            'branches' => $s->branches->pluck('slug'),
         ];
+    }
+
+    /** Dữ liệu đầy đủ cho trang chi tiết dịch vụ — bổ sung các khối riêng của trang chi tiết lên trên map() dùng cho thẻ dịch vụ. */
+    private function mapDetail(Service $s): array
+    {
+        return array_merge($this->map($s), [
+            'pillars_heading' => $s->pillars_heading,
+            'pillars' => $s->pillars ?? [],
+            'pillars_image' => $this->publicUrl($s->pillars_image),
+            'pillars_image_alt' => $s->pillars_image_alt,
+            'treatment_scope_note' => $s->treatment_scope_note,
+            'treatment_scope_image' => $s->treatment_scope_image,
+            'tools_used' => $s->tools_used ?? [],
+            'tiers_heading' => $s->tiers_heading,
+            'tiers_subtitle' => $s->tiers_subtitle,
+            'tiers' => collect($s->tiers ?? [])
+                ->map(fn ($tier) => array_merge(
+                    is_array($tier) ? $tier : [],
+                    ['image' => $this->publicUrl($tier['image'] ?? null)],
+                ))->all(),
+        ]);
     }
 
     /** Dịch vụ là gói combo — qua cờ is_combo hoặc thuộc danh mục "combo" (chính nó hoặc danh mục cấp 1 của nó). */
@@ -65,27 +84,83 @@ class DichVuController extends Controller
         return array_values(array_filter([$thumbnail, ...$gallery]));
     }
 
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        $branchSlug = $request->query('branch');
-        $q = trim((string) $request->query('q', ''));
-
-        $services = Service::active()
-            ->with(['branches', 'category.parent'])
-            ->when($branchSlug, fn ($query) => $query->whereHas('branches', fn ($b) => $b->where('slug', $branchSlug)))
-            ->when($q !== '', fn ($query) => $query->where('name', 'like', "%{$q}%"))
-            ->orderByDesc('is_featured')
-            ->get();
+        $content = ServicePageContent::current();
 
         return Inertia::render('DichVu', [
-            'filters' => ['branch' => $branchSlug, 'q' => $q],
-            'combos' => $services->filter(fn (Service $s) => $this->isCombo($s))->values()->map(fn ($s) => $this->map($s)),
-            'services' => $services->map(fn ($s) => $this->map($s)),
-            'branches' => Branch::where('is_active', true)->get()->map(fn ($b) => [
-                'slug' => $b->slug, 'name' => $b->name,
-            ]),
-            'content' => $this->listingContent(),
+            'hero' => $this->hero($content),
+            'showcase' => $this->showcase(),
+            'closing' => $this->closing($content),
+            'sectionVisibility' => [
+                'hero' => (bool) $content->hero_visible,
+                'showcase' => (bool) $content->showcase_visible,
+                'closing' => (bool) $content->closing_visible,
+            ],
         ]);
+    }
+
+    /** Banner đầu trang /dich-vu — chỉ tiêu đề + mô tả, không ảnh nền/nút CTA. */
+    protected function hero(ServicePageContent $content): array
+    {
+        return [
+            'heading' => $content->hero_title ?: ['vi' => '<p>Dịch vụ tại Mầm</p>', 'en' => '<p>Services at Mầm</p>'],
+            'subtitle' => $content->hero_subtitle ?: [
+                'vi' => '<p>Bốn hành trình trị liệu được thiết kế để chăm sóc cơ thể, nuôi dưỡng tâm trí và khơi dậy nguồn năng lượng tích cực từ bên trong.</p>',
+                'en' => '<p>Four therapeutic journeys designed to care for the body, nourish the mind and awaken positive energy from within.</p>',
+            ],
+            'image' => $this->publicUrl($content->hero_image),
+            'image_alt' => $content->hero_image_alt ?: null,
+        ];
+    }
+
+    /** 4 khối dịch vụ nổi bật = các danh mục dịch vụ cấp 1 thật, quản lý ở /admin/service-categories. */
+    protected function showcase(): array
+    {
+        $categories = ServiceCategory::active()->roots()->orderBy('order')->get();
+
+        return [
+            'items' => $categories->map(fn (ServiceCategory $c) => [
+                'image' => $this->publicUrl($c->image),
+                'title' => $c->getTranslations('name'),
+                'description' => $c->getTranslations('description'),
+                'url' => $c->url,
+            ])->all(),
+        ];
+    }
+
+    /** Banner CTA khép lại trang, mời khách đặt lịch. */
+    protected function closing(ServicePageContent $content): array
+    {
+        return [
+            'heading' => $content->closing_heading ?: [
+                'vi' => '<p>Mỗi liệu trình là một hành trình trở về bên trong.</p>',
+                'en' => '<p>Every treatment is a journey back within.</p>',
+            ],
+            'body' => $content->closing_body ?: [
+                'vi' => '<p>Hãy để Mầm đồng hành cùng bạn trên hành trình chăm sóc sức khỏe và nuôi dưỡng sự an lành mỗi ngày.</p>',
+                'en' => '<p>Let Mầm walk alongside you on the journey of health and everyday wellbeing.</p>',
+            ],
+            'ctaText' => $content->closing_cta_text ?: ['vi' => '<p>Đặt lịch ngay</p>', 'en' => '<p>Book now</p>'],
+            'ctaLink' => $content->closing_cta_link ?: '/dat-lich/',
+            'image' => $this->publicUrl($content->closing_image),
+            'image_alt' => $content->closing_image_alt ?: null,
+        ];
+    }
+
+    /** Banner khép lại trang danh mục — ưu tiên nội dung riêng của danh mục, trống thì dùng chung banner mặc định. */
+    protected function categoryClosing(ServiceCategory $category): array
+    {
+        $fallback = $this->closing(ServicePageContent::current());
+
+        return [
+            'heading' => $category->closing_heading ?: $fallback['heading'],
+            'body' => $category->closing_body ?: $fallback['body'],
+            'ctaText' => $category->closing_cta_text ?: $fallback['ctaText'],
+            'ctaLink' => $category->closing_cta_link ?: $fallback['ctaLink'],
+            'image' => $category->closing_image ? $this->publicUrl($category->closing_image) : $fallback['image'],
+            'image_alt' => $category->closing_image_alt ?: $fallback['image_alt'],
+        ];
     }
 
     /**
@@ -105,7 +180,7 @@ class DichVuController extends Controller
                 abort(404);
             }
 
-            $legacyService = Service::active()->with(['branches', 'category.parent'])->where('slug', $a)->first();
+            $legacyService = Service::active()->with('category.parent')->where('slug', $a)->first();
             abort_if(! $legacyService, 404);
 
             // Dịch vụ chưa gán danh mục thì không có tiền tố để redirect tới — render thẳng tại URL phẳng.
@@ -137,7 +212,7 @@ class DichVuController extends Controller
     private function renderServiceIn(ServiceCategory $category, string $slug, string $requestedPath): Response|RedirectResponse
     {
         $service = Service::active()
-            ->with(['branches', 'category.parent'])
+            ->with('category.parent')
             ->where('service_category_id', $category->id)
             ->where('slug', $slug)
             ->first();
@@ -154,7 +229,7 @@ class DichVuController extends Controller
     private function renderService(Service $service, array $breadcrumb): Response
     {
         $related = Service::active()
-            ->with(['branches', 'category.parent'])
+            ->with('category.parent')
             ->whereKeyNot($service->getKey())
             ->orderByRaw('service_category_id = ? desc', [$service->service_category_id])
             ->orderByDesc('is_featured')
@@ -164,7 +239,7 @@ class DichVuController extends Controller
         // Khối "Các gói combo" chỉ hiển thị khi chính dịch vụ đang xem là combo.
         $combos = $this->isCombo($service)
             ? Service::active()
-                ->with(['branches', 'category.parent'])
+                ->with('category.parent')
                 ->combo()
                 ->whereKeyNot($service->getKey())
                 ->orderByDesc('is_featured')
@@ -174,24 +249,19 @@ class DichVuController extends Controller
 
         $categoryServices = $service->service_category_id
             ? Service::active()
-                ->with(['branches', 'category.parent'])
+                ->with('category.parent')
                 ->where('service_category_id', $service->service_category_id)
                 ->orderByDesc('is_featured')
                 ->get()
             : collect();
 
-        $content = ServicePageContent::current();
-
         return Inertia::render('DichVuDetail', [
-            'service' => $this->map($service),
+            'service' => $this->mapDetail($service),
             'breadcrumb' => $breadcrumb,
             'categoryServices' => $categoryServices->map(fn ($s) => $this->map($s)),
             'combos' => $combos->map(fn ($s) => $this->map($s)),
             'related' => $related->map(fn ($s) => $this->map($s)),
-            'content' => [
-                'happy_hours_title' => $content->happy_hours_title,
-                'happy_hours_desc' => $content->happy_hours_desc,
-            ],
+            'closing' => $this->closing(ServicePageContent::current()),
         ]);
     }
 
@@ -205,7 +275,7 @@ class DichVuController extends Controller
         }
 
         $services = Service::active()
-            ->with(['branches', 'category.parent'])
+            ->with('category.parent')
             ->whereIn('service_category_id', $categoryIds)
             ->orderByDesc('is_featured')
             ->get();
@@ -226,6 +296,7 @@ class DichVuController extends Controller
                 'name' => $category->getTranslations('name'),
                 'description' => $category->getTranslations('description'),
                 'image' => $this->publicUrl($category->image),
+                'image_alt' => $category->image_alt,
                 'url' => $category->url,
                 'benefits' => $category->benefits ?? [],
                 'ideal_for' => $category->ideal_for ?? [],
@@ -237,6 +308,19 @@ class DichVuController extends Controller
                     ])
                     ->filter(fn ($img) => ! empty($img['image']))
                     ->values()->all(),
+                // Khối "Chăm sóc theo nhu cầu, không theo khuôn mẫu" — trống thì FE ẩn khối, không có fallback mặc định.
+                'intro_heading' => $category->intro_heading,
+                'intro_body' => $category->intro_body,
+                'intro_image' => $this->publicUrl($category->intro_image),
+                'intro_image_alt' => $category->intro_image_alt,
+                'pillars' => $category->pillars ?? [],
+                'quote' => $category->quote,
+                'experience_note_title' => $category->experience_note_title,
+                'experience_checklist' => $category->experience_checklist ?? [],
+                'experience_note_body' => $category->experience_note_body,
+                'experience_note_image' => $this->publicUrl($category->experience_note_image),
+                'experience_note_image_alt' => $category->experience_note_image_alt,
+                'therapy_heading' => $category->therapy_heading,
             ],
             'breadcrumb' => $this->categoryAncestors($category),
             'services' => $services->map(fn ($s) => $this->map($s)),
@@ -248,6 +332,7 @@ class DichVuController extends Controller
                 'url' => $c->url,
                 'image' => $this->publicUrl($c->image),
             ])->all(),
+            'closing' => $this->categoryClosing($category),
         ]);
     }
 
@@ -258,7 +343,7 @@ class DichVuController extends Controller
     private function categoryBreadcrumb(ServiceCategory $category): array
     {
         $items = $this->categoryAncestors($category);
-        $items[] = ['name' => $category->name, 'url' => $category->url];
+        $items[] = ['name' => strip_tags($category->name), 'url' => $category->url];
 
         return $items;
     }
@@ -267,25 +352,8 @@ class DichVuController extends Controller
     private function categoryAncestors(ServiceCategory $category): array
     {
         return $category->parent
-            ? [['name' => $category->parent->name, 'url' => $category->parent->url]]
+            ? [['name' => strip_tags($category->parent->name), 'url' => $category->parent->url]]
             : [];
-    }
-
-    private function listingContent(): array
-    {
-        $content = ServicePageContent::current();
-
-        return [
-            'listing_categories' => $content->listing_categories ?? [],
-            'massage_eyebrow' => $content->massage_eyebrow,
-            'massage_cards' => $this->withPublicImages($content->massage_cards ?? []),
-            'head_spa_eyebrow' => $content->head_spa_eyebrow,
-            'head_spa_title' => $content->head_spa_title,
-            'head_spa_cards' => $this->withPublicImages($content->head_spa_cards ?? []),
-            'other_care_eyebrow' => $content->other_care_eyebrow,
-            'other_care_title' => $content->other_care_title,
-            'other_care_items' => $this->withPublicImages($content->other_care_items ?? []),
-        ];
     }
 
     private function withPublicImages(array $items): array

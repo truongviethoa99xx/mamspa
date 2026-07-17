@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Filament\Resources\BookingResource;
 use App\Mail\BookingConfirmation;
 use App\Models\Booking;
+use App\Models\SiteSetting;
 use App\Models\User;
 use App\Services\SmsService;
 use Filament\Notifications\Actions\Action;
@@ -24,10 +25,12 @@ class SendBookingNotifications implements ShouldQueue
 
     public function handle(SmsService $sms): void
     {
-        $booking = Booking::with(['branch', 'service'])->find($this->bookingId);
+        $booking = Booking::with(['service'])->find($this->bookingId);
         if (! $booking) {
             return;
         }
+
+        $brandName = SiteSetting::current()->brand_name ?: 'Mầm Spa';
 
         if ($booking->guest_email) {
             Mail::to($booking->guest_email)->send(new BookingConfirmation($booking));
@@ -39,7 +42,7 @@ class SendBookingNotifications implements ShouldQueue
                 $booking->code,
                 $booking->date->format('d/m'),
                 $booking->time_slot,
-                $booking->branch->getTranslation('name', 'vi'),
+                $brandName,
             );
             $sms->send($booking->guest_phone, $msg);
         }
@@ -52,7 +55,7 @@ class SendBookingNotifications implements ShouldQueue
                 $booking->guest_name,
                 $booking->date->format('d/m/Y'),
                 $booking->time_slot,
-                $booking->branch->getTranslation('name', 'vi'),
+                $brandName,
             ))
             ->icon('heroicon-o-calendar')
             ->actions([

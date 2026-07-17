@@ -23,6 +23,11 @@ class SiteSetting extends Model
         'floating_contact_buttons',
         'social_links',
         'service_menu',
+        'address',
+        'phone',
+        'open_hours',
+        'lat',
+        'lng',
     ];
 
     protected $casts = [
@@ -30,6 +35,8 @@ class SiteSetting extends Model
         'social_links' => 'array',
         'service_menu' => 'array',
         'header_transparent' => 'boolean',
+        'lat' => 'float',
+        'lng' => 'float',
     ];
 
     public static function current(): self

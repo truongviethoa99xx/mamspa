@@ -40,6 +40,7 @@ class SiteSettings extends Page implements HasForms
     {
         $this->form->fill(SiteSetting::current()->only([
             'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links',
+            'address', 'phone', 'open_hours', 'lat', 'lng',
         ]));
     }
 
@@ -75,6 +76,42 @@ class SiteSettings extends Page implements HasForms
                         Forms\Components\TextInput::make('hotline')->label('Hotline'),
                         Forms\Components\TextInput::make('email')->label('Email')->email()->rules(['not_regex:/[\r\n]/']),
                         Forms\Components\TextInput::make('chat_url')->label('Link nút chat / Zalo')->url()->columnSpanFull(),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Địa điểm')
+                    ->description('Thông tin duy nhất của Mầm Spa — dùng cho form đặt lịch, liên hệ và dữ liệu bản đồ.')
+                    ->icon('heroicon-o-map-pin')
+                    ->schema([
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Số điện thoại')
+                            ->tel(),
+                        Forms\Components\TextInput::make('open_hours')
+                            ->label('Giờ mở cửa')
+                            ->default('09:00 - 21:00'),
+                        Forms\Components\Textarea::make('address')
+                            ->label('Địa chỉ')
+                            ->rows(2)
+                            ->columnSpanFull(),
+                        Forms\Components\Fieldset::make('Tọa độ bản đồ')
+                            ->schema([
+                                Forms\Components\TextInput::make('lat')
+                                    ->label('Vĩ độ (Latitude)')
+                                    ->helperText('Số nhỏ ~ 8–23 cho Việt Nam (vd. 10.7938). Lấy từ Google Maps: số ĐẦU trong "10.7938, 106.6677".')
+                                    ->placeholder('10.7938')
+                                    ->numeric()
+                                    ->minValue(-90)
+                                    ->maxValue(90),
+                                Forms\Components\TextInput::make('lng')
+                                    ->label('Kinh độ (Longitude)')
+                                    ->helperText('Số lớn ~ 102–110 cho Việt Nam (vd. 106.6677). Lấy từ Google Maps: số SAU trong "10.7938, 106.6677".')
+                                    ->placeholder('106.6677')
+                                    ->numeric()
+                                    ->minValue(-180)
+                                    ->maxValue(180),
+                            ])
+                            ->columns(2)
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
 

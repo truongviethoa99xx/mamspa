@@ -1,7 +1,6 @@
 <?php
 
 use App\Jobs\SendBookingNotifications;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\User;
@@ -18,15 +17,6 @@ uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->seed(RolePermissionSeeder::class);
-
-    $this->branch = Branch::create([
-        'slug' => 'notif-branch',
-        'name' => ['vi' => 'Chi nhánh kiểm thử'],
-        'address' => '123 Notif',
-        'phone' => '0900000000',
-        'open_hours' => '09:00 - 21:00',
-        'is_active' => true,
-    ]);
 
     $category = ServiceCategory::create([
         'slug' => 'notif-category',
@@ -61,7 +51,6 @@ it('dispatches SendBookingNotifications when a booking is created', function () 
     Bus::fake();
 
     $booking = app(BookingService::class)->create([
-        'branch_id' => $this->branch->id,
         'service_id' => $this->service->id,
         'date' => now()->addDay()->format('Y-m-d'),
         'time_slot' => '10:00',
@@ -88,7 +77,6 @@ it('notifies only admin-role users about a new booking, not customers', function
     Notification::fake();
 
     $booking = app(BookingService::class)->create([
-        'branch_id' => $this->branch->id,
         'service_id' => $this->service->id,
         'date' => now()->addDay()->format('Y-m-d'),
         'time_slot' => '10:00',

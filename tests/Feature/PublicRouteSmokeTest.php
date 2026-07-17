@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\BlogPost;
-use App\Models\Branch;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Database\Seeders\DatabaseSeeder;
@@ -11,17 +10,8 @@ uses(RefreshDatabase::class);
 
 beforeEach(function () {
     // Seed nội dung CMS nền (trang chủ, giới thiệu, liên hệ, chuỗi giao diện).
-    // Dữ liệu động (chi nhánh, dịch vụ, blog) tạo trực tiếp — không còn seeder mẫu.
+    // Dữ liệu động (dịch vụ, blog) tạo trực tiếp — không còn seeder mẫu.
     $this->seed(DatabaseSeeder::class);
-
-    Branch::create([
-        'slug' => 'smoke-branch',
-        'name' => ['vi' => 'Chi nhánh smoke'],
-        'address' => '123 Smoke',
-        'phone' => '0900000000',
-        'open_hours' => '09:00 - 21:00',
-        'is_active' => true,
-    ]);
 
     $category = ServiceCategory::create([
         'slug' => 'smoke-category',
@@ -49,7 +39,6 @@ beforeEach(function () {
 });
 
 it('serves the main public pages', function () {
-    $branch = Branch::where('is_active', true)->firstOrFail();
     $service = Service::where('is_active', true)->firstOrFail();
     $post = BlogPost::firstOrFail();
 
@@ -58,12 +47,11 @@ it('serves the main public pages', function () {
         '/gioi-thieu',
         '/dich-vu',
         "/dich-vu/smoke-category/{$service->slug}",
-        "/chi-nhanh/{$branch->slug}",
         '/lien-he',
         '/dat-lich',
         '/tin-tuc',
         "/tin-tuc/{$post->slug}",
-        '/promotions',
+        '/uu-dai',
         '/gallery',
         '/login',
         '/i18n/vi',

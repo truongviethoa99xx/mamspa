@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Booking;
+use App\Models\SiteSetting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -27,7 +28,10 @@ class BookingConfirmation extends Mailable implements ShouldQueue
     {
         return new Content(
             markdown: 'mail.booking-confirmation',
-            with: ['booking' => $this->booking->load(['branch', 'service', 'items.service'])],
+            with: [
+                'booking' => $this->booking->load(['service', 'items.service']),
+                'site' => SiteSetting::current(),
+            ],
         );
     }
 }

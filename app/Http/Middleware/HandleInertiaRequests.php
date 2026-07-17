@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Branch;
 use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use App\Models\User;
@@ -43,19 +42,14 @@ class HandleInertiaRequests extends Middleware
                 'error' => fn () => $request->session()->get('error'),
                 'booking_code' => fn () => $request->session()->get('booking_code'),
             ],
-            'branches' => fn () => Branch::where('is_active', true)->orderBy('id')->get()
-                ->map(fn ($b) => [
-                    'slug' => $b->slug,
-                    'name' => $b->name,
-                    'address' => $b->address,
-                    'phone' => $b->phone,
-                    'open_hours' => $b->open_hours,
-                    'lat' => $b->lat,
-                    'lng' => $b->lng,
-                ])->all(),
             'site' => [
                 'brand_name' => $site?->brand_name,
                 'logo_path' => $site?->logo_path,
+                'address' => $site?->address,
+                'phone' => $site?->phone,
+                'open_hours' => $site?->open_hours,
+                'lat' => $site?->lat,
+                'lng' => $site?->lng,
                 'header_background_color' => $site?->header_background_color ?: '#F6F3EF',
                 'header_text_color' => $site?->header_text_color ?: '#2F3E2E',
                 'header_transparent' => (bool) $site?->header_transparent,

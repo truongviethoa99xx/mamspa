@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
 use App\Models\HomePageContent;
 use App\Models\Service;
 use App\Models\ServiceCategory;
@@ -24,17 +23,28 @@ class HomeController extends Controller
         return Inertia::render('Home', [
             'hero' => $this->hero($content),
             'story' => $this->story($content),
+            'philosophy' => $this->philosophy($content),
+            'serviceListHeading' => $content->featured_services_heading ?: ['vi' => '<p>Dịch vụ nổi bật</p>', 'en' => '<p>Featured Services</p>'],
+            'serviceListTitle' => $content->service_list_title ?: ['vi' => 'Dịch vụ nổi bật', 'en' => 'Featured Services'],
             'featuredServices' => $this->featuredServices(),
+            'artBanner' => $this->artBanner($content),
+            'spaces' => $this->spaces($content),
+            'whyUs' => $this->whyUs($content),
+            'reviews' => $this->reviews($content),
+            'galleryPreview' => $this->galleryPreview(),
             'menuServices' => $this->menuServices(),
             'menuCategories' => $this->menuCategories(),
-            'branches' => $this->branches(),
-            'bookingBranches' => $this->bookingBranches(),
-            'bookingServices' => $this->bookingServices(),
             // Cờ ẩn/hiện từng khối trên trang chủ, chỉnh trong /admin/home-page-settings.
             'sectionVisibility' => [
                 'hero' => (bool) $content->hero_visible,
                 'story' => (bool) $content->story_visible,
+                'philosophy' => (bool) $content->philosophy_visible,
                 'featuredServices' => (bool) $content->featured_services_visible,
+                'artBanner' => (bool) $content->art_banner_visible,
+                'spaces' => (bool) $content->spaces_visible,
+                'whyUs' => (bool) $content->why_us_visible,
+                'reviews' => (bool) $content->testimonials_visible,
+                'gallery' => (bool) $content->gallery_visible,
             ],
         ]);
     }
@@ -47,7 +57,6 @@ class HomeController extends Controller
             'subtitle' => $content->hero_subtitle ?: ['vi' => '<p>Một khoảng lặng giữa nhịp sống thành phố.</p>', 'en' => '<p>A quiet pause amid the rhythm of city life.</p>'],
             'image' => $this->publicUrl($content->hero_image),
             'image_alt' => $content->hero_image_alt ?: ['vi' => 'Không gian trị liệu Mầm Spa', 'en' => 'Mầm Spa treatment space'],
-            'service_list_title' => $content->service_list_title ?: ['vi' => 'Dịch vụ nổi bật', 'en' => 'Featured Services'],
             'cta' => [
                 'text' => $content->hero_cta_text ?: 'Đặt lịch ngay',
                 'link' => $content->hero_cta_link ?: '/dat-lich/',
@@ -87,6 +96,120 @@ class HomeController extends Controller
         ];
     }
 
+    /** Khối "Our Philosophy" — trích dẫn triết lý trị liệu, căn giữa trang. */
+    protected function philosophy(HomePageContent $content): array
+    {
+        return [
+            'eyebrow' => $content->philosophy_eyebrow ?: ['vi' => '<p>Triết lý của chúng tôi</p>', 'en' => '<p>Our philosophy</p>'],
+            'quote' => $content->philosophy_quote ?: [
+                'vi' => '<p>An lành không phải là điều được trao.<br>Đó là điều được đánh thức từ chính bên trong.</p>',
+                'en' => '<p>Wellness is not something given.<br>It is something awakened from within.</p>',
+            ],
+        ];
+    }
+
+    /** Banner "The Art of Vietnamese Healing" — ảnh + đoạn giới thiệu, nút link tự do (vd: 1 bài blog). */
+    protected function artBanner(HomePageContent $content): array
+    {
+        return [
+            'eyebrow' => $content->art_banner_eyebrow ?: ['vi' => '<p>Nghệ thuật trị liệu Việt</p>', 'en' => '<p>The art of Vietnamese healing</p>'],
+            'body' => $content->art_banner_body ?: [
+                'vi' => '<p>Được nuôi dưỡng từ những giá trị trị liệu Việt,<br>phát triển bằng chuyên môn hiện đại<br>và gìn giữ qua từng đôi tay tận tâm.</p>',
+                'en' => '<p>Nurtured by Vietnamese therapeutic heritage,<br>refined with modern expertise<br>and carried through every attentive hand.</p>',
+            ],
+            'image' => $this->publicUrl($content->art_banner_image),
+            'image_alt' => $content->art_banner_image_alt ?: ['vi' => 'Nghệ thuật trị liệu Việt', 'en' => 'The art of Vietnamese healing'],
+            'cta' => [
+                'text' => $content->art_banner_cta_text ?: ['vi' => 'Tìm hiểu thêm', 'en' => 'Learn more'],
+                'link' => $content->art_banner_cta_link ?: '/blog/',
+                'text_color' => $content->art_banner_cta_text_color ?: '#2F3E2E',
+            ],
+        ];
+    }
+
+    /**
+     * "Our Spaces" — danh sách thẻ không gian, admin quản lý tự do qua repeater
+     * (mặc định theo chi nhánh, có thể thêm/bớt). 1 hàng tối đa 2 thẻ, xử lý ở FE.
+     */
+    protected function spaces(HomePageContent $content): array
+    {
+        $items = collect($content->spaces_items ?: [])
+            ->map(fn (array $item) => [
+                'image' => $this->publicUrl($item['image'] ?? null),
+                'image_alt' => $item['image_alt'] ?? $item['title'] ?? null,
+                'title' => $item['title'] ?? null,
+                'description' => $item['description'] ?? null,
+                'link_text' => $item['link_text'] ?? null,
+                'link_url' => $item['link_url'] ?? null,
+            ])->all();
+
+        return [
+            'title' => $content->spaces_title ?: ['vi' => 'Không gian của chúng tôi', 'en' => 'Our spaces'],
+            'items' => $items,
+        ];
+    }
+
+    /** "Why Mầm" — 5 điểm nổi bật dạng icon, admin quản lý tự do qua repeater. */
+    protected function whyUs(HomePageContent $content): array
+    {
+        return [
+            'title' => $content->why_us_title ?: ['vi' => 'Vì sao chọn Mầm', 'en' => 'Why Mầm'],
+            'items' => $content->why_us_items ?: [],
+        ];
+    }
+
+    /**
+     * Đánh giá khách hàng — thẻ Google + TripAdvisor (nhập tay), 1 trích dẫn nổi bật
+     * (đầu tiên trong danh sách "testimonials" — admin quản lý tự do qua repeater),
+     * và 1 thẻ video (ưu tiên file upload, nếu không có thì dùng link ngoài).
+     */
+    protected function reviews(HomePageContent $content): array
+    {
+        $quote = collect($content->testimonials ?: [])->first();
+        $videoFile = $this->publicUrl($content->testimonial_video_file);
+
+        return [
+            'google' => [
+                'rating' => $content->reviews_google_rating ?: '4.9',
+                'count' => $content->reviews_google_count ?: 0,
+                'link' => $content->reviews_google_link ?: '#',
+            ],
+            'tripadvisor' => [
+                'rating' => $content->reviews_tripadvisor_rating ?: '5.0',
+                'count' => $content->reviews_tripadvisor_count ?: 0,
+                'link' => $content->reviews_tripadvisor_link ?: '#',
+            ],
+            'quote' => $quote ? [
+                'name' => $quote['name'] ?? null,
+                'rating' => $quote['rating'] ?? 5,
+                'content' => $quote['content'] ?? null,
+            ] : null,
+            'quote_cta_link' => $content->testimonials_cta_link ?: '#',
+            'video' => [
+                'thumbnail' => $this->publicUrl($content->testimonial_video_thumbnail),
+                'url' => $videoFile ?: $content->testimonial_video_url,
+            ],
+        ];
+    }
+
+    /** Dải ảnh xem trước thư viện ảnh, xem thêm ở /gallery. */
+    protected function galleryPreview(): array
+    {
+        $images = collect(HomePageContent::current()->customer_gallery_images ?? [])
+            ->map(fn ($item) => [
+                'src' => $this->publicUrl($item['image'] ?? null),
+                'alt' => $item['image_alt'] ?? null,
+                'is_customer' => true,
+            ])
+            ->filter(fn ($item) => ! empty($item['src']))
+            ->take(10)->values()->all();
+
+        return [
+            'images' => $images,
+            'link' => '/gallery/',
+        ];
+    }
+
     /** Dịch vụ nổi bật cho khối grid. */
     protected function featuredServices(): array
     {
@@ -94,8 +217,10 @@ class HomeController extends Controller
             ->map(fn (Service $s) => [
                 'id' => $s->id,
                 'slug' => $s->slug,
+                'url' => $s->url,
                 'name' => $s->name,
                 'description' => $s->description,
+                'thumbnail_alt' => $s->thumbnail_alt,
                 'category' => $this->categoryPayload($s),
                 'duration' => $s->duration,
                 'price' => $s->price,
@@ -140,59 +265,6 @@ class HomeController extends Controller
             'name' => $s->category->name,
             'root_slug' => $s->category->parent?->slug ?? $s->category->slug,
         ];
-    }
-
-    /**
-     * Chi nhánh cho khối giới thiệu. Nội dung khối “Khám phá các không gian Mầm
-     * Spa” được cấu hình riêng cho từng chi nhánh trong cột `page_content`.
-     */
-    protected function branches(): array
-    {
-        return Branch::where('is_active', true)->get()
-            ->map(function (Branch $b) {
-                $pc = $b->page_content ?? [];
-
-                return [
-                    'id' => $b->id,
-                    'slug' => $b->slug,
-                    'name' => $b->name,
-                    'address' => $b->address,
-                    'phone' => $b->phone,
-                    'open_hours' => $b->open_hours,
-                    'intro_title' => $pc['home_intro_title'] ?? null,
-                    'eyebrow' => $pc['home_intro_eyebrow'] ?? null,
-                    'subheading' => $pc['home_intro_subheading'] ?? null,
-                    'heading' => $pc['home_intro_heading'] ?? null,
-                    'body_1' => $pc['home_intro_body_1'] ?? null,
-                    'body_2' => $pc['home_intro_body_2'] ?? null,
-                    'cta' => $pc['home_intro_cta'] ?? null,
-                    'images' => $b->getMedia('images')->map(fn ($media) => $media->getUrl())->all(),
-                ];
-            })->all();
-    }
-
-    /** Chi nhánh rút gọn cho dropdown trong form đặt lịch. */
-    protected function bookingBranches(): array
-    {
-        return Branch::where('is_active', true)->get()
-            ->map(fn (Branch $b) => [
-                'id' => $b->id,
-                'slug' => $b->slug,
-                'name' => $b->name,
-            ])->all();
-    }
-
-    /** Dịch vụ + chi nhánh áp dụng, cho form đặt lịch. */
-    protected function bookingServices(): array
-    {
-        return Service::active()->with('branches')->get()
-            ->map(fn (Service $s) => [
-                'id' => $s->id,
-                'slug' => $s->slug,
-                'name' => $s->name,
-                'duration' => $s->duration,
-                'branch_ids' => $s->branches->pluck('id'),
-            ])->all();
     }
 
     /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */

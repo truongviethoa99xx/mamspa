@@ -27,7 +27,6 @@ class StoreBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'branch_id' => 'required|integer|exists:branches,id',
             'items' => 'required|array|min:1|max:20',
             'items.*.service_id' => 'required|integer|exists:services,id',
             'items.*.gender' => 'nullable|in:male,female',

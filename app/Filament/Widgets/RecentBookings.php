@@ -35,7 +35,7 @@ class RecentBookings extends Widget
     {
         $locale = app()->getLocale();
 
-        $rows = Booking::with('service', 'branch', 'user')
+        $rows = Booking::with('service', 'user')
             ->latest()
             ->limit(6)
             ->get()
@@ -47,8 +47,7 @@ class RecentBookings extends Widget
                     'name' => $name,
                     'initials' => $this->initials($name),
                     'color' => $this->avatarColor($name),
-                    'service' => $b->service ? (string) $b->service->getTranslation('name', $locale) : '—',
-                    'branch' => $b->branch ? (string) $b->branch->getTranslation('name', $locale) : null,
+                    'service' => $b->service ? strip_tags((string) $b->service->getTranslation('name', $locale)) : '—',
                     'price' => number_format((int) $b->total_price, 0, ',', '.').'đ',
                     'status' => $b->status,
                     'statusLabel' => self::STATUS_LABEL[$b->status] ?? $b->status,
