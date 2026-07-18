@@ -74,6 +74,15 @@
     .blog-article img {
         @apply rounded-sm;
     }
+
+    /* Thanh cuộn ngang không hiện scrollbar (vd. lưới liệu pháp cuộn ngang) — vẫn cuộn được bằng chuột/chạm. */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 @layer base {
