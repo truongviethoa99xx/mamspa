@@ -213,7 +213,7 @@ class HomeController extends Controller
     /** "Four Healing Journeys" — danh mục dịch vụ cấp 1, quản lý ở /admin/service-categories. */
     protected function featuredServices(): array
     {
-        return ServiceCategory::active()->roots()->orderBy('order')->get()
+        return ServiceCategory::active()->listed()->roots()->orderBy('order')->get()
             ->map(fn (ServiceCategory $c) => [
                 'id' => $c->id,
                 'slug' => $c->slug,
@@ -243,7 +243,7 @@ class HomeController extends Controller
     /** Danh mục cấp 1 đang có dịch vụ, dùng làm tab cho khối menu dịch vụ. */
     protected function menuCategories(): array
     {
-        return ServiceCategory::active()->roots()->orderBy('order')->get()
+        return ServiceCategory::active()->listed()->roots()->orderBy('order')->get()
             ->map(fn (ServiceCategory $c) => [
                 'slug' => $c->slug,
                 'name' => $c->name,

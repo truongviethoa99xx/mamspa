@@ -63,7 +63,14 @@ class ServiceCategoryResource extends Resource
                         ? 'Danh mục này đang có danh mục con nên phải giữ ở cấp 1.'
                         : 'Để trống nếu đây là danh mục cấp 1. Chỉ chọn được danh mục cấp 1 khác làm cha (tối đa 2 cấp).'),
                 Forms\Components\TextInput::make('order')->label('Thứ tự')->numeric()->default(0),
-                Forms\Components\Toggle::make('is_active')->label('Kích hoạt')->default(true),
+                Forms\Components\Toggle::make('is_active')
+                    ->label('Kích hoạt')
+                    ->helperText('Tắt sẽ ẩn hoàn toàn danh mục — cả trong danh sách lẫn khi truy cập trực tiếp URL (404).')
+                    ->default(true),
+                Forms\Components\Toggle::make('is_listed')
+                    ->label('Hiển thị trong danh sách')
+                    ->helperText('Tắt sẽ ẩn danh mục khỏi các danh sách/menu công khai (trang chủ, trang dịch vụ, danh mục liên quan...) nhưng trang chi tiết vẫn xem được nếu khách gõ thẳng URL.')
+                    ->default(true),
             ])->columns(2),
             TranslatableField::group('name', as: 'quill', label: 'Tên danh mục', required: true),
             TranslatableField::group('description', as: 'textarea', label: 'Mô tả danh mục', rows: 3, example: 'Liệu pháp massage toàn thân giúp thư giãn sâu và phục hồi năng lượng.'),
@@ -269,6 +276,7 @@ class ServiceCategoryResource extends Resource
                 Tables\Columns\TextColumn::make('parent.slug')->label('Thuộc danh mục')->placeholder('— Cấp 1 —'),
                 Tables\Columns\TextColumn::make('order')->label('Thứ tự')->sortable(),
                 Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
+                Tables\Columns\IconColumn::make('is_listed')->label('Hiển thị DS')->boolean(),
                 Tables\Columns\TextColumn::make('services_count')->label('Số dịch vụ')->counts('services'),
             ])
             ->filters([

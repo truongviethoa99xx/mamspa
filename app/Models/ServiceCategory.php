@@ -15,7 +15,7 @@ class ServiceCategory extends Model
     use HasTranslations;
 
     protected $fillable = [
-        'slug', 'name', 'description', 'image', 'image_alt', 'parent_id', 'order', 'is_active',
+        'slug', 'name', 'description', 'image', 'image_alt', 'parent_id', 'order', 'is_active', 'is_listed',
         'benefits', 'experience_images', 'faqs', 'ideal_for',
         // Khối "Chăm sóc theo nhu cầu, không theo khuôn mẫu" (đoạn giới thiệu + 3 điểm nổi bật).
         'intro_heading', 'intro_body', 'intro_image', 'intro_image_alt', 'pillars',
@@ -33,6 +33,7 @@ class ServiceCategory extends Model
     protected $casts = [
         'order' => 'integer',
         'is_active' => 'boolean',
+        'is_listed' => 'boolean',
         'image_alt' => 'array',
         'benefits' => 'array',
         'experience_images' => 'array',
@@ -81,6 +82,12 @@ class ServiceCategory extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    /** Chỉ hiện trong danh sách/menu công khai (trang chủ, trang dịch vụ...) — khác is_active, không ảnh hưởng route chi tiết. */
+    public function scopeListed($query)
+    {
+        return $query->where('is_listed', true);
     }
 
     public function isRoot(): bool

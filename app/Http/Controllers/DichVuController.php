@@ -117,7 +117,7 @@ class DichVuController extends Controller
     /** 4 khối dịch vụ nổi bật = các danh mục dịch vụ cấp 1 thật, quản lý ở /admin/service-categories. */
     protected function showcase(): array
     {
-        $categories = ServiceCategory::active()->roots()->orderBy('order')->get();
+        $categories = ServiceCategory::active()->listed()->roots()->orderBy('order')->get();
 
         return [
             'items' => $categories->map(fn (ServiceCategory $c) => [
@@ -284,6 +284,7 @@ class DichVuController extends Controller
         $currentRootId = $category->isRoot() ? $category->id : $category->parent_id;
 
         $related = ServiceCategory::active()
+            ->listed()
             ->roots()
             ->where('id', '!=', $currentRootId)
             ->orderBy('order')
