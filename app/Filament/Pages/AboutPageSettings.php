@@ -41,7 +41,7 @@ class AboutPageSettings extends Page implements HasForms
     {
         $this->form->fill(AboutPageContent::current()->only([
             'hero_image', 'hero_image_alt', 'hero_eyebrow', 'hero_title', 'hero_subtitle', 'hero_visible',
-            'features', 'features_eyebrow', 'features_visible',
+            'features_eyebrow', 'features_visible',
             'story_image', 'story_image_alt', 'story_heading', 'story_p1', 'story_visible',
             'philosophy_heading', 'philosophy_title', 'philosophy_p1', 'philosophy_image', 'philosophy_image_alt', 'philosophy_visible',
             'approach_image', 'approach_image_alt', 'approach_title', 'approach_p1', 'approach_features', 'approach_visible',
@@ -119,7 +119,7 @@ class AboutPageSettings extends Page implements HasForms
                     ]),
 
                 Forms\Components\Section::make('4 · 4 Healing Journeys')
-                    ->description('Nhãn khối + bốn hành trình chữa lành — mỗi thẻ gồm ảnh, tiêu đề, mô tả ngắn.')
+                    ->description('Nhãn khối. Bốn thẻ hành trình lấy trực tiếp từ 4 danh mục dịch vụ cấp 1 — chỉnh ảnh/tiêu đề/mô tả tại /admin/service-categories.')
                     ->icon('heroicon-o-squares-2x2')
                     ->schema([
                         Forms\Components\Toggle::make('features_visible')
@@ -128,23 +128,6 @@ class AboutPageSettings extends Page implements HasForms
                             ->default(true)
                             ->columnSpanFull(),
                         TranslatableField::group('features_eyebrow', label: 'Tiêu đề khối', example: '4 Healing Journeys'),
-                        Forms\Components\Repeater::make('features')
-                            ->label('')
-                            ->schema([
-                                Forms\Components\FileUpload::make('image')->label('Ảnh')
-                                    ->helperText('Ảnh NGANG, tỉ lệ 4:3, khuyến nghị tối thiểu 1000×750px.')
-                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('about/journeys')->imageEditor(),
-                                TranslatableField::group('image_alt', label: 'Alt text ảnh'),
-                                TranslatableField::group('title', label: 'Tiêu đề', example: 'Vietnamese Healing Therapy'),
-                                TranslatableField::group('description', as: 'textarea', label: 'Mô tả', rows: 2),
-                            ])
-                            ->defaultItems(0)
-                            ->maxItems(4)
-                            ->reorderable()
-                            ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['title']['vi'] ?? null)
-                            ->addActionLabel('+ Thêm hành trình (tối đa 4)')
-                            ->columnSpanFull(),
                     ]),
 
                 Forms\Components\Section::make('5 · Our Approach')

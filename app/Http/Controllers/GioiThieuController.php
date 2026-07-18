@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AboutPageContent;
+use App\Models\ServiceCategory;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -91,18 +92,21 @@ class GioiThieuController extends Controller
         ];
     }
 
+    /** "4 Healing Journeys" — danh mục dịch vụ cấp 1, quản lý ở /admin/service-categories. */
     protected function healingJourneys(AboutPageContent $content): array
     {
-        $items = $content->features ?: [
-            ['image' => null, 'image_alt' => null, 'title' => ['vi' => 'Vietnamese Healing Therapy', 'en' => 'Vietnamese Healing Therapy'], 'description' => ['vi' => 'Tinh hoa day ấn huyệt cổ truyền Việt Nam.', 'en' => 'The essence of traditional Vietnamese acupressure.']],
-            ['image' => null, 'image_alt' => null, 'title' => ['vi' => 'Head Spa & Scalp Care', 'en' => 'Head Spa & Scalp Care'], 'description' => ['vi' => 'Nuôi dưỡng da đầu, mái tóc và sự thư thái.', 'en' => 'Nourishing the scalp, hair and a sense of calm.']],
-            ['image' => null, 'image_alt' => null, 'title' => ['vi' => 'Natural Facial Care', 'en' => 'Natural Facial Care'], 'description' => ['vi' => 'Chăm sóc làn da khỏe mạnh một cách tự nhiên.', 'en' => 'Caring for healthy skin, naturally.']],
-            ['image' => null, 'image_alt' => null, 'title' => ['vi' => 'Signature Rituals', 'en' => 'Signature Rituals'], 'description' => ['vi' => 'Những hành trình chăm sóc đặc trưng được tuyển chọn.', 'en' => 'Curated, signature care journeys.']],
-        ];
+        $items = ServiceCategory::active()->roots()->orderBy('order')->get()
+            ->map(fn (ServiceCategory $c) => [
+                'url' => $c->url,
+                'image' => $this->publicUrl($c->image),
+                'image_alt' => $c->image_alt,
+                'title' => $c->getTranslations('name'),
+                'description' => $c->getTranslations('description'),
+            ])->all();
 
         return [
             'eyebrow' => $content->features_eyebrow ?: ['vi' => '4 Healing Journeys', 'en' => '4 Healing Journeys'],
-            'items' => $this->withPublicImages($items, 'image'),
+            'items' => $items,
         ];
     }
 

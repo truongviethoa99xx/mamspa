@@ -59,7 +59,12 @@ export function BlogFeatured({
                             {title}
                         </h2>
                     </Link>
-                    {excerpt && <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/70">{excerpt}</p>}
+                    {excerpt && (
+                        <div
+                            className="rich-content mt-3 max-w-xl text-sm leading-relaxed text-ink/70"
+                            dangerouslySetInnerHTML={{ __html: excerpt }}
+                        />
+                    )}
 
                     <div className="mt-5 flex items-center justify-between">
                         <Link

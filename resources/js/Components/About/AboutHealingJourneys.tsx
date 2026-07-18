@@ -1,8 +1,10 @@
+import { Link } from '@inertiajs/react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
-import { tr, cn } from '@/Lib/utils';
+import { tr, stripTags, cn } from '@/Lib/utils';
 
 interface HealingJourneyItem {
+    url?: string | null;
     image?: string | null;
     image_alt?: unknown;
     title?: unknown;
@@ -14,7 +16,7 @@ export interface AboutHealingJourneysData {
     items: HealingJourneyItem[];
 }
 
-/** 4 Healing Journeys — nhãn khối nhỏ + lưới 4 thẻ, cùng phong cách thẻ dịch vụ nổi bật ở trang chủ. */
+/** 4 Healing Journeys — nhãn khối nhỏ + lưới 4 danh mục dịch vụ cấp 1, cùng phong cách thẻ dịch vụ nổi bật ở trang chủ. */
 export function AboutHealingJourneys({ data }: { data: AboutHealingJourneysData }) {
     const locale = useLocale();
     const eyebrow = tr(data.eyebrow, locale);
@@ -36,22 +38,46 @@ export function AboutHealingJourneys({ data }: { data: AboutHealingJourneysData 
                     const imageAlt = tr(item.image_alt, locale);
                     const hasImage = !!item.image;
 
-                    return (
-                        <article key={index} className="group flex h-full flex-col">
+                    const body = (
+                        <>
                             <div className="aspect-[4/3] shrink-0 overflow-hidden rounded-t-[4px] bg-maha-200">
                                 {hasImage && (
                                     <img
                                         src={item.image ?? undefined}
-                                        alt={imageAlt || title}
+                                        alt={imageAlt || stripTags(title)}
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         loading="lazy"
                                     />
                                 )}
                             </div>
                             <div className="flex flex-1 flex-col rounded-b-[4px] bg-[#f4eae1] p-5">
-                                {title && <h3 className="font-serif text-xl leading-snug text-heading">{title}</h3>}
-                                {description && <p className="mt-2 text-sm leading-relaxed text-ink/70">{description}</p>}
+                                {title && (
+                                    <h3
+                                        className="rich-content font-serif text-xl leading-snug text-heading"
+                                        dangerouslySetInnerHTML={{ __html: title }}
+                                    />
+                                )}
+                                {description && (
+                                    <div
+                                        className="rich-content mt-2 text-sm leading-relaxed text-ink/70"
+                                        dangerouslySetInnerHTML={{ __html: description }}
+                                    />
+                                )}
                             </div>
+                        </>
+                    );
+
+                    if (item.url) {
+                        return (
+                            <Link key={index} href={item.url} className="group flex h-full flex-col">
+                                {body}
+                            </Link>
+                        );
+                    }
+
+                    return (
+                        <article key={index} className="group flex h-full flex-col">
+                            {body}
                         </article>
                     );
                 })}

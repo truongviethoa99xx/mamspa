@@ -72,12 +72,19 @@ export default function BlogShow({ post, related, previous, next }: Props) {
             {/* Phần đầu bài viết — chuyên mục, tiêu đề, mô tả, meta, chia sẻ.
                 Kiểu chữ (eyebrow serif in nghiêng + tiêu đề serif tracking-wide) lấy theo template /dat-lich/. */}
             <header className="px-5 pb-10 pt-28 sm:px-10 sm:pt-32 lg:px-16 lg:pt-36">
-                <div className="mx-auto max-w-3xl">
+                <div className="mx-auto max-w-5xl">
                     <Breadcrumb items={breadcrumbItems} className="mb-8" />
 
                     {post.category && <p className="font-serif text-base italic text-subheading">{post.category}</p>}
-                    <h1 className="mt-1 font-serif text-3xl tracking-wide text-heading sm:text-4xl lg:text-5xl">{title}</h1>
-                    {excerpt && <p className="mt-4 text-lg leading-relaxed text-ink/70">{excerpt}</p>}
+                    <h1 className="mt-1 font-serif text-3xl leading-snug tracking-wide text-heading sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-snug">
+                        {title}
+                    </h1>
+                    {excerpt && (
+                        <div
+                            className="rich-content mt-4 max-w-3xl text-lg leading-relaxed text-ink/70"
+                            dangerouslySetInnerHTML={{ __html: excerpt }}
+                        />
+                    )}
 
                     <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-y border-maha-200 py-4">
                         <p className="text-sm text-ink/60">
