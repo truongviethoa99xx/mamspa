@@ -49,13 +49,16 @@ export function Header() {
                 style={{ height: HEADER_HEIGHT, backgroundColor: headerBackground, color: textColor }}
             >
                 <Link href="/" className="flex shrink-0 items-center gap-2 sm:gap-3">
-                    {logoUrl && <img src={logoUrl} alt={brandName} className="h-11 w-11 object-contain sm:h-14 sm:w-14" />}
-                    <span
-                        className="font-serif text-base uppercase tracking-[0.1em] sm:text-xl sm:tracking-[0.12em]"
-                        style={{ color: textColor }}
-                    >
-                        {brandName}
-                    </span>
+                    {logoUrl ? (
+                        <img src={logoUrl} alt={brandName} className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
+                    ) : (
+                        <span
+                            className="font-serif text-base uppercase tracking-[0.1em] sm:text-xl sm:tracking-[0.12em]"
+                            style={{ color: textColor }}
+                        >
+                            {brandName}
+                        </span>
+                    )}
                 </Link>
 
                 <nav className="hidden items-center gap-8 lg:flex">
