@@ -25,12 +25,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
 
     public const ROLE_STAFF = 'staff';
 
+    public const ROLE_RECEPTIONIST = 'receptionist';
+
     public const ROLE_CUSTOMER = 'customer';
 
     public const MANAGEABLE_ROLES = [
         self::ROLE_SUPERADMIN,
         self::ROLE_ADMIN,
         self::ROLE_EDITOR,
+        self::ROLE_RECEPTIONIST,
     ];
 
     protected $fillable = [
@@ -99,6 +102,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
             self::ROLE_ADMIN,
             self::ROLE_EDITOR,
             self::ROLE_STAFF,
+            self::ROLE_RECEPTIONIST,
         ]);
     }
 
@@ -117,6 +121,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
         return [self::ROLE_SUPERADMIN, self::ROLE_ADMIN, self::ROLE_STAFF];
     }
 
+    /**
+     * Vận hành hằng ngày (lịch hẹn, lời nhắn liên hệ, đăng ký nhận tin) —
+     * phạm vi lễ tân, không bao gồm voucher/khách hàng như adminRoles().
+     */
+    public static function frontDeskRoles(): array
+    {
+        return [...self::adminRoles(), self::ROLE_RECEPTIONIST];
+    }
+
     public static function contentRoles(): array
     {
         return [self::ROLE_SUPERADMIN, self::ROLE_ADMIN, self::ROLE_EDITOR];
@@ -124,7 +137,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
 
     public static function internalRoles(): array
     {
-        return [self::ROLE_SUPERADMIN, self::ROLE_ADMIN, self::ROLE_EDITOR, self::ROLE_STAFF];
+        return [self::ROLE_SUPERADMIN, self::ROLE_ADMIN, self::ROLE_EDITOR, self::ROLE_STAFF, self::ROLE_RECEPTIONIST];
     }
 
     public static function roleOptions(): array
@@ -133,6 +146,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
             self::ROLE_SUPERADMIN => 'Superadmin',
             self::ROLE_ADMIN => 'Admin',
             self::ROLE_EDITOR => 'Biên tập viên',
+            self::ROLE_RECEPTIONIST => 'Lễ tân',
         ];
     }
 }

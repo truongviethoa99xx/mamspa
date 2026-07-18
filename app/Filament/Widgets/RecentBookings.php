@@ -19,7 +19,7 @@ class RecentBookings extends Widget
     {
         $user = auth()->user();
 
-        return $user instanceof User && $user->hasAnyRole(User::adminRoles());
+        return $user instanceof User && $user->hasAnyRole(User::frontDeskRoles());
     }
 
     private const STATUS_LABEL = [

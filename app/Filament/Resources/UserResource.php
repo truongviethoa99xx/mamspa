@@ -73,7 +73,7 @@ class UserResource extends Resource
                         ->maxItems(1)
                         ->preload()
                         ->required()
-                        ->helperText('Superadmin quản lý toàn bộ hệ thống; Admin quản lý vận hành/nội dung; Biên tập viên chỉ sửa nội dung.'),
+                        ->helperText('Superadmin quản lý toàn bộ hệ thống; Admin quản lý vận hành/nội dung; Biên tập viên chỉ sửa nội dung; Lễ tân chỉ thấy Lịch hẹn, Lời nhắn liên hệ và Đăng ký nhận tin.'),
                     Forms\Components\Select::make('preferred_lang')
                         ->label('Ngôn ngữ')
                         ->options([

@@ -34,7 +34,7 @@ class NewsletterSubscriberResource extends Resource
 
     protected static function allowedRoles(): array
     {
-        return User::adminRoles();
+        return User::frontDeskRoles();
     }
 
     public static function getNavigationBadge(): ?string

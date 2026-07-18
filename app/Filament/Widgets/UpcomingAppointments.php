@@ -20,7 +20,7 @@ class UpcomingAppointments extends Widget
     {
         $user = auth()->user();
 
-        return $user instanceof User && $user->hasAnyRole(User::adminRoles());
+        return $user instanceof User && $user->hasAnyRole(User::frontDeskRoles());
     }
 
     protected function getViewData(): array
