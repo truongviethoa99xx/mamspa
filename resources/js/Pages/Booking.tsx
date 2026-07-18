@@ -12,6 +12,7 @@ type Gender = 'male' | 'female';
 
 interface Props {
     preselect: { service?: string | null };
+    branches: string[];
     openHours: { open: string; close: string };
     services: Service[];
 }
@@ -20,11 +21,12 @@ const DATE_LOCALES: Record<string, string> = { en: 'en-US', ja: 'ja-JP', ko: 'ko
 const TODAY = new Date().toISOString().slice(0, 10);
 const DEFAULT_CONTACT = { name: '', phone: '', email: '', note: '', channel: 'zalo', value: '', country: 'Việt Nam' };
 
-export default function Booking({ preselect, openHours, services }: Props) {
+export default function Booking({ preselect, branches, openHours, services }: Props) {
     const { t } = useTranslation();
     const locale = useLocale();
     const dateLocale = DATE_LOCALES[locale] ?? 'vi-VN';
 
+    const [branch, setBranch] = useState(branches[0] ?? '');
     const [maleCount, setMaleCount] = useState(1);
     const [femaleCount, setFemaleCount] = useState(0);
     const [serviceByKey, setServiceByKey] = useState<Record<string, number>>({});
@@ -67,9 +69,10 @@ export default function Booking({ preselect, openHours, services }: Props) {
         [openHours],
     );
     const canSubmit =
-        !!date && !!timeSlot && guests.length > 0 && guests.every((g) => serviceFor(g.key)) && contact.name.trim().length >= 2 && contact.phone.trim().length >= 8;
+        !!branch && !!date && !!timeSlot && guests.length > 0 && guests.every((g) => serviceFor(g.key)) && contact.name.trim().length >= 2 && contact.phone.trim().length >= 8;
 
     const resetForm = () => {
+        setBranch(branches[0] ?? '');
         setMaleCount(1);
         setFemaleCount(0);
         setServiceByKey({});
@@ -87,6 +90,7 @@ export default function Booking({ preselect, openHours, services }: Props) {
             '/dat-lich',
             {
                 items: guests.map((g) => ({ service_id: serviceFor(g.key)!.id, gender: g.gender })),
+                branch,
                 date,
                 time_slot: timeSlot,
                 guest_name: contact.name,
@@ -166,6 +170,19 @@ export default function Booking({ preselect, openHours, services }: Props) {
                             {/* 1. Location & services */}
                             <section>
                                 <h2 className="font-serif text-2xl text-heading">1. {t('bookingForm.sectionLocation')}</h2>
+
+                                {/* Branch */}
+                                <p className="mt-7 text-sm font-semibold text-ink/80">
+                                    {t('bookingForm.branch', 'Chi nhánh')} <span className="text-red-500">*</span>
+                                </p>
+                                <div className="mt-3">
+                                    <FancySelect
+                                        value={branch}
+                                        onChange={setBranch}
+                                        placeholder={t('bookingForm.branchPlaceholder', 'Chọn chi nhánh')}
+                                        options={branches.map((b) => ({ value: b, label: b }))}
+                                    />
+                                </div>
 
                                 {/* Guest counts */}
                                 <p className="mt-7 text-sm font-semibold text-ink/80">

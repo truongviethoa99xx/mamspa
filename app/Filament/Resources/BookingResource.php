@@ -63,6 +63,11 @@ class BookingResource extends Resource
                         ->label('Mã đặt lịch')
                         ->disabled()
                         ->dehydrated(false),
+                    Forms\Components\Select::make('branch')
+                        ->label('Chi nhánh')
+                        ->options(array_combine(Booking::BRANCHES, Booking::BRANCHES))
+                        ->native(false)
+                        ->required(),
                     Forms\Components\Select::make('status')
                         ->label('Trạng thái')
                         ->options([
@@ -242,6 +247,7 @@ class BookingResource extends Resource
                 ->placeholder('—'),
             Tables\Columns\TextColumn::make('guest_name')->label('Tên khách')->searchable(),
             Tables\Columns\TextColumn::make('guest_phone')->label('Số điện thoại'),
+            Tables\Columns\TextColumn::make('branch')->label('Chi nhánh')->placeholder('—'),
             Tables\Columns\TextColumn::make('service.slug')->label('Dịch vụ'),
             Tables\Columns\TextColumn::make('items_count')->counts('items')->label('Khách')->badge(),
             Tables\Columns\TextColumn::make('date')->label('Ngày')->date(),
@@ -259,6 +265,8 @@ class BookingResource extends Resource
                     'pending' => 'Chờ xác nhận', 'confirmed' => 'Đã xác nhận',
                     'completed' => 'Hoàn thành', 'cancelled' => 'Đã huỷ',
                 ]),
+                Tables\Filters\SelectFilter::make('branch')->label('Chi nhánh')
+                    ->options(array_combine(Booking::BRANCHES, Booking::BRANCHES)),
             ])->actions([Tables\Actions\EditAction::make()])
             ->defaultPaginationPageOption(50);
     }

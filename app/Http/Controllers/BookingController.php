@@ -25,6 +25,7 @@ class BookingController extends Controller
             'preselect' => [
                 'service' => $serviceSlug,
             ],
+            'branches' => Booking::BRANCHES,
             'openHours' => $slots->openHours(),
             'services' => Service::active()->with('category')->get()->map(fn ($s) => [
                 'id' => $s->id, 'slug' => $s->slug, 'name' => $s->name,

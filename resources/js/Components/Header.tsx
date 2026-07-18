@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { publicAssetUrl, cn } from '@/Lib/utils';
+import { LanguageSwitcher } from '@/Components/LanguageSwitcher';
 import type { SharedProps } from '@/types';
 
 const HEADER_HEIGHT = '100px';
@@ -101,13 +102,17 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     </nav>
                 )}
 
-                <Link
-                    href="/dat-lich/"
-                    className="col-start-3 inline-block shrink-0 justify-self-end rounded-md px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-opacity hover:opacity-90 sm:px-5 sm:py-2.5 sm:text-sm lg:col-auto"
-                    style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
-                >
-                    Đặt lịch
-                </Link>
+                <div className="col-start-3 flex shrink-0 items-center justify-self-end gap-4 lg:col-auto">
+                    {!minimal && <LanguageSwitcher color={textColor} className="hidden lg:flex" />}
+
+                    <Link
+                        href="/dat-lich/"
+                        className="inline-block rounded-md px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-opacity hover:opacity-90 sm:px-5 sm:py-2.5 sm:text-sm"
+                        style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
+                    >
+                        Đặt lịch
+                    </Link>
+                </div>
             </div>
 
             {!minimal && mobileOpen && (
@@ -141,6 +146,10 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     >
                         {ctaText}
                     </Link>
+
+                    <div className="mt-2 flex justify-center border-t pt-3" style={{ borderColor: `${textColor}22` }}>
+                        <LanguageSwitcher color={ctaBackground} onNavigate={() => setMobileOpen(false)} />
+                    </div>
                 </div>
             )}
         </header>

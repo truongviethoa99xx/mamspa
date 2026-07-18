@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Booking;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBookingRequest extends FormRequest
 {
@@ -30,6 +32,7 @@ class StoreBookingRequest extends FormRequest
             'items' => 'required|array|min:1|max:20',
             'items.*.service_id' => 'required|integer|exists:services,id',
             'items.*.gender' => 'nullable|in:male,female',
+            'branch' => ['required', 'string', Rule::in(Booking::BRANCHES)],
             'date' => 'required|date|after_or_equal:today',
             'time_slot' => 'required|string',
             'guest_name' => 'required|string|min:2|max:100',

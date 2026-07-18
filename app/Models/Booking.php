@@ -12,9 +12,12 @@ class Booking extends Model
 {
     use HasFactory;
 
+    /** Chi nhánh cố định hiển thị trong select ở trang đặt lịch — lưu thẳng dạng text, không FK. */
+    public const BRANCHES = ['Mầm Spa Lê Văn Sỹ', 'Mầm Spa Lê Thị Riêng'];
+
     protected $fillable = [
         'code', 'user_id', 'customer_id', 'guest_name', 'guest_phone', 'guest_email', 'note',
-        'contact_channel', 'contact_value',
+        'contact_channel', 'contact_value', 'branch',
         'service_id', 'date', 'time_slot',
         'status', 'total_price', 'voucher_code', 'payment_method', 'payment_status',
     ];

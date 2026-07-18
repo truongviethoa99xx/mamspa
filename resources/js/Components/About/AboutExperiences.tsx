@@ -182,7 +182,7 @@ export function AboutExperiences({ data }: { data: AboutExperiencesData }) {
                                 key={index}
                                 ref={(el) => (itemRefs.current[index] = el)}
                                 data-slide-index={index}
-                                className="w-[calc((100%_-_2.5rem)/3)] shrink-0 snap-start rounded-[4px] border border-maha-200 p-6"
+                                className="w-[85%] shrink-0 snap-start rounded-[4px] border border-maha-200 p-6 sm:w-[calc((100%_-_1.25rem)/2)] lg:w-[calc((100%_-_2.5rem)/3)]"
                             >
                                 <TestimonialCard item={item} locale={locale} />
                             </div>

@@ -21,7 +21,7 @@ class BookingService
      *     items:array<int, array{service_id:int, gender?:string|null}>,
      *     date:string, time_slot:string,
      *     guest_name:string, guest_phone:string, guest_email?:string,
-     *     contact_channel?:string|null, contact_value?:string|null, note?:string,
+     *     contact_channel?:string|null, contact_value?:string|null, branch?:string|null, note?:string,
      *     user_id?:int|null, voucher_code?:string|null, payment_method?:string
      * } $data
      */
@@ -83,6 +83,7 @@ class BookingService
                 'guest_email' => $data['guest_email'] ?? null,
                 'contact_channel' => $data['contact_channel'] ?? null,
                 'contact_value' => $data['contact_value'] ?? null,
+                'branch' => $data['branch'] ?? null,
                 'note' => $data['note'] ?? null,
                 // Primary service keeps single-service code paths working.
                 'service_id' => $items[0]['service_id'],
