@@ -14,7 +14,7 @@ interface UseRevealOptions {
  * ngay khi tải trang, không đợi cuộn tới).
  */
 export function useReveal<T extends HTMLElement = HTMLElement>(options: UseRevealOptions = {}) {
-    const { threshold = 0.15 } = options;
+    const { threshold = 0 } = options;
     const ref = useRef<T>(null);
     const [isVisible, setIsVisible] = useState(false);
     const prefersReducedMotion = useReducedMotion();
@@ -35,7 +35,10 @@ export function useReveal<T extends HTMLElement = HTMLElement>(options: UseRevea
                     observer.disconnect();
                 }
             },
-            { threshold, rootMargin: '0px 0px -10% 0px' },
+            // rootMargin dương mở rộng viewport xuống dưới 200px — kích hoạt animation TRƯỚC khi
+            // section thật sự cuộn vào khung nhìn, để nó chạy song song với thời gian ảnh lazy-load
+            // decode thay vì đợi ảnh xong rồi mới fade+trượt (cảm giác "lag" khi cuộn nhanh).
+            { threshold, rootMargin: '0px 0px 200px 0px' },
         );
 
         observer.observe(el);

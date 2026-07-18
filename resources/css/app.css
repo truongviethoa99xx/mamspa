@@ -101,7 +101,7 @@
 
 @layer base {
     :root {
-        --duration-reveal: 1100ms;
+        --duration-reveal: 800ms;
         --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
     html {
