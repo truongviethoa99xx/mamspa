@@ -210,21 +210,18 @@ class HomeController extends Controller
         ];
     }
 
-    /** Dịch vụ nổi bật cho khối grid. */
+    /** "Four Healing Journeys" — danh mục dịch vụ cấp 1, quản lý ở /admin/service-categories. */
     protected function featuredServices(): array
     {
-        return Service::active()->featured()->with('category.parent')->get()
-            ->map(fn (Service $s) => [
-                'id' => $s->id,
-                'slug' => $s->slug,
-                'url' => $s->url,
-                'name' => $s->name,
-                'description' => $s->description,
-                'thumbnail_alt' => $s->thumbnail_alt,
-                'category' => $this->categoryPayload($s),
-                'duration' => $s->duration,
-                'price' => $s->price,
-                'images' => $this->serviceImages($s),
+        return ServiceCategory::active()->roots()->orderBy('order')->get()
+            ->map(fn (ServiceCategory $c) => [
+                'id' => $c->id,
+                'slug' => $c->slug,
+                'url' => $c->url,
+                'name' => $c->getTranslations('name'),
+                'description' => $c->getTranslations('description'),
+                'thumbnail_alt' => $c->image_alt,
+                'images' => array_values(array_filter([$this->publicUrl($c->image)])),
             ])->all();
     }
 
