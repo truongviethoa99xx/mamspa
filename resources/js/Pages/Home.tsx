@@ -9,6 +9,7 @@ import { Spaces, type SpacesData } from '@/Components/Spaces';
 import { WhyUs, type WhyUsData } from '@/Components/WhyUs';
 import { Reviews, type ReviewsData } from '@/Components/Reviews';
 import { GalleryPreview, type GalleryPreviewData } from '@/Components/GalleryPreview';
+import { BookingStrip, type BookingStripData } from '@/Components/BookingStrip';
 
 interface Props {
     hero: HeroData;
@@ -22,6 +23,7 @@ interface Props {
     whyUs: WhyUsData;
     reviews: ReviewsData;
     galleryPreview: GalleryPreviewData;
+    finalCta: BookingStripData;
     sectionVisibility: {
         hero: boolean;
         story: boolean;
@@ -32,6 +34,7 @@ interface Props {
         whyUs: boolean;
         reviews: boolean;
         gallery: boolean;
+        finalCta: boolean;
     };
 }
 
@@ -47,6 +50,7 @@ export default function Home({
     whyUs,
     reviews,
     galleryPreview,
+    finalCta,
     sectionVisibility,
 }: Props) {
     return (
@@ -63,6 +67,7 @@ export default function Home({
             {sectionVisibility.whyUs && <WhyUs data={whyUs} />}
             {sectionVisibility.reviews && <Reviews data={reviews} />}
             {sectionVisibility.gallery && <GalleryPreview data={galleryPreview} />}
+            {sectionVisibility.finalCta && <BookingStrip data={finalCta} />}
         </PublicLayout>
     );
 }

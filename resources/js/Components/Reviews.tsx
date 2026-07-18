@@ -1,8 +1,13 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight, Play, Star } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReducedMotion } from '@/Hooks/useReducedMotion';
 import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
+
+const QUOTE_ROTATE_INTERVAL_MS = 6000;
+const QUOTE_FADE_DURATION_MS = 300;
 
 interface RatingCardData {
     rating: string;
@@ -17,14 +22,16 @@ interface QuoteData {
 }
 
 interface VideoData {
+    type: 'file' | 'youtube' | 'vimeo' | 'link' | null;
     thumbnail?: string | null;
     url?: string | null;
+    embed_url?: string | null;
 }
 
 export interface ReviewsData {
     google: RatingCardData;
     tripadvisor: RatingCardData;
-    quote: QuoteData | null;
+    quotes: QuoteData[];
     quote_cta_link: string;
     video: VideoData;
 }
@@ -42,11 +49,60 @@ function Stars({ count, className }: { count: number; className?: string }) {
     );
 }
 
+/** Trích dẫn khách hàng — tự trượt qua từng đánh giá nếu có nhiều hơn 1, không cần bấm hay mũi tên. */
+function QuoteCarousel({ quotes, ctaLink }: { quotes: QuoteData[]; ctaLink: string }) {
+    const locale = useLocale();
+    const prefersReducedMotion = useReducedMotion();
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        if (quotes.length <= 1) return;
+
+        const timer = setInterval(() => {
+            if (prefersReducedMotion) {
+                setActiveIndex((current) => (current + 1) % quotes.length);
+                return;
+            }
+
+            setIsVisible(false);
+            setTimeout(() => {
+                setActiveIndex((current) => (current + 1) % quotes.length);
+                setIsVisible(true);
+            }, QUOTE_FADE_DURATION_MS);
+        }, QUOTE_ROTATE_INTERVAL_MS);
+
+        return () => clearInterval(timer);
+    }, [quotes.length, prefersReducedMotion]);
+
+    const activeQuote = quotes[activeIndex];
+    const quoteText = tr(activeQuote.content, locale);
+
+    return (
+        <Link href={ctaLink} className="flex flex-col justify-between rounded-[4px] bg-white/60 p-6">
+            <div
+                className={cn(
+                    'rich-content text-sm leading-relaxed text-ink/80 transition-opacity duration-300',
+                    isVisible ? 'opacity-100' : 'opacity-0',
+                )}
+                dangerouslySetInnerHTML={{ __html: quoteText }}
+            />
+            <div className="mt-4">
+                <Stars count={activeQuote.rating} />
+                <span className="mt-3 inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-wide text-heading">
+                    Xem thêm đánh giá
+                    <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+            </div>
+        </Link>
+    );
+}
+
 /** Đánh giá khách hàng — Google, TripAdvisor (nhập tay), trích dẫn nổi bật, và video. */
 export function Reviews({ data }: { data: ReviewsData }) {
-    const locale = useLocale();
-    const quoteText = tr(data.quote?.content, locale);
-    const hasVideo = !!data.video.url;
+    const video = data.video;
+    const hasVideo = !!video.url;
+    const hasQuote = data.quotes.length > 0;
 
     const { ref, className } = useReveal<HTMLElement>();
 
@@ -99,47 +155,54 @@ export function Reviews({ data }: { data: ReviewsData }) {
                     </span>
                 </a>
 
-                {data.quote && (
-                    <Link href={data.quote_cta_link} className="flex flex-col justify-between rounded-[4px] bg-white/60 p-6">
-                        <div
-                            className="rich-content text-sm leading-relaxed text-ink/80"
-                            dangerouslySetInnerHTML={{ __html: quoteText }}
-                        />
-                        <div className="mt-4">
-                            <Stars count={data.quote.rating} />
-                            <span className="mt-3 inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-wide text-heading">
-                                Xem thêm đánh giá
-                                <ArrowRight className="h-3.5 w-3.5" />
-                            </span>
-                        </div>
-                    </Link>
-                )}
+                {hasQuote && <QuoteCarousel quotes={data.quotes} ctaLink={data.quote_cta_link} />}
 
                 {hasVideo && (
-                    <a
-                        href={data.video.url ?? '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-[4px] bg-maha-800 p-6 text-white"
-                    >
-                        {data.video.thumbnail && (
-                            <img
-                                src={data.video.thumbnail}
-                                alt="Video trải nghiệm khách hàng"
-                                className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                    <div className="relative min-h-[220px] overflow-hidden rounded-[4px] bg-maha-800">
+                        {video.type === 'file' ? (
+                            <video
+                                src={video.url ?? undefined}
+                                poster={video.thumbnail ?? undefined}
+                                controls
+                                preload="metadata"
+                                className="h-full w-full object-cover"
                             />
+                        ) : video.embed_url ? (
+                            <iframe
+                                src={video.embed_url}
+                                title="Video trải nghiệm khách hàng"
+                                loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="h-full w-full"
+                            />
+                        ) : (
+                            <a
+                                href={video.url ?? '#'}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex h-full min-h-[220px] flex-col justify-end p-6 text-white"
+                            >
+                                {video.thumbnail && (
+                                    <img
+                                        src={video.thumbnail}
+                                        alt="Video trải nghiệm khách hàng"
+                                        className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                )}
+                                <div className="absolute inset-0 bg-black/30" />
+                                <span className="absolute inset-0 flex items-center justify-center">
+                                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-heading transition-transform group-hover:scale-110">
+                                        <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
+                                    </span>
+                                </span>
+                                <span className="relative z-10 mt-4 inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-wide">
+                                    Xem thêm video
+                                    <ArrowRight className="h-3.5 w-3.5" />
+                                </span>
+                            </a>
                         )}
-                        <div className="absolute inset-0 bg-black/30" />
-                        <span className="absolute inset-0 flex items-center justify-center">
-                            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-heading transition-transform group-hover:scale-110">
-                                <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
-                            </span>
-                        </span>
-                        <span className="relative z-10 mt-4 inline-flex w-fit items-center gap-2 text-xs font-semibold uppercase tracking-wide">
-                            Xem thêm video
-                            <ArrowRight className="h-3.5 w-3.5" />
-                        </span>
-                    </a>
+                    </div>
                 )}
             </div>
         </section>

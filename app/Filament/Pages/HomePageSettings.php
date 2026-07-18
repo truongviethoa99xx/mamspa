@@ -57,6 +57,7 @@ class HomePageSettings extends Page implements HasForms
             'reviews_tripadvisor_rating', 'reviews_tripadvisor_count', 'reviews_tripadvisor_link',
             'testimonial_video_thumbnail', 'testimonial_video_file', 'testimonial_video_url',
             'gallery_visible', 'customer_gallery_images',
+            'final_cta_heading', 'final_cta_cta_text', 'final_cta_cta_link', 'final_cta_image', 'final_cta_visible',
         ]));
     }
 
@@ -266,7 +267,7 @@ class HomePageSettings extends Page implements HasForms
 
                         Forms\Components\Repeater::make('testimonials')
                             ->label('Danh sách trích dẫn khách hàng')
-                            ->helperText('Thẻ đầu tiên trong danh sách sẽ hiển thị trên trang chủ.')
+                            ->helperText('Trang chủ sẽ tự động trượt qua lần lượt các trích dẫn trong danh sách này.')
                             ->schema([
                                 Forms\Components\TextInput::make('name')->label('Tên khách hàng'),
                                 Forms\Components\Select::make('rating')
@@ -336,6 +337,22 @@ class HomePageSettings extends Page implements HasForms
                             ->grid(2)
                             ->addActionLabel('+ Thêm ảnh')
                             ->columnSpanFull(),
+                    ]),
+
+                Forms\Components\Section::make('CTA cuối trang — "Take a moment for yourself"')
+                    ->description('Dải CTA mảnh (~100px cao) ngay trên footer, có ảnh nền tải lên.')
+                    ->schema([
+                        Forms\Components\Toggle::make('final_cta_visible')
+                            ->label('Hiển thị khối này trên trang chủ')
+                            ->default(true)
+                            ->columnSpanFull(),
+                        Forms\Components\FileUpload::make('final_cta_image')->label('Ảnh nền')
+                            ->helperText('Ảnh nền ngang cho dải CTA mảnh, khuyến nghị tối thiểu 1600×400px.')
+                            ->image()->disk('public')->directory('home')
+                            ->columnSpanFull(),
+                        TranslatableField::group('final_cta_heading', label: 'Tiêu đề'),
+                        TranslatableField::group('final_cta_cta_text', label: 'Chữ trên nút'),
+                        Forms\Components\TextInput::make('final_cta_cta_link')->label('Đường dẫn nút')->placeholder('/dat-lich/'),
                     ]),
             ])
             ->statePath('data');

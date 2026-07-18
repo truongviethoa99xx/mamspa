@@ -73,7 +73,9 @@
         "login": "Sign In",
         "register": "Sign Up",
         "logout": "Sign Out",
-        "toggleMenu": "Toggle menu"
+        "toggleMenu": "Toggle menu",
+        "offers": "Offers",
+        "experience": "Customer Experience"
     },
     "common": {
         "loading": "Loading...",
@@ -105,6 +107,12 @@
     },
     "footer": {
         "tagline": "The Beginning of the Journey to Balance Body - Mind - Spirit",
+        "description": "A therapy space inspired by traditional Vietnamese medicine — where the body is cared for and the mind rests completely.",
+        "ctaLine1": "Take a quiet moment",
+        "ctaLine2": "just for yourself",
+        "bookNow": "Book now",
+        "servicesTitle": "Services",
+        "exploreTitle": "Explore",
         "contact": "Contact",
         "follow": "Follow us",
         "hotline": "Booking hotline",
@@ -116,7 +124,8 @@
         "terms": "Terms of service",
         "support": "Customer support",
         "rights": "© {{year}} Mầm Spa. All rights reserved.",
-        "paymentGuide": "Payment Guide"
+        "paymentGuide": "Payment Guide",
+        "guidelines": "Service Guidelines"
     },
     "services": {
         "category": {

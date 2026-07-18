@@ -32,6 +32,7 @@ class HomeController extends Controller
             'whyUs' => $this->whyUs($content),
             'reviews' => $this->reviews($content),
             'galleryPreview' => $this->galleryPreview(),
+            'finalCta' => $this->finalCta($content),
             'menuServices' => $this->menuServices(),
             'menuCategories' => $this->menuCategories(),
             // Cờ ẩn/hiện từng khối trên trang chủ, chỉnh trong /admin/home-page-settings.
@@ -45,6 +46,7 @@ class HomeController extends Controller
                 'whyUs' => (bool) $content->why_us_visible,
                 'reviews' => (bool) $content->testimonials_visible,
                 'gallery' => (bool) $content->gallery_visible,
+                'finalCta' => (bool) $content->final_cta_visible,
             ],
         ]);
     }
@@ -159,14 +161,25 @@ class HomeController extends Controller
     }
 
     /**
-     * Đánh giá khách hàng — thẻ Google + TripAdvisor (nhập tay), 1 trích dẫn nổi bật
-     * (đầu tiên trong danh sách "testimonials" — admin quản lý tự do qua repeater),
-     * và 1 thẻ video (ưu tiên file upload, nếu không có thì dùng link ngoài).
+     * Đánh giá khách hàng — thẻ Google + TripAdvisor (nhập tay), trích dẫn nổi bật
+     * (toàn bộ danh sách "testimonials" — admin quản lý tự do qua repeater, FE tự
+     * trượt qua từng đánh giá nếu có nhiều hơn 1), và 1 thẻ video (ưu tiên file
+     * upload, nếu không có thì dùng link ngoài).
      */
     protected function reviews(HomePageContent $content): array
     {
-        $quote = collect($content->testimonials ?: [])->first();
+        $quotes = collect($content->testimonials ?: [])
+            ->map(fn (array $quote) => [
+                'name' => $quote['name'] ?? null,
+                'rating' => $quote['rating'] ?? 5,
+                'content' => $quote['content'] ?? null,
+            ])
+            ->values()
+            ->all();
         $videoFile = $this->publicUrl($content->testimonial_video_file);
+        $video = $videoFile
+            ? ['type' => 'file', 'embed_url' => null]
+            : $this->videoEmbed($content->testimonial_video_url);
 
         return [
             'google' => [
@@ -179,17 +192,33 @@ class HomeController extends Controller
                 'count' => $content->reviews_tripadvisor_count ?: 0,
                 'link' => $content->reviews_tripadvisor_link ?: '#',
             ],
-            'quote' => $quote ? [
-                'name' => $quote['name'] ?? null,
-                'rating' => $quote['rating'] ?? 5,
-                'content' => $quote['content'] ?? null,
-            ] : null,
+            'quotes' => $quotes,
             'quote_cta_link' => $content->testimonials_cta_link ?: '#',
             'video' => [
+                'type' => $video['type'],
                 'thumbnail' => $this->publicUrl($content->testimonial_video_thumbnail),
                 'url' => $videoFile ?: $content->testimonial_video_url,
+                'embed_url' => $video['embed_url'],
             ],
         ];
+    }
+
+    /** Nhận diện link YouTube/Vimeo để nhúng dạng iframe; ngược lại coi là link ngoài thường. */
+    private function videoEmbed(?string $url): array
+    {
+        if (! $url) {
+            return ['type' => null, 'embed_url' => null];
+        }
+
+        if (preg_match('#(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([\w-]{11})#i', $url, $matches)) {
+            return ['type' => 'youtube', 'embed_url' => "https://www.youtube.com/embed/{$matches[1]}"];
+        }
+
+        if (preg_match('#vimeo\.com/(?:video/)?(\d+)#i', $url, $matches)) {
+            return ['type' => 'vimeo', 'embed_url' => "https://player.vimeo.com/video/{$matches[1]}"];
+        }
+
+        return ['type' => 'link', 'embed_url' => null];
     }
 
     /** Dải ảnh xem trước thư viện ảnh, xem thêm ở /gallery. */
@@ -207,6 +236,17 @@ class HomeController extends Controller
         return [
             'images' => $images,
             'link' => '/gallery/',
+        ];
+    }
+
+    /** Dải CTA mảnh ngay trên footer "Take a moment for yourself" — ảnh nền tải lên qua /admin. */
+    protected function finalCta(HomePageContent $content): array
+    {
+        return [
+            'heading' => $content->final_cta_heading ?: ['vi' => 'Dành một khoảnh khắc cho chính mình', 'en' => 'Take a moment for yourself'],
+            'cta_text' => $content->final_cta_cta_text ?: ['vi' => 'Đặt lịch ngay', 'en' => 'Book now'],
+            'cta_link' => $content->final_cta_cta_link ?: '/dat-lich/',
+            'image' => $this->publicUrl($content->final_cta_image),
         ];
     }
 

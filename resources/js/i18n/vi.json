@@ -73,7 +73,9 @@
         "login": "Đăng nhập",
         "register": "Đăng ký",
         "logout": "Đăng xuất",
-        "toggleMenu": "Mở menu"
+        "toggleMenu": "Mở menu",
+        "offers": "Ưu đãi",
+        "experience": "Trải nghiệm khách hàng"
     },
     "common": {
         "loading": "Đang tải...",
@@ -105,6 +107,12 @@
     },
     "footer": {
         "tagline": "The Beginning of the Journey to Balance Body - Mind - Spirit",
+        "description": "Không gian trị liệu lấy cảm hứng từ y học cổ truyền Việt Nam — nơi cơ thể được chăm sóc và tâm trí được nghỉ ngơi trọn vẹn.",
+        "ctaLine1": "Dành một khoảng lặng",
+        "ctaLine2": "cho chính mình",
+        "bookNow": "Đặt lịch ngay",
+        "servicesTitle": "Dịch vụ",
+        "exploreTitle": "Khám phá",
         "contact": "Liên hệ",
         "follow": "Theo dõi chúng tôi",
         "hotline": "Tổng đài đặt lịch",
@@ -116,7 +124,8 @@
         "terms": "Điều khoản dịch vụ",
         "support": "Hỗ trợ khách hàng",
         "rights": "© {{year}} Mầm Spa. All rights reserved.",
-        "paymentGuide": "Hướng dẫn thanh toán"
+        "paymentGuide": "Hướng dẫn thanh toán",
+        "guidelines": "Lưu ý dịch vụ"
     },
     "services": {
         "category": {
