@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Filament\Support\EditablePage;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
@@ -46,6 +47,11 @@ class ServiceResource extends Resource
     protected static function allowedRoles(): array
     {
         return User::contentRoles();
+    }
+
+    protected static function pageKey(): ?string
+    {
+        return EditablePage::Service->value;
     }
 
     public static function form(Form $form): Form

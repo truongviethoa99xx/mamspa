@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Filament\Support\EditablePage;
 use App\Models\SiteSetting;
 use App\Models\User;
 use Filament\Forms;
@@ -35,6 +36,11 @@ class HeaderSettings extends Page implements HasForms
     protected static function allowedRoles(): array
     {
         return User::contentRoles();
+    }
+
+    protected static function pageKey(): ?string
+    {
+        return EditablePage::Header->value;
     }
 
     public function mount(): void

@@ -95,7 +95,7 @@ class GioiThieuController extends Controller
     /** "4 Healing Journeys" — danh mục dịch vụ cấp 1, quản lý ở /admin/service-categories. */
     protected function healingJourneys(AboutPageContent $content): array
     {
-        $items = ServiceCategory::active()->roots()->orderBy('order')->get()
+        $items = ServiceCategory::active()->listed()->roots()->orderBy('order')->get()
             ->map(fn (ServiceCategory $c) => [
                 'url' => $c->url,
                 'image' => $this->publicUrl($c->image),

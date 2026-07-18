@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Filament\Support\EditablePage;
 use App\Filament\Forms\TranslatableField;
 use App\Models\HomePageContent;
 use App\Models\User;
@@ -35,6 +36,11 @@ class HomePageSettings extends Page implements HasForms
     protected static function allowedRoles(): array
     {
         return User::contentRoles();
+    }
+
+    protected static function pageKey(): ?string
+    {
+        return EditablePage::Home->value;
     }
 
     public function mount(): void

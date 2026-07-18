@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Filament\Support\EditablePage;
 use App\Filament\Forms\TranslatableField;
 use App\Models\ContactPageContent;
 use App\Models\User;
@@ -35,6 +36,11 @@ class ContactPageSettings extends Page implements HasForms
     protected static function allowedRoles(): array
     {
         return User::contentRoles();
+    }
+
+    protected static function pageKey(): ?string
+    {
+        return EditablePage::Contact->value;
     }
 
     public function mount(): void

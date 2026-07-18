@@ -177,11 +177,14 @@ class DichVuController extends Controller
 
         if (! $root) {
             if ($b !== null || $c !== null) {
-                abort(404);
+                return $this->customPageOrAbort($a, $b, $c);
             }
 
             $legacyService = Service::active()->with('category.parent')->where('slug', $a)->first();
-            abort_if(! $legacyService, 404);
+
+            if (! $legacyService) {
+                return $this->customPageOrAbort($a);
+            }
 
             // Dịch vụ chưa gán danh mục thì không có tiền tố để redirect tới — render thẳng tại URL phẳng.
             if (! $legacyService->category) {
@@ -203,9 +206,22 @@ class DichVuController extends Controller
                 : $this->renderServiceIn($child, $c, "/dich-vu/{$a}/{$b}/{$c}/");
         }
 
-        abort_if($c !== null, 404);
+        if ($c !== null) {
+            return $this->customPageOrAbort($a, $b, $c);
+        }
 
         return $this->renderServiceIn($root, $b, "/dich-vu/{$a}/{$b}/");
+    }
+
+    /**
+     * Không khớp danh mục/dịch vụ nào dưới /dich-vu/ — thử tìm Trang tuỳ biến (CustomPage)
+     * trùng slug trước khi trả 404, để admin có thể tạo trang riêng dưới tiền tố /dich-vu/.
+     */
+    private function customPageOrAbort(string $a, ?string $b = null, ?string $c = null): Response
+    {
+        $slug = implode('/', array_filter(['dich-vu', $a, $b, $c], fn (?string $segment) => $segment !== null));
+
+        return app(CustomPageController::class)->show($slug);
     }
 
     /** Render chi tiết dịch vụ, hoặc 301 sang URL chuẩn nếu $requestedPath không còn là URL chính tắc (VD: dịch vụ đã đổi danh mục). */
@@ -217,7 +233,9 @@ class DichVuController extends Controller
             ->where('slug', $slug)
             ->first();
 
-        abort_if(! $service, 404);
+        if (! $service) {
+            return app(CustomPageController::class)->show(trim($requestedPath, '/'));
+        }
 
         if ($service->url !== $requestedPath) {
             return redirect()->away(url(rtrim($service->url, '/')).'/', 301);
@@ -344,7 +362,7 @@ class DichVuController extends Controller
     private function categoryBreadcrumb(ServiceCategory $category): array
     {
         $items = $this->categoryAncestors($category);
-        $items[] = ['name' => strip_tags($category->name), 'url' => $category->url];
+        $items[] = ['name' => html_entity_decode(strip_tags($category->name)), 'url' => $category->url];
 
         return $items;
     }
@@ -353,7 +371,7 @@ class DichVuController extends Controller
     private function categoryAncestors(ServiceCategory $category): array
     {
         return $category->parent
-            ? [['name' => strip_tags($category->parent->name), 'url' => $category->parent->url]]
+            ? [['name' => html_entity_decode(strip_tags($category->parent->name)), 'url' => $category->parent->url]]
             : [];
     }
 

@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Filament\Support\EditablePage;
 use App\Filament\Forms\TranslatableField;
 use App\Models\CustomerExperiencePageContent;
 use App\Models\User;
@@ -44,6 +45,11 @@ class CustomerExperiencePageSettings extends Page implements HasForms
     protected static function allowedRoles(): array
     {
         return User::contentRoles();
+    }
+
+    protected static function pageKey(): ?string
+    {
+        return EditablePage::CustomerExperience->value;
     }
 
     public function mount(): void

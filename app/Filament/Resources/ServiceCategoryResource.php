@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Filament\Support\EditablePage;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\ServiceCategoryResource\Pages;
 use App\Filament\Support\DeleteGuard;
@@ -35,6 +36,11 @@ class ServiceCategoryResource extends Resource
     protected static function allowedRoles(): array
     {
         return User::contentRoles();
+    }
+
+    protected static function pageKey(): ?string
+    {
+        return EditablePage::ServiceCategory->value;
     }
 
     public static function form(Form $form): Form

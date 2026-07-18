@@ -4,6 +4,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CustomerExperienceController;
+use App\Http\Controllers\CustomPageController;
 use App\Http\Controllers\DichVuController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GioiThieuController;
@@ -63,6 +64,15 @@ Route::get('/luu-y-dich-vu', fn () => Inertia::render('PaymentGuide'))->name('se
 Route::get('/huong-dan-thanh-toan', fn () => redirect()->away(url('/luu-y-dich-vu').'/', 301));
 
 require __DIR__.'/auth.php';
+
+// Trang tuỳ biến qua CMS (App\Filament\Resources\CustomPageResource) — slug tự do,
+// có thể chứa "/". BẮT BUỘC đặt route này SAU mọi route cụ thể khác ở trên: bất kỳ
+// route nào định nghĩa sau dòng này sẽ không bao giờ được match (bị catch-all này
+// "nuốt" mất trước). CustomPageController::show() tự abort(404) nếu không tìm thấy
+// slug tương ứng, rơi về đúng trang NotFound như route không tồn tại.
+Route::get('/{slug}', [CustomPageController::class, 'show'])
+    ->where('slug', '.*')
+    ->name('custom-page.show');
 
 // Catch-all for URLs that don't match any route above. Defined here (rather
 // than only in the exception handler) so it runs through the full `web`

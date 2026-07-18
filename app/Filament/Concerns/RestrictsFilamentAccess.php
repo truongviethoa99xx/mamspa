@@ -14,11 +14,27 @@ trait RestrictsFilamentAccess
         return [User::ROLE_SUPERADMIN];
     }
 
+    /**
+     * Khoá EditablePage tương ứng (xem App\Filament\Support\EditablePage), dùng để giới hạn
+     * theo từng editor cụ thể qua User::canEditPage(). Trả về null nếu trang này không nằm
+     * trong danh sách có thể giới hạn (vẫn chỉ gate bởi allowedRoles()).
+     */
+    protected static function pageKey(): ?string
+    {
+        return null;
+    }
+
     protected static function userHasAccess(): bool
     {
         $user = Filament::auth()->user() ?? Auth::user();
 
-        return $user instanceof User && $user->hasAnyRole(static::allowedRoles());
+        if (! $user instanceof User || ! $user->hasAnyRole(static::allowedRoles())) {
+            return false;
+        }
+
+        $pageKey = static::pageKey();
+
+        return $pageKey === null || $user->canEditPage($pageKey);
     }
 
     public static function canAccess(): bool

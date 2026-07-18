@@ -96,10 +96,10 @@ class HandleInertiaRequests extends Middleware
             });
 
             return [
-                'label' => strip_tags($root->name),
+                'label' => html_entity_decode(strip_tags($root->name)),
                 'href' => $this->menuHref($root),
                 'children' => $root->children->map(fn (ServiceCategory $child) => [
-                    'label' => strip_tags($child->name),
+                    'label' => html_entity_decode(strip_tags($child->name)),
                     'href' => $this->menuHref($child),
                 ])->values()->all(),
             ];

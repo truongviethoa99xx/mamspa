@@ -42,6 +42,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
         'phone',
         'password',
         'preferred_lang',
+        'editable_pages',
     ];
 
     protected $hidden = [
@@ -54,6 +55,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'editable_pages' => 'array',
         ];
     }
 
@@ -148,5 +150,23 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
             self::ROLE_EDITOR => 'Biên tập viên',
             self::ROLE_RECEPTIONIST => 'Lễ tân',
         ];
+    }
+
+    /**
+     * Editor có thể bị giới hạn chỉ sửa một số trang cụ thể (editable_pages).
+     * NULL = chưa từng giới hạn → mặc định vẫn full quyền (tránh mất quyền đột ngột
+     * cho các editor đã tồn tại trước khi có tính năng này). Superadmin/Admin luôn full quyền.
+     */
+    public function canEditPage(string $pageKey): bool
+    {
+        if ($this->hasAnyRole([self::ROLE_SUPERADMIN, self::ROLE_ADMIN])) {
+            return true;
+        }
+
+        if (! $this->hasRole(self::ROLE_EDITOR)) {
+            return true;
+        }
+
+        return $this->editable_pages === null || in_array($pageKey, $this->editable_pages, true);
     }
 }

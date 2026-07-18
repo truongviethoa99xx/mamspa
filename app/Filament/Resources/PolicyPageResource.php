@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
+use App\Filament\Support\EditablePage;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\PolicyPageResource\Pages;
 use App\Models\PolicyPage;
@@ -34,6 +35,11 @@ class PolicyPageResource extends Resource
     protected static function allowedRoles(): array
     {
         return User::contentRoles();
+    }
+
+    protected static function pageKey(): ?string
+    {
+        return EditablePage::Policy->value;
     }
 
     public static function form(Form $form): Form

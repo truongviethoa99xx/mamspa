@@ -4,15 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Support\EditablePage;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
@@ -58,9 +62,17 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('password')
                         ->label('Mật khẩu')
                         ->password()
+                        ->revealable()
+                        ->suffixAction(
+                            Forms\Components\Actions\Action::make('generatePassword')
+                                ->icon('heroicon-m-arrow-path')
+                                ->tooltip('Tạo mật khẩu ngẫu nhiên 10 ký tự')
+                                ->action(fn (Set $set) => $set('password', Str::password(10))),
+                        )
                         ->dehydrateStateUsing(fn ($state) => filled($state) ? Hash::make($state) : null)
                         ->dehydrated(fn ($state) => filled($state))
-                        ->required(fn (string $context): bool => $context === 'create'),
+                        ->required(fn (string $context): bool => $context === 'create')
+                        ->helperText('Bấm biểu tượng 🔄 để tạo mật khẩu ngẫu nhiên 10 ký tự.'),
                     Forms\Components\Select::make('roles')
                         ->label('Quyền')
                         ->relationship(
@@ -73,7 +85,37 @@ class UserResource extends Resource
                         ->maxItems(1)
                         ->preload()
                         ->required()
+                        ->live()
                         ->helperText('Superadmin quản lý toàn bộ hệ thống; Admin quản lý vận hành/nội dung; Biên tập viên chỉ sửa nội dung; Lễ tân chỉ thấy Lịch hẹn, Lời nhắn liên hệ và Đăng ký nhận tin.'),
+                    Forms\Components\CheckboxList::make('editable_pages')
+                        ->label('Trang được phép sửa (Biên tập viên)')
+                        ->options(function (): array {
+                            $options = EditablePage::options();
+                            $options[EditablePage::CustomPage->value] .= ' <span style="display:inline-block;margin-left:.375rem;padding:.0625rem .5rem;'
+                                .'border-radius:9999px;background:#fee2e2;color:#b91c1c;font-size:.6875rem;font-weight:700;">'
+                                .'⚠️ QUAN TRỌNG — rủi ro bảo mật</span>';
+
+                            return $options;
+                        })
+                        ->allowHtml()
+                        ->descriptions([
+                            EditablePage::CustomPage->value => 'Cho phép chạy HTML/CSS/JS thô trực tiếp trên site công khai. Chỉ tick nếu thực sự tin tưởng biên tập viên này.',
+                        ])
+                        ->columns(2)
+                        ->bulkToggleable()
+                        ->visible(function (Get $get): bool {
+                            $roleIds = $get('roles') ?? [];
+
+                            return filled($roleIds) && Role::whereKey($roleIds)->where('name', User::ROLE_EDITOR)->exists();
+                        })
+                        ->default(EditablePage::values())
+                        ->afterStateHydrated(function (Forms\Components\CheckboxList $component, $state): void {
+                            if ($state === null) {
+                                $component->state(EditablePage::values());
+                            }
+                        })
+                        ->helperText('Chỉ áp dụng cho quyền Biên tập viên. Bỏ tick trang nào thì biên tập viên sẽ không thấy/sửa được trang đó trong menu quản trị.')
+                        ->columnSpanFull(),
                     Forms\Components\Select::make('preferred_lang')
                         ->label('Ngôn ngữ')
                         ->options([
