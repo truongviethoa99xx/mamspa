@@ -103,7 +103,9 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                 )}
 
                 <div className="col-start-3 flex shrink-0 items-center justify-self-end gap-4 lg:col-auto">
-                    {!minimal && <LanguageSwitcher color={textColor} className="hidden lg:flex" />}
+                    {!minimal && (
+                        <LanguageSwitcher color={textColor} accentColor={ctaBackground} className="hidden lg:block" />
+                    )}
 
                     <Link
                         href="/dat-lich/"
@@ -148,7 +150,11 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     </Link>
 
                     <div className="mt-2 flex justify-center border-t pt-3" style={{ borderColor: `${textColor}22` }}>
-                        <LanguageSwitcher color={ctaBackground} onNavigate={() => setMobileOpen(false)} />
+                        <LanguageSwitcher
+                            color={ctaBackground}
+                            accentColor={ctaBackground}
+                            onNavigate={() => setMobileOpen(false)}
+                        />
                     </div>
                 </div>
             )}
