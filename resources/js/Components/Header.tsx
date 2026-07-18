@@ -106,7 +106,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     className="col-start-3 inline-block shrink-0 justify-self-end rounded-md px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-opacity hover:opacity-90 sm:px-5 sm:py-2.5 sm:text-sm lg:col-auto"
                     style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
                 >
-                    {ctaText}
+                    Đặt lịch
                 </Link>
             </div>
 
