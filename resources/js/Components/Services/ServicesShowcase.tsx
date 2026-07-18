@@ -69,7 +69,10 @@ export function ServicesShowcase({ data }: { data: ServicesShowcaseData }) {
                                         )}
                                         <div className="mt-5 h-px w-16 bg-heading/30" />
                                         {description && (
-                                            <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink/70">{description}</p>
+                                            <div
+                                                className="rich-content mt-5 max-w-sm text-sm leading-relaxed text-ink/70"
+                                                dangerouslySetInnerHTML={{ __html: description }}
+                                            />
                                         )}
                                         <Link
                                             href={item.url}

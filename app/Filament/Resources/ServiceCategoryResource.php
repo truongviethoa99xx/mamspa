@@ -73,7 +73,7 @@ class ServiceCategoryResource extends Resource
                     ->default(true),
             ])->columns(2),
             TranslatableField::group('name', as: 'quill', label: 'Tên danh mục', required: true),
-            TranslatableField::group('description', as: 'textarea', label: 'Mô tả danh mục', rows: 3, example: 'Liệu pháp massage toàn thân giúp thư giãn sâu và phục hồi năng lượng.'),
+            TranslatableField::group('description', as: 'quill', label: 'Mô tả danh mục', example: 'Liệu pháp massage toàn thân giúp thư giãn sâu và phục hồi năng lượng.'),
             Forms\Components\Section::make('Ảnh đại diện')
                 ->description('Ảnh dùng làm ảnh banner (hero) ở đầu trang danh mục.')
                 ->schema([
