@@ -82,6 +82,41 @@ class AdminPanelProvider extends PanelProvider
                     asset('css/admin-theme.css').'?v='.filemtime(public_path('css/admin-theme.css')),
                 ),
             )
+            // Khi nhận notification broadcast (booking/liên hệ mới — xem NotifyAdminsOfContactSubmission,
+            // SendBookingNotifications), Filament tự lo toast + chuông thông báo, nhưng KHÔNG tự refresh
+            // navigation badge tuỳ biến (BookingResource, ContactSubmissionResource) hay bảng đang mở.
+            // Đoạn dưới tái dùng đúng kênh + event Filament đã tự phát (App.Models.User.{id},
+            // .database-notifications.sent — xem vendor/filament/notifications) để refresh component
+            // Livewire hiện tại: resetTable() nếu đang ở list booking/liên hệ, $refresh cho các trang khác
+            // (badge nằm cùng cây render layout nên tự cập nhật theo).
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                function (): string {
+                    $userId = auth()->id();
+
+                    if (! $userId) {
+                        return '';
+                    }
+
+                    return sprintf(<<<'HTML'
+                        <div x-data x-init="
+                            window.addEventListener('EchoLoaded', () => {
+                                window.Echo.private('App.Models.User.%d').listen('.database-notifications.sent', () => {
+                                    const path = window.location.pathname
+                                    setTimeout(() => {
+                                        if (path.startsWith('/admin/bookings') || path.startsWith('/admin/contact-submissions')) {
+                                            $wire.call('resetTable')
+                                        } else {
+                                            $wire.call('$refresh')
+                                        }
+                                    }, 500)
+                                })
+                            })
+                            if (window.Echo) window.dispatchEvent(new CustomEvent('EchoLoaded'))
+                        "></div>
+                        HTML, $userId);
+                },
+            )
             // Thứ tự nhóm menu: vận hành hằng ngày trước, nội dung sau, hệ thống cuối.
             ->navigationGroups([
                 'Vận hành',

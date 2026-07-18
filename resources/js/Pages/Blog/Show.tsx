@@ -57,7 +57,7 @@ export default function BlogShow({ post, related, previous, next }: Props) {
     const breadcrumbItems: BreadcrumbItem[] = [HOME_CRUMB, BLOG_CRUMB, { name: title }];
 
     return (
-        <PublicLayout mainClassName="bg-maha-50">
+        <PublicLayout mainClassName="bg-maha-50" minimalHeader>
             <Head title={seoTitle || 'Blog'}>
                 {seoDescription && <meta name="description" content={seoDescription} />}
                 <meta property="og:type" content="article" />

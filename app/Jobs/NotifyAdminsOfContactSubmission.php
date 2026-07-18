@@ -26,7 +26,7 @@ class NotifyAdminsOfContactSubmission implements ShouldQueue
             return;
         }
 
-        $admins = User::role(User::adminRoles())->get();
+        $admins = User::role(User::frontDeskRoles())->get();
         Notification::make()
             ->title('Liên hệ mới: '.$submission->subject)
             ->body(sprintf('%s — %s', $submission->name, $submission->message))

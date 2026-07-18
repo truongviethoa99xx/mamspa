@@ -47,7 +47,7 @@ class SendBookingNotifications implements ShouldQueue
             $sms->send($booking->guest_phone, $msg);
         }
 
-        $admins = User::role(User::adminRoles())->get();
+        $admins = User::role(User::frontDeskRoles())->get();
         Notification::make()
             ->title('Đặt lịch mới #'.$booking->code)
             ->body(sprintf(

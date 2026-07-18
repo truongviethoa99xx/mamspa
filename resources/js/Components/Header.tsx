@@ -23,9 +23,11 @@ const NAV_ITEMS = [
  * Nền/màu chữ/logo/chế độ trong suốt quản lý ở /admin (Quản lý header).
  * Khi trong suốt, header nổi đè lên nội dung phía dưới thay vì chiếm khoảng riêng.
  * Dưới lg: menu chính thu vào nút hamburger, mở ra thành panel xổ xuống dưới header
- * (không đổi chiều cao header cố định).
+ * (không đổi chiều cao header cố định). Hàng header dưới lg dùng grid 3 cột đều nhau
+ * (hamburger trái, logo giữa tuyệt đối, CTA phải) để logo luôn nằm chính giữa dù 2 bên
+ * lệch độ rộng; từ lg chuyển sang flex với thứ tự DOM gốc (logo, nav, CTA).
  */
-export function Header() {
+export function Header({ minimal = false }: { minimal?: boolean }) {
     const { props, url } = usePage<SharedProps>();
     const [mobileOpen, setMobileOpen] = useState(false);
     const site = props.site ?? {};
@@ -45,10 +47,26 @@ export function Header() {
             className={cn('w-full', isTransparent ? 'absolute inset-x-0 top-0 z-30' : 'relative shrink-0')}
         >
             <div
-                className="flex items-center justify-between gap-3 px-5 sm:gap-6 sm:px-10"
+                className="grid grid-cols-3 items-center gap-3 px-5 sm:gap-6 sm:px-10 lg:flex lg:justify-between"
                 style={{ height: HEADER_HEIGHT, backgroundColor: headerBackground, color: textColor }}
             >
-                <Link href="/" className="flex shrink-0 items-center gap-2 sm:gap-3">
+                {!minimal && (
+                    <button
+                        type="button"
+                        onClick={() => setMobileOpen((open) => !open)}
+                        aria-label={mobileOpen ? 'Đóng menu' : 'Mở menu'}
+                        aria-expanded={mobileOpen}
+                        className="col-start-1 flex h-10 w-10 items-center justify-center justify-self-start rounded-md lg:hidden"
+                        style={{ color: textColor }}
+                    >
+                        {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    </button>
+                )}
+
+                <Link
+                    href="/"
+                    className="col-start-2 flex shrink-0 items-center justify-self-center gap-2 sm:gap-3 lg:col-auto lg:justify-self-start"
+                >
                     {logoUrl ? (
                         <img src={logoUrl} alt={brandName} className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
                     ) : (
@@ -61,49 +79,38 @@ export function Header() {
                     )}
                 </Link>
 
-                <nav className="hidden items-center gap-8 lg:flex">
-                    {NAV_ITEMS.map((item) => {
-                        const active = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+                {!minimal && (
+                    <nav className="hidden items-center gap-8 lg:flex">
+                        {NAV_ITEMS.map((item) => {
+                            const active = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
 
-                        return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={cn(
-                                    'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
-                                    active && 'border-b-2 opacity-100',
-                                )}
-                                style={active ? { borderColor: textColor, color: textColor } : { color: textColor }}
-                            >
-                                {item.label}
-                            </Link>
-                        );
-                    })}
-                </nav>
+                            return (
+                                <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    className={cn(
+                                        'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
+                                        active && 'border-b-2 opacity-100',
+                                    )}
+                                    style={active ? { borderColor: textColor, color: textColor } : { color: textColor }}
+                                >
+                                    {item.label}
+                                </Link>
+                            );
+                        })}
+                    </nav>
+                )}
 
-                <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-                    <Link
-                        href="/dat-lich/"
-                        className="hidden shrink-0 rounded-md px-5 py-2.5 text-sm font-semibold uppercase tracking-wide transition-opacity hover:opacity-90 sm:inline-block"
-                        style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
-                    >
-                        {ctaText}
-                    </Link>
-
-                    <button
-                        type="button"
-                        onClick={() => setMobileOpen((open) => !open)}
-                        aria-label={mobileOpen ? 'Đóng menu' : 'Mở menu'}
-                        aria-expanded={mobileOpen}
-                        className="flex h-10 w-10 items-center justify-center rounded-md lg:hidden"
-                        style={{ color: textColor }}
-                    >
-                        {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                    </button>
-                </div>
+                <Link
+                    href="/dat-lich/"
+                    className="col-start-3 inline-block shrink-0 justify-self-end rounded-md px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-opacity hover:opacity-90 sm:px-5 sm:py-2.5 sm:text-sm lg:col-auto"
+                    style={{ backgroundColor: ctaBackground, color: ctaTextColor }}
+                >
+                    {ctaText}
+                </Link>
             </div>
 
-            {mobileOpen && (
+            {!minimal && mobileOpen && (
                 <div
                     className="flex flex-col gap-1 border-t px-5 py-4 shadow-lg lg:hidden"
                     style={{ backgroundColor: configuredBackground, borderColor: `${textColor}22` }}
@@ -120,7 +127,7 @@ export function Header() {
                                     'rounded-md px-3 py-3 text-sm font-medium uppercase tracking-wide transition-opacity',
                                     active ? 'opacity-100' : 'opacity-80',
                                 )}
-                                style={{ color: textColor }}
+                                style={{ color: ctaBackground }}
                             >
                                 {item.label}
                             </Link>
