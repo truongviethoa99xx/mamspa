@@ -11,7 +11,7 @@ export function BlogPostCard({ data, className }: { data: BlogPostCardData; clas
 
     return (
         <Link href={`/tin-tuc/${data.slug}/`} className={cn('group block', className)}>
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-maha-200">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-maha-200">
                 {data.cover_image && (
                     <img
                         src={data.cover_image}
@@ -21,7 +21,7 @@ export function BlogPostCard({ data, className }: { data: BlogPostCardData; clas
                     />
                 )}
                 {data.category && (
-                    <span className="absolute bottom-3 left-3 rounded-sm bg-heading/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
+                    <span className="absolute bottom-3 left-3 rounded-full bg-heading/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">
                         {data.category}
                     </span>
                 )}

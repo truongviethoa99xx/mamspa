@@ -254,8 +254,6 @@ class ServiceResource extends Resource
             Tables\Columns\TextColumn::make('category.name')->label('Danh mục')->badge()
                 ->formatStateUsing(fn ($state) => strip_tags($state)),
             Tables\Columns\TextColumn::make('duration')->label('Thời lượng')->suffix(' phút'),
-            Tables\Columns\IconColumn::make('is_featured')->label('Nổi bật')->boolean(),
-            Tables\Columns\IconColumn::make('is_combo')->label('Combo')->boolean(),
             Tables\Columns\IconColumn::make('is_active')->label('Kích hoạt')->boolean(),
         ])->filters([
             Tables\Filters\SelectFilter::make('service_category_id')

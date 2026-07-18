@@ -32,11 +32,15 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
     }
 
     return (
-        <nav aria-label="Mục lục bài viết" className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-y-auto lg:block">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-subheading">
-                <List className="h-4 w-4" strokeWidth={1.5} />
+        <nav
+            aria-label="Mục lục bài viết"
+            className="sticky top-28 hidden max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl border border-[#CDBCA3] bg-white p-6 shadow-xl shadow-maha-900/5 lg:block"
+        >
+            <div className="flex items-center gap-2 font-serif text-lg text-heading">
+                <List className="h-4 w-4 text-subheading" strokeWidth={1.5} />
                 Mục lục
             </div>
+            <span className="mt-3 block h-px w-10 bg-subheading/50" aria-hidden="true" />
             <ul className="mt-4 space-y-1 border-l border-maha-200 text-sm">
                 {items.map((item) => (
                     <li key={item.id}>

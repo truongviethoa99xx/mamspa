@@ -1,7 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, Clock, Minus, Plus, X } from 'lucide-react';
+import { CheckCircle2, ChevronLeft, ChevronRight, Clock, Minus, Plus, X } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { generateTimeOptions, tr, stripTags } from '@/Lib/utils';
 import { FancySelect } from '@/Components/FancySelect';
@@ -18,6 +18,7 @@ interface Props {
 
 const DATE_LOCALES: Record<string, string> = { en: 'en-US', ja: 'ja-JP', ko: 'ko-KR', zh: 'zh-CN', vi: 'vi-VN' };
 const TODAY = new Date().toISOString().slice(0, 10);
+const DEFAULT_CONTACT = { name: '', phone: '', email: '', note: '', channel: 'zalo', value: '', country: 'Việt Nam' };
 
 export default function Booking({ preselect, openHours, services }: Props) {
     const { t } = useTranslation();
@@ -29,9 +30,10 @@ export default function Booking({ preselect, openHours, services }: Props) {
     const [serviceByKey, setServiceByKey] = useState<Record<string, number>>({});
     const [date, setDate] = useState<string>('');
     const [timeSlot, setTimeSlot] = useState<string>('');
-    const [contact, setContact] = useState({ name: '', phone: '', email: '', note: '', channel: 'zalo', value: '', country: 'Việt Nam' });
+    const [contact, setContact] = useState(DEFAULT_CONTACT);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [successCode, setSuccessCode] = useState<string | null>(null);
 
     const availableServices = services;
 
@@ -67,6 +69,15 @@ export default function Booking({ preselect, openHours, services }: Props) {
     const canSubmit =
         !!date && !!timeSlot && guests.length > 0 && guests.every((g) => serviceFor(g.key)) && contact.name.trim().length >= 2 && contact.phone.trim().length >= 8;
 
+    const resetForm = () => {
+        setMaleCount(1);
+        setFemaleCount(0);
+        setServiceByKey({});
+        setDate('');
+        setTimeSlot('');
+        setContact(DEFAULT_CONTACT);
+    };
+
     const submit = () => {
         if (!canSubmit || submitting) return;
         setSubmitting(true);
@@ -85,8 +96,17 @@ export default function Booking({ preselect, openHours, services }: Props) {
                 contact_value: contact.value || undefined,
                 note: contact.note || undefined,
                 payment_method: 'cash',
+                inline: true,
             },
             {
+                preserveScroll: true,
+                onSuccess: (page) => {
+                    const code = (page.props.flash as { booking_code?: string })?.booking_code;
+                    if (code) {
+                        setSuccessCode(code);
+                        resetForm();
+                    }
+                },
                 onError: (errors) => setError(Object.values(errors).join(' ')),
                 onFinish: () => setSubmitting(false),
             },
@@ -367,6 +387,51 @@ export default function Booking({ preselect, openHours, services }: Props) {
                     </div>
                 </div>
             </section>
+
+            {successCode && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="booking-success-title"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm"
+                >
+                    <div className="relative w-full max-w-md rounded-3xl border border-[#CDBCA3] bg-white p-8 text-center shadow-2xl shadow-maha-900/20">
+                        <button
+                            type="button"
+                            onClick={() => setSuccessCode(null)}
+                            aria-label="Đóng"
+                            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-ink/50 transition-colors hover:bg-maha-100 hover:text-ink"
+                        >
+                            <X className="h-4 w-4" />
+                        </button>
+
+                        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-maha-100 text-heading">
+                            <CheckCircle2 className="h-7 w-7" />
+                        </div>
+
+                        <h2 id="booking-success-title" className="mt-5 font-serif text-2xl text-heading">
+                            {t('blocks.bookingForm.success.title')}
+                        </h2>
+                        <p className="mt-3 text-sm leading-relaxed text-ink/70">
+                            {t('blocks.bookingForm.success.message')}
+                        </p>
+
+                        <div className="mt-6 rounded-xl border border-dashed border-maha-200 bg-maha-50 px-4 py-3">
+                            <p className="text-xs font-semibold uppercase tracking-wider text-subheading">
+                                {t('blocks.bookingForm.success.codeLabel')}
+                            </p>
+                            <p className="mt-1 font-mono text-lg font-semibold tracking-wide text-heading">{successCode}</p>
+                        </div>
+
+                        <Link
+                            href="/"
+                            className="mt-6 block w-full rounded-md bg-[#2F3E2E] py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-opacity hover:opacity-90"
+                        >
+                            {t('blocks.bookingForm.success.home')}
+                        </Link>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

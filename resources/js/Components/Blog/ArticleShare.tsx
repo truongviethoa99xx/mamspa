@@ -39,7 +39,7 @@ export function ArticleShare({ title, className }: { title: string; className?: 
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={link.label}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-maha-200 text-heading transition-colors hover:bg-maha-100"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-maha-100 text-heading transition-colors hover:bg-maha-200"
                 >
                     <link.icon className="h-4 w-4" strokeWidth={1.5} />
                 </a>
@@ -48,7 +48,7 @@ export function ArticleShare({ title, className }: { title: string; className?: 
                 type="button"
                 onClick={copyLink}
                 aria-label="Sao chép liên kết"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-maha-200 text-heading transition-colors hover:bg-maha-100"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-maha-100 text-heading transition-colors hover:bg-maha-200"
             >
                 {copied ? <Check className="h-4 w-4" strokeWidth={1.5} /> : <Copy className="h-4 w-4" strokeWidth={1.5} />}
             </button>

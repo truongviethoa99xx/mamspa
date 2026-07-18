@@ -28,7 +28,7 @@ export function ReadingProgressBar({ targetRef }: { targetRef: RefObject<HTMLEle
 
     return (
         <div className="fixed inset-x-0 top-0 z-40 h-1 bg-transparent" aria-hidden="true">
-            <div className="h-full bg-subheading transition-[width] duration-150 ease-out" style={{ width: `${progress}%` }} />
+            <div className="h-full bg-heading transition-[width] duration-150 ease-out" style={{ width: `${progress}%` }} />
         </div>
     );
 }

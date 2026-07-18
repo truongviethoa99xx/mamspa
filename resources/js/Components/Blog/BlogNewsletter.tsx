@@ -54,7 +54,7 @@ export function BlogNewsletter() {
                             value={form.data.email}
                             onChange={(e) => form.setData('email', e.target.value)}
                             placeholder="Nhập email của bạn"
-                            className="w-full rounded-md border border-maha-300 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/50 focus:border-subheading focus:outline-none sm:w-64"
+                            className="input-base text-sm sm:w-64"
                         />
                         <button
                             type="submit"

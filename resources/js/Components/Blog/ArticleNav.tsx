@@ -16,7 +16,7 @@ export function ArticleNav({ previous, next }: ArticleNavProps) {
     }
 
     return (
-        <div className="mt-12 grid grid-cols-1 gap-4 border-t border-maha-100 pt-8 sm:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 gap-4 border-t border-maha-200 pt-8 sm:grid-cols-2">
             <NavCard post={previous} direction="previous" />
             <NavCard post={next} direction="next" />
         </div>
@@ -37,11 +37,11 @@ function NavCard({ post, direction }: { post: BlogPostCardData | null; direction
         <Link
             href={`/tin-tuc/${post.slug}/`}
             className={cn(
-                'group flex items-center gap-3 rounded-lg border border-maha-100 p-4 transition-colors hover:border-maha-300',
+                'group flex items-center gap-3 rounded-2xl border border-maha-200 bg-white p-4 transition-colors hover:border-[#CDBCA3]',
                 isNext && 'sm:flex-row-reverse sm:text-right',
             )}
         >
-            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-sm bg-maha-200">
+            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-maha-200">
                 {post.cover_image && <img src={post.cover_image} alt="" className="h-full w-full object-cover" />}
             </div>
             <div className="min-w-0">

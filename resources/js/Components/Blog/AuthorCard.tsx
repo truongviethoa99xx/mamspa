@@ -6,7 +6,7 @@ interface AuthorCardProps {
 /** Thẻ giới thiệu tác giả cuối bài viết. */
 export function AuthorCard({ name, avatar }: AuthorCardProps) {
     return (
-        <div className="mt-12 flex items-center gap-4 rounded-lg border border-maha-100 bg-maha-50 p-5">
+        <div className="mt-12 flex items-center gap-4 rounded-2xl border border-[#CDBCA3] bg-white p-5 shadow-sm">
             <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-maha-200">
                 {avatar && <img src={avatar} alt={name} className="h-full w-full object-cover" />}
             </div>
