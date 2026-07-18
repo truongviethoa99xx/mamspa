@@ -34,7 +34,7 @@ export function FeaturedServices({ data }: { data: FeaturedServicesData }) {
     return (
         <section
             ref={ref}
-            className={cn(className, 'bg-maha-50 px-5 pb-16 pt-4 sm:px-10 sm:pb-20 sm:pt-6 lg:px-16 lg:pb-24 lg:pt-8')}
+            className={cn(className, 'bg-maha-50 px-5 pb-8 pt-4 sm:px-10 sm:pb-8 sm:pt-6 lg:px-16 lg:pb-8 lg:pt-8')}
         >
             <div className="mx-auto max-w-7xl">
                 {heading && (
