@@ -16,7 +16,7 @@ export interface CategoryTherapyItem {
 const HEADING_LABEL: Record<string, string> = { vi: 'NHÓM LIỆU PHÁP', en: 'THERAPY GROUPS' };
 const SEE_MORE_LABEL: Record<string, string> = { vi: 'Xem thêm', en: 'See more' };
 const GO_TO_LABEL: Record<string, string> = { vi: 'Đi tới mục', en: 'Go to item' };
-const CARD_BASIS = 'basis-[calc(50%-0.625rem)] sm:basis-[calc(33.333%-0.834rem)] lg:basis-[calc(20%-1rem)]';
+const CARD_BASIS = 'basis-[calc(50%_-_0.625rem)] sm:basis-[calc(33.333%_-_0.834rem)] lg:basis-[calc(20%_-_1rem)]';
 
 /** "NHÓM LIỆU PHÁP" — dải thẻ dạng slider (kéo/vuốt ngang, snap từng thẻ) + chấm điều hướng ở giữa. */
 export function CategoryTherapyGrid({ items, heading }: { items: CategoryTherapyItem[]; heading?: unknown }) {
