@@ -8,7 +8,7 @@ export function AuthorCard({ name, avatar }: AuthorCardProps) {
     return (
         <div className="mt-12 flex items-center gap-4 rounded-2xl border border-[#CDBCA3] bg-white p-5 shadow-sm">
             <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-maha-200">
-                {avatar && <img src={avatar} alt={name} className="h-full w-full object-cover" />}
+                {avatar && <img src={avatar} alt={name} className="h-full w-full object-cover" loading="lazy" />}
             </div>
             <div>
                 <p className="text-xs uppercase tracking-wide text-subheading">Người viết</p>

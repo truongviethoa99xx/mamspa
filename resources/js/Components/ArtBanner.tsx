@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 export interface ArtBannerCta {
     text: unknown;
@@ -25,8 +26,10 @@ export function ArtBanner({ data }: { data: ArtBannerData }) {
     const ctaText = tr(data.cta?.text, locale);
     const imageAlt = tr(data.image_alt, locale);
 
+    const { ref, className } = useReveal<HTMLElement>();
+
     return (
-        <section className="bg-maha-50">
+        <section ref={ref} className={cn(className, 'bg-maha-50')}>
             <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="relative aspect-[4/3] bg-maha-200 md:aspect-auto">
                     {data.image && (

@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { cn, tr } from '@/Lib/utils';
 
 interface BranchOfferItem {
     image?: string | null;
@@ -22,11 +23,12 @@ export function OfferBranchDeals({ data }: { data: OfferBranchDealsData }) {
     const locale = useLocale();
     const heading = tr(data.heading, locale);
     const items = data.items ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) return null;
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px] lg:py-16">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px] lg:py-16')}>
             <div className="mx-auto max-w-6xl">
                 {heading && (
                     <div className="flex items-center justify-center gap-2 text-center">
@@ -53,6 +55,7 @@ export function OfferBranchDeals({ data }: { data: OfferBranchDealsData }) {
                                         src={item.image ?? undefined}
                                         alt={imageAlt || title}
                                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        loading="lazy"
                                     />
                                 )}
                                 <div

@@ -1,5 +1,6 @@
 import { ArrowRight, Clock, MapPin, Phone } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 interface BranchItem {
@@ -35,13 +36,14 @@ export function ContactBranches({ data }: { data: ContactBranchesData }) {
     const directionsLabel = tr(data.directionsLabel, locale);
     const moreLabel = tr(data.moreLabel, locale);
     const items = data.items ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) {
         return null;
     }
 
     return (
-        <section className="bg-maha-50 px-5 pb-2 pt-8 sm:px-10 lg:px-16">
+        <section ref={ref} className={cn(className, 'bg-maha-50 px-5 pb-2 pt-8 sm:px-10 lg:px-16')}>
             <div className="mx-auto max-w-7xl">
                 <div className="text-center">
                     {title && (
@@ -73,7 +75,12 @@ export function ContactBranches({ data }: { data: ContactBranchesData }) {
                             <article key={index} className="overflow-hidden rounded-2xl bg-white shadow-sm">
                                 <div className="relative aspect-[5/2] w-full bg-maha-200">
                                     {branch.image && (
-                                        <img src={branch.image} alt={imageAlt} className="h-full w-full object-cover" />
+                                        <img
+                                            src={branch.image}
+                                            alt={imageAlt}
+                                            className="h-full w-full object-cover"
+                                            loading="lazy"
+                                        />
                                     )}
                                     {label && (
                                         <span className="absolute bottom-4 left-4 rounded-md bg-[#2F3E2E]/95 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-white">

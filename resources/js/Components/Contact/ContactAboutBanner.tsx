@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight, Leaf } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 export interface ContactAboutBannerData {
     text?: unknown;
@@ -14,13 +15,14 @@ export function ContactAboutBanner({ data }: { data: ContactAboutBannerData }) {
     const locale = useLocale();
     const text = tr(data.text, locale);
     const linkText = tr(data.linkText, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!text && !linkText) {
         return null;
     }
 
     return (
-        <section className="bg-maha-50 px-5 sm:px-10 lg:px-16">
+        <section ref={ref} className={cn(className, 'bg-maha-50 px-5 sm:px-10 lg:px-16')}>
             <div className="mx-auto max-w-7xl rounded-2xl bg-maha-100">
                 <div className="flex flex-col items-start gap-2 px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-8">
                     <div className="flex items-center gap-2">

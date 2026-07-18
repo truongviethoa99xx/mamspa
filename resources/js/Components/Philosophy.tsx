@@ -1,5 +1,6 @@
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 export interface PhilosophyData {
     eyebrow?: unknown;
@@ -11,13 +12,14 @@ export function Philosophy({ data }: { data: PhilosophyData }) {
     const locale = useLocale();
     const eyebrow = tr(data.eyebrow, locale);
     const quote = tr(data.quote, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!eyebrow && !quote) {
         return null;
     }
 
     return (
-        <section className="bg-maha-50 px-5 pb-4 pt-12 sm:pb-5 sm:pt-14 lg:pb-6 lg:pt-16">
+        <section ref={ref} className={cn(className, 'bg-maha-50 px-5 pb-4 pt-12 sm:pb-5 sm:pt-14 lg:pb-6 lg:pt-16')}>
             <div className="mx-auto max-w-3xl text-center">
                 {eyebrow && (
                     <div

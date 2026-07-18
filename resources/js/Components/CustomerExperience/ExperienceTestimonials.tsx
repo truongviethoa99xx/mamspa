@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { ArrowRight, Quote, Star } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn, stripTags } from '@/Lib/utils';
 import { SectionHeading } from '@/Components/About/SectionHeading';
 
@@ -35,6 +36,7 @@ export function ExperienceTestimonials({ data }: { data: ExperienceTestimonialsD
     const intro = tr(data.intro, locale);
     const items = data.items ?? [];
     const trackRef = useRef<HTMLDivElement>(null);
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) return null;
 
@@ -43,7 +45,7 @@ export function ExperienceTestimonials({ data }: { data: ExperienceTestimonialsD
     };
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]')}>
             {(title || intro) && (
                 <div className="mb-8 max-w-2xl">
                     {title && <SectionHeading heading={title} />}

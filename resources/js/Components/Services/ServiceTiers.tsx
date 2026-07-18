@@ -1,5 +1,6 @@
 import { useLocale } from '@/Hooks/useLocale';
-import { tr, stripTags } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn, stripTags } from '@/Lib/utils';
 
 export interface ServiceTier {
     image?: string | null;
@@ -33,6 +34,7 @@ const SUITABLE_LABEL: Record<string, string> = { vi: 'Phù hợp với', en: 'Su
 export function ServiceTiers({ data }: { data: ServiceTiersData }) {
     const locale = useLocale();
     const tiers = data.tiers ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!tiers.length) {
         return null;
@@ -47,7 +49,10 @@ export function ServiceTiers({ data }: { data: ServiceTiersData }) {
     const suitableLabel = SUITABLE_LABEL[locale] ?? SUITABLE_LABEL.vi;
 
     return (
-        <section className="mt-2 bg-white px-5 pb-16 sm:px-10 sm:pb-20 lg:px-[60px] lg:pb-24">
+        <section
+            ref={ref}
+            className={cn(className, 'mt-2 bg-white px-5 pb-16 sm:px-10 sm:pb-20 lg:px-[60px] lg:pb-24')}
+        >
             <div className="text-center">
                 <h2 className="font-serif text-sm uppercase tracking-[0.25em] text-heading">
                     {customLabel ? (
@@ -92,6 +97,7 @@ export function ServiceTiers({ data }: { data: ServiceTiersData }) {
                                         src={tier.image}
                                         alt={imageAlt || stripTags(name)}
                                         className="h-full w-full object-cover"
+                                        loading="lazy"
                                     />
                                 )}
                             </div>

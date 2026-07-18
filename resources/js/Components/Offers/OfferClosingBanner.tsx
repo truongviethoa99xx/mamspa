@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { cn, tr } from '@/Lib/utils';
 
 export interface OfferClosingBannerData {
     title?: unknown;
@@ -19,9 +20,10 @@ export function OfferClosingBanner({ data }: { data: OfferClosingBannerData }) {
     const subtitle = tr(data.subtitle, locale);
     const primaryText = tr(data.primaryButtonText, locale);
     const secondaryText = tr(data.secondaryButtonText, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="bg-maha-800 px-5 py-14 sm:px-10 sm:py-16 lg:px-16">
+        <section ref={ref} className={cn(className, 'bg-maha-800 px-5 py-14 sm:px-10 sm:py-16 lg:px-16')}>
             <div className="mx-auto flex max-w-7xl flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-xl">
                     {title && (

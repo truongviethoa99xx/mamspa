@@ -1,6 +1,7 @@
 import { Clock, Gift, HeartHandshake, Leaf, ShieldCheck, Sparkles, type LucideIcon } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 const ICONS: Record<string, LucideIcon> = {
     Clock,
@@ -25,13 +26,14 @@ export interface ContactCommitmentsData {
 export function ContactCommitments({ data }: { data: ContactCommitmentsData }) {
     const locale = useLocale();
     const items = data.items ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) {
         return null;
     }
 
     return (
-        <section className="bg-maha-50 px-5 py-10 sm:px-10 sm:py-12 lg:px-16">
+        <section ref={ref} className={cn(className, 'bg-maha-50 px-5 py-10 sm:px-10 sm:py-12 lg:px-16')}>
             <div className="mx-auto max-w-7xl">
                 <div className="grid grid-cols-2 divide-y divide-maha-200 sm:grid-cols-4 sm:divide-y-0">
                     {items.map((item, index) => {

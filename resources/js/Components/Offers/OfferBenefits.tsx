@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight, Clock, Gift, HeartHandshake, Leaf, ShieldCheck, User, type LucideIcon } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { cn, tr } from '@/Lib/utils';
 
 const ICONS: Record<string, LucideIcon> = {
     Leaf,
@@ -32,11 +33,12 @@ export function OfferBenefits({ data }: { data: OfferBenefitsData }) {
     const heading = tr(data.heading, locale);
     const subtitle = tr(data.subtitle, locale);
     const items = data.items ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) return null;
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px] lg:py-16">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px] lg:py-16')}>
             <div className="mx-auto max-w-6xl">
                 <div className="flex flex-col items-center gap-2 text-center">
                     {heading && (

@@ -1,6 +1,7 @@
 import { Flower2, Leaf } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 import { SectionHeading } from './SectionHeading';
 import type { AboutMissionVisionData } from './AboutMissionVision';
 import type { AboutJourneyData } from './AboutJourney';
@@ -24,9 +25,10 @@ export function AboutMissionVisionJourney({ missionVision, journey }: Props) {
 
     const journeyTitle = tr(journey.title, locale);
     const journeyIntro = tr(journey.intro, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]')}>
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
                 <div className="lg:col-span-4">
                     <SectionHeading heading={mvTitle} />
@@ -91,6 +93,7 @@ export function AboutMissionVisionJourney({ missionVision, journey }: Props) {
                                                     src={item.image}
                                                     alt={imageAlt || stripTags(caption) || stripTags(journeyTitle)}
                                                     className="h-full w-full object-cover"
+                                                    loading="lazy"
                                                 />
                                             )}
                                         </div>

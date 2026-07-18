@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight, Play, Star } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 interface RatingCardData {
@@ -47,8 +48,13 @@ export function Reviews({ data }: { data: ReviewsData }) {
     const quoteText = tr(data.quote?.content, locale);
     const hasVideo = !!data.video.url;
 
+    const { ref, className } = useReveal<HTMLElement>();
+
     return (
-        <section className="bg-maha-50 px-5 pb-4 pt-4 sm:px-10 sm:pb-6 sm:pt-6 lg:px-16 lg:pb-8 lg:pt-8">
+        <section
+            ref={ref}
+            className={cn(className, 'bg-maha-50 px-5 pb-4 pt-4 sm:px-10 sm:pb-6 sm:pt-6 lg:px-16 lg:pb-8 lg:pt-8')}
+        >
             <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <a
                     href={data.google.link}

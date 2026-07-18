@@ -1,5 +1,6 @@
 import { GraduationCap, HandHeart, Leaf, type LucideIcon } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 const ICONS: Record<string, LucideIcon> = {
@@ -29,13 +30,14 @@ export function CategoryIntro({ data }: { data: CategoryIntroData }) {
     const imageAlt = tr(data.imageAlt, locale);
     const hasImage = !!data.image;
     const pillars = data.pillars ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!heading && !body && !hasImage && !pillars.length) {
         return null;
     }
 
     return (
-        <section className="mt-1 bg-[#f5f2ed]">
+        <section ref={ref} className={cn(className, 'mt-1 bg-[#f5f2ed]')}>
             <div className="grid lg:h-[440px] lg:grid-cols-2">
                 <div className={cn('aspect-[4/3] w-full lg:aspect-auto lg:h-[440px]', !hasImage && 'bg-maha-200')}>
                     {hasImage && (
@@ -43,6 +45,7 @@ export function CategoryIntro({ data }: { data: CategoryIntroData }) {
                             src={data.image ?? undefined}
                             alt={imageAlt || heading}
                             className="h-full w-full object-cover"
+                            loading="lazy"
                         />
                     )}
                 </div>

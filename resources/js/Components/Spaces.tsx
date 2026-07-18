@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 export interface SpaceItem {
@@ -28,13 +29,17 @@ export function Spaces({ data }: { data: SpacesData }) {
     const title = tr(data.title, locale);
     const items = data.items ?? [];
     const isOdd = items.length % 2 === 1;
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) {
         return null;
     }
 
     return (
-        <section className="bg-maha-50 px-5 pb-4 pt-4 sm:px-10 sm:pb-6 sm:pt-6 lg:px-16 lg:pb-8 lg:pt-8">
+        <section
+            ref={ref}
+            className={cn(className, 'bg-maha-50 px-5 pb-4 pt-4 sm:px-10 sm:pb-6 sm:pt-6 lg:px-16 lg:pb-8 lg:pt-8')}
+        >
             <div className="mx-auto max-w-7xl">
                 {title && (
                     <p className="font-serif text-xs uppercase tracking-[0.2em] text-subheading">{title}</p>

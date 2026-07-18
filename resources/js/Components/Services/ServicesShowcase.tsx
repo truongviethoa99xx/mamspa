@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn, stripTags } from '@/Lib/utils';
 
 export interface ServiceShowcaseItem {
@@ -19,13 +20,17 @@ const EXPLORE_MORE: Record<string, string> = { vi: 'Khám phá thêm', en: 'Expl
 /** 4 khối dịch vụ nổi bật = danh mục dịch vụ cấp 1 thật (quản lý ở Danh mục dịch vụ) — ảnh và chữ xen kẽ trái/phải. */
 export function ServicesShowcase({ data }: { data: ServicesShowcaseData }) {
     const locale = useLocale();
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!data.items?.length) {
         return null;
     }
 
     return (
-        <section className="mt-[24px] bg-maha-50 px-5 pb-16 sm:px-10 sm:pb-20 lg:px-[60px] lg:pb-24">
+        <section
+            ref={ref}
+            className={cn(className, 'mt-[24px] bg-maha-50 px-5 pb-16 sm:px-10 sm:pb-20 lg:px-[60px] lg:pb-24')}
+        >
             <div className="mx-auto flex max-w-6xl flex-col gap-6">
                 {data.items.map((item, index) => {
                     const title = tr(item.title, locale);
@@ -41,6 +46,7 @@ export function ServicesShowcase({ data }: { data: ServicesShowcaseData }) {
                                         src={item.image}
                                         alt={stripTags(title)}
                                         className="absolute inset-0 h-full w-full object-cover"
+                                        loading="lazy"
                                     />
                                 )}
                             </div>

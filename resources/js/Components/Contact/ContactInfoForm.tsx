@@ -2,7 +2,8 @@ import { useForm } from '@inertiajs/react';
 import { FormEvent } from 'react';
 import { Instagram, Lock, Mail, MessageCircle, Phone } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 export interface ContactInfoData {
     title?: unknown;
@@ -40,6 +41,7 @@ export function ContactInfoForm({ info, form: formContent }: { info: ContactInfo
     const formTitle = tr(formContent.title, locale);
     const formIntro = tr(formContent.intro, locale);
     const privacyNote = tr(formContent.privacyNote, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     const form = useForm<ContactSubmitForm>({
         name: '',
@@ -85,7 +87,7 @@ export function ContactInfoForm({ info, form: formContent }: { info: ContactInfo
     ].filter((row) => row.value);
 
     return (
-        <section className="bg-maha-50 px-5 pb-14 pt-2 sm:px-10 sm:pb-16 lg:px-16 lg:pb-20">
+        <section ref={ref} className={cn(className, 'bg-maha-50 px-5 pb-14 pt-2 sm:px-10 sm:pb-16 lg:px-16 lg:pb-20')}>
             <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2">
                 <div className="rounded-2xl bg-maha-100 p-6 sm:p-8 lg:p-10">
                     {infoTitle && (

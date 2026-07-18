@@ -42,7 +42,9 @@ function NavCard({ post, direction }: { post: BlogPostCardData | null; direction
             )}
         >
             <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-maha-200">
-                {post.cover_image && <img src={post.cover_image} alt="" className="h-full w-full object-cover" />}
+                {post.cover_image && (
+                    <img src={post.cover_image} alt="" className="h-full w-full object-cover" loading="lazy" />
+                )}
             </div>
             <div className="min-w-0">
                 <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-subheading">

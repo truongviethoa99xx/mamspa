@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 export interface GalleryPreviewImage {
     src: string;
@@ -17,13 +18,17 @@ export interface GalleryPreviewData {
 /** Dải ảnh xem trước thư viện ảnh, dẫn tới trang thư viện ảnh đầy đủ. */
 export function GalleryPreview({ data }: { data: GalleryPreviewData }) {
     const locale = useLocale();
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!data.images?.length) {
         return null;
     }
 
     return (
-        <section className="bg-maha-50 px-5 pb-16 pt-4 sm:px-10 sm:pb-20 sm:pt-6 lg:px-16 lg:pb-24 lg:pt-8">
+        <section
+            ref={ref}
+            className={cn(className, 'bg-maha-50 px-5 pb-16 pt-4 sm:px-10 sm:pb-20 sm:pt-6 lg:px-16 lg:pb-24 lg:pt-8')}
+        >
             <div className="mx-auto max-w-7xl">
                 <p className="font-serif text-xs uppercase tracking-[0.2em] text-subheading">Gallery</p>
 

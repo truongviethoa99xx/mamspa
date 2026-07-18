@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 export interface ContactClosingBannerData {
@@ -18,16 +19,24 @@ export function ContactClosingBanner({ data }: { data: ContactClosingBannerData 
     const buttonText = tr(data.buttonText, locale);
     const imageAlt = tr(data.image_alt, locale);
     const hasImage = !!data.image;
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="bg-maha-50 px-5 py-4 sm:px-10 sm:py-6 lg:px-16">
+        <section ref={ref} className={cn(className, 'bg-maha-50 px-5 py-4 sm:px-10 sm:py-6 lg:px-16')}>
             <div
                 className={cn(
                     'relative isolate mx-auto flex min-h-[280px] max-w-7xl flex-col justify-end overflow-hidden rounded-2xl px-5 pb-10 pt-16 sm:min-h-[320px] sm:px-10 sm:pb-12 lg:px-16',
                     hasImage ? 'bg-[#2F3E2E]' : 'bg-maha-200',
                 )}
             >
-                {hasImage && <img src={data.image ?? undefined} alt={imageAlt} className="absolute inset-0 z-0 h-full w-full object-cover" />}
+                {hasImage && (
+                    <img
+                        src={data.image ?? undefined}
+                        alt={imageAlt}
+                        className="absolute inset-0 z-0 h-full w-full object-cover"
+                        loading="lazy"
+                    />
+                )}
                 {hasImage && (
                     <div
                         className="absolute inset-0 z-0"

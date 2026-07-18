@@ -1,7 +1,8 @@
 import { Link, usePage } from '@inertiajs/react';
 import { Phone } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 import type { SharedProps } from '@/types';
 
 export interface ExperienceClosingCtaData {
@@ -17,9 +18,10 @@ export function ExperienceClosingCta({ data }: { data: ExperienceClosingCtaData 
     const title = tr(data.title, locale);
     const buttonText = tr(data.buttonText, locale);
     const hotline = props.site?.hotline;
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="mt-[50px] bg-[#2F3E2E] px-5 py-10 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#2F3E2E] px-5 py-10 sm:px-10 lg:px-[60px]')}>
             <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                 {title && (
                     <div

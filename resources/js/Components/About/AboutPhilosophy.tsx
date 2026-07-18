@@ -1,6 +1,7 @@
 import { Leaf } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 import { LeafBranch } from '@/Components/decorative/LeafBranch';
 import { SectionHeading } from './SectionHeading';
 
@@ -18,15 +19,23 @@ export function AboutPhilosophy({ data }: { data: AboutPhilosophyData }) {
     const title = tr(data.title, locale);
     const body = tr(data.body, locale);
     const imageAlt = tr(data.image_alt, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="relative isolate mt-[50px] overflow-hidden rounded-3xl bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]">
+        <section
+            ref={ref}
+            className={cn(
+                className,
+                'relative isolate mt-[50px] overflow-hidden rounded-3xl bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]',
+            )}
+        >
             {data.image && (
                 <img
                     src={data.image}
                     alt={imageAlt}
                     aria-hidden={imageAlt ? undefined : 'true'}
                     className="absolute inset-0 -z-10 h-full w-full object-cover"
+                    loading="lazy"
                 />
             )}
             <div className="grid gap-10 lg:grid-cols-3 lg:gap-16">

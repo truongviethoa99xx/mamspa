@@ -1,5 +1,6 @@
 import { HeartHandshake, Leaf, GraduationCap, Flower2, Sparkles, Droplet, type LucideIcon } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn, stripTags } from '@/Lib/utils';
 import { SectionHeading } from './SectionHeading';
 
@@ -34,9 +35,10 @@ export function AboutApproach({ data }: { data: AboutApproachData }) {
     const imageAlt = tr(data.image_alt, locale);
     const hasImage = !!data.image;
     const features = data.features ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]')}>
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                 <div
                     className={cn(
@@ -49,6 +51,7 @@ export function AboutApproach({ data }: { data: AboutApproachData }) {
                             src={data.image ?? undefined}
                             alt={imageAlt || stripTags(title)}
                             className="h-full w-full object-cover"
+                            loading="lazy"
                         />
                     )}
                 </div>

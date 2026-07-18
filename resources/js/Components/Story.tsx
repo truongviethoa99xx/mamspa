@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 export interface StoryCta {
     text: unknown;
@@ -29,9 +30,13 @@ export function Story({ data }: { data: StoryData }) {
     const caption = tr(data.caption, locale);
     const ctaText = tr(data.cta?.text, locale);
     const imageAlt = tr(data.image_alt, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="relative isolate h-[calc(85vh/1.5)] overflow-hidden bg-[#ece1db] sm:h-[50vh]">
+        <section
+            ref={ref}
+            className={cn(className, 'relative isolate h-[calc(85vh/1.5)] overflow-hidden bg-[#ece1db] sm:h-[50vh]')}
+        >
             {data.image && (
                 <img src={data.image} alt={imageAlt} className="absolute inset-0 z-0 h-full w-full object-cover" />
             )}

@@ -12,6 +12,7 @@ import {
     type LucideIcon,
 } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn, stripTags } from '@/Lib/utils';
 
 const ICONS: Record<string, LucideIcon> = {
@@ -46,13 +47,14 @@ export function ServicePillars({ data }: { data: ServicePillarsData }) {
     const imageAlt = tr(data.imageAlt, locale);
     const hasImage = !!data.image;
     const pillars = data.pillars ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!heading && !pillars.length) {
         return null;
     }
 
     return (
-        <section className="mb-2 mt-2 bg-[#f5f2ed]">
+        <section ref={ref} className={cn(className, 'mb-2 mt-2 bg-[#f5f2ed]')}>
             <div className="grid items-center lg:grid-cols-2">
                 <div className={cn('aspect-[4/3] lg:aspect-[5/4]', !hasImage && 'bg-maha-200')}>
                     {hasImage && (
@@ -60,6 +62,7 @@ export function ServicePillars({ data }: { data: ServicePillarsData }) {
                             src={data.image ?? undefined}
                             alt={imageAlt || stripTags(heading)}
                             className="h-full w-full object-cover"
+                            loading="lazy"
                         />
                     )}
                 </div>

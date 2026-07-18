@@ -1,5 +1,6 @@
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 interface HealingJourneyItem {
     image?: string | null;
@@ -17,11 +18,12 @@ export interface AboutHealingJourneysData {
 export function AboutHealingJourneys({ data }: { data: AboutHealingJourneysData }) {
     const locale = useLocale();
     const eyebrow = tr(data.eyebrow, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!data.items?.length) return null;
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]')}>
             {eyebrow && (
                 <span className="block text-center font-serif text-xs uppercase tracking-[0.25em] text-subheading sm:text-left">
                     {eyebrow}
@@ -42,6 +44,7 @@ export function AboutHealingJourneys({ data }: { data: AboutHealingJourneysData 
                                         src={item.image ?? undefined}
                                         alt={imageAlt || title}
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        loading="lazy"
                                     />
                                 )}
                             </div>

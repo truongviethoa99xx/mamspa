@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 import { SectionHeading } from '@/Components/About/SectionHeading';
 
@@ -46,6 +47,7 @@ export function ExperienceGallery({ data }: { data: ExperienceGalleryData }) {
     const featuredDescription = tr(data.featuredStat?.description, locale);
     const showFeaturedCard = activeTab === 'all' && !!(featuredTitle || featuredDescription);
     const featuredIndex = Math.max(0, Math.min((data.featuredStat?.position ?? 1) - 1, filteredItems.length));
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) return null;
 
@@ -92,7 +94,7 @@ export function ExperienceGallery({ data }: { data: ExperienceGalleryData }) {
     }
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]')}>
             {title && <SectionHeading heading={title} align="center" />}
 
             <div className="mt-8 flex flex-wrap justify-center gap-2">

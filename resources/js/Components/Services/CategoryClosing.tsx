@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 export interface CategoryClosingData {
@@ -24,10 +25,13 @@ export function CategoryClosing({ data }: { data: CategoryClosingData }) {
     const ctaText = tr(data.ctaText, locale);
     const imageAlt = tr(data.image_alt, locale);
     const hasImage = !!data.image;
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
         <section
+            ref={ref}
             className={cn(
+                className,
                 'relative isolate mt-2 overflow-hidden px-5 py-16 sm:px-10 sm:py-20 lg:px-[60px]',
                 !hasImage && 'bg-maha-100',
             )}
@@ -38,6 +42,7 @@ export function CategoryClosing({ data }: { data: CategoryClosingData }) {
                     alt={imageAlt}
                     aria-hidden={imageAlt ? undefined : 'true'}
                     className="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
                 />
             )}
             <div className="relative ml-auto max-w-4xl">

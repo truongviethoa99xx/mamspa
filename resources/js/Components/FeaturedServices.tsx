@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr, stripTags } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, stripTags, cn } from '@/Lib/utils';
 
 export interface FeaturedService {
     id: number;
@@ -24,13 +25,17 @@ export function FeaturedServices({ data }: { data: FeaturedServicesData }) {
     const locale = useLocale();
     const heading = tr(data.heading, locale);
     const title = tr(data.title, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!data.services?.length) {
         return null;
     }
 
     return (
-        <section className="bg-maha-50 px-5 pb-16 pt-4 sm:px-10 sm:pb-20 sm:pt-6 lg:px-16 lg:pb-24 lg:pt-8">
+        <section
+            ref={ref}
+            className={cn(className, 'bg-maha-50 px-5 pb-16 pt-4 sm:px-10 sm:pb-20 sm:pt-6 lg:px-16 lg:pb-24 lg:pt-8')}
+        >
             <div className="mx-auto max-w-7xl">
                 {heading && (
                     <div

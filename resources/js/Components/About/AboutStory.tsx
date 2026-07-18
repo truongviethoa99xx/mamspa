@@ -1,4 +1,5 @@
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 import { SectionHeading } from './SectionHeading';
 
@@ -18,9 +19,13 @@ export function AboutStory({ data }: { data: AboutStoryData }) {
     const body = tr(data.body, locale);
     const imageAlt = tr(data.image_alt, locale);
     const hasImage = !!data.image;
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:h-[360px] lg:px-[60px] lg:py-0">
+        <section
+            ref={ref}
+            className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:h-[360px] lg:px-[60px] lg:py-0')}
+        >
             <div className="grid gap-10 lg:h-full lg:grid-cols-[4fr_6fr] lg:items-stretch lg:gap-16">
                 <div className="lg:flex lg:flex-col lg:justify-center">
                     <SectionHeading heading={heading} />
@@ -42,6 +47,7 @@ export function AboutStory({ data }: { data: AboutStoryData }) {
                             src={data.image ?? undefined}
                             alt={imageAlt || stripTags(heading)}
                             className="h-full w-full object-cover"
+                            loading="lazy"
                         />
                     )}
                 </div>

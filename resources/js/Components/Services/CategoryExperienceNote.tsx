@@ -1,6 +1,7 @@
 import { Check } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 export interface CategoryChecklistItem {
     text?: unknown;
@@ -25,18 +26,23 @@ export function CategoryExperienceNote({ data }: { data: CategoryExperienceNoteD
     const imageAlt = tr(data.imageAlt, locale);
     const hasImage = !!data.image;
     const checklist = (data.checklist ?? []).map((item) => tr(item.text, locale)).filter(Boolean);
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!title && !body && !hasImage && !checklist.length) {
         return null;
     }
 
     return (
-        <section className="relative isolate mt-1 h-[480px] overflow-hidden bg-[#ece1db]">
+        <section
+            ref={ref}
+            className={cn(className, 'relative isolate mt-1 h-[480px] overflow-hidden bg-[#ece1db]')}
+        >
             {hasImage && (
                 <img
                     src={data.image ?? undefined}
                     alt={imageAlt || title}
                     className="absolute inset-0 z-0 h-full w-full object-cover"
+                    loading="lazy"
                 />
             )}
 

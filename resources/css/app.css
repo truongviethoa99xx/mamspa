@@ -83,9 +83,27 @@
     .scrollbar-hide::-webkit-scrollbar {
         display: none;
     }
+
+    /* Section fade + trượt lên khi cuộn tới lần đầu (useReveal hook). Chỉ animate
+       opacity/transform để hiệu ứng chạy trên compositor, không ảnh hưởng layout. */
+    .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+            opacity var(--duration-reveal) var(--ease-out-expo),
+            transform var(--duration-reveal) var(--ease-out-expo);
+    }
+    .reveal-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @layer base {
+    :root {
+        --duration-reveal: 1100ms;
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
     html {
         font-family: 'Quicksand', system-ui, sans-serif;
     }

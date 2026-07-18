@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 export interface AboutInvitationData {
@@ -22,15 +23,25 @@ export function AboutInvitation({ data }: { data: AboutInvitationData }) {
     const buttonText = tr(data.buttonText, locale);
     const imageAlt = tr(data.image_alt, locale);
     const hasImage = !!data.image;
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
         <section
+            ref={ref}
             className={cn(
+                className,
                 'relative isolate mt-[50px] flex min-h-[420px] flex-col justify-end overflow-hidden px-5 pb-12 pt-16 sm:min-h-[480px] sm:px-10 sm:pb-16 lg:px-[60px]',
                 hasImage ? 'bg-[#2F3E2E]' : 'bg-maha-200',
             )}
         >
-            {hasImage && <img src={data.image ?? undefined} alt={imageAlt} className="absolute inset-0 z-0 h-full w-full object-cover" />}
+            {hasImage && (
+                <img
+                    src={data.image ?? undefined}
+                    alt={imageAlt}
+                    className="absolute inset-0 z-0 h-full w-full object-cover"
+                    loading="lazy"
+                />
+            )}
             {hasImage && (
                 <div
                     className="absolute inset-0 z-0"

@@ -21,6 +21,7 @@ import {
     type LucideIcon,
 } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 
 const ICONS: Record<string, LucideIcon> = {
@@ -66,6 +67,7 @@ export function ServiceScopeAndTools({ data }: { data: ServiceScopeAndToolsData 
     const tools = data.tools ?? [];
     const showScope = !!scopeNote;
     const showTools = tools.length > 0;
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!showScope && !showTools) {
         return null;
@@ -76,7 +78,7 @@ export function ServiceScopeAndTools({ data }: { data: ServiceScopeAndToolsData 
     const toolsLabel = TOOLS_LABEL[locale] ?? TOOLS_LABEL.vi;
 
     return (
-        <section className="mt-2 bg-[#f4eae1] px-5 py-10 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-2 bg-[#f4eae1] px-5 py-10 sm:px-10 lg:px-[60px]')}>
             <div className={cn('grid gap-10', showScope && showTools && 'lg:grid-cols-[1fr_auto_2fr] lg:gap-10')}>
                 {showScope && (
                     <div>

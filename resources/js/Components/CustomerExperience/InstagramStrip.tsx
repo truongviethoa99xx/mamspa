@@ -1,6 +1,7 @@
 import { Instagram } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 
 interface InstagramImageItem {
     image?: string | null;
@@ -21,11 +22,12 @@ export function InstagramStrip({ data }: { data: InstagramStripData }) {
     const title = tr(data.title, locale);
     const description = tr(data.description, locale);
     const items = data.items ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length && !data.handle) return null;
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 pb-4 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 pb-4 sm:px-10 lg:px-[60px]')}>
             {title && (
                 <span className="mb-6 block font-serif text-xs uppercase tracking-[0.25em] text-subheading">{title}</span>
             )}

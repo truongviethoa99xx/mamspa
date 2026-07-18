@@ -1,6 +1,7 @@
 import { Leaf } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 import { CUSTOMER_EXPERIENCE_ICON_MAP } from './icons';
 
 interface StatItem {
@@ -17,11 +18,12 @@ export interface StatsStripData {
 export function StatsStrip({ data }: { data: StatsStripData }) {
     const locale = useLocale();
     const items = data.items ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     if (!items.length) return null;
 
     return (
-        <section className="bg-[#f5f2ed] px-5 pb-14 pt-4 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'bg-[#f5f2ed] px-5 pb-14 pt-4 sm:px-10 lg:px-[60px]')}>
             <div className="grid grid-cols-2 gap-y-8 divide-heading/15 border-y border-heading/15 py-8 sm:grid-cols-4 sm:divide-x">
                 {items.map((item, index) => {
                     const Icon = CUSTOMER_EXPERIENCE_ICON_MAP[item.icon ?? ''] ?? Leaf;

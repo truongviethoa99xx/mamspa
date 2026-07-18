@@ -1,7 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { Leaf } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn } from '@/Lib/utils';
 import { SectionHeading } from '@/Components/About/SectionHeading';
 import { CUSTOMER_EXPERIENCE_ICON_MAP } from './icons';
 
@@ -40,9 +41,10 @@ export function WhyGuestsReturn({ data }: { data: WhyGuestsReturnData }) {
     const cardTitle = tr(card?.title, locale);
     const cardDescription = tr(card?.description, locale);
     const cardButtonText = tr(card?.buttonText, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]')}>
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
                 <div className="lg:col-span-8">
                     {title && <SectionHeading heading={title} />}
@@ -95,6 +97,7 @@ export function WhyGuestsReturn({ data }: { data: WhyGuestsReturnData }) {
                                                 src={avatar.image ?? undefined}
                                                 alt={avatar.alt ?? ''}
                                                 className="h-9 w-9 rounded-full border-2 border-[#2F3E2E] object-cover"
+                                                loading="lazy"
                                             />
                                         ))}
                                     </div>

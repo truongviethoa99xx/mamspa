@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn, stripTags } from '@/Lib/utils';
 import { SectionHeading } from './SectionHeading';
 
@@ -27,9 +28,10 @@ export function AboutSpaces({ data }: { data: AboutSpacesData }) {
 
     const title = tr(data.title, locale);
     const intro = tr(data.intro, locale);
+    const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]')}>
             <SectionHeading heading={title} />
             {intro && (
                 <div
@@ -60,6 +62,7 @@ export function AboutSpaces({ data }: { data: AboutSpacesData }) {
                                             src={item.image ?? undefined}
                                             alt={itemImageAlt || stripTags(itemTitle)}
                                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            loading="lazy"
                                         />
                                     )}
                                 </div>

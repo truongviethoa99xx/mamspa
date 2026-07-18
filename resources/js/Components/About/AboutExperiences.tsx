@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 import { Quote, Star } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
+import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
 import { SectionHeading } from './SectionHeading';
 
@@ -82,6 +83,7 @@ export function AboutExperiences({ data }: { data: AboutExperiencesData }) {
     const title = tr(data.title, locale);
     const intro = tr(data.intro, locale);
     const items = data.items ?? [];
+    const { ref, className } = useReveal<HTMLElement>();
 
     const trackRef = useRef<HTMLDivElement>(null);
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -152,7 +154,7 @@ export function AboutExperiences({ data }: { data: AboutExperiencesData }) {
     };
 
     return (
-        <section className="mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]">
+        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 py-12 sm:px-10 lg:px-[60px]')}>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
                 <div className="lg:col-span-3">
                     <SectionHeading heading={title} />

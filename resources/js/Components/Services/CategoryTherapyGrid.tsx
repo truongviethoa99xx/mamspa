@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr, stripTags } from '@/Lib/utils';
+import { useReveal } from '@/Hooks/useReveal';
+import { tr, cn, stripTags } from '@/Lib/utils';
 
 export interface CategoryTherapyItem {
     url: string;
@@ -49,6 +50,8 @@ export function CategoryTherapyGrid({ items, heading }: { items: CategoryTherapy
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [items.length]);
 
+    const { ref, className } = useReveal<HTMLElement>();
+
     if (!items.length) {
         return null;
     }
@@ -59,7 +62,7 @@ export function CategoryTherapyGrid({ items, heading }: { items: CategoryTherapy
     const thumbLeft = scrollState.progress * (1 - scrollState.visibleRatio) * 100;
 
     return (
-        <section className="mt-1 bg-[#f5f2ed] pb-2 pt-4">
+        <section ref={ref} className={cn(className, 'mt-1 bg-[#f5f2ed] pb-2 pt-4')}>
             <div className="text-center">
                 <h2 className="font-serif text-sm uppercase tracking-[0.25em] text-heading">
                     {customLabel ? (
@@ -92,6 +95,7 @@ export function CategoryTherapyGrid({ items, heading }: { items: CategoryTherapy
                                         src={item.images[0]}
                                         alt={itemImageAlt || stripTags(itemName)}
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        loading="lazy"
                                     />
                                 )}
                             </div>
