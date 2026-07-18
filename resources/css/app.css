@@ -31,6 +31,12 @@
     .rich-content :is(ul, ol) {
         @apply ml-5 space-y-1.5;
     }
+    /* "04 nhóm dịch vụ" (FeaturedServices) — tiêu đề card luôn dùng cỡ chữ mặc định của section,
+       không phụ thuộc size chữ mà admin chọn trong Quill (kể cả inline style="font-size: ..."
+       trên <span>, không chỉ class .ql-size-*, nên cần !important để thắng inline style). */
+    .featured-service-title * {
+        font-size: inherit !important;
+    }
     .rich-content ul {
         list-style: disc;
     }

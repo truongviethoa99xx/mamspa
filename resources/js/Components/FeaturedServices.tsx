@@ -67,7 +67,7 @@ export function FeaturedServices({ data }: { data: FeaturedServicesData }) {
                                 </div>
                                 <div className="flex flex-1 flex-col rounded-b-[4px] bg-[#f4eae1] p-5">
                                     <h3
-                                        className="rich-content font-serif text-xl leading-snug text-heading"
+                                        className="rich-content featured-service-title font-serif text-xl leading-snug text-heading"
                                         dangerouslySetInnerHTML={{ __html: name }}
                                     />
                                     {description && (
