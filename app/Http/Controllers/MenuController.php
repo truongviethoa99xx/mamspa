@@ -67,14 +67,16 @@ class MenuController extends Controller
     {
         $items = $content->branches ?: [];
 
-        return array_map(function (array $branch) {
-            $branch['image'] = $this->publicUrl($branch['image'] ?? null);
-            $branch['pdfs'] = collect(self::PDF_LOCALES)
-                ->mapWithKeys(fn (string $locale) => [$locale => $this->publicUrl($branch["pdf_{$locale}"] ?? null)])
-                ->all();
+        return [
+            'items' => array_map(function (array $branch) {
+                $branch['image'] = $this->publicUrl($branch['image'] ?? null);
+                $branch['pdfs'] = collect(self::PDF_LOCALES)
+                    ->mapWithKeys(fn (string $locale) => [$locale => $this->publicUrl($branch["pdf_{$locale}"] ?? null)])
+                    ->all();
 
-            return $branch;
-        }, $items);
+                return $branch;
+            }, $items),
+        ];
     }
 
     protected function contact(MenuPageContent $content): array
