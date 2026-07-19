@@ -62,7 +62,7 @@ class CustomerExperiencePageSettings extends Page implements HasForms
             'reasons_title', 'reasons_features', 'reasons_card_title', 'reasons_card_description',
             'reasons_card_stat_text', 'reasons_card_avatars', 'reasons_card_button_text', 'reasons_card_button_url', 'reasons_visible',
             'instagram_title', 'instagram_images', 'instagram_handle', 'instagram_description', 'instagram_url', 'instagram_visible',
-            'closing_title', 'closing_button_text', 'closing_button_url', 'closing_visible',
+            'closing_title', 'closing_image', 'closing_image_alt', 'closing_button_text', 'closing_button_url', 'closing_visible',
         ]));
     }
 
@@ -306,6 +306,12 @@ class CustomerExperiencePageSettings extends Page implements HasForms
                             ->default(true)
                             ->columnSpanFull(),
                         TranslatableField::group('closing_title', as: 'quill', label: 'Tiêu đề banner'),
+                        Forms\Components\FileUpload::make('closing_image')->label('Ảnh nền banner')
+                            ->helperText('Ảnh ngang full-bleed, khuyến nghị tối thiểu 1600×900px.')
+                            ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(10240)
+                            ->disk('public')->directory('customer-experience')->imageEditor()
+                            ->columnSpanFull(),
+                        TranslatableField::group('closing_image_alt', label: 'Alt text ảnh'),
                         TranslatableField::group('closing_button_text', label: 'Nhãn nút', example: 'Đặt lịch ngay'),
                         Forms\Components\TextInput::make('closing_button_url')->label('Link nút')->default('/dat-lich/'),
                     ]),

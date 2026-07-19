@@ -23,18 +23,26 @@ export function StatsStrip({ data }: { data: StatsStripData }) {
     if (!items.length) return null;
 
     return (
-        <section ref={ref} className={cn(className, 'bg-[#f5f2ed] px-5 pb-14 pt-4 sm:px-10 lg:px-[60px]')}>
-            <div className="grid grid-cols-2 gap-y-8 divide-heading/15 border-y border-heading/15 py-8 sm:grid-cols-4 sm:divide-x">
+        <section ref={ref} className={cn(className, 'bg-[#f5f2ed] px-5 py-8 sm:px-10 lg:px-[60px]')}>
+            <div className="grid grid-cols-2 gap-y-8 sm:grid-cols-4">
                 {items.map((item, index) => {
                     const Icon = CUSTOMER_EXPERIENCE_ICON_MAP[item.icon ?? ''] ?? Leaf;
                     const description = tr(item.description, locale);
 
                     return (
-                        <div key={index} className="flex items-center gap-3 px-4 first:pl-0">
-                            <Icon className="h-7 w-7 shrink-0 text-heading/70" strokeWidth={1.5} />
+                        <div
+                            key={index}
+                            className={cn(
+                                'flex items-center gap-4 px-4 first:pl-0',
+                                index > 0 && 'sm:border-l sm:border-heading/15',
+                            )}
+                        >
+                            <Icon className="h-9 w-9 shrink-0 text-heading/70" strokeWidth={1.3} />
                             <div>
-                                {item.value && <p className="font-serif text-xl text-heading">{item.value}</p>}
-                                {description && <p className="text-xs leading-snug text-ink/70 sm:text-sm">{description}</p>}
+                                {item.value && <p className="font-serif text-2xl leading-tight text-heading">{item.value}</p>}
+                                {description && (
+                                    <p className="mt-0.5 text-xs leading-snug text-ink/60 sm:text-sm">{description}</p>
+                                )}
                             </div>
                         </div>
                     );

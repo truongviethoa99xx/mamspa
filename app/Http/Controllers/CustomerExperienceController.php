@@ -144,6 +144,8 @@ class CustomerExperienceController extends Controller
                 'vi' => '<p>Sẵn sàng cho hành trình chăm sóc của bạn?</p>',
                 'en' => '<p>Ready for your care journey?</p>',
             ],
+            'image' => $this->publicUrl($content->closing_image),
+            'image_alt' => $content->closing_image_alt ?: ['vi' => 'Nến và thảo mộc tại Mầm', 'en' => 'Candles and herbs at Mầm'],
             'buttonText' => $content->closing_button_text ?: ['vi' => 'Đặt lịch ngay', 'en' => 'Book now'],
             'buttonUrl' => $content->closing_button_url ?: '/dat-lich/',
         ];

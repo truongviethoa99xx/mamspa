@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ArrowRight, Quote, Star } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn, stripTags } from '@/Lib/utils';
@@ -23,7 +23,7 @@ function Stars({ rating }: { rating: number }) {
     return (
         <div className="flex gap-0.5" aria-label={`${rating}/5 sao`}>
             {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className={cn('h-3.5 w-3.5', i < rating ? 'fill-amber-400 text-amber-400' : 'text-maha-300')} />
+                <Star key={i} className={cn('h-3.5 w-3.5', i < rating ? 'fill-heading text-heading' : 'text-maha-300')} />
             ))}
         </div>
     );
@@ -69,20 +69,13 @@ export function ExperienceTestimonials({ data }: { data: ExperienceTestimonialsD
                         const rating = Number(item.rating ?? 0);
                         const isLead = index === 0;
 
-                        return (
-                            <figure
-                                key={index}
-                                className={cn(
-                                    'shrink-0 snap-start rounded-[4px] border border-maha-200 bg-white/60 p-6',
-                                    isLead ? 'w-[85%] sm:w-[36%]' : 'w-[75%] sm:w-[20%]',
-                                )}
-                            >
-                                {rating > 0 ? <Stars rating={rating} /> : <Quote className="h-6 w-6 text-maha-300" strokeWidth={1.5} />}
+                        const content = (
+                            <>
                                 {quote && (
                                     <blockquote
                                         className={cn(
-                                            'rich-content mt-4 leading-relaxed text-ink/80',
-                                            isLead ? 'text-lg' : 'text-sm',
+                                            'rich-content leading-relaxed text-ink/80',
+                                            isLead ? 'text-lg' : 'mt-4 text-sm',
                                         )}
                                         dangerouslySetInnerHTML={{ __html: quote }}
                                     />
@@ -91,6 +84,39 @@ export function ExperienceTestimonials({ data }: { data: ExperienceTestimonialsD
                                     {item.author_name}
                                     {meta && <span className="ml-1 font-normal text-ink/60">({stripTags(meta)})</span>}
                                 </figcaption>
+                            </>
+                        );
+
+                        return (
+                            <figure
+                                key={index}
+                                className={cn(
+                                    'shrink-0 snap-start rounded-[4px] border border-maha-200 bg-maha-50 p-6',
+                                    isLead ? 'flex w-[85%] gap-4 sm:w-[36%]' : 'w-[75%] sm:w-[20%]',
+                                )}
+                            >
+                                {isLead ? (
+                                    <>
+                                        <span
+                                            className="shrink-0 font-serif text-5xl leading-[0.8] text-heading/60"
+                                            aria-hidden="true"
+                                        >
+                                            &#8220;
+                                        </span>
+                                        <div className="min-w-0">{content}</div>
+                                    </>
+                                ) : (
+                                    <>
+                                        {rating > 0 ? (
+                                            <Stars rating={rating} />
+                                        ) : (
+                                            <span className="font-serif text-3xl leading-[0.8] text-heading/60" aria-hidden="true">
+                                                &#8220;
+                                            </span>
+                                        )}
+                                        {content}
+                                    </>
+                                )}
                             </figure>
                         );
                     })}

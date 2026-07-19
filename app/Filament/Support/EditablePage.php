@@ -14,6 +14,7 @@ enum EditablePage: string
     case ServicePage = 'service_page';
     case Contact = 'contact';
     case Offer = 'offer';
+    case Menu = 'menu';
     case Policy = 'policy';
     case ServiceCategory = 'service_category';
     case CustomerExperience = 'customer_experience';
@@ -31,6 +32,7 @@ enum EditablePage: string
             self::ServicePage => 'Trang Dịch vụ',
             self::Contact => 'Trang Liên hệ',
             self::Offer => 'Trang Ưu đãi',
+            self::Menu => 'Trang Menu dịch vụ',
             self::Policy => 'Trang chính sách',
             self::ServiceCategory => 'Danh mục dịch vụ',
             self::CustomerExperience => 'Trang Customer Experience',

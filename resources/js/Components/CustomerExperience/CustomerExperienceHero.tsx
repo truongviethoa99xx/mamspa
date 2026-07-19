@@ -8,7 +8,7 @@ export interface CustomerExperienceHeroData {
     image_alt?: unknown;
 }
 
-/** Banner đầu trang — chữ trên nền cream bên trái, ảnh không gian spa bo góc bên phải (khác kiểu banner full-bleed của các trang khác). */
+/** Banner đầu trang — ảnh full-bleed thiên bên phải, gradient kem mờ dần đè lên khối chữ bên trái (cùng kỹ thuật "Banner 2" với ServiceHero/CategoryHero). */
 export function CustomerExperienceHero({ data }: { data: CustomerExperienceHeroData }) {
     const locale = useLocale();
     const heading = tr(data.heading, locale);
@@ -17,9 +17,31 @@ export function CustomerExperienceHero({ data }: { data: CustomerExperienceHeroD
     const hasImage = !!data.image;
 
     return (
-        <section className="bg-[#f5f2ed] px-5 pb-12 pt-28 sm:px-10 sm:pt-32 lg:px-[60px]">
-            <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
-                <div className="lg:col-span-4">
+        <section
+            className={cn(
+                'relative isolate overflow-hidden pt-20 sm:min-h-[460px] sm:pt-24',
+                hasImage ? 'bg-[#efe8da]' : 'bg-maha-200',
+            )}
+        >
+            {hasImage && (
+                <img
+                    src={data.image ?? undefined}
+                    alt={imageAlt || stripTags(heading)}
+                    className="relative z-0 h-56 w-full object-cover sm:absolute sm:inset-y-0 sm:right-0 sm:h-full sm:w-[64%]"
+                />
+            )}
+            {hasImage && (
+                <div
+                    className="absolute inset-0 z-0 hidden sm:block"
+                    style={{
+                        background:
+                            'linear-gradient(90deg, #efe8da 0%, #efe8da 36%, rgba(239,232,218,.6) 48%, rgba(239,232,218,0) 62%)',
+                    }}
+                />
+            )}
+
+            <div className="relative z-10 px-5 py-8 sm:py-14 sm:px-10 lg:px-[60px]">
+                <div className="max-w-md">
                     {heading && (
                         <div
                             className="rich-content font-serif text-4xl uppercase leading-[1.1] tracking-tight text-heading sm:text-5xl"
@@ -33,18 +55,6 @@ export function CustomerExperienceHero({ data }: { data: CustomerExperienceHeroD
                             dangerouslySetInnerHTML={{ __html: subtitle }}
                         />
                     )}
-                </div>
-
-                <div className="lg:col-span-8">
-                    <div className={cn('aspect-[16/9] overflow-hidden rounded-[4px]', !hasImage && 'bg-maha-200')}>
-                        {hasImage && (
-                            <img
-                                src={data.image ?? undefined}
-                                alt={imageAlt || stripTags(heading)}
-                                className="h-full w-full object-cover"
-                            />
-                        )}
-                    </div>
                 </div>
             </div>
         </section>

@@ -14,7 +14,7 @@ class CustomerExperiencePageContent extends Model
         'reasons_title', 'reasons_features', 'reasons_card_title', 'reasons_card_description',
         'reasons_card_stat_text', 'reasons_card_avatars', 'reasons_card_button_text', 'reasons_card_button_url', 'reasons_visible',
         'instagram_title', 'instagram_images', 'instagram_handle', 'instagram_description', 'instagram_url', 'instagram_visible',
-        'closing_title', 'closing_button_text', 'closing_button_url', 'closing_visible',
+        'closing_title', 'closing_image', 'closing_image_alt', 'closing_button_text', 'closing_button_url', 'closing_visible',
     ];
 
     protected $casts = [
@@ -45,6 +45,7 @@ class CustomerExperiencePageContent extends Model
         'instagram_description' => 'array',
         'instagram_visible' => 'boolean',
         'closing_title' => 'array',
+        'closing_image_alt' => 'array',
         'closing_button_text' => 'array',
         'closing_visible' => 'boolean',
     ];

@@ -45,8 +45,8 @@ export function WhyGuestsReturn({ data }: { data: WhyGuestsReturnData }) {
 
     return (
         <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]')}>
-            <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-                <div className="lg:col-span-8">
+            <div className="grid gap-5 lg:grid-cols-12">
+                <div className="rounded-[4px] border border-heading/15 bg-maha-100/60 p-6 sm:p-8 lg:col-span-8">
                     {title && <SectionHeading heading={title} />}
 
                     {!!features.length && (
@@ -58,15 +58,15 @@ export function WhyGuestsReturn({ data }: { data: WhyGuestsReturnData }) {
 
                                 return (
                                     <div key={index} className="flex flex-col gap-3">
-                                        <Icon className="h-7 w-7 text-heading/70" strokeWidth={1.5} />
+                                        <Icon className="h-8 w-8 text-heading/70" strokeWidth={1.3} />
                                         {featureTitle && (
-                                            <p className="text-sm font-semibold uppercase tracking-wide text-heading">
+                                            <p className="text-xs font-semibold uppercase tracking-wide text-heading">
                                                 {featureTitle}
                                             </p>
                                         )}
                                         {featureDescription && (
                                             <div
-                                                className="rich-content text-sm leading-relaxed text-ink/70"
+                                                className="rich-content text-xs leading-relaxed text-ink/60"
                                                 dangerouslySetInnerHTML={{ __html: featureDescription }}
                                             />
                                         )}

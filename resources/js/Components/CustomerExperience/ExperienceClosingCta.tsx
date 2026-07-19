@@ -7,22 +7,47 @@ import type { SharedProps } from '@/types';
 
 export interface ExperienceClosingCtaData {
     title?: unknown;
+    image?: string | null;
+    image_alt?: unknown;
     buttonText?: unknown;
     buttonUrl?: string;
 }
 
-/** Banner CTA đóng trang — số hotline lấy từ Thiết lập chung (site-wide), cùng nguồn với nút CTA ở header. */
+/** Banner CTA đóng trang — ảnh nền full-bleed (nếu có) + gradient tối, số hotline lấy từ Thiết lập chung (site-wide), cùng nguồn với nút CTA ở header. */
 export function ExperienceClosingCta({ data }: { data: ExperienceClosingCtaData }) {
     const locale = useLocale();
     const { props } = usePage<SharedProps>();
     const title = tr(data.title, locale);
+    const imageAlt = tr(data.image_alt, locale);
     const buttonText = tr(data.buttonText, locale);
     const hotline = props.site?.hotline;
+    const hasImage = !!data.image;
     const { ref, className } = useReveal<HTMLElement>();
 
     return (
-        <section ref={ref} className={cn(className, 'mt-[50px] bg-[#2F3E2E] px-5 py-10 sm:px-10 lg:px-[60px]')}>
-            <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+        <section
+            ref={ref}
+            className={cn(className, 'relative isolate mt-[50px] overflow-hidden bg-[#2F3E2E] px-5 py-10 sm:px-10 lg:px-[60px]')}
+        >
+            {hasImage && (
+                <img
+                    src={data.image ?? undefined}
+                    alt={imageAlt}
+                    className="absolute inset-0 z-0 h-full w-full object-cover"
+                    loading="lazy"
+                />
+            )}
+            {hasImage && (
+                <div
+                    className="absolute inset-0 z-0"
+                    style={{
+                        background:
+                            'linear-gradient(90deg, #2F3E2E 0%, #2F3E2E 62%, rgba(47,62,46,.75) 74%, rgba(47,62,46,0) 92%)',
+                    }}
+                />
+            )}
+
+            <div className="relative z-10 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                 {title && (
                     <div
                         className="rich-content max-w-lg font-serif text-2xl leading-snug text-white sm:text-3xl"

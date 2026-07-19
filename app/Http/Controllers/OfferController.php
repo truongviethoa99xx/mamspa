@@ -8,7 +8,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Trang "Ưu đãi" — 5 khối nội dung tĩnh quản lý ở /admin/offer-page-settings.
+ * Trang "Ưu đãi" — 4 khối nội dung tĩnh quản lý ở /admin/offer-page-settings.
  * Field trống ở CMS sẽ fallback về nội dung mặc định (vi/en) khớp bản thiết kế gốc,
  * để trang luôn có nội dung đầy đủ ngay cả khi admin chưa nhập liệu.
  */
@@ -20,14 +20,12 @@ class OfferController extends Controller
 
         return Inertia::render('Offers', [
             'hero' => $this->hero($content),
-            'benefits' => $this->benefits($content),
-            'branchOffers' => $this->branchOffers($content),
+            'branches' => $this->branches($content),
             'note' => $this->note($content),
             'closing' => $this->closing($content),
             'sectionVisibility' => [
                 'hero' => (bool) $content->hero_visible,
-                'benefits' => (bool) $content->benefits_visible,
-                'branchOffers' => (bool) $content->branch_offers_visible,
+                'branches' => (bool) $content->branches_visible,
                 'note' => (bool) $content->note_visible,
                 'closing' => (bool) $content->closing_visible,
             ],
@@ -37,100 +35,112 @@ class OfferController extends Controller
     protected function hero(OfferPageContent $content): array
     {
         return [
-            'title' => $content->hero_title ?: ['vi' => 'SPECIAL OFFERS', 'en' => 'SPECIAL OFFERS'],
+            'title' => $content->hero_title ?: ['vi' => 'Ưu đãi tại Mầm', 'en' => 'Offers at Mầm'],
             'subtitle' => $content->hero_subtitle ?: [
-                'vi' => '<p>Ưu đãi dành cho từng hành trình chăm sóc</p>',
-                'en' => '<p>Offers made for every wellness journey</p>',
+                'vi' => '<p>Mỗi chi nhánh đều có những chương trình được thiết kế riêng cho từng hành trình chăm sóc.</p>',
+                'en' => '<p>Each branch has its own programs, designed for every wellness journey.</p>',
             ],
             'body' => $content->hero_body ?: [
-                'vi' => '<p>Mỗi chương trình được xây dựng nhằm mang đến nhiều lựa chọn hơn trong hành trình chăm sóc sức khỏe tại Mầm.</p>',
-                'en' => '<p>Every program is designed to give you more choice on your wellness journey at Mầm.</p>',
+                'vi' => '<p>Vui lòng liên hệ Mầm để được tư vấn chương trình phù hợp tại thời điểm đặt lịch.</p>',
+                'en' => '<p>Please contact Mầm for advice on the right program at the time of booking.</p>',
             ],
             'image' => $this->publicUrl($content->hero_image),
-            'image_alt' => $content->hero_image_alt ?: ['vi' => 'Bàn trị liệu tại Mầm Spa', 'en' => 'Therapy tray at Mầm Spa'],
+            'image_alt' => $content->hero_image_alt ?: ['vi' => 'Không gian đón tiếp tại Mầm', 'en' => 'Reception space at Mầm'],
         ];
     }
 
-    protected function benefits(OfferPageContent $content): array
+    protected function branches(OfferPageContent $content): array
     {
-        $items = $content->benefits ?: [
-            [
-                'icon' => 'Leaf',
-                'title' => ['vi' => 'Wellness Credit', 'en' => 'Wellness Credit'],
-                'description' => [
-                    'vi' => '<p>Giới thiệu bạn bè và cùng lan tỏa hành trình chăm sóc.</p>',
-                    'en' => '<p>Refer friends and share the journey of care together.</p>',
-                ],
-                'button_label' => ['vi' => 'Tìm hiểu thêm', 'en' => 'Learn more'],
-                'button_link' => '/uu-dai/',
-            ],
-            [
-                'icon' => 'Clock',
-                'title' => ['vi' => 'Quiet Hours', 'en' => 'Quiet Hours'],
-                'description' => [
-                    'vi' => '<p>Những khoảng thời gian yên tĩnh với quyền lợi dành cho khách hàng phù hợp.</p>',
-                    'en' => '<p>Quiet time slots with benefits tailored for the right guests.</p>',
-                ],
-                'button_label' => ['vi' => 'Tìm hiểu thêm', 'en' => 'Learn more'],
-                'button_link' => '/uu-dai/',
-            ],
-            [
-                'icon' => 'User',
-                'title' => ['vi' => 'Membership', 'en' => 'Membership'],
-                'description' => [
-                    'vi' => '<p>Những quyền lợi dành cho khách hàng đồng hành cùng Mầm. Chương trình thành viên có thể khác nhau giữa các chi nhánh và từng thời điểm.</p>',
-                    'en' => '<p>Benefits for guests who journey together with Mầm. Membership programs may vary between branches and over time.</p>',
-                ],
-                'button_label' => ['vi' => 'Tìm hiểu thêm', 'en' => 'Learn more'],
-                'button_link' => '/uu-dai/',
-            ],
-        ];
+        $items = $content->branches ?: $this->defaultBranches();
 
         return [
-            'heading' => $content->benefits_heading ?: ['vi' => 'Quyền lợi toàn hệ thống', 'en' => 'System-wide Benefits'],
-            'subtitle' => $content->benefits_subtitle ?: [
-                'vi' => 'Áp dụng tại tất cả các chi nhánh của Mầm.',
-                'en' => 'Available at every Mầm branch.',
+            'heading' => $content->branches_heading ?: [
+                'vi' => 'BẠN SẼ TRẢI NGHIỆM TẠI CHI NHÁNH NÀO?',
+                'en' => 'WHICH BRANCH WILL YOU EXPERIENCE?',
             ],
-            'items' => $items,
-        ];
-    }
-
-    protected function branchOffers(OfferPageContent $content): array
-    {
-        $items = $content->branch_offers ?: $this->defaultBranchOffers();
-
-        return [
-            'heading' => $content->branch_offers_heading ?: ['vi' => 'Ưu đãi nổi bật', 'en' => 'Featured Offers'],
             'items' => $this->withPublicImages($items, 'image'),
         ];
     }
 
-    /** Ưu đãi mẫu, khớp nội dung bản thiết kế gốc. */
-    protected function defaultBranchOffers(): array
+    /** Chi nhánh + ưu đãi mẫu, khớp nội dung bản thiết kế gốc. */
+    protected function defaultBranches(): array
     {
         return [
             [
                 'image' => null,
-                'image_alt' => null,
-                'title' => ['vi' => 'Happy Hours Rituals', 'en' => 'Happy Hours Rituals'],
-                'description' => [
-                    'vi' => '<p>Ưu đãi dành riêng cho một số liệu trình Signature Rituals trong khung giờ áp dụng.</p>',
-                    'en' => '<p>A special offer for selected Signature Rituals during set time slots.</p>',
+                'image_alt' => ['vi' => 'Chi nhánh Phú Nhuận', 'en' => 'Phú Nhuận branch'],
+                'name' => ['vi' => 'PHÚ NHUẬN', 'en' => 'PHÚ NHUẬN'],
+                'tagline' => ['vi' => 'Một khoảng lặng giữa lòng thành phố.', 'en' => 'A quiet pause in the heart of the city.'],
+                'offers' => [
+                    [
+                        'icon' => 'Clock',
+                        'title' => ['vi' => 'Happy Hours Rituals', 'en' => 'Happy Hours Rituals'],
+                        'description' => [
+                            'vi' => '<p>Ưu đãi dành riêng cho các hành trình Signature Rituals trong khung giờ yên tĩnh.</p>',
+                            'en' => '<p>A special offer for Signature Rituals during quiet time slots.</p>',
+                        ],
+                        'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
+                        'button_link' => '/dich-vu/',
+                    ],
+                    [
+                        'icon' => 'ShieldCheck',
+                        'title' => ['vi' => 'Quiet Hours', 'en' => 'Quiet Hours'],
+                        'description' => [
+                            'vi' => '<p>Những khoảng thời gian thư thái với quyền lợi dành riêng cho khách hàng phù hợp.</p>',
+                            'en' => '<p>Relaxed time slots with benefits tailored for the right guests.</p>',
+                        ],
+                        'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
+                        'button_link' => '/dich-vu/',
+                    ],
+                    [
+                        'icon' => 'Leaf',
+                        'title' => ['vi' => 'Wellness Credit', 'en' => 'Wellness Credit'],
+                        'description' => [
+                            'vi' => '<p>Giới thiệu bạn bè và cùng lan tỏa hành trình chăm sóc sức khỏe.</p>',
+                            'en' => '<p>Refer friends and share the journey of care together.</p>',
+                        ],
+                        'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
+                        'button_link' => '/dich-vu/',
+                    ],
                 ],
-                'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
-                'button_link' => '/dich-vu/',
             ],
             [
                 'image' => null,
-                'image_alt' => null,
-                'title' => ['vi' => 'First Visit', 'en' => 'First Visit'],
-                'description' => [
-                    'vi' => '<p>Ưu đãi dành cho khách hàng lần đầu trải nghiệm tại Mầm Spa.</p>',
-                    'en' => '<p>An offer for guests visiting Mầm Spa for the first time.</p>',
+                'image_alt' => ['vi' => 'Chi nhánh Bến Thành', 'en' => 'Bến Thành branch'],
+                'name' => ['vi' => 'BẾN THÀNH', 'en' => 'BẾN THÀNH'],
+                'tagline' => ['vi' => 'Một không gian wellness giữa trung tâm thành phố.', 'en' => 'A wellness space in the heart of downtown.'],
+                'offers' => [
+                    [
+                        'icon' => 'User',
+                        'title' => ['vi' => 'First Visit', 'en' => 'First Visit'],
+                        'description' => [
+                            'vi' => '<p>Ưu đãi dành cho khách hàng lần đầu trải nghiệm tại Mầm Spa Bến Thành.</p>',
+                            'en' => '<p>An offer for guests visiting Mầm Spa Bến Thành for the first time.</p>',
+                        ],
+                        'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
+                        'button_link' => '/dich-vu/',
+                    ],
+                    [
+                        'icon' => 'Gift',
+                        'title' => ['vi' => 'Membership', 'en' => 'Membership'],
+                        'description' => [
+                            'vi' => '<p>Quyền lợi dành cho khách hàng đồng hành lâu dài cùng Mầm.</p>',
+                            'en' => '<p>Benefits for guests who journey together with Mầm long-term.</p>',
+                        ],
+                        'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
+                        'button_link' => '/dich-vu/',
+                    ],
+                    [
+                        'icon' => 'Leaf',
+                        'title' => ['vi' => 'Wellness Credit', 'en' => 'Wellness Credit'],
+                        'description' => [
+                            'vi' => '<p>Giới thiệu bạn bè và cùng lan tỏa hành trình chăm sóc sức khỏe.</p>',
+                            'en' => '<p>Refer friends and share the journey of care together.</p>',
+                        ],
+                        'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
+                        'button_link' => '/dich-vu/',
+                    ],
                 ],
-                'button_label' => ['vi' => 'Xem chi tiết', 'en' => 'View details'],
-                'button_link' => '/dich-vu/',
             ],
         ];
     }
@@ -139,26 +149,29 @@ class OfferController extends Controller
     {
         return [
             'text' => $content->note_text ?: [
-                'vi' => '<ul><li>Các chương trình ưu đãi được cập nhật theo từng thời điểm và có thể khác nhau giữa các chi nhánh.</li><li>Vui lòng liên hệ Mầm để được tư vấn chương trình phù hợp tại thời điểm đặt lịch.</li></ul>',
-                'en' => '<ul><li>Offer programs are updated periodically and may vary between branches.</li><li>Please contact Mầm for advice on the right program when you book.</li></ul>',
+                'vi' => '<ul><li>Chương trình có thể thay đổi theo từng thời điểm.</li><li>Mỗi chi nhánh có chương trình riêng.</li><li>Liên hệ Mầm để được tư vấn ưu đãi phù hợp.</li></ul>',
+                'en' => '<ul><li>Programs may change from time to time.</li><li>Each branch has its own program.</li><li>Contact Mầm for advice on the right offer.</li></ul>',
             ],
             'image' => $this->publicUrl($content->note_image),
-            'image_alt' => $content->note_image_alt ?: null,
+            'image_alt' => $content->note_image_alt ?: ['vi' => 'Thiệp Mầm Integrative Therapy', 'en' => 'Mầm Integrative Therapy card'],
         ];
     }
 
     protected function closing(OfferPageContent $content): array
     {
         return [
-            'title' => $content->closing_title ?: ['vi' => '<p>Begin Your Wellness Journey</p>', 'en' => '<p>Begin Your Wellness Journey</p>'],
-            'subtitle' => $content->closing_subtitle ?: [
-                'vi' => '<p>Chúng tôi luôn sẵn sàng tư vấn liệu trình và chương trình phù hợp dành cho bạn.</p>',
-                'en' => '<p>We are always ready to advise you on the right treatment and program.</p>',
+            'title' => $content->closing_title ?: [
+                'vi' => '<p>Chưa biết nên chọn chi nhánh nào?</p>',
+                'en' => '<p>Not sure which branch to choose?</p>',
             ],
-            'primaryButtonText' => $content->closing_primary_button_text ?: ['vi' => 'Đặt lịch ngay', 'en' => 'Book now'],
-            'primaryButtonUrl' => $content->closing_primary_button_url ?: '/dat-lich/',
-            'secondaryButtonText' => $content->closing_secondary_button_text ?: ['vi' => 'Liên hệ với chúng tôi', 'en' => 'Contact us'],
-            'secondaryButtonUrl' => $content->closing_secondary_button_url ?: '/lien-he/',
+            'subtitle' => $content->closing_subtitle ?: [
+                'vi' => '<p>Mầm sẽ giúp bạn lựa chọn liệu trình và ưu đãi phù hợp nhất.</p>',
+                'en' => '<p>Mầm will help you choose the right treatment and offer.</p>',
+            ],
+            'buttonText' => $content->closing_button_text ?: ['vi' => 'Đặt lịch ngay', 'en' => 'Book now'],
+            'buttonUrl' => $content->closing_button_url ?: '/dat-lich/',
+            'image' => $this->publicUrl($content->closing_image),
+            'image_alt' => $content->closing_image_alt ?: ['vi' => 'Bình gốm và đá cuội', 'en' => 'Ceramic vase and pebbles'],
         ];
     }
 

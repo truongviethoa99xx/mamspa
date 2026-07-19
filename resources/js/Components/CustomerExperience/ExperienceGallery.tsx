@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
+import { ArrowDown } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
-import { SectionHeading } from '@/Components/About/SectionHeading';
 
 interface GalleryImageItem {
     image?: string | null;
@@ -57,7 +57,7 @@ export function ExperienceGallery({ data }: { data: ExperienceGalleryData }) {
         return {
             key: `image-${index}`,
             node: (
-                <div className="aspect-square overflow-hidden rounded-[4px] bg-maha-200">
+                <div className="aspect-[4/3] overflow-hidden rounded-[3px] bg-maha-200">
                     {item.image && (
                         <img
                             src={item.image}
@@ -75,19 +75,20 @@ export function ExperienceGallery({ data }: { data: ExperienceGalleryData }) {
         tiles.splice(featuredIndex, 0, {
             key: 'featured-stat',
             node: (
-                <div className="flex aspect-square flex-col justify-center gap-2 rounded-[4px] bg-[#2F3E2E] p-5 text-white">
+                <div className="flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-[3px] bg-[#2F3E2E] px-4 py-5 text-center text-white">
                     {featuredTitle && (
                         <div
-                            className="rich-content font-serif text-xl leading-snug"
+                            className="rich-content font-serif text-lg uppercase leading-snug tracking-wide"
                             dangerouslySetInnerHTML={{ __html: featuredTitle }}
                         />
                     )}
                     {featuredDescription && (
                         <div
-                            className="rich-content text-sm leading-relaxed text-white/80"
+                            className="rich-content text-xs leading-relaxed text-white/75"
                             dangerouslySetInnerHTML={{ __html: featuredDescription }}
                         />
                     )}
+                    <ArrowDown className="mt-1 h-4 w-4 text-white/50" strokeWidth={1.5} />
                 </div>
             ),
         });
@@ -95,7 +96,9 @@ export function ExperienceGallery({ data }: { data: ExperienceGalleryData }) {
 
     return (
         <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 sm:px-10 lg:px-[60px]')}>
-            {title && <SectionHeading heading={title} align="center" />}
+            {title && (
+                <h2 className="text-center font-serif text-2xl uppercase tracking-wide text-heading sm:text-3xl">{title}</h2>
+            )}
 
             <div className="mt-8 flex flex-wrap justify-center gap-2">
                 {CATEGORY_TABS.map((tab) => (

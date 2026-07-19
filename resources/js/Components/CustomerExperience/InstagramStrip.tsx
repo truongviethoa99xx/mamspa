@@ -28,16 +28,14 @@ export function InstagramStrip({ data }: { data: InstagramStripData }) {
 
     return (
         <section ref={ref} className={cn(className, 'mt-[50px] bg-[#f5f2ed] px-5 pb-4 sm:px-10 lg:px-[60px]')}>
-            {title && (
-                <span className="mb-6 block font-serif text-xs uppercase tracking-[0.25em] text-subheading">{title}</span>
-            )}
+            {title && <h2 className="mb-5 font-serif text-lg uppercase tracking-wide text-heading">{title}</h2>}
 
             <div className="flex gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {items.map((item, index) => {
                     const alt = tr(item.image_alt, locale);
 
                     return (
-                        <div key={index} className="aspect-square w-28 shrink-0 overflow-hidden rounded-[4px] bg-maha-200 sm:w-36">
+                        <div key={index} className="aspect-square w-28 shrink-0 overflow-hidden rounded-[3px] bg-maha-200 sm:w-36">
                             {item.image && (
                                 <img
                                     src={item.image}
@@ -55,12 +53,15 @@ export function InstagramStrip({ data }: { data: InstagramStripData }) {
                         href={data.url || undefined}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex aspect-square w-28 shrink-0 flex-col justify-center gap-2 rounded-[4px] bg-[#2F3E2E] p-4 text-white transition-opacity hover:opacity-90 sm:w-36"
+                        className="flex aspect-square w-28 shrink-0 flex-col justify-center gap-1.5 rounded-[3px] bg-[#2F3E2E] p-4 text-white transition-opacity hover:opacity-90 sm:w-36"
                     >
-                        <Instagram className="h-5 w-5" strokeWidth={1.5} />
+                        <Instagram className="h-5 w-5" strokeWidth={1.3} />
                         <span className="text-sm font-semibold">{data.handle}</span>
                         {description && (
-                            <span className="rich-content text-xs leading-snug text-white/75" dangerouslySetInnerHTML={{ __html: description }} />
+                            <span
+                                className="rich-content text-xs leading-snug text-white/70"
+                                dangerouslySetInnerHTML={{ __html: description }}
+                            />
                         )}
                     </a>
                 )}
