@@ -66,7 +66,7 @@ export function MenuBranches({ data }: { data: MenuBranchesData }) {
                             key={index}
                             className="flex flex-col overflow-hidden rounded-2xl border border-maha-200 bg-maha-50"
                         >
-                            <div className="aspect-[4/3] w-full bg-maha-200">
+                            <div className="h-64 w-full shrink-0 bg-maha-200 sm:h-72 md:h-80">
                                 {hasImage && (
                                     <img
                                         src={branch.image ?? undefined}
