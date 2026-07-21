@@ -13,8 +13,14 @@ export interface ServicesClosingData {
     image_alt?: unknown;
 }
 
+interface ServicesClosingProps {
+    data: ServicesClosingData;
+    /** Chiều cao cố định (trang chi tiết dịch vụ) thay vì tự co theo nội dung — bố cục & style giữ nguyên. */
+    fixedHeight?: boolean;
+}
+
 /** Banner CTA khép lại trang /dich-vu, mời khách đặt lịch. */
-export function ServicesClosing({ data }: { data: ServicesClosingData }) {
+export function ServicesClosing({ data, fixedHeight = false }: ServicesClosingProps) {
     const locale = useLocale();
     const heading = tr(data.heading, locale);
     const body = tr(data.body, locale);
@@ -28,7 +34,8 @@ export function ServicesClosing({ data }: { data: ServicesClosingData }) {
             ref={ref}
             className={cn(
                 className,
-                'relative isolate overflow-hidden px-5 py-16 sm:px-10 sm:py-20 lg:px-[60px]',
+                'relative isolate w-full overflow-hidden px-5 sm:px-10 lg:px-[60px]',
+                fixedHeight ? 'flex h-[360px] items-center sm:h-[400px]' : 'py-16 sm:py-20',
                 !hasImage && 'bg-maha-100',
             )}
         >

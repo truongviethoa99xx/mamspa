@@ -129,22 +129,50 @@ class DichVuController extends Controller
         ];
     }
 
-    /** Banner CTA khép lại trang, mời khách đặt lịch. */
-    protected function closing(ServicePageContent $content): array
+    /** Nội dung chữ mặc định của banner CTA khép lại trang — dùng khi field tương ứng để trống. */
+    protected function closingDefaults(): array
     {
         return [
-            'heading' => $content->closing_heading ?: [
+            'heading' => [
                 'vi' => '<p>Mỗi liệu trình là một hành trình trở về bên trong.</p>',
                 'en' => '<p>Every treatment is a journey back within.</p>',
             ],
-            'body' => $content->closing_body ?: [
+            'body' => [
                 'vi' => '<p>Hãy để Mầm đồng hành cùng bạn trên hành trình chăm sóc sức khỏe và nuôi dưỡng sự an lành mỗi ngày.</p>',
                 'en' => '<p>Let Mầm walk alongside you on the journey of health and everyday wellbeing.</p>',
             ],
-            'ctaText' => $content->closing_cta_text ?: ['vi' => '<p>Đặt lịch ngay</p>', 'en' => '<p>Book now</p>'],
-            'ctaLink' => $content->closing_cta_link ?: '/dat-lich/',
+            'ctaText' => ['vi' => '<p>Đặt lịch ngay</p>', 'en' => '<p>Book now</p>'],
+            'ctaLink' => '/dat-lich/',
+        ];
+    }
+
+    /** Banner CTA khép lại trang, mời khách đặt lịch. */
+    protected function closing(ServicePageContent $content): array
+    {
+        $defaults = $this->closingDefaults();
+
+        return [
+            'heading' => $content->closing_heading ?: $defaults['heading'],
+            'body' => $content->closing_body ?: $defaults['body'],
+            'ctaText' => $content->closing_cta_text ?: $defaults['ctaText'],
+            'ctaLink' => $content->closing_cta_link ?: $defaults['ctaLink'],
             'image' => $this->publicUrl($content->closing_image),
             'image_alt' => $content->closing_image_alt ?: null,
+        ];
+    }
+
+    /** Banner khép lại trang chi tiết dịch vụ — riêng cho từng dịch vụ, không dùng chung banner ở Trang Dịch vụ; field chữ trống thì dùng nội dung mặc định. */
+    protected function serviceClosing(Service $service): array
+    {
+        $defaults = $this->closingDefaults();
+
+        return [
+            'heading' => $service->closing_heading ?: $defaults['heading'],
+            'body' => $service->closing_body ?: $defaults['body'],
+            'ctaText' => $service->closing_cta_text ?: $defaults['ctaText'],
+            'ctaLink' => $service->closing_cta_link ?: $defaults['ctaLink'],
+            'image' => $this->publicUrl($service->closing_image),
+            'image_alt' => $service->closing_image_alt ?: null,
         ];
     }
 
@@ -279,7 +307,7 @@ class DichVuController extends Controller
             'categoryServices' => $categoryServices->map(fn ($s) => $this->map($s)),
             'combos' => $combos->map(fn ($s) => $this->map($s)),
             'related' => $related->map(fn ($s) => $this->map($s)),
-            'closing' => $this->closing(ServicePageContent::current()),
+            'closing' => $this->serviceClosing($service),
         ]);
     }
 

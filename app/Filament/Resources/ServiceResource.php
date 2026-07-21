@@ -234,6 +234,19 @@ class ServiceResource extends Resource
                         ->addActionLabel('+ Thêm tầng trải nghiệm')
                         ->columnSpanFull(),
                 ]),
+            Forms\Components\Section::make('Banner khép lại trang (riêng cho dịch vụ này)')
+                ->description('Banner CTA cuối trang chi tiết dịch vụ — mỗi dịch vụ có banner riêng, không dùng chung với Trang Dịch vụ. Banner rộng 100% màn hình, chiều cao cố định. Field chữ để trống sẽ dùng nội dung mặc định.')
+                ->icon('heroicon-o-envelope-open')
+                ->schema([
+                    Forms\Components\FileUpload::make('closing_image')->label('Ảnh nền (tuỳ chọn)')
+                        ->helperText('Ảnh nền banner hiển thị rõ nét, không có lớp phủ — nên chọn ảnh tông sáng để chữ tối vẫn đọc rõ. Banner cao cố định nên ảnh bị crop theo khung ngang (~4:1 trên desktop), chọn ảnh ngang chủ thể căn giữa, khuyến nghị tối thiểu 2400×800px.')
+                        ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('services/closing')->imageEditor(),
+                    TranslatableField::group('closing_image_alt', label: 'Alt text ảnh (bỏ trống nếu ảnh chỉ mang tính trang trí)'),
+                    TranslatableField::group('closing_heading', as: 'quill', label: 'Tiêu đề', example: 'Mỗi liệu trình là một hành trình trở về bên trong.'),
+                    TranslatableField::group('closing_body', as: 'quill', label: 'Mô tả', example: 'Hãy để Mầm đồng hành cùng bạn trên hành trình chăm sóc sức khỏe và nuôi dưỡng sự an lành mỗi ngày.'),
+                    TranslatableField::group('closing_cta_text', as: 'quill', label: 'Nhãn nút CTA', example: 'Đặt lịch ngay'),
+                    Forms\Components\TextInput::make('closing_cta_link')->label('Link nút CTA')->url(),
+                ]),
             Forms\Components\Section::make('Ảnh khác')
                 ->hidden()
                 ->schema([

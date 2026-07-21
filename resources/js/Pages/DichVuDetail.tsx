@@ -86,7 +86,7 @@ export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
                     tiers: service.tiers ?? [],
                 }}
             />
-            <ServicesClosing data={closing} />
+            <ServicesClosing data={closing} fixedHeight />
         </PublicLayout>
     );
 }
