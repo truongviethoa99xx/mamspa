@@ -1,11 +1,14 @@
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { publicAssetUrl, cn } from '@/Lib/utils';
 import { LanguageSwitcher } from '@/Components/LanguageSwitcher';
 import type { SharedProps } from '@/types';
 
 const HEADER_HEIGHT = '100px';
+const SCROLL_THRESHOLD = 10;
+const SCROLLED_BACKGROUND = 'rgba(0, 0, 0, 0.9)';
+const SCROLLED_TEXT_COLOR = '#FFFFFF';
 
 const NAV_ITEMS = [
     { label: 'Trang chủ', href: '/' },
@@ -21,6 +24,8 @@ const NAV_ITEMS = [
  * Header dùng chung cho toàn site — full width, cao cố định 100px.
  * Nền/màu chữ/logo/chế độ trong suốt quản lý ở /admin (Quản lý header).
  * Khi trong suốt, header nổi đè lên nội dung phía dưới thay vì chiếm khoảng riêng.
+ * Khi cuộn trang, header chuyển sang fixed (sticky) với nền đen 90% và chữ trắng;
+ * header không trong suốt cần spacer giữ chỗ để nội dung không bị nhảy layout.
  * Dưới lg: menu chính thu vào nút hamburger, mở ra thành panel xổ xuống dưới header
  * (không đổi chiều cao header cố định). Hàng header dưới lg dùng grid 3 cột đều nhau
  * (hamburger trái, logo giữa tuyệt đối, CTA phải) để logo luôn nằm chính giữa dù 2 bên
@@ -29,6 +34,17 @@ const NAV_ITEMS = [
 export function Header({ minimal = false }: { minimal?: boolean }) {
     const { props, url } = usePage<SharedProps>();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
+
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
     const site = props.site ?? {};
     const brandName = site.brand_name || 'Mầm Spa';
     const logoUrl = publicAssetUrl(site.logo_path);
@@ -40,14 +56,25 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
     const ctaBackground = site.header_cta_background_color || '#2F3E2E';
     const ctaTextColor = site.header_cta_text_color || '#FFFFFF';
     const currentPath = url.split('?')[0];
+    const effectiveTextColor = scrolled ? SCROLLED_TEXT_COLOR : textColor;
+    const effectiveBackground = scrolled ? SCROLLED_BACKGROUND : headerBackground;
 
     return (
+        <>
+            {scrolled && !isTransparent && <div aria-hidden style={{ height: HEADER_HEIGHT }} />}
         <header
-            className={cn('w-full', isTransparent ? 'absolute inset-x-0 top-0 z-30' : 'relative shrink-0')}
+            className={cn(
+                'w-full',
+                scrolled
+                    ? 'fixed inset-x-0 top-0 z-50'
+                    : isTransparent
+                      ? 'absolute inset-x-0 top-0 z-30'
+                      : 'relative shrink-0',
+            )}
         >
             <div
-                className="grid grid-cols-3 items-center gap-3 px-5 sm:gap-6 sm:px-10 lg:flex lg:justify-between"
-                style={{ height: HEADER_HEIGHT, backgroundColor: headerBackground, color: textColor }}
+                className="grid grid-cols-3 items-center gap-3 px-5 transition-colors duration-300 sm:gap-6 sm:px-10 lg:flex lg:justify-between"
+                style={{ height: HEADER_HEIGHT, backgroundColor: effectiveBackground, color: effectiveTextColor }}
             >
                 {!minimal && (
                     <button
@@ -56,7 +83,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                         aria-label={mobileOpen ? 'Đóng menu' : 'Mở menu'}
                         aria-expanded={mobileOpen}
                         className="col-start-1 flex h-10 w-10 items-center justify-center justify-self-start rounded-md lg:hidden"
-                        style={{ color: textColor }}
+                        style={{ color: effectiveTextColor }}
                     >
                         {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </button>
@@ -71,7 +98,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     ) : (
                         <span
                             className="font-serif text-base uppercase tracking-[0.1em] sm:text-xl sm:tracking-[0.12em]"
-                            style={{ color: textColor }}
+                            style={{ color: effectiveTextColor }}
                         >
                             {brandName}
                         </span>
@@ -91,7 +118,11 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                                         'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
                                         active && 'border-b-2 opacity-100',
                                     )}
-                                    style={active ? { borderColor: textColor, color: textColor } : { color: textColor }}
+                                    style={
+                                        active
+                                            ? { borderColor: effectiveTextColor, color: effectiveTextColor }
+                                            : { color: effectiveTextColor }
+                                    }
                                 >
                                     {item.label}
                                 </Link>
@@ -102,7 +133,11 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
 
                 <div className="col-start-3 flex shrink-0 items-center justify-self-end gap-4 lg:col-auto">
                     {!minimal && (
-                        <LanguageSwitcher color={textColor} accentColor={ctaBackground} className="hidden lg:block" />
+                        <LanguageSwitcher
+                            color={effectiveTextColor}
+                            accentColor={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
+                            className="hidden lg:block"
+                        />
                     )}
 
                     <Link
@@ -118,7 +153,10 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
             {!minimal && mobileOpen && (
                 <div
                     className="flex flex-col gap-1 border-t px-5 py-4 shadow-lg lg:hidden"
-                    style={{ backgroundColor: configuredBackground, borderColor: `${textColor}22` }}
+                    style={{
+                        backgroundColor: scrolled ? SCROLLED_BACKGROUND : configuredBackground,
+                        borderColor: `${effectiveTextColor}22`,
+                    }}
                 >
                     {NAV_ITEMS.map((item) => {
                         const active = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
@@ -132,7 +170,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                                     'rounded-md px-3 py-3 text-sm font-medium uppercase tracking-wide transition-opacity',
                                     active ? 'opacity-100' : 'opacity-80',
                                 )}
-                                style={{ color: ctaBackground }}
+                                style={{ color: scrolled ? SCROLLED_TEXT_COLOR : ctaBackground }}
                             >
                                 {item.label}
                             </Link>
@@ -147,15 +185,19 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                         {ctaText}
                     </Link>
 
-                    <div className="mt-2 flex justify-center border-t pt-3" style={{ borderColor: `${textColor}22` }}>
+                    <div
+                        className="mt-2 flex justify-center border-t pt-3"
+                        style={{ borderColor: `${effectiveTextColor}22` }}
+                    >
                         <LanguageSwitcher
-                            color={ctaBackground}
-                            accentColor={ctaBackground}
+                            color={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
+                            accentColor={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
                             onNavigate={() => setMobileOpen(false)}
                         />
                     </div>
                 </div>
             )}
         </header>
+        </>
     );
 }
