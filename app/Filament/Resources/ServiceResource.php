@@ -196,6 +196,7 @@ class ServiceResource extends Resource
                 ->schema([
                     TranslatableField::group('tiers_heading', as: 'quill', label: 'Tiêu đề khối', example: '04 Tầng trải nghiệm'),
                     TranslatableField::group('tiers_subtitle', as: 'quill', label: 'Mô tả khối', example: 'Mỗi tầng trải nghiệm được thiết kế với tỷ lệ thư giãn, kỹ thuật day ấn huyệt và mức độ tác động khác nhau, giúp bạn dễ dàng lựa chọn liệu trình phù hợp.'),
+                    TranslatableField::group('tiers_intensity_label', as: 'quill', label: 'Nhãn "Mức độ tác động"', example: 'Mức độ tác động'),
                     Forms\Components\Repeater::make('tiers')
                         ->label('')
                         ->schema([

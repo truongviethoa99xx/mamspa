@@ -17,6 +17,7 @@ export interface ServiceTier {
 export interface ServiceTiersData {
     heading?: unknown;
     subtitle?: unknown;
+    intensityLabel?: unknown;
     tiers: ServiceTier[];
 }
 
@@ -45,7 +46,7 @@ export function ServiceTiers({ data }: { data: ServiceTiersData }) {
     const subtitle = tr(data.subtitle, locale) || (SUBTITLE_FALLBACK[locale] ?? SUBTITLE_FALLBACK.vi);
     const relaxLabel = RELAX_LABEL[locale] ?? RELAX_LABEL.vi;
     const acupressureLabel = ACUPRESSURE_LABEL[locale] ?? ACUPRESSURE_LABEL.vi;
-    const intensityLabel = INTENSITY_LABEL[locale] ?? INTENSITY_LABEL.vi;
+    const intensityLabel = tr(data.intensityLabel, locale) || (INTENSITY_LABEL[locale] ?? INTENSITY_LABEL.vi);
     const suitableLabel = SUITABLE_LABEL[locale] ?? SUITABLE_LABEL.vi;
 
     return (
@@ -153,7 +154,11 @@ export function ServiceTiers({ data }: { data: ServiceTiersData }) {
                                     <ul className="mt-3 space-y-1 text-sm text-ink/75">
                                         {intensity && (
                                             <li className="flex gap-1">
-                                                <span>{intensityLabel}:</span>
+                                                <span
+                                                    className="rich-content inline [&>p]:inline"
+                                                    dangerouslySetInnerHTML={{ __html: intensityLabel }}
+                                                />
+                                                <span>:</span>
                                                 <span
                                                     className="rich-content inline [&>p]:inline"
                                                     dangerouslySetInnerHTML={{ __html: intensity }}

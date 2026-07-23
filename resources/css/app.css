@@ -40,8 +40,16 @@
     .rich-content ul {
         list-style: disc;
     }
+    /* Quill always wraps BOTH ordered and bullet lists in <ol>, differentiating them only via
+       a data-list="bullet"/"ordered" attribute on each <li> (see node_modules/quill/formats/list.js —
+       ListContainer.tagName = 'OL'), and relies on its own theme CSS to render the correct marker.
+       The public site doesn't load Quill's theme CSS, so without this the tag-name-only rule below
+       would render every admin-authored bullet list as a numbered list too. */
     .rich-content ol {
         list-style: decimal;
+    }
+    .rich-content ol > li[data-list='bullet'] {
+        list-style: disc;
     }
 
     /* Nội dung đầy đủ bài viết Blog (Show) — nhiều đoạn văn, có heading/list/ảnh xen kẽ,

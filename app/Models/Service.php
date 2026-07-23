@@ -22,7 +22,7 @@ class Service extends Model implements HasMedia
         'thumbnail_alt',
         'ingredients', 'steps', 'is_featured', 'is_combo', 'is_active',
         'pillars_heading', 'pillars', 'pillars_image', 'pillars_image_alt', 'treatment_scope_note', 'treatment_scope_image', 'treatment_scope_image_alt', 'tools_used', 'tiers',
-        'tiers_heading', 'tiers_subtitle',
+        'tiers_heading', 'tiers_subtitle', 'tiers_intensity_label',
         'closing_image', 'closing_image_alt', 'closing_heading', 'closing_body', 'closing_cta_text', 'closing_cta_link',
     ];
 
@@ -46,7 +46,7 @@ class Service extends Model implements HasMedia
         'closing_cta_text' => 'array',
     ];
 
-    public array $translatable = ['name', 'short_description', 'description', 'pillars_heading', 'treatment_scope_note', 'tiers_heading', 'tiers_subtitle'];
+    public array $translatable = ['name', 'short_description', 'description', 'pillars_heading', 'treatment_scope_note', 'tiers_heading', 'tiers_subtitle', 'tiers_intensity_label'];
 
     public function registerMediaCollections(): void
     {

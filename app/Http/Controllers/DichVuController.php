@@ -61,6 +61,7 @@ class DichVuController extends Controller
             'tools_used' => $s->tools_used ?? [],
             'tiers_heading' => $s->tiers_heading,
             'tiers_subtitle' => $s->tiers_subtitle,
+            'tiers_intensity_label' => $s->tiers_intensity_label,
             'tiers' => collect($s->tiers ?? [])
                 ->map(fn ($tier) => array_merge(
                     is_array($tier) ? $tier : [],

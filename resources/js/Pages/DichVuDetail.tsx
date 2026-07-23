@@ -23,6 +23,7 @@ interface ServiceDetailData {
     tools_used?: ServiceTool[];
     tiers_heading?: unknown;
     tiers_subtitle?: unknown;
+    tiers_intensity_label?: unknown;
     tiers?: ServiceTier[];
 }
 
@@ -83,6 +84,7 @@ export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
                 data={{
                     heading: service.tiers_heading,
                     subtitle: service.tiers_subtitle,
+                    intensityLabel: service.tiers_intensity_label,
                     tiers: service.tiers ?? [],
                 }}
             />
