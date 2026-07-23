@@ -112,7 +112,7 @@ export function ChatWidget() {
                         target={button.href?.startsWith('http') ? '_blank' : undefined}
                         rel={button.href?.startsWith('http') ? 'noreferrer' : undefined}
                         className={cn(
-                            'flex items-center justify-center rounded-full border border-black/10 shadow-[0_4px_14px_rgba(15,23,42,0.22)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgba(15,23,42,0.28)]',
+                            'flex items-center justify-center overflow-hidden rounded-full border border-black/10 shadow-[0_4px_14px_rgba(15,23,42,0.22)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgba(15,23,42,0.28)]',
                             'h-12 w-12',
                             isOpen
                                 ? 'translate-y-0 scale-100 opacity-100'
