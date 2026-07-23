@@ -58,7 +58,7 @@ function ButtonIcon({ button }: { button: ContactButton }) {
     const iconUrl = publicAssetUrl(button.icon);
     if (iconUrl) {
         return (
-            <span className={ICON_BOX}>
+            <span className="flex h-full w-full items-center justify-center">
                 <img src={iconUrl} alt="" className="h-full w-full object-contain" loading="lazy" />
             </span>
         );
