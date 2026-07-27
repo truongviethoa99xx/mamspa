@@ -30,11 +30,12 @@ class BookingAlertWatcher extends Component
 
         $this->lastSeenId = $latest->id;
 
-        $this->dispatch('booking-alert-show', [
-            'title' => $latest->data['title'] ?? 'Thông báo mới',
-            'body' => $latest->data['body'] ?? '',
-            'url' => $latest->data['actions'][0]['url'] ?? null,
-        ]);
+        $this->dispatch(
+            'booking-alert-show',
+            title: $latest->data['title'] ?? 'Thông báo mới',
+            body: $latest->data['body'] ?? '',
+            url: $latest->data['actions'][0]['url'] ?? null,
+        );
     }
 
     public function render()
