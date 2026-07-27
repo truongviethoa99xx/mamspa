@@ -21,6 +21,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
@@ -116,6 +117,13 @@ class AdminPanelProvider extends PanelProvider
                         "></div>
                         HTML, $userId);
                 },
+            )
+            // Modal to giữa màn hình khi có thông báo mới (booking, liên hệ...) — bổ sung cho
+            // chuông góc trên vốn dễ bị bỏ sót. Tự poll mỗi 15s (không phụ thuộc Echo/Reverb nên
+            // chạy tốt trên shared hosting), tự đóng sau 60s. Xem App\Livewire\BookingAlertWatcher.
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): string => auth()->check() ? Blade::render("@livewire('booking-alert-watcher')") : '',
             )
             // Thứ tự nhóm menu: vận hành hằng ngày trước, nội dung sau, hệ thống cuối.
             ->navigationGroups([
