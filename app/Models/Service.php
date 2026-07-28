@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -52,6 +54,35 @@ class Service extends Model implements HasMedia
     {
         $this->addMediaCollection('thumbnail')->singleFile();
         $this->addMediaCollection('images');
+    }
+
+    /** Ảnh đại diện được crop sẵn 2 kích thước: 'card' cho thẻ dịch vụ, 'hero' cho banner trang chi tiết. */
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('card')
+            ->fit(Fit::Crop, 800, 800)
+            ->nonQueued()
+            ->performOnCollections('thumbnail');
+
+        $this->addMediaConversion('hero')
+            ->fit(Fit::Crop, 1920, 960)
+            ->nonQueued()
+            ->performOnCollections('thumbnail');
+    }
+
+    /** URL ảnh thẻ dịch vụ (vuông, tối ưu ~800×800) — ảnh đại diện trước, sau đó ảnh phụ gốc. */
+    public function getCardImageUrlsAttribute(): array
+    {
+        $thumbnail = $this->getFirstMediaUrl('thumbnail', 'card') ?: null;
+        $gallery = $this->getMedia('images')->map(fn (Media $media) => $media->getUrl())->all();
+
+        return array_values(array_filter([$thumbnail, ...$gallery]));
+    }
+
+    /** URL ảnh banner (ngang, tối ưu ~1920×960) cho hero trang chi tiết dịch vụ. */
+    public function getHeroImageUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('thumbnail', 'hero') ?: null;
     }
 
     public function category(): BelongsTo

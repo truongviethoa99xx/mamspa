@@ -44,7 +44,7 @@ class DichVuController extends Controller
                 ])
                 ->filter(fn ($img) => ! empty($img['image']))
                 ->values()->all(),
-            'images' => $this->serviceImages($s),
+            'images' => $s->card_image_urls,
         ];
     }
 
@@ -52,6 +52,7 @@ class DichVuController extends Controller
     private function mapDetail(Service $s): array
     {
         return array_merge($this->map($s), [
+            'hero_image' => $s->hero_image_url,
             'pillars_heading' => $s->pillars_heading,
             'pillars' => $s->pillars ?? [],
             'pillars_image' => $this->publicUrl($s->pillars_image),
@@ -74,15 +75,6 @@ class DichVuController extends Controller
     private function isCombo(Service $s): bool
     {
         return $s->is_combo || ($s->category && ($s->category->slug === 'combo' || $s->category->parent?->slug === 'combo'));
-    }
-
-    /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
-    private function serviceImages(Service $s): array
-    {
-        $thumbnail = $s->getMedia('thumbnail')->first()?->getUrl();
-        $gallery = $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all();
-
-        return array_values(array_filter([$thumbnail, ...$gallery]));
     }
 
     public function index(): Response

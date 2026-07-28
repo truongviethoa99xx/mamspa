@@ -3,9 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Concerns\RestrictsFilamentAccess;
-use App\Filament\Support\EditablePage;
 use App\Filament\Forms\TranslatableField;
 use App\Filament\Resources\ServiceResource\Pages;
+use App\Filament\Support\EditablePage;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\User;
@@ -61,7 +61,7 @@ class ServiceResource extends Resource
                 ->schema([
                     Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
                         ->label('Ảnh đại diện')
-                        ->helperText('Ảnh chính hiển thị trên thẻ dịch vụ ở trang chủ & danh sách. Ảnh vuông/dọc chất lượng cao, khuyến nghị tối thiểu 1200×1200px.')
+                        ->helperText('Ảnh này dùng cho cả thẻ dịch vụ (crop vuông) lẫn banner trang chi tiết (crop ngang) — hệ thống tự cắt 2 bản tối ưu từ ảnh gốc. Nên tải ảnh ngang tỷ lệ 3:2, tối thiểu 2400×1600px, chủ thể chính đặt giữa khung hình để không bị mất khi crop.')
                         ->collection('thumbnail')
                         ->image()
                         ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])

@@ -276,7 +276,7 @@ class HomeController extends Controller
                 'description' => $s->description,
                 'category' => $this->categoryPayload($s),
                 'duration' => $s->duration,
-                'images' => $this->serviceImages($s),
+                'images' => $s->card_image_urls,
             ])->all();
     }
 
@@ -302,15 +302,6 @@ class HomeController extends Controller
             'name' => $s->category->name,
             'root_slug' => $s->category->parent?->slug ?? $s->category->slug,
         ];
-    }
-
-    /** Gộp ảnh đại diện (thumbnail) lên đầu, theo sau là các ảnh phụ. */
-    private function serviceImages(Service $s): array
-    {
-        $thumbnail = $s->getMedia('thumbnail')->first()?->getUrl();
-        $gallery = $s->getMedia('images')->map(fn ($media) => $media->getUrl())->all();
-
-        return array_values(array_filter([$thumbnail, ...$gallery]));
     }
 
     private function publicUrl(?string $path): ?string

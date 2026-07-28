@@ -14,6 +14,7 @@ interface ServiceDetailData {
     short_description?: unknown;
     thumbnail_alt?: unknown;
     images?: string[];
+    hero_image?: string | null;
     pillars_heading?: unknown;
     pillars?: ServicePillar[];
     pillars_image?: string | null;
@@ -44,7 +45,6 @@ const SERVICES_CRUMB: BreadcrumbItem = { name: 'Dịch vụ', url: '/dich-vu/' }
 export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
     const locale = useLocale();
     const serviceName = stripTags(tr(service.name, locale));
-    const images = service.images ?? [];
 
     const breadcrumbItems: BreadcrumbItem[] = [
         HOME_CRUMB,
@@ -61,7 +61,7 @@ export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
                 data={{
                     heading: service.name,
                     subtitle: service.short_description,
-                    image: images[0] ?? null,
+                    image: service.hero_image ?? null,
                     imageAlt: service.thumbnail_alt,
                 }}
             />
