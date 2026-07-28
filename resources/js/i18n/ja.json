@@ -284,6 +284,12 @@
         "bookOne": "今すぐ予約",
         "confirmCancel": "予約 {{code}} をキャンセルしますか？",
         "payVnpay": "VNPayで支払う",
+        "cancelBooking": "予約をキャンセル",
+        "lookupTitle": "他の予約を検索",
+        "lookupDesc": "電話番号と予約コード（確認メール/SMSに記載）を入力すると、その電話番号のすべての予約を確認できます。",
+        "lookupPhonePlaceholder": "電話番号",
+        "lookupCodePlaceholder": "予約コード（例：MSABC123）",
+        "lookupButton": "検索",
         "status": {
             "pending": "保留中",
             "confirmed": "確認済み",

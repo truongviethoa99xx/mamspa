@@ -48,6 +48,28 @@ class MyBookingController extends Controller
         return Inertia::render('MyBookings', ['bookings' => $bookings]);
     }
 
+    public function lookup(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'phone' => ['required', 'string', 'max:20'],
+            'code' => ['required', 'string', 'max:20'],
+        ]);
+
+        $matched = Booking::where('guest_phone', trim($data['phone']))
+            ->where('code', trim($data['code']))
+            ->first();
+
+        if (! $matched) {
+            return back()->with('error', 'Không tìm thấy booking khớp với số điện thoại và mã đã nhập.');
+        }
+
+        Booking::where('guest_phone', $matched->guest_phone)
+            ->pluck('code')
+            ->each(fn (string $code) => GuestBookings::remember($request, $code));
+
+        return redirect()->route('my-bookings.index');
+    }
+
     public function cancel(Request $request, Booking $booking, BookingService $svc): RedirectResponse
     {
         abort_unless($this->authorizes($request, $booking), 403);

@@ -284,6 +284,12 @@
         "bookOne": "지금 예약하기",
         "confirmCancel": "예약 {{code}}을 취소하시겠습니까?",
         "payVnpay": "VNPay로 결제",
+        "cancelBooking": "예약 취소",
+        "lookupTitle": "다른 예약 조회",
+        "lookupDesc": "전화번호와 예약 코드(확인 이메일/SMS에 있음)를 입력하면 해당 전화번호의 모든 예약을 볼 수 있습니다.",
+        "lookupPhonePlaceholder": "전화번호",
+        "lookupCodePlaceholder": "예약 코드 (예: MSABC123)",
+        "lookupButton": "조회",
         "status": {
             "pending": "대기 중",
             "confirmed": "확인됨",

@@ -300,6 +300,12 @@
         "bookOne": "Book now",
         "confirmCancel": "Cancel booking {{code}}?",
         "payVnpay": "Pay with VNPay",
+        "cancelBooking": "Cancel",
+        "lookupTitle": "Look up another booking",
+        "lookupDesc": "Enter your phone number and booking code (from your confirmation email/SMS) to see all bookings under that phone number.",
+        "lookupPhonePlaceholder": "Phone number",
+        "lookupCodePlaceholder": "Booking code (e.g. MSABC123)",
+        "lookupButton": "Look up",
         "status": {
             "pending": "Pending",
             "confirmed": "Confirmed",

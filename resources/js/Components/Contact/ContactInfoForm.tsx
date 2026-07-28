@@ -1,6 +1,6 @@
 import { useForm } from '@inertiajs/react';
-import { FormEvent } from 'react';
-import { Instagram, Lock, Mail, MessageCircle, Phone } from 'lucide-react';
+import { FormEvent, useState } from 'react';
+import { AlertTriangle, CheckCircle2, Instagram, Lock, Mail, MessageCircle, Phone, X } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
@@ -42,6 +42,8 @@ export function ContactInfoForm({ info, form: formContent }: { info: ContactInfo
     const formIntro = tr(formContent.intro, locale);
     const privacyNote = tr(formContent.privacyNote, locale);
     const { ref, className } = useReveal<HTMLElement>();
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
 
     const form = useForm<ContactSubmitForm>({
         name: '',
@@ -55,7 +57,11 @@ export function ContactInfoForm({ info, form: formContent }: { info: ContactInfo
         event.preventDefault();
         form.post('/lien-he', {
             preserveScroll: true,
-            onSuccess: () => form.reset(),
+            onSuccess: () => {
+                form.reset();
+                setShowSuccess(true);
+            },
+            onError: () => setShowError(true),
         });
     };
 
@@ -211,10 +217,6 @@ export function ContactInfoForm({ info, form: formContent }: { info: ContactInfo
                             {form.processing ? 'Đang gửi...' : 'Gửi thông tin'}
                         </button>
 
-                        {form.recentlySuccessful && (
-                            <p className="text-center text-sm text-subheading">Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi sớm.</p>
-                        )}
-
                         {privacyNote && (
                             <p className="flex items-center justify-center gap-1.5 text-center text-xs text-ink/50">
                                 <Lock className="h-3.5 w-3.5" strokeWidth={1.5} />
@@ -224,6 +226,84 @@ export function ContactInfoForm({ info, form: formContent }: { info: ContactInfo
                     </form>
                 </div>
             </div>
+
+            {showSuccess && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="contact-success-title"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm"
+                >
+                    <div className="relative w-full max-w-md rounded-3xl border border-[#CDBCA3] bg-white p-8 text-center shadow-2xl shadow-maha-900/20">
+                        <button
+                            type="button"
+                            onClick={() => setShowSuccess(false)}
+                            aria-label="Đóng"
+                            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-ink/50 transition-colors hover:bg-maha-100 hover:text-ink"
+                        >
+                            <X className="h-4 w-4" />
+                        </button>
+
+                        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-maha-100 text-heading">
+                            <CheckCircle2 className="h-7 w-7" />
+                        </div>
+
+                        <h2 id="contact-success-title" className="mt-5 font-serif text-2xl text-heading">
+                            Gửi thành công
+                        </h2>
+                        <p className="mt-3 text-sm leading-relaxed text-ink/70">
+                            Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi sớm nhất có thể.
+                        </p>
+
+                        <button
+                            type="button"
+                            onClick={() => setShowSuccess(false)}
+                            className="mt-6 block w-full rounded-md bg-[#2F3E2E] py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-opacity hover:opacity-90"
+                        >
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {showError && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="contact-error-title"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4 backdrop-blur-sm"
+                >
+                    <div className="relative w-full max-w-md rounded-3xl border border-[#CDBCA3] bg-white p-8 text-center shadow-2xl shadow-maha-900/20">
+                        <button
+                            type="button"
+                            onClick={() => setShowError(false)}
+                            aria-label="Đóng"
+                            className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-ink/50 transition-colors hover:bg-maha-100 hover:text-ink"
+                        >
+                            <X className="h-4 w-4" />
+                        </button>
+
+                        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-red-500">
+                            <AlertTriangle className="h-7 w-7" />
+                        </div>
+
+                        <h2 id="contact-error-title" className="mt-5 font-serif text-2xl text-heading">
+                            Gửi không thành công
+                        </h2>
+                        <p className="mt-3 text-sm leading-relaxed text-ink/70">
+                            Vui lòng kiểm tra lại thông tin bên dưới và thử gửi lại.
+                        </p>
+
+                        <button
+                            type="button"
+                            onClick={() => setShowError(false)}
+                            className="mt-6 block w-full rounded-md bg-[#2F3E2E] py-3.5 text-sm font-semibold uppercase tracking-wide text-white transition-opacity hover:opacity-90"
+                        >
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

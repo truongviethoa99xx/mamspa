@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
 // Mở cho cả khách chưa đăng nhập: controller tự kiểm tra quyền sở hữu
 // qua user_id hoặc cookie guest_bookings (App\Support\GuestBookings).
 Route::get('my-bookings', [MyBookingController::class, 'index'])->name('my-bookings.index');
+Route::post('my-bookings/lookup', [MyBookingController::class, 'lookup'])
+    ->middleware('throttle:10,1')->name('my-bookings.lookup');
 Route::post('my-bookings/{booking}/cancel', [MyBookingController::class, 'cancel'])
     ->middleware('throttle:10,1')->name('my-bookings.cancel');
 

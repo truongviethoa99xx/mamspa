@@ -300,6 +300,12 @@
         "bookOne": "Đặt lịch ngay",
         "confirmCancel": "Huỷ booking {{code}}?",
         "payVnpay": "Thanh toán VNPay",
+        "cancelBooking": "Huỷ lịch",
+        "lookupTitle": "Tra cứu lịch đặt khác",
+        "lookupDesc": "Nhập số điện thoại và mã booking (có trong email/SMS xác nhận) để xem toàn bộ lịch đặt theo số điện thoại đó.",
+        "lookupPhonePlaceholder": "Số điện thoại",
+        "lookupCodePlaceholder": "Mã booking (vd. MSABC123)",
+        "lookupButton": "Tra cứu",
         "status": {
             "pending": "Chờ xác nhận",
             "confirmed": "Đã xác nhận",

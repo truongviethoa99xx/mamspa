@@ -284,6 +284,12 @@
         "bookOne": "立即预约",
         "confirmCancel": "确定取消预约 {{code}}？",
         "payVnpay": "使用VNPay支付",
+        "cancelBooking": "取消预约",
+        "lookupTitle": "查询其他预约",
+        "lookupDesc": "输入电话号码和预约码（在确认邮件/短信中）即可查看该电话号码下的所有预约。",
+        "lookupPhonePlaceholder": "电话号码",
+        "lookupCodePlaceholder": "预约码（例如 MSABC123）",
+        "lookupButton": "查询",
         "status": {
             "pending": "待确认",
             "confirmed": "已确认",
