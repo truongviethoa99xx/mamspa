@@ -40,7 +40,7 @@ class SiteSettings extends Page implements HasForms
     {
         $this->form->fill(SiteSetting::current()->only([
             'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links',
-            'address', 'phone', 'open_hours', 'lat', 'lng',
+            'address', 'phone', 'open_hours', 'lat', 'lng', 'booking_notification_emails',
         ]));
     }
 
@@ -78,6 +78,19 @@ class SiteSettings extends Page implements HasForms
                         Forms\Components\TextInput::make('chat_url')->label('Link nút chat / Zalo')->url()->columnSpanFull(),
                     ])
                     ->columns(2),
+
+                Forms\Components\Section::make('Thông báo booking')
+                    ->description('Ngoài chuông + modal trong CMS, hệ thống sẽ gửi thêm email tới các địa chỉ dưới đây mỗi khi có lịch đặt mới.')
+                    ->icon('heroicon-o-bell-alert')
+                    ->schema([
+                        Forms\Components\TagsInput::make('booking_notification_emails')
+                            ->label('Email nhận thông báo booking mới')
+                            ->helperText('Nhập email rồi nhấn Enter. Có thể thêm nhiều email. Để trống thì chỉ có thông báo trong CMS, không gửi mail.')
+                            ->placeholder('vd. lephuong@mamspa.vn')
+                            ->splitKeys(['Tab', ','])
+                            ->rules(['array'])
+                            ->columnSpanFull(),
+                    ]),
 
                 Forms\Components\Section::make('Địa điểm')
                     ->description('Thông tin duy nhất của Mầm Spa — dùng cho form đặt lịch, liên hệ và dữ liệu bản đồ.')

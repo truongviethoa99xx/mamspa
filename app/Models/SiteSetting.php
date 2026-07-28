@@ -28,12 +28,14 @@ class SiteSetting extends Model
         'open_hours',
         'lat',
         'lng',
+        'booking_notification_emails',
     ];
 
     protected $casts = [
         'floating_contact_buttons' => 'array',
         'social_links' => 'array',
         'service_menu' => 'array',
+        'booking_notification_emails' => 'array',
         'header_transparent' => 'boolean',
         'lat' => 'float',
         'lng' => 'float',

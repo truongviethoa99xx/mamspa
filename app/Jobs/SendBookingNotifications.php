@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Filament\Resources\BookingResource;
+use App\Mail\BookingAdminAlert;
 use App\Mail\BookingConfirmation;
 use App\Models\Booking;
 use App\Models\SiteSetting;
@@ -30,10 +31,17 @@ class SendBookingNotifications implements ShouldQueue
             return;
         }
 
-        $brandName = SiteSetting::current()->brand_name ?: 'Mầm Spa';
+        $siteSetting = SiteSetting::current();
+        $brandName = $siteSetting->brand_name ?: 'Mầm Spa';
 
         if ($booking->guest_email) {
             Mail::to($booking->guest_email)->send(new BookingConfirmation($booking));
+        }
+
+        $notificationEmails = collect($siteSetting->booking_notification_emails ?? [])->filter();
+
+        if ($notificationEmails->isNotEmpty()) {
+            Mail::to($notificationEmails->all())->send(new BookingAdminAlert($booking));
         }
 
         if ($booking->guest_phone) {
