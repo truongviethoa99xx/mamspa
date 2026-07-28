@@ -315,6 +315,7 @@ export default function Booking({ preselect, branches, openHours, services }: Pr
                                             placeholder={t('bookingForm.emailPlaceholder')}
                                             className="input-base"
                                         />
+                                        <p className="mt-2 text-xs text-maha-500">{t('bookingForm.emailHint')}</p>
                                     </Field>
                                     <Field label={t('bookingForm.contactChannel')}>
                                         <div className="flex gap-2">

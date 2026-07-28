@@ -43,6 +43,7 @@
         "phonePlaceholder": "Nhập số điện thoại",
         "email": "Email (Gmail)",
         "emailPlaceholder": "Nhập Gmail của bạn",
+        "emailHint": "Nhận mail xác nhận booking qua email này",
         "contactChannel": "Kênh liên hệ trực tuyến (Contact Method)",
         "contactValuePlaceholder": "SĐT / ID Tài khoản",
         "note": "Ghi chú cho Spa (Không bắt buộc)",

@@ -222,15 +222,15 @@ export function Footer() {
                 <div className="flex flex-col items-center gap-3 border-t border-white/10 py-6 text-center text-xs text-maha-50/45 sm:flex-row sm:justify-between sm:text-left">
                     <p>{t('footer.rights', { year })}</p>
                     <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:justify-end">
-                        <Link href="/chinh-sach/" className="transition-colors hover:text-maha-400">
+                        <Link href="/chinh-sach-bao-mat/" className="transition-colors hover:text-maha-400">
                             {t('footer.privacy')}
                         </Link>
                         <span>•</span>
-                        <Link href="/chinh-sach/" className="transition-colors hover:text-maha-400">
+                        <Link href="/dieu-khoan-dich-vu/" className="transition-colors hover:text-maha-400">
                             {t('footer.terms')}
                         </Link>
                         <span>•</span>
-                        <Link href="/chinh-sach/" className="transition-colors hover:text-maha-400">
+                        <Link href="/ho-tro-khach-hang/" className="transition-colors hover:text-maha-400">
                             {t('footer.support')}
                         </Link>
                         <span>•</span>

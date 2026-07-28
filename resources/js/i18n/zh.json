@@ -42,6 +42,7 @@
         "phonePlaceholder": "请输入电话号码",
         "email": "邮箱 (Gmail)",
         "emailPlaceholder": "请输入 Gmail",
+        "emailHint": "将通过此邮箱接收预约确认邮件",
         "contactChannel": "在线联系方式",
         "contactValuePlaceholder": "电话 / 账号 ID",
         "note": "给水疗中心的备注（选填）",

@@ -79,12 +79,12 @@ class SiteSettings extends Page implements HasForms
                     ])
                     ->columns(2),
 
-                Forms\Components\Section::make('Thông báo booking')
-                    ->description('Ngoài chuông + modal trong CMS, hệ thống sẽ gửi thêm email tới các địa chỉ dưới đây mỗi khi có lịch đặt mới.')
+                Forms\Components\Section::make('Thông báo booking & liên hệ')
+                    ->description('Ngoài chuông + modal trong CMS, hệ thống sẽ gửi thêm email tới các địa chỉ dưới đây mỗi khi có lịch đặt mới hoặc có người gửi form liên hệ.')
                     ->icon('heroicon-o-bell-alert')
                     ->schema([
                         Forms\Components\TagsInput::make('booking_notification_emails')
-                            ->label('Email nhận thông báo booking mới')
+                            ->label('Email nhận thông báo booking & liên hệ mới')
                             ->helperText('Nhập email rồi nhấn Enter. Có thể thêm nhiều email. Để trống thì chỉ có thông báo trong CMS, không gửi mail.')
                             ->placeholder('vd. lephuong@mamspa.vn')
                             ->splitKeys(['Tab', ','])

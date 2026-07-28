@@ -3,7 +3,9 @@
 namespace App\Jobs;
 
 use App\Filament\Resources\ContactSubmissionResource;
+use App\Mail\ContactSubmissionAlert;
 use App\Models\ContactSubmission;
+use App\Models\SiteSetting;
 use App\Models\User;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
@@ -12,6 +14,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class NotifyAdminsOfContactSubmission implements ShouldQueue
 {
@@ -38,5 +41,11 @@ class NotifyAdminsOfContactSubmission implements ShouldQueue
             ])
             ->sendToDatabase($admins)
             ->broadcast($admins);
+
+        $notificationEmails = collect(SiteSetting::current()->booking_notification_emails ?? [])->filter();
+
+        if ($notificationEmails->isNotEmpty()) {
+            Mail::to($notificationEmails->all())->send(new ContactSubmissionAlert($submission));
+        }
     }
 }

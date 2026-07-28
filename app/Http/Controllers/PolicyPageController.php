@@ -8,22 +8,6 @@ use Inertia\Response;
 
 class PolicyPageController extends Controller
 {
-    public function index(): Response
-    {
-        $pages = PolicyPage::published()
-            ->orderBy('name')
-            ->get()
-            ->map(fn (PolicyPage $page) => [
-                'slug' => $page->slug,
-                'name' => $page->name,
-            ])
-            ->values();
-
-        return Inertia::render('ChinhSach/Index', [
-            'pages' => $pages,
-        ]);
-    }
-
     public function show(PolicyPage $policyPage): Response
     {
         abort_unless($policyPage->is_published, 404);

@@ -235,7 +235,7 @@ class HomeController extends Controller
 
         return [
             'images' => $images,
-            'link' => '/gallery/',
+            'link' => '/trai-nghiem-khach-hang/',
         ];
     }
 

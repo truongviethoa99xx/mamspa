@@ -16,6 +16,7 @@ use App\Http\Controllers\PolicyPageController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TranslationController;
 use App\Models\MenuPageContent;
+use App\Models\PolicyPage;
 use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -58,10 +59,16 @@ Route::post('/lien-he', [ContactController::class, 'store'])->middleware('thrott
 // Legacy EN slug → canonical VI slug (301).
 Route::get('/contact', fn () => redirect()->away(url('/lien-he').'/', 301));
 
-Route::get('/chinh-sach', [PolicyPageController::class, 'index'])->name('chinh-sach.index');
-Route::get('/chinh-sach/{policyPage:slug}', [PolicyPageController::class, 'show'])->name('chinh-sach.show');
+// 4 trang chính sách ở footer — mỗi trang một URL riêng ở cấp gốc (không còn tiền tố
+// /chinh-sach), nội dung chỉnh qua Filament › Nội dung › Trang chính sách (Quill editor).
+$policyPage = fn (string $slug) => fn (PolicyPageController $controller) => $controller->show(
+    PolicyPage::published()->where('slug', $slug)->firstOrFail()
+);
 
-Route::get('/luu-y-dich-vu', fn () => Inertia::render('PaymentGuide'))->name('service-guidelines');
+Route::get('/chinh-sach-bao-mat', $policyPage('chinh-sach-bao-mat'))->name('policy.privacy');
+Route::get('/dieu-khoan-dich-vu', $policyPage('dieu-khoan-dich-vu'))->name('policy.terms');
+Route::get('/ho-tro-khach-hang', $policyPage('ho-tro-khach-hang'))->name('policy.support');
+Route::get('/luu-y-dich-vu', $policyPage('luu-y-dich-vu'))->name('service-guidelines');
 // Giữ URL cũ hoạt động (301) phòng khi đã chia sẻ.
 Route::get('/huong-dan-thanh-toan', fn () => redirect()->away(url('/luu-y-dich-vu').'/', 301));
 

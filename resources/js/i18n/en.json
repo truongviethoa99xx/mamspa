@@ -43,6 +43,7 @@
         "phonePlaceholder": "Enter your phone number",
         "email": "Email (Gmail)",
         "emailPlaceholder": "Enter your Gmail",
+        "emailHint": "Get your booking confirmation by email",
         "contactChannel": "Online contact method",
         "contactValuePlaceholder": "Phone / Account ID",
         "note": "Note for the spa (optional)",

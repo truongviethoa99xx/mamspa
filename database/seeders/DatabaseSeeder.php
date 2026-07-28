@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             AboutPageContentSeeder::class,
             ContactPageContentSeeder::class,
             ServicePageContentSeeder::class,
+            PolicyPageSeeder::class,
             SiteSettingSeeder::class,
             TranslationStringSeeder::class,
         ]);

@@ -42,6 +42,7 @@
         "phonePlaceholder": "電話番号を入力",
         "email": "メール (Gmail)",
         "emailPlaceholder": "Gmail を入力",
+        "emailHint": "このメールで予約確認メールを受け取ります",
         "contactChannel": "オンライン連絡方法",
         "contactValuePlaceholder": "電話 / アカウントID",
         "note": "スパへのご要望（任意）",

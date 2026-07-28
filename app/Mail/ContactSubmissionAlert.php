@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Booking;
+use App\Models\ContactSubmission;
 use App\Models\SiteSetting;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,25 +11,25 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class BookingAdminAlert extends Mailable implements ShouldQueue
+class ContactSubmissionAlert extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public Booking $booking) {}
+    public function __construct(public ContactSubmission $submission) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Có lịch đặt mới #'.$this->booking->code,
+            subject: 'Liên hệ mới: '.$this->submission->subject,
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'mail.booking-admin-alert',
+            view: 'mail.contact-submission-alert',
             with: [
-                'booking' => $this->booking->load(['service', 'items.service']),
+                'submission' => $this->submission,
                 'site' => SiteSetting::current(),
             ],
         );

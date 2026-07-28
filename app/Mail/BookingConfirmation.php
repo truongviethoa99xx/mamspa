@@ -27,7 +27,7 @@ class BookingConfirmation extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.booking-confirmation',
+            view: 'mail.booking-confirmation',
             with: [
                 'booking' => $this->booking->load(['service', 'items.service']),
                 'site' => SiteSetting::current(),
