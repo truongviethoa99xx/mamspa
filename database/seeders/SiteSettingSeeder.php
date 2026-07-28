@@ -20,7 +20,7 @@ class SiteSettingSeeder extends Seeder
           'email' => 'info@mamspa.vn',
           'chat_url' => 'https://zalo.me/0865806166',
           'floating_contact_buttons' => '[{"href": "https://zalo.me/0865806166", "type": "zalo", "color": "#028fe8", "label": "Zalo", "enabled": true, "background": "#ffffff"}, {"href": "/contact", "type": "map", "color": "#4285f4", "label": "Google Maps", "enabled": true, "background": "#ffffff"}, {"href": "https://wa.me/84865806166", "type": "whatsapp", "color": "#ffffff", "label": "WhatsApp", "enabled": true, "background": "#19b83f"}, {"href": "#", "type": "kakao", "color": "#3b1f1f", "label": "KakaoTalk", "enabled": true, "background": "#fee500"}, {"href": "tel:0865806166", "type": "phone", "color": "#ffffff", "label": "Hotline", "enabled": true, "background": "#0d8bff"}]',
-          'social_links' => '[{"href": "https://facebook.com/mahaSpa.danang", "label": "Facebook"}, {"href": "https://instagram.com/mahaspa.danang", "label": "Instagram"}, {"href": "https://zalo.me", "label": "Zalo OA"}]',
+          'social_links' => '[{"href": "https://facebook.com/mamSpa.danang", "label": "Facebook"}, {"href": "https://instagram.com/mamspa.danang", "label": "Instagram"}, {"href": "https://zalo.me", "label": "Zalo OA"}]',
           'service_menu' => '[{"href": "/dich-vu/combo/", "label": "Mầm Combo"}, {"href": "/dich-vu/massage/", "label": "Traditional Massage"}, {"href": "/dich-vu/head-spa/", "label": "Head Spa"}, {"href": "/dich-vu/facial/", "label": "Facial Care"}, {"href": "/dich-vu/foot-spa/", "label": "Foot Spa"}]',
         );
 

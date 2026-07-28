@@ -1,14 +1,14 @@
-# CLAUDE.md — Maha Spa Website Project Spec
+# CLAUDE.md — Mầm Spa Website Project Spec
 > File này được đọc tự động bởi Claude Code mỗi khi khởi động trong thư mục project.
 > Chứa toàn bộ spec kỹ thuật, module list, API routes và convention của dự án.
 ---
 ## 📌 Tổng quan dự án
-- **Tên:** Maha Spa — mahaspa.vn
+- **Tên:** Mầm Spa — mamspa.vn
 - **Loại:** Website spa booking + CMS có dashboard chỉnh sửa nội dung (kiểu WordPress)
 - **Thành lập:** 2018 · Đà Nẵng, Việt Nam
 - **Chi nhánh:**
-  - Maha Heritage — 26 Nguyễn Văn Thoại · (+84) 934 743 026
-  - Maha Signature — 185 Hồ Nghinh · (+84) 978 456 185
+  - Mầm Spa Lê Văn Sỹ · (+84) 934 743 026
+  - Mầm Spa Lê Thị Riêng · (+84) 978 456 185
 - **Tagline:** "The Beginning of the Journey to Balance Body - Mind - Spirit"
 - **Ngôn ngữ:** Tiếng Việt (default) + English (`?lang=en`)
 ---
@@ -44,7 +44,7 @@
 ---
 ## 📁 Project Structure (Laravel monorepo)
 ```
-mahaspa/
+mamspa/
 ├── CLAUDE.md                       # ← file này
 ├── app/
 │   ├── Models/
@@ -199,8 +199,8 @@ mahaspa/
 | **Home Page** | `/?lang=vi\|en` | Hero banner, giới thiệu thương hiệu, highlight dịch vụ, CTA booking — toàn bộ render từ CMS blocks |
 | **About / Chi nhánh** | `/about-us/{branch:slug}` | Chi tiết từng chi nhánh — fetch từ DB |
 **Known branches (slug):**
-- `heritage` — Maha Heritage
-- `signature` — Maha Signature
+- `heritage` — Mầm Spa Lê Văn Sỹ
+- `signature` — Mầm Spa Lê Thị Riêng
 ---
 ### ② Services
 | Module | Route | Mô tả |
@@ -386,8 +386,8 @@ protected $translatable = ['title'];
 ## 📱 Social Media & External Integrations
 | Platform | Handle / ID |
 |----------|-------------|
-| Facebook | facebook.com/mahaSpa.danang |
-| Instagram | @mahaspa.danang |
+| Facebook | facebook.com/mamSpa.danang |
+| Instagram | @mamspa.danang |
 | Klook | Có listing — nhận voucher từ Klook |
 | Google Maps | 2 chi nhánh có pin riêng |
 | Google Tag Manager | GTM-W6NJ4P3S |

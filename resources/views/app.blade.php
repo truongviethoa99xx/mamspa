@@ -44,7 +44,7 @@
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@mahaspa_danang">
+    <meta name="twitter:site" content="@mamspa_danang">
     <meta name="twitter:image" content="{{ config('app.url') }}/images/banner.png">
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
@@ -62,8 +62,8 @@
                 'url' => config('app.url'),
                 'logo' => $siteLogoUrl,
                 'sameAs' => [
-                    'https://www.facebook.com/mahaSpa.danang',
-                    'https://www.instagram.com/mahaspa.danang',
+                    'https://www.facebook.com/mamSpa.danang',
+                    'https://www.instagram.com/mamspa.danang',
                 ],
                 'contactPoint' => [
                     ['@type' => 'ContactPoint', 'telephone' => '+84934743026', 'contactType' => 'customer service'],
@@ -85,7 +85,7 @@
             [
                 '@type' => ['HealthAndBeautyBusiness', 'DaySpa'],
                 '@id' => config('app.url') . '/#heritage',
-                'name' => 'Maha Heritage Spa',
+                'name' => 'Mầm Spa Lê Văn Sỹ',
                 'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
                 'address' => [
                     '@type' => 'PostalAddress',
@@ -107,7 +107,7 @@
             [
                 '@type' => ['HealthAndBeautyBusiness', 'DaySpa'],
                 '@id' => config('app.url') . '/#signature',
-                'name' => 'Maha Signature Spa',
+                'name' => 'Mầm Spa Lê Thị Riêng',
                 'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
                 'address' => [
                     '@type' => 'PostalAddress',

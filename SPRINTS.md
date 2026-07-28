@@ -1,6 +1,6 @@
-# SPRINTS.md — Maha Spa Roadmap
+# SPRINTS.md — Mầm Spa Roadmap
 
-> Kế hoạch phát triển Maha Spa website theo 6 sprint (mỗi sprint ~1 tuần, ~6 tuần MVP).
+> Kế hoạch phát triển Mầm Spa website theo 6 sprint (mỗi sprint ~1 tuần, ~6 tuần MVP).
 > Stack: **Laravel 11 + Inertia + React + TypeScript + Filament v3 + MySQL**.
 > Xem chi tiết stack & convention tại [`CLAUDE.md`](./CLAUDE.md).
 
@@ -137,7 +137,7 @@
 
 ## Sprint 6 — Polish & Launch (1 tuần)
 
-**Mục tiêu:** Website live tại mahaspa.vn.
+**Mục tiêu:** Website live tại mamspa.vn.
 
 - [ ] Analytics:
   - [ ] GTM container `GTM-TTGB95P9`
@@ -160,10 +160,10 @@
   - [ ] VPS Ubuntu 22.04 + Nginx + PHP 8.3-FPM + MySQL 8 + Redis
   - [ ] Laravel Forge hoặc Ploi
   - [ ] SSL (Let's Encrypt)
-  - [ ] Domain mahaspa.vn trỏ về
+  - [ ] Domain mamspa.vn trỏ về
   - [ ] Backup tự động (DB + media)
 
-**Deliverable:** website live, mahaspa.vn truy cập được, đủ analytics, đủ SEO.
+**Deliverable:** website live, mamspa.vn truy cập được, đủ analytics, đủ SEO.
 
 ---
 

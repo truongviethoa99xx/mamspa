@@ -112,8 +112,8 @@ export function localBusinessSchema(params: {
     name: params.name,
     image: window.location.origin + '/images/banner.png',
     sameAs: [
-      'https://www.facebook.com/mahaSpa.danang',
-      'https://www.instagram.com/mahaspa.danang',
+      'https://www.facebook.com/mamSpa.danang',
+      'https://www.instagram.com/mamspa.danang',
     ],
     address: {
       '@type': 'PostalAddress',

@@ -41,7 +41,7 @@ class GeminiTranslator implements TranslatorContract
         $toName = $this->langNames[$to] ?? $to;
         $prompt = "Translate the following text from {$fromName} to {$toName}. "
             .'Return ONLY the translated text, no explanations or quotes. '
-            ."Keep brand names like 'Mầm Spa', 'Maha Heritage', 'Maha Signature' unchanged.\n\n{$text}";
+            ."Keep brand names like 'Mầm Spa', 'Mầm Spa Lê Văn Sỹ', 'Mầm Spa Lê Thị Riêng' unchanged.\n\n{$text}";
 
         // Thử với model đang cache; nếu thất bại (lỗi HTTP, timeout, hoặc model
         // đã bị gỡ) thì quên cache, dò lại model khác và thử thêm 1 lần.

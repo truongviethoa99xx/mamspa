@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "mahaspa/mahaspa",
+    "name": "mamspa/mamspa",
     "type": "project",
     "description": "Mầm Spa booking website with Laravel + Inertia + React + Filament CMS.",
     "keywords": ["spa", "booking", "laravel", "inertia", "react", "filament"],

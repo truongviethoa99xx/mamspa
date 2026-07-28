@@ -10,8 +10,8 @@ import type { SharedProps } from '@/types';
 const DEFAULT_HOTLINE = '(+84) 965 80 6166';
 const DEFAULT_EMAIL = 'info@mamspa.vn';
 const DEFAULT_SOCIALS = [
-    { label: 'Facebook', href: 'https://facebook.com/mahaSpa.danang' },
-    { label: 'Instagram', href: 'https://instagram.com/mahaspa.danang' },
+    { label: 'Facebook', href: 'https://facebook.com/mamSpa.danang' },
+    { label: 'Instagram', href: 'https://instagram.com/mamspa.danang' },
     { label: 'Zalo OA', href: 'https://zalo.me/0865806166' },
 ];
 

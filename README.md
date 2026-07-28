@@ -1,6 +1,6 @@
-# Maha Spa — mahaspa.vn
+# Mầm Spa — mamspa.vn
 
-Website spa booking + CMS (kiểu WordPress) cho Maha Spa Đà Nẵng.
+Website spa booking + CMS (kiểu WordPress) cho Mầm Spa Đà Nẵng.
 
 **Stack:** Laravel 11 · Inertia.js · React 18 + TypeScript · TailwindCSS · Filament v3 · MySQL · Redis
 
@@ -21,7 +21,7 @@ npm run dev
 ```
 
 - Public site: <http://localhost:8000>
-- Admin Filament: <http://localhost:8000/admin> — `admin@mahaspa.vn` / `password`
+- Admin Filament: <http://localhost:8000/admin> — `admin@mamspa.vn` / `password`
 
 ## Cấu trúc chính
 
@@ -74,4 +74,4 @@ npm run build                # Production build
 
 ## License
 
-Proprietary © Maha Spa.
+Proprietary © Mầm Spa.

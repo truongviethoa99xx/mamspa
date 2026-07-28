@@ -1,4 +1,4 @@
-# Deployment — Maha Spa
+# Deployment — Mầm Spa
 
 ## Yêu cầu server
 
@@ -14,8 +14,8 @@
 
 ```bash
 # 1. Clone & install
-git clone git@github.com:truongviethoa99xx/mahaspa.git
-cd mahaspa
+git clone git@github.com:truongviethoa99xx/mamspa.git
+cd mamspa
 composer install --no-dev --optimize-autoloader
 npm ci && npm run build
 
@@ -41,23 +41,23 @@ php artisan view:cache
 php artisan filament:optimize
 ```
 
-## Nginx config (mahaspa.vn)
+## Nginx config (mamspa.vn)
 
 ```nginx
 server {
     listen 80;
-    server_name mahaspa.vn www.mahaspa.vn;
-    return 301 https://mahaspa.vn$request_uri;
+    server_name mamspa.vn www.mamspa.vn;
+    return 301 https://mamspa.vn$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name mahaspa.vn;
+    server_name mamspa.vn;
 
-    ssl_certificate /etc/letsencrypt/live/mahaspa.vn/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/mahaspa.vn/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/mamspa.vn/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mamspa.vn/privkey.pem;
 
-    root /var/www/mahaspa/public;
+    root /var/www/mamspa/public;
     index index.php;
 
     add_header X-Frame-Options "SAMEORIGIN";
@@ -82,47 +82,47 @@ server {
 
 ## Queue worker (systemd)
 
-`/etc/systemd/system/mahaspa-queue.service`:
+`/etc/systemd/system/mamspa-queue.service`:
 
 ```ini
 [Unit]
-Description=Maha Spa Laravel queue worker
+Description=Mầm Spa Laravel queue worker
 After=redis.service
 
 [Service]
 User=www-data
 Restart=always
-ExecStart=/usr/bin/php /var/www/mahaspa/artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
+ExecStart=/usr/bin/php /var/www/mamspa/artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
 
 [Install]
 WantedBy=multi-user.target
 ```
 
 ```bash
-systemctl enable --now mahaspa-queue
+systemctl enable --now mamspa-queue
 ```
 
 ## Scheduler (cron)
 
 ```cron
-* * * * * cd /var/www/mahaspa && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /var/www/mamspa && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 ## SSL
 
 ```bash
-certbot --nginx -d mahaspa.vn -d www.mahaspa.vn
+certbot --nginx -d mamspa.vn -d www.mamspa.vn
 ```
 
 ## Backup
 
-Script `/usr/local/bin/backup-mahaspa.sh` (cron daily 03:00):
+Script `/usr/local/bin/backup-mamspa.sh` (cron daily 03:00):
 
 ```bash
 #!/bin/bash
 DATE=$(date +%F)
-mysqldump -u root mahaspa | gzip > /backups/mahaspa-db-$DATE.sql.gz
-tar czf /backups/mahaspa-storage-$DATE.tar.gz /var/www/mahaspa/storage/app
+mysqldump -u root mamspa | gzip > /backups/mamspa-db-$DATE.sql.gz
+tar czf /backups/mamspa-storage-$DATE.tar.gz /var/www/mamspa/storage/app
 find /backups -mtime +14 -delete
 ```
 
@@ -130,7 +130,7 @@ find /backups -mtime +14 -delete
 
 - `GET /up` → Laravel health endpoint
 - `GET /sitemap.xml` → kiểm tra SEO
-- Filament `/admin` → login bằng admin@mahaspa.vn
+- Filament `/admin` → login bằng admin@mamspa.vn
 
 ## Rollback
 
@@ -139,5 +139,5 @@ git checkout <previous-tag>
 composer install --no-dev --optimize-autoloader
 php artisan migrate:rollback --step=1   # nếu cần
 php artisan config:cache && php artisan route:cache
-systemctl restart php8.3-fpm mahaspa-queue
+systemctl restart php8.3-fpm mamspa-queue
 ```

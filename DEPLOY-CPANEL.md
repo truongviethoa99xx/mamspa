@@ -1,4 +1,4 @@
-# Deploy Maha Spa lên hosting cPanel (không Docker)
+# Deploy Mầm Spa lên hosting cPanel (không Docker)
 
 > cPanel shared hosting **không build được Docker / Vite / Node nền** và **thường
 > không có Composer**. Cách làm: build + cài dependency ở máy local, **commit cả
@@ -47,7 +47,7 @@ bash scripts/deploy/build-cpanel.sh
 ```
 
 Script sẽ: `npm ci && npm run build` → `composer install --no-dev --optimize-autoloader`
-→ xoá `public/hot` → nén `dist/mahaspa-cpanel-<timestamp>.zip`.
+→ xoá `public/hot` → nén `dist/mamspa-cpanel-<timestamp>.zip`.
 
 > Đã có sẵn `vendor/` và `public/build/` production trong zip vì server **không**
 > cài Composer / build Vite được.
@@ -59,11 +59,11 @@ Script sẽ: `npm ci && npm run build` → `composer install --no-dev --optimize
 ### Cách A — Đổi được document root (KHUYẾN NGHỊ, sạch & an toàn nhất)
 
 cPanel → *Domains* → domain của bạn → *Manage* → đổi **Document Root** thành
-`mahaspa/public`.
+`mamspa/public`.
 
 ```
 /home/cpaneluser/
-└── mahaspa/              ← giải nén artifact vào đây (NGOÀI public_html)
+└── mamspa/              ← giải nén artifact vào đây (NGOÀI public_html)
     ├── app/  bootstrap/  config/  vendor/ …
     └── public/           ← document root trỏ vào ĐÂY
 ```
@@ -89,7 +89,7 @@ sẽ tự route request vào `public/` và chặn truy cập file nhạy cảm.
 
 ## 4. Upload & giải nén
 
-1. cPanel → *File Manager* → upload `mahaspa-cpanel-*.zip` vào thư mục đích (mục 3).
+1. cPanel → *File Manager* → upload `mamspa-cpanel-*.zip` vào thư mục đích (mục 3).
 2. Chuột phải → *Extract*.
 3. Xoá file zip sau khi giải nén.
 
@@ -99,7 +99,7 @@ sẽ tự route request vào `public/` và chặn truy cập file nhạy cảm.
 
 1. Copy mẫu: đổi tên `.env.cpanel.example` → `.env`.
 2. Điền: `DB_*` (tạo DB & user ở cPanel → *MySQL Databases*, nhớ prefix `cpaneluser_`),
-   `APP_URL=https://mahaspa.vn`, `MAIL_*`, các key thanh toán / SMS / translate.
+   `APP_URL=https://mamspa.vn`, `MAIL_*`, các key thanh toán / SMS / translate.
 3. **Tạo APP_KEY** (xem mục 6).
 
 ---
@@ -113,7 +113,7 @@ sẽ tự route request vào `public/` và chặn truy cập file nhạy cảm.
 ### Có SSH
 
 ```bash
-cd ~/mahaspa            # hoặc ~/public_html ở cách B
+cd ~/mamspa            # hoặc ~/public_html ở cách B
 php artisan key:generate
 php artisan migrate --force
 php artisan db:seed --force          # chỉ chạy LẦN ĐẦU (2 branch, services, trang Home…)
@@ -157,7 +157,7 @@ foreach ([
 }
 ```
 
-Mở `https://mahaspa.vn/__setup.php` một lần, kiểm tra output, rồi **XOÁ NGAY** file này.
+Mở `https://mamspa.vn/__setup.php` một lần, kiểm tra output, rồi **XOÁ NGAY** file này.
 (Tạo admin Filament sau qua Terminal, hoặc thêm `['make:filament-user', [...]]` tương tự.)
 
 > ⚠️ Mỗi lần deploy bản mới có đổi `.env`/route/config: chạy lại
@@ -173,14 +173,14 @@ cPanel → *Cron Jobs*. Đường dẫn PHP đúng phiên bản thường là
 **a) Laravel scheduler** — mỗi phút:
 
 ```
-* * * * * /usr/local/bin/ea-php83 /home/cpaneluser/mahaspa/artisan schedule:run >> /dev/null 2>&1
+* * * * * /usr/local/bin/ea-php83 /home/cpaneluser/mamspa/artisan schedule:run >> /dev/null 2>&1
 ```
 
 **b) Queue worker** (vì booking gửi email/SMS qua job `database`) — mỗi phút xử lý
 hàng đợi rồi thoát (an toàn cho shared hosting, tránh process treo):
 
 ```
-* * * * * /usr/local/bin/ea-php83 /home/cpaneluser/mahaspa/artisan queue:work --stop-when-empty --max-time=55 >> /dev/null 2>&1
+* * * * * /usr/local/bin/ea-php83 /home/cpaneluser/mamspa/artisan queue:work --stop-when-empty --max-time=55 >> /dev/null 2>&1
 ```
 
 > Không set được cron worker? → đổi `QUEUE_CONNECTION=sync` trong `.env`: job chạy
