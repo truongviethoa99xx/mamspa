@@ -50,7 +50,12 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="apple-touch-icon" href="/images/favicon.ico">
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap" rel="stylesheet" />
+    {{-- Load non-blocking: preload the stylesheet, then swap its rel to "stylesheet" once
+         fetched instead of using a normal blocking <link rel="stylesheet">. The <noscript>
+         fallback covers the (rare) no-JS case. --}}
+    <link rel="preload" as="style" href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap"></noscript>
 
     <script type="application/ld+json">{!! json_encode([
         '@context' => 'https://schema.org',
@@ -131,11 +136,31 @@
 
     @if(config('services.gtm.id'))
     <link rel="preconnect" href="https://www.googletagmanager.com">
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','{{ config('services.gtm.id') }}');</script>
+    <script>
+    // GTM's container script is heavy and mostly unused on initial paint (Lighthouse flags
+    // it under "unused JavaScript"/TBT). Defer loading it until the first real user
+    // interaction (or a 3.5s fallback so it still fires for users who never interact) instead
+    // of blocking/competing with the initial render — analytics stays effectively complete
+    // since almost no one converts within the first few seconds anyway.
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        var loaded = false;
+        function loadGtm() {
+            if (loaded) return;
+            loaded = true;
+            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            var f = d.getElementsByTagName(s)[0], j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+            events.forEach(function (evt) { w.removeEventListener(evt, loadGtm, { passive: true }); });
+        }
+        var events = ['scroll', 'mousemove', 'touchstart', 'keydown'];
+        events.forEach(function (evt) { w.addEventListener(evt, loadGtm, { passive: true }); });
+        setTimeout(loadGtm, 3500);
+    })(window, document, 'script', 'dataLayer', '{{ config('services.gtm.id') }}');
+    </script>
     @endif
 
     @routes

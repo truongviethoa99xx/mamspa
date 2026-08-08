@@ -56,16 +56,24 @@ class Service extends Model implements HasMedia
         $this->addMediaCollection('images');
     }
 
-    /** Ảnh đại diện được crop sẵn 2 kích thước: 'card' cho thẻ dịch vụ, 'hero' cho banner trang chi tiết. */
+    /**
+     * Ảnh đại diện được crop sẵn 2 kích thước: 'card' cho thẻ dịch vụ, 'hero' cho banner trang
+     * chi tiết. Xuất .webp (không giữ định dạng gốc JPG/PNG) — nhẹ hơn đáng kể ở cùng chất
+     * lượng, đây là phần lớn "Improve image delivery" mà Lighthouse/PageSpeed hay báo.
+     */
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('card')
             ->fit(Fit::Crop, 800, 800)
+            ->format('webp')
+            ->quality(78)
             ->nonQueued()
             ->performOnCollections('thumbnail');
 
         $this->addMediaConversion('hero')
             ->fit(Fit::Crop, 1920, 960)
+            ->format('webp')
+            ->quality(78)
             ->nonQueued()
             ->performOnCollections('thumbnail');
     }
