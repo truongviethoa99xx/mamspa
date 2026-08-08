@@ -35,11 +35,23 @@ class ProcessGateway implements Gateway
 
     public function dispatch(array $page): ?Response
     {
+        // TODO(debug): remove after confirming SSR reaches proc_open in production —
+        // narrows down whether dispatch() is even being called with the right config
+        // under PHP-FPM (vs CLI, where `tinker` already confirmed the binding/config).
+        Log::info('Inertia SSR: dispatch() called', [
+            'enabled' => config('inertia.ssr.enabled', true),
+            'cached_unavailable' => (bool) Cache::get(self::UNAVAILABLE_CACHE_KEY),
+            'node_binary' => $this->nodeBinary(),
+            'gateway_class' => static::class,
+        ]);
+
         if (! config('inertia.ssr.enabled', true) || Cache::get(self::UNAVAILABLE_CACHE_KEY)) {
             return null;
         }
 
         $bundle = (new BundleDetector)->detect();
+
+        Log::info('Inertia SSR: bundle detected', ['bundle' => $bundle]);
 
         if (! $bundle) {
             return null;
