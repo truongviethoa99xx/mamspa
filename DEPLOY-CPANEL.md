@@ -2,12 +2,14 @@
 
 > cPanel shared hosting **không build được Docker / Vite / Node nền** và **thường
 > không có Composer**. Cách làm: build + cài dependency ở máy local, **commit cả
-> `vendor/` và `public/build/` vào git**, rồi trên cPanel chỉ cần `git pull`.
-> Project đã gỡ bỏ hoàn toàn Docker — chỉ chạy PHP/MySQL thuần.
+> `vendor/`, `public/build/` và `bootstrap/ssr/` vào git**, rồi trên cPanel chỉ
+> cần `git pull`. Project đã gỡ bỏ hoàn toàn Docker — chỉ chạy PHP/MySQL thuần.
 
-> ⚠️ **KHÔNG cần chạy `composer install` / `npm install` trên cPanel.** Vì `vendor/`
-> và `public/build/` đã nằm sẵn trong git, server chỉ pull về là đủ. Mọi lệnh
-> `composer`/`npm` chỉ chạy ở **máy local** trước khi push (xem mục 2).
+> ⚠️ **KHÔNG cần chạy `composer install` / `npm install` trên cPanel.** Vì `vendor/`,
+> `public/build/` và `bootstrap/ssr/` đã nằm sẵn trong git, server chỉ pull về là đủ.
+> Mọi lệnh `composer`/`npm` chỉ chạy ở **máy local** trước khi push (xem mục 2).
+> `node` trên cPanel (biến `INERTIA_SSR_NODE_BINARY`, xem mục 0.1) chỉ dùng để
+> **CHẠY** bundle SSR đã build sẵn, không dùng để build.
 > Nếu thật sự cần Composer trên server: xem mục 9 (tải `composer.phar`).
 
 ---

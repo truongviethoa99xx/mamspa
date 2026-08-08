@@ -1,0 +1,307 @@
+{
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/js/Components/About/AboutApproach.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutExperiences.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutHealingJourneys.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutInvitation.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutMissionVisionJourney.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutPeople.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutPhilosophy.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutSpaces.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/AboutStory.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Components/About/SectionHeading.tsx": [
+    "/build/assets/SectionHeading-D9HrE0zY.js"
+  ],
+  "resources/js/Components/ArtBanner.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/BackToTop.tsx": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Components/Blog/ArticleNav.tsx": [
+    "/build/assets/Show-DWwnJYd2.js"
+  ],
+  "resources/js/Components/Blog/ArticleShare.tsx": [
+    "/build/assets/Show-DWwnJYd2.js"
+  ],
+  "resources/js/Components/Blog/AuthorCard.tsx": [
+    "/build/assets/Show-DWwnJYd2.js"
+  ],
+  "resources/js/Components/Blog/BlogCategoryFilter.tsx": [
+    "/build/assets/Index-Bk25upiY.js"
+  ],
+  "resources/js/Components/Blog/BlogCommitments.tsx": [
+    "/build/assets/Index-Bk25upiY.js"
+  ],
+  "resources/js/Components/Blog/BlogExploreGrid.tsx": [
+    "/build/assets/Index-Bk25upiY.js"
+  ],
+  "resources/js/Components/Blog/BlogFeatured.tsx": [
+    "/build/assets/Index-Bk25upiY.js"
+  ],
+  "resources/js/Components/Blog/BlogNewsletter.tsx": [
+    "/build/assets/BlogNewsletter-C4zpkH5m.js"
+  ],
+  "resources/js/Components/Blog/BlogPostCard.tsx": [
+    "/build/assets/BlogNewsletter-C4zpkH5m.js"
+  ],
+  "resources/js/Components/Blog/ReadingProgressBar.tsx": [
+    "/build/assets/Show-DWwnJYd2.js"
+  ],
+  "resources/js/Components/Blog/TableOfContents.tsx": [
+    "/build/assets/Show-DWwnJYd2.js"
+  ],
+  "resources/js/Components/BookingStrip.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/Breadcrumb.tsx": [
+    "/build/assets/Breadcrumb-CY3ASVHf.js"
+  ],
+  "resources/js/Components/ChatWidget.tsx": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Components/Contact/ContactAboutBanner.tsx": [
+    "/build/assets/Contact-rQI69-V9.js"
+  ],
+  "resources/js/Components/Contact/ContactBranches.tsx": [
+    "/build/assets/Contact-rQI69-V9.js"
+  ],
+  "resources/js/Components/Contact/ContactClosingBanner.tsx": [
+    "/build/assets/Contact-rQI69-V9.js"
+  ],
+  "resources/js/Components/Contact/ContactCommitments.tsx": [
+    "/build/assets/Contact-rQI69-V9.js"
+  ],
+  "resources/js/Components/Contact/ContactInfoForm.tsx": [
+    "/build/assets/Contact-rQI69-V9.js"
+  ],
+  "resources/js/Components/CustomPageBody.tsx": [
+    "/build/assets/Show-B_pIU9uT.js"
+  ],
+  "resources/js/Components/CustomerExperience/CustomerExperienceHero.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/CustomerExperience/ExperienceClosingCta.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/CustomerExperience/ExperienceGallery.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/CustomerExperience/ExperienceTestimonials.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/CustomerExperience/InstagramStrip.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/CustomerExperience/StatsStrip.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/CustomerExperience/WhyGuestsReturn.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/CustomerExperience/icons.ts": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Components/FancySelect.tsx": [
+    "/build/assets/Booking-Di5I7KJ7.js"
+  ],
+  "resources/js/Components/FeaturedServices.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/Footer.tsx": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Components/GalleryPreview.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/Header.tsx": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Components/Hero.tsx": [
+    "/build/assets/Hero-DI8c9mRY.js"
+  ],
+  "resources/js/Components/LanguageSwitcher.tsx": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Components/Menu/MenuBranches.tsx": [
+    "/build/assets/Menu-a9b31n6-.js"
+  ],
+  "resources/js/Components/Menu/MenuContact.tsx": [
+    "/build/assets/Menu-a9b31n6-.js"
+  ],
+  "resources/js/Components/Menu/MenuHero.tsx": [
+    "/build/assets/Menu-a9b31n6-.js"
+  ],
+  "resources/js/Components/Menu/MenuIntro.tsx": [
+    "/build/assets/Menu-a9b31n6-.js"
+  ],
+  "resources/js/Components/Offers/OfferBranches.tsx": [
+    "/build/assets/Offers-CUCB_aj6.js"
+  ],
+  "resources/js/Components/Offers/OfferClosing.tsx": [
+    "/build/assets/Offers-CUCB_aj6.js"
+  ],
+  "resources/js/Components/Offers/OfferHero.tsx": [
+    "/build/assets/Offers-CUCB_aj6.js"
+  ],
+  "resources/js/Components/Offers/OfferNote.tsx": [
+    "/build/assets/Offers-CUCB_aj6.js"
+  ],
+  "resources/js/Components/Philosophy.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/Reviews.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/Services/CategoryClosing.tsx": [
+    "/build/assets/DichVuCategory-FGkRahwy.js"
+  ],
+  "resources/js/Components/Services/CategoryExperienceNote.tsx": [
+    "/build/assets/DichVuCategory-FGkRahwy.js"
+  ],
+  "resources/js/Components/Services/CategoryHero.tsx": [
+    "/build/assets/CategoryHero-EgN955Kt.js"
+  ],
+  "resources/js/Components/Services/CategoryIntro.tsx": [
+    "/build/assets/DichVuCategory-FGkRahwy.js"
+  ],
+  "resources/js/Components/Services/CategoryQuote.tsx": [
+    "/build/assets/DichVuCategory-FGkRahwy.js"
+  ],
+  "resources/js/Components/Services/CategoryTherapyGrid.tsx": [
+    "/build/assets/DichVuCategory-FGkRahwy.js"
+  ],
+  "resources/js/Components/Services/ServiceHero.tsx": [
+    "/build/assets/DichVuDetail-f4XCaiqz.js"
+  ],
+  "resources/js/Components/Services/ServicePillars.tsx": [
+    "/build/assets/DichVuDetail-f4XCaiqz.js"
+  ],
+  "resources/js/Components/Services/ServiceScopeAndTools.tsx": [
+    "/build/assets/DichVuDetail-f4XCaiqz.js"
+  ],
+  "resources/js/Components/Services/ServiceTiers.tsx": [
+    "/build/assets/DichVuDetail-f4XCaiqz.js"
+  ],
+  "resources/js/Components/Services/ServicesClosing.tsx": [
+    "/build/assets/ServicesClosing-aggeXKcb.js"
+  ],
+  "resources/js/Components/Services/ServicesShowcase.tsx": [
+    "/build/assets/DichVu-DtI-2eIb.js"
+  ],
+  "resources/js/Components/Spaces.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/Story.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/WhyUs.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Components/decorative/LeafBranch.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Hooks/useLocale.ts": [
+    "/build/assets/useLocale-CGFjb2L7.js"
+  ],
+  "resources/js/Hooks/useReducedMotion.ts": [
+    "/build/assets/useReveal-CTtvbu38.js"
+  ],
+  "resources/js/Hooks/useReveal.ts": [
+    "/build/assets/useReveal-CTtvbu38.js"
+  ],
+  "resources/js/Layouts/PublicLayout.tsx": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Lib/analytics.ts": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Lib/countryCodes.ts": [
+    "/build/assets/Booking-Di5I7KJ7.js"
+  ],
+  "resources/js/Lib/maps.ts": [
+    "/build/assets/PublicLayout-B7nDyDjV.js"
+  ],
+  "resources/js/Lib/toc.ts": [
+    "/build/assets/Show-DWwnJYd2.js"
+  ],
+  "resources/js/Lib/utils.ts": [
+    "/build/assets/useLocale-CGFjb2L7.js"
+  ],
+  "resources/js/Pages/Blog/Index.tsx": [
+    "/build/assets/Index-Bk25upiY.js"
+  ],
+  "resources/js/Pages/Blog/Show.tsx": [
+    "/build/assets/Show-DWwnJYd2.js"
+  ],
+  "resources/js/Pages/Booking.tsx": [
+    "/build/assets/Booking-Di5I7KJ7.js"
+  ],
+  "resources/js/Pages/ChinhSach/Show.tsx": [
+    "/build/assets/Show-C-hKGcsV.js"
+  ],
+  "resources/js/Pages/Contact.tsx": [
+    "/build/assets/Contact-rQI69-V9.js"
+  ],
+  "resources/js/Pages/CustomPage/Show.tsx": [
+    "/build/assets/Show-B_pIU9uT.js"
+  ],
+  "resources/js/Pages/CustomerExperience.tsx": [
+    "/build/assets/CustomerExperience-D9lzKbeQ.js"
+  ],
+  "resources/js/Pages/DichVu.tsx": [
+    "/build/assets/DichVu-DtI-2eIb.js"
+  ],
+  "resources/js/Pages/DichVuCategory.tsx": [
+    "/build/assets/DichVuCategory-FGkRahwy.js"
+  ],
+  "resources/js/Pages/DichVuDetail.tsx": [
+    "/build/assets/DichVuDetail-f4XCaiqz.js"
+  ],
+  "resources/js/Pages/Gallery.tsx": [
+    "/build/assets/Gallery-buY3zjUE.js"
+  ],
+  "resources/js/Pages/GioiThieu.tsx": [
+    "/build/assets/GioiThieu-4XNvkArj.js"
+  ],
+  "resources/js/Pages/Home.tsx": [
+    "/build/assets/Home-DI9rmyog.js"
+  ],
+  "resources/js/Pages/Menu.tsx": [
+    "/build/assets/Menu-a9b31n6-.js"
+  ],
+  "resources/js/Pages/MyBookings.tsx": [
+    "/build/assets/MyBookings-BESu3jk9.js"
+  ],
+  "resources/js/Pages/NotFound.tsx": [
+    "/build/assets/NotFound-DZKO9COk.js"
+  ],
+  "resources/js/Pages/Offers.tsx": [
+    "/build/assets/Offers-CUCB_aj6.js"
+  ],
+  "resources/js/i18n/en.json": [],
+  "resources/js/i18n/index.ts": [],
+  "resources/js/i18n/ja.json": [],
+  "resources/js/i18n/ko.json": [],
+  "resources/js/i18n/vi.json": [],
+  "resources/js/i18n/zh.json": [],
+  "resources/js/ssr.tsx": []
+}
