@@ -17,4 +17,10 @@ export default defineConfig({
             '@': path.resolve(__dirname, 'resources/js'),
         },
     },
+    ssr: {
+        // cPanel deploy commits bootstrap/ssr/ instead of running `npm install` on the
+        // server (see DEPLOY-CPANEL.md) — the SSR bundle has no node_modules to resolve
+        // bare imports (react, etc.) against at runtime, so everything must be bundled in.
+        noExternal: true,
+    },
 });
