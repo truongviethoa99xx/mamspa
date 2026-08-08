@@ -55,7 +55,13 @@ export default function Home({
 }: Props) {
     return (
         <PublicLayout>
-            <Head title="Trang chủ" />
+            <Head title="Trang chủ">
+                <meta
+                    name="description"
+                    content="Mầm Spa — spa trị liệu tại Đà Nẵng với 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng. Massage body, chăm sóc da mặt, head spa và các liệu trình chăm sóc sức khoẻ theo giá trị trị liệu Việt."
+                />
+                {hero.image && <link rel="preload" as="image" href={hero.image} fetchPriority="high" />}
+            </Head>
             {sectionVisibility.hero && <Hero data={hero} />}
             {sectionVisibility.story && <Story data={story} />}
             {sectionVisibility.philosophy && <Philosophy data={philosophy} />}

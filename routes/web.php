@@ -31,6 +31,9 @@ Route::get('/uu-dai', [OfferController::class, 'index'])->name('offers');
 // /dich-vu/{root}/{service}/ hoặc /dich-vu/{root}/{child}/{service}/.
 Route::get('/dich-vu/{a}/{b?}/{c?}', [DichVuController::class, 'browse'])->name('dichvu.browse');
 Route::get('/services', fn () => redirect()->away(url('/dich-vu').'/', 301))->name('services.index');
+// URL "bảng giá" cũ đã được Google index nhưng không còn tồn tại trong hệ thống hiện tại
+// (giá hiển thị theo từng dịch vụ ở /dich-vu/) → redirect thay vì để 404.
+Route::get('/bang-gia', fn () => redirect()->away(url('/dich-vu').'/', 301))->name('bang-gia.redirect');
 // URL dịch vụ cũ (phẳng, không danh mục) → URL chuẩn có tiền tố danh mục.
 Route::get('/services/{service}', function (string $service) {
     $target = Service::with('category.parent')->where('slug', $service)->first()?->url ?? "/dich-vu/{$service}/";

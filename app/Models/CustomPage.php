@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Support\HomeImageOptimizer;
 use Illuminate\Database\Eloquent\Model;
 
 class CustomPage extends Model
 {
     protected $fillable = [
         'slug',
+        'meta_description',
         'is_published',
         'banner_title',
         'banner_subtitle',
@@ -31,6 +33,7 @@ class CustomPage extends Model
 
     protected $casts = [
         'is_published' => 'boolean',
+        'meta_description' => 'array',
         'banner_title' => 'array',
         'banner_subtitle' => 'array',
         'banner_image_alt' => 'array',
@@ -42,5 +45,11 @@ class CustomPage extends Model
     public function scopePublished($query)
     {
         return $query->where('is_published', true);
+    }
+
+    /** Sinh bản .webp đã resize cho banner vừa tải lên (chỉ tạo file mới, không đụng DB). */
+    protected static function booted(): void
+    {
+        static::saved(fn (self $page) => HomeImageOptimizer::forCustomPage($page));
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\HomePageContent;
 use App\Models\Service;
 use App\Models\ServiceCategory;
-use Illuminate\Support\Facades\Storage;
+use App\Support\OptimizedImageUrl;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -306,10 +306,6 @@ class HomeController extends Controller
 
     private function publicUrl(?string $path): ?string
     {
-        if (! $path || str_starts_with($path, '/') || str_starts_with($path, 'http')) {
-            return $path;
-        }
-
-        return Storage::disk('public')->url($path);
+        return OptimizedImageUrl::resolve($path);
     }
 }

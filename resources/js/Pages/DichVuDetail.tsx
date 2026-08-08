@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr, stripTags } from '@/Lib/utils';
+import { tr, stripTags, truncate } from '@/Lib/utils';
 import { type BreadcrumbItem } from '@/Components/Breadcrumb';
 import { ServiceHero } from '@/Components/Services/ServiceHero';
 import { ServicePillars, type ServicePillar } from '@/Components/Services/ServicePillars';
@@ -45,6 +45,7 @@ const SERVICES_CRUMB: BreadcrumbItem = { name: 'Dịch vụ', url: '/dich-vu/' }
 export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
     const locale = useLocale();
     const serviceName = stripTags(tr(service.name, locale));
+    const serviceDescription = truncate(stripTags(tr(service.short_description, locale)), 160);
 
     const breadcrumbItems: BreadcrumbItem[] = [
         HOME_CRUMB,
@@ -55,7 +56,9 @@ export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
 
     return (
         <PublicLayout>
-            <Head title={serviceName || 'Dịch vụ'} />
+            <Head title={serviceName || 'Dịch vụ'}>
+                {serviceDescription && <meta name="description" content={serviceDescription} />}
+            </Head>
             <ServiceHero
                 breadcrumb={breadcrumbItems}
                 data={{

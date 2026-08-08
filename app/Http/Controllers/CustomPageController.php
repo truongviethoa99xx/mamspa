@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomPage;
-use Illuminate\Support\Facades\Storage;
+use App\Support\OptimizedImageUrl;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -19,6 +19,7 @@ class CustomPageController extends Controller
         return Inertia::render('CustomPage/Show', [
             'banner' => $this->banner($page),
             'bannerVisible' => (bool) $page->banner_visible,
+            'metaDescription' => $page->meta_description,
             'body' => [
                 'html' => $page->body_html,
                 'css' => $page->body_css,
@@ -53,10 +54,6 @@ class CustomPageController extends Controller
 
     private function publicUrl(?string $path): ?string
     {
-        if (! $path || str_starts_with($path, '/') || str_starts_with($path, 'http')) {
-            return $path;
-        }
-
-        return Storage::disk('public')->url($path);
+        return OptimizedImageUrl::resolve($path);
     }
 }

@@ -61,6 +61,13 @@ class CustomPageResource extends Resource
                             ->label('Xuất bản (cho phép truy cập công khai)')
                             ->default(false)
                             ->helperText('Tắt sẽ trả về 404 khi truy cập URL này, nội dung vẫn được giữ lại để publish sau.'),
+                        TranslatableField::group(
+                            'meta_description',
+                            as: 'textarea',
+                            label: 'Meta description (SEO)',
+                            rows: 2,
+                            example: 'Mô tả ngắn xuất hiện trên kết quả tìm kiếm Google, khoảng 150-160 ký tự',
+                        ),
                     ])
                     ->columns(2),
 

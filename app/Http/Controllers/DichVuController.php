@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServicePageContent;
+use App\Support\OptimizedImageUrl;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -409,10 +409,6 @@ class DichVuController extends Controller
 
     private function publicUrl(?string $path): ?string
     {
-        if (! $path || str_starts_with($path, '/') || str_starts_with($path, 'http')) {
-            return $path;
-        }
-
-        return Storage::disk('public')->url($path);
+        return OptimizedImageUrl::resolve($path);
     }
 }

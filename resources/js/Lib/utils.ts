@@ -42,6 +42,16 @@ export function stripTags(html: string): string {
     return html.replace(/<[^>]+>/g, '');
 }
 
+/** Cắt chữ về tối đa `maxLength` ký tự, dừng ở khoảng trắng gần nhất (không cắt giữa từ) — dùng cho meta description. */
+export function truncate(text: string, maxLength: number): string {
+    if (text.length <= maxLength) return text;
+
+    const cut = text.slice(0, maxLength);
+    const lastSpace = cut.lastIndexOf(' ');
+
+    return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd() + '…';
+}
+
 export function tr(value: unknown, locale: string = 'vi'): string {
     if (typeof value === 'string') return value;
     if (value && typeof value === 'object' && locale in value) {

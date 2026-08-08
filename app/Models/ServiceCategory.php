@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\HomeImageOptimizer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -101,5 +102,11 @@ class ServiceCategory extends Model
         return $this->parent
             ? "/dich-vu/{$this->parent->slug}/{$this->slug}/"
             : "/dich-vu/{$this->slug}/";
+    }
+
+    /** Sinh bản .webp đã resize cho ảnh vừa tải lên (chỉ tạo file mới, không đụng DB). */
+    protected static function booted(): void
+    {
+        static::saved(fn (self $category) => HomeImageOptimizer::forServiceCategory($category));
     }
 }

@@ -17,9 +17,9 @@ STAMP="$(date +%Y%m%d-%H%M%S)"
 OUT_DIR="$ROOT/dist"
 ARTIFACT="$OUT_DIR/mahaspa-cpanel-$STAMP.zip"
 
-echo "▶ 1/4  Build frontend assets (Vite, client-only)…"
+echo "▶ 1/4  Build frontend assets (Vite, client + SSR)…"
 npm ci
-npm run build
+npm run build:ssr
 
 echo "▶ 2/4  Cài vendor production (no-dev, optimized autoloader)…"
 composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist

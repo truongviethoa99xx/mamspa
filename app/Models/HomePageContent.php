@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\HomeImageOptimizer;
 use Illuminate\Database\Eloquent\Model;
 
 class HomePageContent extends Model
@@ -141,5 +142,11 @@ class HomePageContent extends Model
         return static::first() ?? static::create([
             'testimonials' => [],
         ]);
+    }
+
+    /** Sinh bản .webp đã resize cho ảnh vừa tải lên (chỉ tạo file mới, không đụng DB). */
+    protected static function booted(): void
+    {
+        static::saved(fn (self $content) => HomeImageOptimizer::forHomePageContent($content));
     }
 }

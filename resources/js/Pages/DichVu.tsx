@@ -18,7 +18,12 @@ interface Props {
 export default function DichVu({ hero, showcase, closing, sectionVisibility }: Props) {
     return (
         <PublicLayout>
-            <Head title="Dịch vụ" />
+            <Head title="Dịch vụ">
+                <meta
+                    name="description"
+                    content="Khám phá các liệu trình trị liệu tại Mầm Spa: massage body, chăm sóc da mặt, head spa và các gói combo — theo giá trị trị liệu Việt kết hợp chuyên môn hiện đại."
+                />
+            </Head>
             {sectionVisibility.hero && <Hero data={hero} />}
             {sectionVisibility.showcase && <ServicesShowcase data={showcase} />}
             {sectionVisibility.closing && <ServicesClosing data={closing} />}

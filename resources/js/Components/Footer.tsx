@@ -100,10 +100,12 @@ export function Footer() {
             <div className="relative mx-auto max-w-7xl px-6 2xl:max-w-[1440px]">
                 {/* CTA band */}
                 <div className="flex flex-col gap-6 border-b border-white/10 py-9 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:py-11">
-                    <h2 className="font-serif text-[28px] leading-tight sm:text-4xl">
+                    {/* h2/h3.. mặc định lấy màu text-subheading (#556B3F) từ app.css cho nền sáng —
+                        phải ghi đè tường minh ở đây vì h2 này nằm trên nền tối (bg-maha-900). */}
+                    <h2 className="font-serif text-[28px] leading-tight text-maha-50 sm:text-4xl">
                         {t('footer.ctaLine1')}
                         <br />
-                        <em className="not-italic text-maha-400">{t('footer.ctaLine2')}</em>
+                        <em className="not-italic text-maha-300">{t('footer.ctaLine2')}</em>
                     </h2>
                     <a
                         href={`tel:${hotline.replace(/[^\d+]/g, '')}`}
@@ -132,7 +134,7 @@ export function Footer() {
                                 <span className="font-serif text-2xl uppercase tracking-[0.2em] text-maha-50">{brandName}</span>
                             )}
                         </Link>
-                        <p className="mt-2 font-serif text-base italic text-maha-400">{tagline}</p>
+                        <p className="mt-2 font-serif text-base italic text-maha-300">{tagline}</p>
                         <p className="mt-5 max-w-[34ch] text-sm font-light leading-relaxed text-maha-50/65">{description}</p>
 
                         <ul className="mt-6 flex flex-wrap gap-2.5">
@@ -219,22 +221,22 @@ export function Footer() {
                 </div>
 
                 {/* Bottom bar */}
-                <div className="flex flex-col items-center gap-3 border-t border-white/10 py-6 text-center text-xs text-maha-50/45 sm:flex-row sm:justify-between sm:text-left">
+                <div className="flex flex-col items-center gap-3 border-t border-white/10 py-6 text-center text-xs text-maha-50/70 sm:flex-row sm:justify-between sm:text-left">
                     <p>{t('footer.rights', { year })}</p>
                     <nav className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:justify-end">
-                        <Link href="/chinh-sach-bao-mat/" className="transition-colors hover:text-maha-400">
+                        <Link href="/chinh-sach-bao-mat/" className="inline-block py-1.5 transition-colors hover:text-maha-400">
                             {t('footer.privacy')}
                         </Link>
                         <span>•</span>
-                        <Link href="/dieu-khoan-dich-vu/" className="transition-colors hover:text-maha-400">
+                        <Link href="/dieu-khoan-dich-vu/" className="inline-block py-1.5 transition-colors hover:text-maha-400">
                             {t('footer.terms')}
                         </Link>
                         <span>•</span>
-                        <Link href="/ho-tro-khach-hang/" className="transition-colors hover:text-maha-400">
+                        <Link href="/ho-tro-khach-hang/" className="inline-block py-1.5 transition-colors hover:text-maha-400">
                             {t('footer.support')}
                         </Link>
                         <span>•</span>
-                        <Link href="/luu-y-dich-vu/" className="transition-colors hover:text-maha-400">
+                        <Link href="/luu-y-dich-vu/" className="inline-block py-1.5 transition-colors hover:text-maha-400">
                             {t('footer.guidelines')}
                         </Link>
                     </nav>

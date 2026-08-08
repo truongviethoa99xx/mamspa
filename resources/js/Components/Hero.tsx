@@ -53,7 +53,13 @@ export function Hero({ data, heightClassName, showDivider }: HeroProps) {
                 role="img" on the section itself would've hidden the heading/links below
                 from screen readers, so the alt lives on the image element instead. */}
             {hasImage && !isVideo && (
-                <img src={image} alt={imageAlt} className="absolute inset-0 z-0 h-full w-full object-cover" />
+                <img
+                    src={image}
+                    alt={imageAlt}
+                    className="absolute inset-0 z-0 h-full w-full object-cover"
+                    fetchPriority="high"
+                    decoding="async"
+                />
             )}
             {isVideo && image && (
                 <video

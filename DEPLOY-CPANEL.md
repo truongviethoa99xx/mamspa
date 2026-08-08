@@ -18,12 +18,32 @@
 |---|---|---|
 | `public/.htaccess` | **trống → 404 mọi route** | rewrite chuẩn Laravel + HTTPS + cache |
 | `.htaccess` gốc | không có | route vào `/public` khi không đổi được document root |
-| Build script | `vite build && vite build --ssr` | `vite build` (bỏ SSR — cPanel không chạy Node nền) |
+| Build script | `vite build && vite build --ssr` | `npm run build:ssr` (client + SSR, xem mục 0.1) |
 | Cache / Session / Queue | `redis` | `database` / `file` / `database` (xem `.env.cpanel.example`) |
 | Đóng gói | — | `scripts/deploy/build-cpanel.sh` tạo zip upload |
 | Docker | `Dockerfile`, `docker-compose.yml`, `docker/` | **đã xoá toàn bộ** |
 
-SSR không được dùng ở runtime (blade dùng `@inertia` client-side) nên bỏ `--ssr` an toàn.
+### 0.1. SSR trên cPanel (không cần daemon)
+
+> Trước đây SSR bị bỏ hoàn toàn vì cPanel shared hosting không chạy được tiến
+> trình Node nền liên tục (`php artisan inertia:start-ssr` cần 1 process sống
+> mãi). Giờ dùng `App\Support\Ssr\ProcessGateway` thay cho `HttpGateway` mặc
+> định của Inertia — **spawn 1 tiến trình `node` MỚI cho MỖI request** (qua
+> `proc_open`) thay vì gọi HTTP tới 1 daemon có sẵn. Không cần daemon, không
+> cần Supervisor/PM2.
+
+**Đánh đổi:** cộng thêm ~150-250ms/request (khởi động Node) so với client-only.
+Nếu `proc_open` bị host chặn hoặc `node` không chạy được, gateway tự động
+fallback êm về client-side rendering (không lỗi 500) — xem bảng sự cố ở mục 9.
+
+**Cần cấu hình `.env`:**
+```
+INERTIA_SSR_NODE_BINARY=/opt/cpanel/ea-nodejs20/bin/node
+```
+PATH của user chạy PHP-FPM trên cPanel thường **không** có `node` — phải dùng
+đường dẫn tuyệt đối. Tìm bằng cách vào cPanel → *Terminal* → `which node`
+(hoặc hỏi hosting provider đường dẫn Node.js runtime). Nếu bỏ trống, mặc định
+`node` (chỉ chạy được nếu PATH của PHP-FPM tình cờ có sẵn — hiếm khi đúng).
 
 ---
 
@@ -46,8 +66,9 @@ SSR không được dùng ở runtime (blade dùng `@inertia` client-side) nên 
 bash scripts/deploy/build-cpanel.sh
 ```
 
-Script sẽ: `npm ci && npm run build` → `composer install --no-dev --optimize-autoloader`
-→ xoá `public/hot` → nén `dist/mamspa-cpanel-<timestamp>.zip`.
+Script sẽ: `npm ci && npm run build:ssr` → `composer install --no-dev --optimize-autoloader`
+→ xoá `public/hot` → nén `dist/mamspa-cpanel-<timestamp>.zip`. `build:ssr` tạo cả
+`public/build/` (client) lẫn `bootstrap/ssr/ssr.js` (SSR — xem mục 0.1).
 
 > Đã có sẵn `vendor/` và `public/build/` production trong zip vì server **không**
 > cài Composer / build Vite được.
@@ -216,6 +237,7 @@ cPanel chạy PHP dưới user của bạn nên `755/644` là đủ (đừng dù
 | **Mail không gửi** | Sai `MAIL_*`. Shared hosting thường chặn SMTP ngoài — ưu tiên SMTP nội bộ host (port 465/ssl) hoặc Mailgun/SendGrid API. |
 | **`composer: command not found`** | **Bình thường — không cần Composer trên cPanel.** `vendor/` đã có sẵn qua `git pull`. Đừng chạy `composer install`. Nếu thật sự cần, dùng `composer.phar` (ngay dưới). |
 | **Class mới (vừa thêm ở local) báo "not found" trên server** | Quên build lại autoloader trước khi push. Ở **local** chạy `composer dump-autoload --no-dev --optimize` rồi commit `vendor/composer/*` + push. |
+| **Nội dung trang vẫn trống khi tải HTML gốc (view-source / crawler)** dù đã deploy SSR | Kiểm tra `storage/logs/laravel.log` tìm dòng `Inertia SSR:`. Thường do (a) thiếu/sai `INERTIA_SSR_NODE_BINARY` — chạy `which node` trong Terminal cPanel rồi set đúng đường dẫn tuyệt đối; (b) host chặn `proc_open` (nhiều shared host tắt vì bảo mật) — nếu vậy SSR không khả dụng trên host này, site vẫn hoạt động bình thường (tự fallback client-render) nhưng cần đổi gói hosting nếu bắt buộc phải có SSR; (c) quên chạy `npm run build:ssr` (thiếu `bootstrap/ssr/ssr.js`). |
 
 ### 9.1. Nếu thật sự cần Composer trên cPanel
 
@@ -238,8 +260,8 @@ php ~/composer.phar install --no-dev --optimize-autoloader
 source được track):
 
 ```bash
-composer install --no-dev --optimize-autoloader   # cập nhật vendor/
-npm install --include=dev && npm run build         # cập nhật public/build/
+composer install --no-dev --optimize-autoloader     # cập nhật vendor/
+npm install --include=dev && npm run build:ssr       # cập nhật public/build/ + bootstrap/ssr/
 rm -f public/hot
 git add -A && git commit -m "deploy: rebuild vendor + assets" && git push origin main
 ```

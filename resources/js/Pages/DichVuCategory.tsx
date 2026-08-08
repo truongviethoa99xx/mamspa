@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
-import { tr, stripTags } from '@/Lib/utils';
+import { tr, stripTags, truncate } from '@/Lib/utils';
 import { type BreadcrumbItem } from '@/Components/Breadcrumb';
 import { CategoryHero } from '@/Components/Services/CategoryHero';
 import { CategoryIntro, type CategoryPillar } from '@/Components/Services/CategoryIntro';
@@ -47,6 +47,7 @@ const SERVICES_CRUMB: BreadcrumbItem = { name: 'Dịch vụ', url: '/dich-vu/' }
 export default function DichVuCategory({ category, breadcrumb, services, closing }: Props) {
     const locale = useLocale();
     const categoryName = stripTags(tr(category.name, locale));
+    const categoryDescription = truncate(stripTags(tr(category.description, locale)), 160);
 
     const breadcrumbItems: BreadcrumbItem[] = [
         HOME_CRUMB,
@@ -57,7 +58,9 @@ export default function DichVuCategory({ category, breadcrumb, services, closing
 
     return (
         <PublicLayout mainClassName="bg-[#f5f2ed]">
-            <Head title={categoryName || 'Dịch vụ'} />
+            <Head title={categoryName || 'Dịch vụ'}>
+                {categoryDescription && <meta name="description" content={categoryDescription} />}
+            </Head>
             <CategoryHero
                 breadcrumb={breadcrumbItems}
                 data={{
