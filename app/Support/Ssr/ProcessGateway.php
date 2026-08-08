@@ -35,36 +35,29 @@ class ProcessGateway implements Gateway
 
     public function dispatch(array $page): ?Response
     {
-        // TODO(debug): remove after confirming SSR reaches proc_open in production —
-        // narrows down whether dispatch() is even being called with the right config
-        // under PHP-FPM (vs CLI, where `tinker` already confirmed the binding/config).
-        Log::info('Inertia SSR: dispatch() called', [
-            'enabled' => config('inertia.ssr.enabled', true),
-            'cached_unavailable' => (bool) Cache::get(self::UNAVAILABLE_CACHE_KEY),
-            'node_binary' => $this->nodeBinary(),
-            'gateway_class' => static::class,
-        ]);
-
         if (! config('inertia.ssr.enabled', true) || Cache::get(self::UNAVAILABLE_CACHE_KEY)) {
             return null;
         }
 
         $bundle = (new BundleDetector)->detect();
 
-        Log::info('Inertia SSR: bundle detected', ['bundle' => $bundle]);
-
         if (! $bundle) {
             return null;
         }
 
         try {
-            $process = new Process([$this->nodeBinary(), $bundle]);
+            // --no-experimental-fetch: our SSR script never calls fetch()/Request/Response,
+            // but Node 18+ lazily instantiates undici's llhttp WASM parser the moment those
+            // globals are touched anywhere in the module graph — and on this host's memory-
+            // constrained environment that WASM allocation throws "RangeError: Out of memory".
+            // Disabling the flag entirely sidesteps it since nothing here needs fetch.
+            $process = new Process([$this->nodeBinary(), '--no-experimental-fetch', $bundle]);
             $process->setTimeout(self::TIMEOUT_SECONDS);
             $process->setInput(json_encode($page));
             $process->run();
 
             if (! $process->isSuccessful()) {
-                Log::warning('Inertia SSR: node process exited with an error', [
+                Log::error('Inertia SSR: node process exited with an error', [
                     'exitCode' => $process->getExitCode(),
                     'stderr' => $process->getErrorOutput(),
                 ]);
@@ -75,7 +68,7 @@ class ProcessGateway implements Gateway
             $result = json_decode($process->getOutput(), true);
 
             if (! is_array($result) || ! isset($result['head'], $result['body'])) {
-                Log::warning('Inertia SSR: unexpected node output', ['output' => $process->getOutput()]);
+                Log::error('Inertia SSR: unexpected node output', ['output' => $process->getOutput()]);
 
                 return null;
             }
@@ -84,13 +77,13 @@ class ProcessGateway implements Gateway
         } catch (ProcessException $e) {
             // proc_open bị host chặn, hoặc node binary không chạy được.
             Cache::put(self::UNAVAILABLE_CACHE_KEY, true, self::UNAVAILABLE_CACHE_TTL);
-            Log::warning('Inertia SSR: node process could not be started, falling back to client-side rendering', [
+            Log::error('Inertia SSR: node process could not be started, falling back to client-side rendering', [
                 'error' => $e->getMessage(),
             ]);
 
             return null;
         } catch (Throwable $e) {
-            Log::warning('Inertia SSR: unexpected error, falling back to client-side rendering', [
+            Log::error('Inertia SSR: unexpected error, falling back to client-side rendering', [
                 'error' => $e->getMessage(),
             ]);
 
