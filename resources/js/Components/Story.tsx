@@ -38,7 +38,13 @@ export function Story({ data }: { data: StoryData }) {
             className={cn(className, 'relative isolate h-[calc(85vh/1.5)] overflow-hidden bg-[#ece1db] sm:h-[50vh]')}
         >
             {data.image && (
-                <img src={data.image} alt={imageAlt} className="absolute inset-0 z-0 h-full w-full object-cover" />
+                <img
+                    src={data.image}
+                    alt={imageAlt}
+                    className="absolute inset-0 z-0 h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                />
             )}
 
             <div className="relative z-10 flex h-full w-full flex-col justify-center px-5 py-10 sm:px-10 md:w-1/2 md:px-12 lg:w-1/3 lg:px-16">

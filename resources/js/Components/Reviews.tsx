@@ -188,6 +188,8 @@ export function Reviews({ data }: { data: ReviewsData }) {
                                         src={video.thumbnail}
                                         alt="Video trải nghiệm khách hàng"
                                         className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 )}
                                 <div className="absolute inset-0 bg-black/30" />

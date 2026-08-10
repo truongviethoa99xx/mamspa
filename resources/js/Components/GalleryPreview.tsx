@@ -39,6 +39,8 @@ export function GalleryPreview({ data }: { data: GalleryPreviewData }) {
                                 src={image.src}
                                 alt={tr(image.alt, locale) || 'Không gian Mầm Spa'}
                                 className="h-full w-full object-cover"
+                                loading="lazy"
+                                decoding="async"
                             />
                         </div>
                     ))}

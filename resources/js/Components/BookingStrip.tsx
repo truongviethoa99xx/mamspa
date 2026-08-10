@@ -21,7 +21,13 @@ export function BookingStrip({ data }: { data: BookingStripData }) {
         <section ref={ref} className={cn(className, 'relative overflow-hidden bg-maha-800')}>
             {data.image && (
                 <>
-                    <img src={data.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                    <img
+                        src={data.image}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                    />
                     <div className="absolute inset-0 bg-maha-900/45" />
                 </>
             )}

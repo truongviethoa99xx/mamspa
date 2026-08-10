@@ -33,7 +33,13 @@ export function ArtBanner({ data }: { data: ArtBannerData }) {
             <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="relative aspect-[4/3] bg-maha-200 md:aspect-auto">
                     {data.image && (
-                        <img src={data.image} alt={imageAlt} className="absolute inset-0 h-full w-full object-cover" />
+                        <img
+                            src={data.image}
+                            alt={imageAlt}
+                            className="absolute inset-0 h-full w-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                        />
                     )}
                 </div>
                 <div className="flex flex-col justify-center bg-[#f4eae1] px-6 py-10 sm:px-10 sm:py-12 lg:px-16">

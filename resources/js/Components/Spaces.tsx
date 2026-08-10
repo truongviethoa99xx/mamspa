@@ -67,6 +67,8 @@ export function Spaces({ data }: { data: SpacesData }) {
                                         src={item.image}
                                         alt={imageAlt}
                                         className="absolute inset-0 z-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 )}
 
