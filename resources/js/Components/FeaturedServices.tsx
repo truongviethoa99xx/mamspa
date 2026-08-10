@@ -80,7 +80,7 @@ export function FeaturedServices({ data }: { data: FeaturedServicesData }) {
                                         card above is already a <Link>, and nesting a real
                                         <button>/<a> inside it would be invalid, non-focusable
                                         markup. */}
-                                    <span className="mt-auto inline-flex w-fit items-center gap-2 self-start rounded-md border border-heading px-4 py-2 text-sm font-medium text-heading transition-colors group-hover:bg-heading group-hover:text-white">
+                                    <span className="mt-5 inline-flex w-fit items-center gap-2 self-start rounded-md bg-heading px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-opacity group-hover:opacity-90">
                                         Xem thêm
                                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                                     </span>
