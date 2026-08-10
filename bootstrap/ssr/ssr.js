@@ -29115,7 +29115,7 @@ var type = TypeError;
 var uri = URIError;
 var abs$1 = Math.abs;
 var floor$1 = Math.floor;
-var max$1 = Math.max;
+var max$2 = Math.max;
 var min$1 = Math.min;
 var pow$1 = Math.pow;
 var round$1 = Math.round;
@@ -29244,99 +29244,78 @@ function requireObject_getPrototypeOf() {
   Object_getPrototypeOf = $Object2.getPrototypeOf || null;
   return Object_getPrototypeOf;
 }
-var implementation;
-var hasRequiredImplementation;
-function requireImplementation() {
-  if (hasRequiredImplementation) return implementation;
-  hasRequiredImplementation = 1;
-  var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
-  var toStr2 = Object.prototype.toString;
-  var max2 = Math.max;
-  var funcType = "[object Function]";
-  var concatty = function concatty2(a, b2) {
-    var arr2 = [];
-    for (var i = 0; i < a.length; i += 1) {
-      arr2[i] = a[i];
+var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
+var toStr$1 = Object.prototype.toString;
+var max$1 = Math.max;
+var funcType = "[object Function]";
+var concatty = function concatty2(a, b2) {
+  var arr2 = [];
+  for (var i = 0; i < a.length; i += 1) {
+    arr2[i] = a[i];
+  }
+  for (var j = 0; j < b2.length; j += 1) {
+    arr2[j + a.length] = b2[j];
+  }
+  return arr2;
+};
+var slicy = function slicy2(arrLike, offset) {
+  var arr2 = [];
+  for (var i = offset, j = 0; i < arrLike.length; i += 1, j += 1) {
+    arr2[j] = arrLike[i];
+  }
+  return arr2;
+};
+var joiny = function(arr2, joiner) {
+  var str = "";
+  for (var i = 0; i < arr2.length; i += 1) {
+    str += arr2[i];
+    if (i + 1 < arr2.length) {
+      str += joiner;
     }
-    for (var j = 0; j < b2.length; j += 1) {
-      arr2[j + a.length] = b2[j];
-    }
-    return arr2;
-  };
-  var slicy = function slicy2(arrLike, offset) {
-    var arr2 = [];
-    for (var i = offset, j = 0; i < arrLike.length; i += 1, j += 1) {
-      arr2[j] = arrLike[i];
-    }
-    return arr2;
-  };
-  var joiny = function(arr2, joiner) {
-    var str = "";
-    for (var i = 0; i < arr2.length; i += 1) {
-      str += arr2[i];
-      if (i + 1 < arr2.length) {
-        str += joiner;
-      }
-    }
-    return str;
-  };
-  implementation = function bind2(that) {
-    var target = this;
-    if (typeof target !== "function" || toStr2.apply(target) !== funcType) {
-      throw new TypeError(ERROR_MESSAGE + target);
-    }
-    var args = slicy(arguments, 1);
-    var bound;
-    var binder = function() {
-      if (this instanceof bound) {
-        var result = target.apply(
-          this,
-          concatty(args, arguments)
-        );
-        if (Object(result) === result) {
-          return result;
-        }
-        return this;
-      }
-      return target.apply(
-        that,
+  }
+  return str;
+};
+var implementation$1 = function bind(that) {
+  var target = this;
+  if (typeof target !== "function" || toStr$1.apply(target) !== funcType) {
+    throw new TypeError(ERROR_MESSAGE + target);
+  }
+  var args = slicy(arguments, 1);
+  var bound;
+  var binder = function() {
+    if (this instanceof bound) {
+      var result = target.apply(
+        this,
         concatty(args, arguments)
       );
-    };
-    var boundLength = max2(0, target.length - args.length);
-    var boundArgs = [];
-    for (var i = 0; i < boundLength; i++) {
-      boundArgs[i] = "$" + i;
+      if (Object(result) === result) {
+        return result;
+      }
+      return this;
     }
-    bound = Function("binder", "return function (" + joiny(boundArgs, ",") + "){ return binder.apply(this,arguments); }")(binder);
-    if (target.prototype) {
-      var Empty = function Empty2() {
-      };
-      Empty.prototype = target.prototype;
-      bound.prototype = new Empty();
-      Empty.prototype = null;
-    }
-    return bound;
+    return target.apply(
+      that,
+      concatty(args, arguments)
+    );
   };
-  return implementation;
-}
-var functionBind;
-var hasRequiredFunctionBind;
-function requireFunctionBind() {
-  if (hasRequiredFunctionBind) return functionBind;
-  hasRequiredFunctionBind = 1;
-  var implementation2 = requireImplementation();
-  functionBind = Function.prototype.bind || implementation2;
-  return functionBind;
-}
-var functionCall;
-var hasRequiredFunctionCall;
-function requireFunctionCall() {
-  if (hasRequiredFunctionCall) return functionCall;
-  hasRequiredFunctionCall = 1;
-  functionCall = Function.prototype.call;
-  return functionCall;
-}
+  var boundLength = max$1(0, target.length - args.length);
+  var boundArgs = [];
+  for (var i = 0; i < boundLength; i++) {
+    boundArgs[i] = "$" + i;
+  }
+  bound = Function("binder", "return function (" + joiny(boundArgs, ",") + "){ return binder.apply(this,arguments); }")(binder);
+  if (target.prototype) {
+    var Empty = function Empty2() {
+    };
+    Empty.prototype = target.prototype;
+    bound.prototype = new Empty();
+    Empty.prototype = null;
+  }
+  return bound;
+};
+var implementation = implementation$1;
+var functionBind = Function.prototype.bind || implementation;
+var functionCall = Function.prototype.call;
 var functionApply;
 var hasRequiredFunctionApply;
 function requireFunctionApply() {
@@ -29346,14 +29325,14 @@ function requireFunctionApply() {
   return functionApply;
 }
 var reflectApply = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
-var bind$2 = requireFunctionBind();
+var bind$2 = functionBind;
 var $apply$1 = requireFunctionApply();
-var $call$2 = requireFunctionCall();
+var $call$2 = functionCall;
 var $reflectApply = reflectApply;
 var actualApply = $reflectApply || bind$2.call($call$2, $apply$1);
-var bind$1 = requireFunctionBind();
+var bind$1 = functionBind;
 var $TypeError$6 = type;
-var $call$1 = requireFunctionCall();
+var $call$1 = functionCall;
 var $actualApply = actualApply;
 var callBindApplyHelpers = function callBindBasic(args) {
   if (args.length < 1 || typeof args[0] !== "function") {
@@ -29419,8 +29398,8 @@ function requireHasown() {
   hasRequiredHasown = 1;
   var call = Function.prototype.call;
   var $hasOwn = Object.prototype.hasOwnProperty;
-  var bind2 = requireFunctionBind();
-  hasown = bind2.call(call, $hasOwn);
+  var bind3 = functionBind;
+  hasown = bind3.call(call, $hasOwn);
   return hasown;
 }
 var undefined$1;
@@ -29434,7 +29413,7 @@ var $TypeError$5 = type;
 var $URIError = uri;
 var abs = abs$1;
 var floor = floor$1;
-var max = max$1;
+var max = max$2;
 var min = min$1;
 var pow = pow$1;
 var round = round$1;
@@ -29468,7 +29447,7 @@ var getProto = requireGetProto();
 var $ObjectGPO = requireObject_getPrototypeOf();
 var $ReflectGPO = requireReflect_getPrototypeOf();
 var $apply = requireFunctionApply();
-var $call = requireFunctionCall();
+var $call = functionCall;
 var needsEval = {};
 var TypedArray = typeof Uint8Array === "undefined" || !getProto ? undefined$1 : getProto(Uint8Array);
 var INTRINSICS = {
@@ -29639,13 +29618,13 @@ var LEGACY_ALIASES = {
   "%WeakMapPrototype%": ["WeakMap", "prototype"],
   "%WeakSetPrototype%": ["WeakSet", "prototype"]
 };
-var bind = requireFunctionBind();
+var bind2 = functionBind;
 var hasOwn$3 = requireHasown();
-var $concat$1 = bind.call($call, Array.prototype.concat);
-var $spliceApply = bind.call($apply, Array.prototype.splice);
-var $replace$1 = bind.call($call, String.prototype.replace);
-var $strSlice = bind.call($call, String.prototype.slice);
-var $exec = bind.call($call, RegExp.prototype.exec);
+var $concat$1 = bind2.call($call, Array.prototype.concat);
+var $spliceApply = bind2.call($apply, Array.prototype.splice);
+var $replace$1 = bind2.call($call, String.prototype.replace);
+var $strSlice = bind2.call($call, String.prototype.slice);
+var $exec = bind2.call($call, RegExp.prototype.exec);
 var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
 var reEscapeChar = /\\(\\)?/g;
 var stringToPath = function stringToPath2(string) {
@@ -43702,7 +43681,7 @@ async function main() {
     title: (title) => title ? `${title} — ${appName}` : appName,
     resolve: (name) => resolvePageComponent(
       `./Pages/${name}.tsx`,
-      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-Y4HEgmFL.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-6y6CjKBI.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-BM-gAR4W.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-B1wGhqGt.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-BecDcbO9.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-BUwsx3w4.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-B5wPgikh.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu-CmQMKxZ0.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-C-AvBNOI.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-zcg_7Mdw.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-CWmN5bUR.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-7hF_tuLk.js"), "./Pages/Home.tsx": () => import("./assets/Home-C5Ckd1sv.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-BEQatPxd.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-Bt3PjrqB.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-DZDcTNLe.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-pBB8LrL-.js") })
+      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-tc9Nvs0Z.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-DSBSCCug.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-CHZscfwM.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-B638VBp7.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-Cj4dSZ-O.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-DnTibDXK.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-DB_QoBlo.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu--_Ig4Edl.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-Dtw6cX5N.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-CvQAfKPI.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-BhF0pqy8.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-CMh0Ra66.js"), "./Pages/Home.tsx": () => import("./assets/Home-CSFdQ4w5.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-BvE7H2o0.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-CiniiT6L.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-Cw7ivnTO.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-Cx_ND6ck.js") })
     ),
     setup: ({ App, props }) => /* @__PURE__ */ jsxRuntimeExports.jsx(App, { ...props })
   });

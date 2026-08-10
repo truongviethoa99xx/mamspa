@@ -71,9 +71,11 @@ function decodeHtmlEntities(text: string): string {
 }
 
 /** Bỏ toàn bộ thẻ HTML + giải mã entity — dùng khi nội dung Quill cần hiển thị dạng chữ
- *  thường (title, alt, breadcrumb, tab label...). */
+ *  thường (title, alt, breadcrumb, tab label...). Thay mỗi thẻ bằng 1 khoảng trắng (rồi gộp
+ *  khoảng trắng thừa) thay vì xoá hẳn — nội dung nhiều block liền nhau trong HTML nguồn (vd.
+ *  "</h2><div>") sẽ dính chữ làm một nếu chỉ xoá tag, VD "chăm sócda đầu" thay vì "chăm sóc da đầu". */
 export function stripTags(html: string): string {
-    return decodeHtmlEntities(html.replace(/<[^>]+>/g, ''));
+    return decodeHtmlEntities(html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
 }
 
 /** Cắt chữ về tối đa `maxLength` ký tự, dừng ở khoảng trắng gần nhất (không cắt giữa từ) — dùng cho meta description. */
