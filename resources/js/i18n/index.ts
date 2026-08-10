@@ -42,11 +42,19 @@ i18n.use(LanguageDetector)
         },
     });
 
+const loadedRemoteLocales = new Set<string>();
+
 /**
  * Tải translations từ DB qua API và merge vào i18next.
- * Strings JSON tĩnh hoạt động như fallback nếu API fail.
+ * Strings JSON tĩnh hoạt động như fallback nếu API fail. Bỏ qua nếu ngôn ngữ này
+ * đã tải rồi — mỗi lượt xem trang chỉ cần đúng 1 ngôn ngữ đang hiển thị, không
+ * cần tải trước cả 5 (từng khiến trang chờ 4 request /i18n/* thừa trước khi
+ * render, làm LCP mobile vọt lên >10s theo PageSpeed).
  */
 export async function loadRemoteTranslations(lang: 'vi' | 'en' | 'ja' | 'ko' | 'zh'): Promise<void> {
+    if (loadedRemoteLocales.has(lang)) return;
+    loadedRemoteLocales.add(lang);
+
     try {
         const res = await fetch(`/i18n/${lang}/`, { headers: { Accept: 'application/json' } });
         if (!res.ok) return;
@@ -58,11 +66,8 @@ export async function loadRemoteTranslations(lang: 'vi' | 'en' | 'ja' | 'ko' | '
 }
 
 if (typeof window !== 'undefined') {
-    void loadRemoteTranslations('vi');
-    void loadRemoteTranslations('en');
-    void loadRemoteTranslations('ja');
-    void loadRemoteTranslations('ko');
-    void loadRemoteTranslations('zh');
+    const initialLang = document.documentElement.lang.split('-')[0];
+    void loadRemoteTranslations(['vi', 'en', 'ja', 'ko', 'zh'].includes(initialLang) ? (initialLang as 'vi' | 'en' | 'ja' | 'ko' | 'zh') : 'vi');
 }
 
 export default i18n;
