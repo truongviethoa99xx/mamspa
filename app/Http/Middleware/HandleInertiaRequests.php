@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use App\Models\User;
+use App\Support\OptimizedImageUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Middleware;
@@ -44,7 +45,9 @@ class HandleInertiaRequests extends Middleware
             ],
             'site' => [
                 'brand_name' => $site?->brand_name,
-                'logo_path' => $site?->logo_path,
+                // Ưu tiên bản .webp đã resize (xem SiteSetting::booted) — logo gốc admin tải
+                // lên thường vài nghìn px dù hiển thị ~80px, PageSpeed từng báo lãng phí ~287KB.
+                'logo_path' => OptimizedImageUrl::resolve($site?->logo_path),
                 'address' => $site?->address,
                 'phone' => $site?->phone,
                 'open_hours' => $site?->open_hours,
@@ -62,7 +65,13 @@ class HandleInertiaRequests extends Middleware
                 'hotline' => $site?->hotline,
                 'email' => $site?->email,
                 'chat_url' => $site?->chat_url,
-                'floating_contact_buttons' => $site?->floating_contact_buttons ?? [],
+                // Icon tự tải lên (nếu có) cũng ưu tiên bản .webp đã resize, cùng lý do trên.
+                'floating_contact_buttons' => collect($site?->floating_contact_buttons ?? [])
+                    ->map(function (array $button) {
+                        $button['icon'] = OptimizedImageUrl::resolve($button['icon'] ?? null);
+
+                        return $button;
+                    })->all(),
                 'social_links' => $site?->social_links ?? [],
                 'service_menu' => fn () => Schema::hasTable('service_categories') ? $this->serviceMenu() : [],
             ],

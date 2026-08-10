@@ -11,7 +11,9 @@
         // reuse it here instead of re-querying SiteSetting.
         $siteProps = $page['props']['site'] ?? [];
         $siteName = $siteProps['brand_name'] ?? config('app.name', 'Mầm Spa');
-        $siteLogoUrl = ! empty($siteProps['logo_path']) ? asset('storage/'.$siteProps['logo_path']) : asset('images/logo.svg');
+        // logo_path đã là URL đầy đủ (ưu tiên bản .webp) qua OptimizedImageUrl::resolve() trong
+        // HandleInertiaRequests — không tự ghép asset('storage/...') nữa như trước.
+        $siteLogoUrl = ! empty($siteProps['logo_path']) ? $siteProps['logo_path'] : asset('images/logo.svg');
     @endphp
 
     {{-- No static <title> here — @inertiaHead below (SSR-rendered per page, or client-side
@@ -51,6 +53,38 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@mamspa_danang">
     <meta name="twitter:image" content="{{ config('app.url') }}/images/banner.png">
+
+    @php
+        // Gợi ý tải trước ảnh hero (LCP element) NGAY TỪ HTML GỐC — không phụ thuộc SSR/JS.
+        // App\Support\Ssr\ProcessGateway chỉ chạy SSR cho bot (xem ghi chú ở đó); với người
+        // dùng thật (client-render), <img>/<link preload> mà Home.tsx/Hero.tsx tự thêm vào
+        // <Head> chỉ xuất hiện SAU KHI React chạy xong — nghĩa là trình duyệt không hề biết
+        // cần tải ảnh hero cho tới lúc đó, làm LCP chậm hẳn dù ảnh đã tối ưu cỡ (xác nhận qua
+        // PageSpeed: "LCP request discovery" báo "Request is discoverable in initial
+        // document: ✗"). Field trong $page['props'] đã được server tính sẵn dù SSR có chạy
+        // hay không, nên lấy thẳng từ đây, không cần đợi Node.
+        $heroImage = null;
+        $heroImageMobile = null;
+        if (($page['component'] ?? null) === 'Home') {
+            $heroImage = $page['props']['hero']['image'] ?? null;
+            $heroImageMobile = $page['props']['hero']['image_mobile'] ?? null;
+        } elseif (($page['component'] ?? null) === 'CustomPage/Show') {
+            $heroImage = $page['props']['banner']['image'] ?? null;
+            $heroImageMobile = $page['props']['banner']['image_mobile'] ?? null;
+        }
+    @endphp
+    @if($heroImage)
+        <link
+            rel="preload"
+            as="image"
+            href="{{ $heroImage }}"
+            @if($heroImageMobile)
+                imagesrcset="{{ $heroImageMobile }} 1280w, {{ $heroImage }} 1920w"
+                imagesizes="100vw"
+            @endif
+            fetchpriority="high"
+        >
+    @endif
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="apple-touch-icon" href="/images/favicon.ico">

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\HomeImageOptimizer;
 use Illuminate\Database\Eloquent\Model;
 
 class SiteSetting extends Model
@@ -50,5 +51,12 @@ class SiteSetting extends Model
             'social_links' => [],
             'service_menu' => [],
         ]);
+    }
+
+    /** Sinh bản .webp đã resize cho logo + icon nút liên hệ nổi mỗi khi admin lưu
+     *  (chỉ tạo file mới, không đụng DB/ảnh gốc) — xem HomeImageOptimizer::forSiteSetting(). */
+    protected static function booted(): void
+    {
+        static::saved(fn (self $site) => HomeImageOptimizer::forSiteSetting($site));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\CustomPage;
 use App\Models\HomePageContent;
 use App\Models\ServiceCategory;
+use App\Models\SiteSetting;
 use App\Support\HomeImageOptimizer;
 use Illuminate\Console\Command;
 
@@ -31,6 +32,9 @@ class OptimizeHomeImages extends Command
         $pages = CustomPage::all();
         $this->info("Đang sinh ảnh .webp cho {$pages->count()} trang tuỳ biến...");
         $pages->each(fn (CustomPage $page) => HomeImageOptimizer::forCustomPage($page));
+
+        $this->info('Đang sinh ảnh .webp cho logo và icon liên hệ...');
+        HomeImageOptimizer::forSiteSetting(SiteSetting::current());
 
         $this->info('Hoàn tất.');
 

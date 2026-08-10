@@ -5,6 +5,7 @@ namespace App\Support;
 use App\Models\CustomPage;
 use App\Models\HomePageContent;
 use App\Models\ServiceCategory;
+use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Image\Image;
@@ -54,6 +55,12 @@ class HomeImageOptimizer
         'closing_image' => 1600,
     ];
 
+    /** Logo và icon nút liên hệ nổi thường được admin tải lên nguyên bản (vài trăm KB,
+     *  nghìn px) dù hiển thị rất nhỏ — PageSpeed từng báo lãng phí >700KB vì việc này. */
+    private const LOGO_WIDTH = 256;
+
+    private const CONTACT_ICON_WIDTH = 200;
+
     public static function forHomePageContent(HomePageContent $content): void
     {
         self::generateResponsivePair($content->hero_image);
@@ -86,6 +93,15 @@ class HomeImageOptimizer
     public static function forCustomPage(CustomPage $page): void
     {
         self::generateResponsivePair($page->banner_image);
+    }
+
+    public static function forSiteSetting(SiteSetting $site): void
+    {
+        self::generate($site->logo_path, self::LOGO_WIDTH);
+
+        foreach ((array) $site->floating_contact_buttons as $button) {
+            self::generate($button['icon'] ?? null, self::CONTACT_ICON_WIDTH);
+        }
     }
 
     /** Sinh cả bản desktop ({path}.webp) lẫn bản mobile ({path}-mobile.webp) cho ảnh
