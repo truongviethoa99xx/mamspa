@@ -14,7 +14,12 @@
         $siteLogoUrl = ! empty($siteProps['logo_path']) ? asset('storage/'.$siteProps['logo_path']) : asset('images/logo.svg');
     @endphp
 
-    <title inertia>{{ $siteName }}</title>
+    {{-- No static <title> here — @inertiaHead below (SSR-rendered per page, or client-side
+         hydration as fallback) is the single source of truth. A static tag here would sit
+         alongside the SSR-injected one instead of being replaced by it (both carry the
+         "inertia" tracking attribute, but Blade doesn't dedupe them), producing two <title>
+         elements in the raw HTML — invalid markup, and crawlers tend to read the first one,
+         which would always be this generic fallback instead of the actual per-page title. --}}
 
     @php
         // URL chuẩn luôn kết thúc bằng "/" (khớp với rule 301 trong .htaccess).
