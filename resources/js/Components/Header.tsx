@@ -121,7 +121,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                 {!minimal && (
                     <LanguageSwitcher
                         color={effectiveTextColor}
-                        accentColor={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
+                        accentColor={ctaBackground}
                         className="col-start-2 justify-self-center lg:hidden"
                         hideChevron
                     />
@@ -144,7 +144,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     {!minimal && (
                         <LanguageSwitcher
                             color={effectiveTextColor}
-                            accentColor={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
+                            accentColor={ctaBackground}
                         />
                     )}
 
@@ -199,7 +199,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     >
                         <LanguageSwitcher
                             color={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
-                            accentColor={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
+                            accentColor={ctaBackground}
                             onNavigate={() => setMobileOpen(false)}
                         />
                     </div>

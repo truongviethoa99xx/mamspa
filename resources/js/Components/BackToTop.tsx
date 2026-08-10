@@ -38,7 +38,9 @@ export function BackToTop() {
             type="button"
             onClick={scrollToTop}
             className={cn(
-                'fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-maha-600 text-white shadow-[0_8px_24px_rgba(85,107,63,0.36)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:bg-maha-700',
+                // bottom-24 thay vì bottom-6 trên mobile — chừa chỗ cho thanh CTA "Đặt lịch"
+                // ghim cố định dưới đáy (xem Header.tsx), tránh 2 thứ chồng lên nhau.
+                'fixed bottom-24 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-maha-600 text-white shadow-[0_8px_24px_rgba(85,107,63,0.36)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:bg-maha-700 lg:bottom-6',
                 isVisible
                     ? 'translate-y-0 scale-100 opacity-100'
                     : 'pointer-events-none translate-y-4 scale-90 opacity-0',
