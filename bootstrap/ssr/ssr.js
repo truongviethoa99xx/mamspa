@@ -17007,7 +17007,7 @@ server_node.renderToStaticMarkup = l.renderToStaticMarkup;
 server_node.renderToNodeStream = l.renderToNodeStream;
 server_node.renderToStaticNodeStream = l.renderToStaticNodeStream;
 server_node.renderToPipeableStream = s.renderToPipeableStream;
-function bind$3(fn, thisArg) {
+function bind$4(fn, thisArg) {
   return function wrap2() {
     return fn.apply(thisArg, arguments);
   };
@@ -17193,7 +17193,7 @@ const extend = (a, b2, thisArg, { allOwnKeys } = {}) => {
           // Null-proto descriptor so a polluted Object.prototype.get cannot
           // hijack defineProperty's accessor-vs-data resolution.
           __proto__: null,
-          value: bind$3(val, thisArg),
+          value: bind$4(val, thisArg),
           writable: true,
           enumerable: true,
           configurable: true
@@ -29115,7 +29115,7 @@ var type = TypeError;
 var uri = URIError;
 var abs$1 = Math.abs;
 var floor$1 = Math.floor;
-var max$1 = Math.max;
+var max$2 = Math.max;
 var min$1 = Math.min;
 var pow$1 = Math.pow;
 var round$1 = Math.round;
@@ -29244,99 +29244,78 @@ function requireObject_getPrototypeOf() {
   Object_getPrototypeOf = $Object2.getPrototypeOf || null;
   return Object_getPrototypeOf;
 }
-var implementation;
-var hasRequiredImplementation;
-function requireImplementation() {
-  if (hasRequiredImplementation) return implementation;
-  hasRequiredImplementation = 1;
-  var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
-  var toStr2 = Object.prototype.toString;
-  var max2 = Math.max;
-  var funcType = "[object Function]";
-  var concatty = function concatty2(a, b2) {
-    var arr2 = [];
-    for (var i = 0; i < a.length; i += 1) {
-      arr2[i] = a[i];
+var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
+var toStr$1 = Object.prototype.toString;
+var max$1 = Math.max;
+var funcType = "[object Function]";
+var concatty = function concatty2(a, b2) {
+  var arr2 = [];
+  for (var i = 0; i < a.length; i += 1) {
+    arr2[i] = a[i];
+  }
+  for (var j = 0; j < b2.length; j += 1) {
+    arr2[j + a.length] = b2[j];
+  }
+  return arr2;
+};
+var slicy = function slicy2(arrLike, offset) {
+  var arr2 = [];
+  for (var i = offset, j = 0; i < arrLike.length; i += 1, j += 1) {
+    arr2[j] = arrLike[i];
+  }
+  return arr2;
+};
+var joiny = function(arr2, joiner) {
+  var str = "";
+  for (var i = 0; i < arr2.length; i += 1) {
+    str += arr2[i];
+    if (i + 1 < arr2.length) {
+      str += joiner;
     }
-    for (var j = 0; j < b2.length; j += 1) {
-      arr2[j + a.length] = b2[j];
-    }
-    return arr2;
-  };
-  var slicy = function slicy2(arrLike, offset) {
-    var arr2 = [];
-    for (var i = offset, j = 0; i < arrLike.length; i += 1, j += 1) {
-      arr2[j] = arrLike[i];
-    }
-    return arr2;
-  };
-  var joiny = function(arr2, joiner) {
-    var str = "";
-    for (var i = 0; i < arr2.length; i += 1) {
-      str += arr2[i];
-      if (i + 1 < arr2.length) {
-        str += joiner;
-      }
-    }
-    return str;
-  };
-  implementation = function bind2(that) {
-    var target = this;
-    if (typeof target !== "function" || toStr2.apply(target) !== funcType) {
-      throw new TypeError(ERROR_MESSAGE + target);
-    }
-    var args = slicy(arguments, 1);
-    var bound;
-    var binder = function() {
-      if (this instanceof bound) {
-        var result = target.apply(
-          this,
-          concatty(args, arguments)
-        );
-        if (Object(result) === result) {
-          return result;
-        }
-        return this;
-      }
-      return target.apply(
-        that,
+  }
+  return str;
+};
+var implementation$1 = function bind(that) {
+  var target = this;
+  if (typeof target !== "function" || toStr$1.apply(target) !== funcType) {
+    throw new TypeError(ERROR_MESSAGE + target);
+  }
+  var args = slicy(arguments, 1);
+  var bound;
+  var binder = function() {
+    if (this instanceof bound) {
+      var result = target.apply(
+        this,
         concatty(args, arguments)
       );
-    };
-    var boundLength = max2(0, target.length - args.length);
-    var boundArgs = [];
-    for (var i = 0; i < boundLength; i++) {
-      boundArgs[i] = "$" + i;
+      if (Object(result) === result) {
+        return result;
+      }
+      return this;
     }
-    bound = Function("binder", "return function (" + joiny(boundArgs, ",") + "){ return binder.apply(this,arguments); }")(binder);
-    if (target.prototype) {
-      var Empty = function Empty2() {
-      };
-      Empty.prototype = target.prototype;
-      bound.prototype = new Empty();
-      Empty.prototype = null;
-    }
-    return bound;
+    return target.apply(
+      that,
+      concatty(args, arguments)
+    );
   };
-  return implementation;
-}
-var functionBind;
-var hasRequiredFunctionBind;
-function requireFunctionBind() {
-  if (hasRequiredFunctionBind) return functionBind;
-  hasRequiredFunctionBind = 1;
-  var implementation2 = requireImplementation();
-  functionBind = Function.prototype.bind || implementation2;
-  return functionBind;
-}
-var functionCall;
-var hasRequiredFunctionCall;
-function requireFunctionCall() {
-  if (hasRequiredFunctionCall) return functionCall;
-  hasRequiredFunctionCall = 1;
-  functionCall = Function.prototype.call;
-  return functionCall;
-}
+  var boundLength = max$1(0, target.length - args.length);
+  var boundArgs = [];
+  for (var i = 0; i < boundLength; i++) {
+    boundArgs[i] = "$" + i;
+  }
+  bound = Function("binder", "return function (" + joiny(boundArgs, ",") + "){ return binder.apply(this,arguments); }")(binder);
+  if (target.prototype) {
+    var Empty = function Empty2() {
+    };
+    Empty.prototype = target.prototype;
+    bound.prototype = new Empty();
+    Empty.prototype = null;
+  }
+  return bound;
+};
+var implementation = implementation$1;
+var functionBind = Function.prototype.bind || implementation;
+var functionCall = Function.prototype.call;
 var functionApply;
 var hasRequiredFunctionApply;
 function requireFunctionApply() {
@@ -29346,20 +29325,20 @@ function requireFunctionApply() {
   return functionApply;
 }
 var reflectApply = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
-var bind$2 = requireFunctionBind();
+var bind$3 = functionBind;
 var $apply$1 = requireFunctionApply();
-var $call$2 = requireFunctionCall();
+var $call$2 = functionCall;
 var $reflectApply = reflectApply;
-var actualApply = $reflectApply || bind$2.call($call$2, $apply$1);
-var bind$1 = requireFunctionBind();
+var actualApply = $reflectApply || bind$3.call($call$2, $apply$1);
+var bind$2 = functionBind;
 var $TypeError$6 = type;
-var $call$1 = requireFunctionCall();
+var $call$1 = functionCall;
 var $actualApply = actualApply;
 var callBindApplyHelpers = function callBindBasic(args) {
   if (args.length < 1 || typeof args[0] !== "function") {
     throw new $TypeError$6("a function is required");
   }
-  return $actualApply(bind$1, $call$1, args);
+  return $actualApply(bind$2, $call$1, args);
 };
 var get$1;
 var hasRequiredGet;
@@ -29412,17 +29391,10 @@ function requireGetProto() {
   } : null;
   return getProto$1;
 }
-var hasown;
-var hasRequiredHasown;
-function requireHasown() {
-  if (hasRequiredHasown) return hasown;
-  hasRequiredHasown = 1;
-  var call = Function.prototype.call;
-  var $hasOwn = Object.prototype.hasOwnProperty;
-  var bind2 = requireFunctionBind();
-  hasown = bind2.call(call, $hasOwn);
-  return hasown;
-}
+var call = Function.prototype.call;
+var $hasOwn = Object.prototype.hasOwnProperty;
+var bind$1 = functionBind;
+var hasown = bind$1.call(call, $hasOwn);
 var undefined$1;
 var $Object = esObjectAtoms;
 var $Error = esErrors;
@@ -29434,7 +29406,7 @@ var $TypeError$5 = type;
 var $URIError = uri;
 var abs = abs$1;
 var floor = floor$1;
-var max = max$1;
+var max = max$2;
 var min = min$1;
 var pow = pow$1;
 var round = round$1;
@@ -29468,7 +29440,7 @@ var getProto = requireGetProto();
 var $ObjectGPO = requireObject_getPrototypeOf();
 var $ReflectGPO = requireReflect_getPrototypeOf();
 var $apply = requireFunctionApply();
-var $call = requireFunctionCall();
+var $call = functionCall;
 var needsEval = {};
 var TypedArray = typeof Uint8Array === "undefined" || !getProto ? undefined$1 : getProto(Uint8Array);
 var INTRINSICS = {
@@ -29639,13 +29611,13 @@ var LEGACY_ALIASES = {
   "%WeakMapPrototype%": ["WeakMap", "prototype"],
   "%WeakSetPrototype%": ["WeakSet", "prototype"]
 };
-var bind = requireFunctionBind();
-var hasOwn$3 = requireHasown();
-var $concat$1 = bind.call($call, Array.prototype.concat);
-var $spliceApply = bind.call($apply, Array.prototype.splice);
-var $replace$1 = bind.call($call, String.prototype.replace);
-var $strSlice = bind.call($call, String.prototype.slice);
-var $exec = bind.call($call, RegExp.prototype.exec);
+var bind2 = functionBind;
+var hasOwn$3 = hasown;
+var $concat$1 = bind2.call($call, Array.prototype.concat);
+var $spliceApply = bind2.call($apply, Array.prototype.splice);
+var $replace$1 = bind2.call($call, String.prototype.replace);
+var $strSlice = bind2.call($call, String.prototype.slice);
+var $exec = bind2.call($call, RegExp.prototype.exec);
 var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
 var reEscapeChar = /\\(\\)?/g;
 var stringToPath = function stringToPath2(string) {
@@ -29760,7 +29732,7 @@ function requireShams() {
 var GetIntrinsic$3 = getIntrinsic;
 var $defineProperty = GetIntrinsic$3("%Object.defineProperty%", true);
 var hasToStringTag = requireShams()();
-var hasOwn$2 = requireHasown();
+var hasOwn$2 = hasown;
 var $TypeError$4 = type;
 var toStringTag$1 = hasToStringTag ? Symbol.toStringTag : null;
 var esSetTostringtag = function setToStringTag(object, value) {
@@ -29800,7 +29772,7 @@ var crypto = require$$8;
 var mime = mimeTypes;
 var asynckit = asynckit$1;
 var setToStringTag2 = esSetTostringtag;
-var hasOwn$1 = requireHasown();
+var hasOwn$1 = hasown;
 var populate = populate$1;
 function escapeHeaderParam(str) {
   return String(str).replace(/\r/g, "%0D").replace(/\n/g, "%0A").replace(/"/g, "%22");
@@ -35325,7 +35297,7 @@ Object.entries(HttpStatusCode$1).forEach(([key, value]) => {
 });
 function createInstance(defaultConfig) {
   const context = new Axios$1(defaultConfig);
-  const instance2 = bind$3(Axios$1.prototype.request, context);
+  const instance2 = bind$4(Axios$1.prototype.request, context);
   utils$4.extend(instance2, Axios$1.prototype, context, { allOwnKeys: true });
   utils$4.extend(instance2, context, null, { allOwnKeys: true });
   instance2.create = function create3(instanceConfig) {
@@ -43702,7 +43674,7 @@ async function main() {
     title: (title) => title ? `${title} — ${appName}` : appName,
     resolve: (name) => resolvePageComponent(
       `./Pages/${name}.tsx`,
-      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-BCYoy1lH.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-DHaDh_Da.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-CUzURG09.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-DZr144YK.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-Bo3o7fx0.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-DK9GtK6f.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-DZvQjmsT.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu-Bm-it1Uf.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-BWWbQye0.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-BuLpSDif.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-AI4gtZZU.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-BQaXau27.js"), "./Pages/Home.tsx": () => import("./assets/Home-BTdorg9m.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-DfqQrohJ.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-DlND-lfJ.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-B0n2lTtN.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-CRjd_9OE.js") })
+      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-CDJDeEE5.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-DY3F2Sti.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-d1p2epSl.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-D8WwLQ6J.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-BAezkUOJ.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-COpDfH6T.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-Bduvb5U7.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu-BqyCkNGg.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-AQ0JQ5aB.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-B3i3o1hS.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-Bs-vO1dB.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-BU9fmdPf.js"), "./Pages/Home.tsx": () => import("./assets/Home-IW38m-60.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-Da50TtoE.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-isKgWg6k.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-DDRDxkvv.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-Cuk9fw90.js") })
     ),
     setup: ({ App, props }) => /* @__PURE__ */ jsxRuntimeExports.jsx(App, { ...props })
   });

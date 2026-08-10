@@ -37,9 +37,43 @@ export function formatDate(iso: string | null | undefined): string {
     return `${day}.${month}.${date.getFullYear()}`;
 }
 
-/** Bỏ toàn bộ thẻ HTML — dùng khi nội dung Quill cần hiển thị dạng chữ thường (title, alt, breadcrumb...). */
+const NAMED_HTML_ENTITIES: Record<string, string> = {
+    amp: '&',
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    nbsp: ' ',
+    hellip: '…',
+    mdash: '—',
+    ndash: '–',
+    copy: '©',
+    reg: '®',
+    trade: '™',
+};
+
+/**
+ * Giải mã HTML entity (&amp;, &#39;, &#x27;...) thành ký tự thật — không dùng DOM
+ * (document.createElement) vì hàm này chạy cả ở Node.js lúc SSR, không có DOM.
+ */
+function decodeHtmlEntities(text: string): string {
+    return text.replace(/&(#\d+|#x[0-9a-fA-F]+|[a-zA-Z]+);/g, (match, entity: string) => {
+        if (/^#x/i.test(entity)) {
+            const code = parseInt(entity.slice(2), 16);
+            return Number.isNaN(code) ? match : String.fromCodePoint(code);
+        }
+        if (entity.startsWith('#')) {
+            const code = parseInt(entity.slice(1), 10);
+            return Number.isNaN(code) ? match : String.fromCodePoint(code);
+        }
+        return NAMED_HTML_ENTITIES[entity] ?? match;
+    });
+}
+
+/** Bỏ toàn bộ thẻ HTML + giải mã entity — dùng khi nội dung Quill cần hiển thị dạng chữ
+ *  thường (title, alt, breadcrumb, tab label...). */
 export function stripTags(html: string): string {
-    return html.replace(/<[^>]+>/g, '');
+    return decodeHtmlEntities(html.replace(/<[^>]+>/g, ''));
 }
 
 /** Cắt chữ về tối đa `maxLength` ký tự, dừng ở khoảng trắng gần nhất (không cắt giữa từ) — dùng cho meta description. */
