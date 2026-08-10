@@ -76,7 +76,11 @@ export function FeaturedServices({ data }: { data: FeaturedServicesData }) {
                                             dangerouslySetInnerHTML={{ __html: description }}
                                         />
                                     )}
-                                    <span className="mt-auto inline-flex w-fit items-center gap-2 pt-3 text-sm font-medium text-heading">
+                                    {/* Styled to look like a button, but stays a <span> — the whole
+                                        card above is already a <Link>, and nesting a real
+                                        <button>/<a> inside it would be invalid, non-focusable
+                                        markup. */}
+                                    <span className="mt-auto inline-flex w-fit items-center gap-2 self-start rounded-md border border-heading px-4 py-2 text-sm font-medium text-heading transition-colors group-hover:bg-heading group-hover:text-white">
                                         Xem thêm
                                         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                                     </span>
