@@ -65,7 +65,7 @@ export default function Home({
                         rel="preload"
                         as="image"
                         href={hero.image}
-                        imageSrcSet={hero.image_mobile ? `${hero.image_mobile} 800w, ${hero.image} 1920w` : undefined}
+                        imageSrcSet={hero.image_mobile ? `${hero.image_mobile} 1280w, ${hero.image} 1920w` : undefined}
                         imageSizes={hero.image_mobile ? '100vw' : undefined}
                         fetchPriority="high"
                     />

@@ -28,7 +28,15 @@ class HomeImageOptimizer
      *  ảnh 1920px dùng chung cho cả điện thoại từng khiến LCP mobile vọt lên >10s. */
     private const HERO_DESKTOP_WIDTH = 1920;
 
-    private const HERO_MOBILE_WIDTH = 800;
+    /**
+     * 1280 chứ không phải 1 con số "điện thoại" nhỏ hơn (vd. 800) — vì <img sizes="100vw">
+     * khiến trình duyệt tính cỡ cần theo viewport × DPR màn hình thật, và điện thoại hiện
+     * đại thường DPR 2-3x. Từng thử 800w: máy giả lập Moto G Power của Lighthouse cần
+     * ~1000-1100px thực, "800" bị coi là không đủ nét nên trình duyệt tự rớt về bản 1920w
+     * gốc — số liệu "Improve image delivery" trên PageSpeed không hề giảm dù đã có bản
+     * mobile. 1280w đủ lớn để luôn được chọn, mà vẫn nhẹ hơn ~50% so với 1920w.
+     */
+    private const HERO_MOBILE_WIDTH = 1280;
 
     /** field => chiều rộng tối đa (px) cho ảnh trang chủ (không phải hero). */
     private const HOME_PAGE_FIELD_WIDTHS = [
