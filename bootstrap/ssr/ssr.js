@@ -17007,7 +17007,7 @@ server_node.renderToStaticMarkup = l.renderToStaticMarkup;
 server_node.renderToNodeStream = l.renderToNodeStream;
 server_node.renderToStaticNodeStream = l.renderToStaticNodeStream;
 server_node.renderToPipeableStream = s.renderToPipeableStream;
-function bind$4(fn, thisArg) {
+function bind$3(fn, thisArg) {
   return function wrap2() {
     return fn.apply(thisArg, arguments);
   };
@@ -17193,7 +17193,7 @@ const extend = (a, b2, thisArg, { allOwnKeys } = {}) => {
           // Null-proto descriptor so a polluted Object.prototype.get cannot
           // hijack defineProperty's accessor-vs-data resolution.
           __proto__: null,
-          value: bind$4(val, thisArg),
+          value: bind$3(val, thisArg),
           writable: true,
           enumerable: true,
           configurable: true
@@ -29329,7 +29329,14 @@ function requireFunctionBind() {
   functionBind = Function.prototype.bind || implementation2;
   return functionBind;
 }
-var functionCall = Function.prototype.call;
+var functionCall;
+var hasRequiredFunctionCall;
+function requireFunctionCall() {
+  if (hasRequiredFunctionCall) return functionCall;
+  hasRequiredFunctionCall = 1;
+  functionCall = Function.prototype.call;
+  return functionCall;
+}
 var functionApply;
 var hasRequiredFunctionApply;
 function requireFunctionApply() {
@@ -29339,20 +29346,20 @@ function requireFunctionApply() {
   return functionApply;
 }
 var reflectApply = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
-var bind$3 = requireFunctionBind();
-var $apply$1 = requireFunctionApply();
-var $call$2 = functionCall;
-var $reflectApply = reflectApply;
-var actualApply = $reflectApply || bind$3.call($call$2, $apply$1);
 var bind$2 = requireFunctionBind();
+var $apply$1 = requireFunctionApply();
+var $call$2 = requireFunctionCall();
+var $reflectApply = reflectApply;
+var actualApply = $reflectApply || bind$2.call($call$2, $apply$1);
+var bind$1 = requireFunctionBind();
 var $TypeError$6 = type;
-var $call$1 = functionCall;
+var $call$1 = requireFunctionCall();
 var $actualApply = actualApply;
 var callBindApplyHelpers = function callBindBasic(args) {
   if (args.length < 1 || typeof args[0] !== "function") {
     throw new $TypeError$6("a function is required");
   }
-  return $actualApply(bind$2, $call$1, args);
+  return $actualApply(bind$1, $call$1, args);
 };
 var get$1;
 var hasRequiredGet;
@@ -29405,10 +29412,17 @@ function requireGetProto() {
   } : null;
   return getProto$1;
 }
-var call = Function.prototype.call;
-var $hasOwn = Object.prototype.hasOwnProperty;
-var bind$1 = requireFunctionBind();
-var hasown = bind$1.call(call, $hasOwn);
+var hasown;
+var hasRequiredHasown;
+function requireHasown() {
+  if (hasRequiredHasown) return hasown;
+  hasRequiredHasown = 1;
+  var call = Function.prototype.call;
+  var $hasOwn = Object.prototype.hasOwnProperty;
+  var bind2 = requireFunctionBind();
+  hasown = bind2.call(call, $hasOwn);
+  return hasown;
+}
 var undefined$1;
 var $Object = esObjectAtoms;
 var $Error = esErrors;
@@ -29454,7 +29468,7 @@ var getProto = requireGetProto();
 var $ObjectGPO = requireObject_getPrototypeOf();
 var $ReflectGPO = requireReflect_getPrototypeOf();
 var $apply = requireFunctionApply();
-var $call = functionCall;
+var $call = requireFunctionCall();
 var needsEval = {};
 var TypedArray = typeof Uint8Array === "undefined" || !getProto ? undefined$1 : getProto(Uint8Array);
 var INTRINSICS = {
@@ -29626,7 +29640,7 @@ var LEGACY_ALIASES = {
   "%WeakSetPrototype%": ["WeakSet", "prototype"]
 };
 var bind = requireFunctionBind();
-var hasOwn$3 = hasown;
+var hasOwn$3 = requireHasown();
 var $concat$1 = bind.call($call, Array.prototype.concat);
 var $spliceApply = bind.call($apply, Array.prototype.splice);
 var $replace$1 = bind.call($call, String.prototype.replace);
@@ -29746,7 +29760,7 @@ function requireShams() {
 var GetIntrinsic$3 = getIntrinsic;
 var $defineProperty = GetIntrinsic$3("%Object.defineProperty%", true);
 var hasToStringTag = requireShams()();
-var hasOwn$2 = hasown;
+var hasOwn$2 = requireHasown();
 var $TypeError$4 = type;
 var toStringTag$1 = hasToStringTag ? Symbol.toStringTag : null;
 var esSetTostringtag = function setToStringTag(object, value) {
@@ -29786,7 +29800,7 @@ var crypto = require$$8;
 var mime = mimeTypes;
 var asynckit = asynckit$1;
 var setToStringTag2 = esSetTostringtag;
-var hasOwn$1 = hasown;
+var hasOwn$1 = requireHasown();
 var populate = populate$1;
 function escapeHeaderParam(str) {
   return String(str).replace(/\r/g, "%0D").replace(/\n/g, "%0A").replace(/"/g, "%22");
@@ -35311,7 +35325,7 @@ Object.entries(HttpStatusCode$1).forEach(([key, value]) => {
 });
 function createInstance(defaultConfig) {
   const context = new Axios$1(defaultConfig);
-  const instance2 = bind$4(Axios$1.prototype.request, context);
+  const instance2 = bind$3(Axios$1.prototype.request, context);
   utils$4.extend(instance2, Axios$1.prototype, context, { allOwnKeys: true });
   utils$4.extend(instance2, context, null, { allOwnKeys: true });
   instance2.create = function create3(instanceConfig) {
@@ -43688,7 +43702,7 @@ async function main() {
     title: (title) => title ? `${title} — ${appName}` : appName,
     resolve: (name) => resolvePageComponent(
       `./Pages/${name}.tsx`,
-      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-BCYoy1lH.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-DHaDh_Da.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-CUzURG09.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-DZr144YK.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-Bo3o7fx0.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-DK9GtK6f.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-DZvQjmsT.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu-Bm-it1Uf.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-BWWbQye0.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-BuLpSDif.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-AI4gtZZU.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-BQaXau27.js"), "./Pages/Home.tsx": () => import("./assets/Home-CYhhwJmh.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-DfqQrohJ.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-DlND-lfJ.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-B0n2lTtN.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-CRjd_9OE.js") })
+      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-BCYoy1lH.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-DHaDh_Da.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-CUzURG09.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-DZr144YK.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-Bo3o7fx0.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-DK9GtK6f.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-DZvQjmsT.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu-Bm-it1Uf.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-BWWbQye0.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-BuLpSDif.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-AI4gtZZU.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-BQaXau27.js"), "./Pages/Home.tsx": () => import("./assets/Home-BTdorg9m.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-DfqQrohJ.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-DlND-lfJ.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-B0n2lTtN.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-CRjd_9OE.js") })
     ),
     setup: ({ App, props }) => /* @__PURE__ */ jsxRuntimeExports.jsx(App, { ...props })
   });
