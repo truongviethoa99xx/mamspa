@@ -76,22 +76,9 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                 className="grid grid-cols-3 items-center gap-3 px-5 transition-colors duration-300 sm:gap-6 sm:px-10 lg:flex lg:justify-between"
                 style={{ height: HEADER_HEIGHT, backgroundColor: effectiveBackground, color: effectiveTextColor }}
             >
-                {!minimal && (
-                    <button
-                        type="button"
-                        onClick={() => setMobileOpen((open) => !open)}
-                        aria-label={mobileOpen ? 'Đóng menu' : 'Mở menu'}
-                        aria-expanded={mobileOpen}
-                        className="col-start-1 flex h-10 w-10 items-center justify-center justify-self-start rounded-md lg:hidden"
-                        style={{ color: effectiveTextColor }}
-                    >
-                        {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                    </button>
-                )}
-
                 <Link
                     href="/"
-                    className="col-start-2 flex shrink-0 items-center justify-self-center gap-2 sm:gap-3 lg:col-auto lg:justify-self-start"
+                    className="col-start-1 flex shrink-0 items-center justify-self-start gap-2 sm:gap-3 lg:col-auto"
                 >
                     {logoUrl ? (
                         <img src={logoUrl} alt={brandName} className="h-16 w-16 object-contain sm:h-20 sm:w-20" />
@@ -131,12 +118,33 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     </nav>
                 )}
 
-                <div className="col-start-3 flex shrink-0 items-center justify-self-end gap-4 lg:col-auto">
+                {!minimal && (
+                    <LanguageSwitcher
+                        color={effectiveTextColor}
+                        accentColor={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
+                        className="col-start-2 justify-self-center lg:hidden"
+                        hideChevron
+                    />
+                )}
+
+                {!minimal && (
+                    <button
+                        type="button"
+                        onClick={() => setMobileOpen((open) => !open)}
+                        aria-label={mobileOpen ? 'Đóng menu' : 'Mở menu'}
+                        aria-expanded={mobileOpen}
+                        className="col-start-3 flex h-10 w-10 items-center justify-center justify-self-end rounded-md lg:hidden"
+                        style={{ color: effectiveTextColor }}
+                    >
+                        {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    </button>
+                )}
+
+                <div className="hidden shrink-0 items-center gap-4 lg:flex">
                     {!minimal && (
                         <LanguageSwitcher
                             color={effectiveTextColor}
                             accentColor={scrolled ? SCROLLED_TEXT_COLOR : ctaBackground}
-                            className="hidden lg:block"
                         />
                     )}
 
@@ -198,6 +206,23 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                 </div>
             )}
         </header>
+
+        {/* CTA "Đặt lịch" trên mobile sống ở đây thay vì trong header — ghim cố định dưới
+            đáy màn hình thay vì chiếm chỗ trên hàng header (đã nhường chỗ đó cho logo/ngôn
+            ngữ/hamburger). Desktop không đổi, CTA vẫn nằm trong header như cũ. */}
+        {!minimal && (
+            <Link
+                href="/dat-lich/"
+                className="fixed inset-x-0 bottom-0 z-40 block text-center text-sm font-semibold uppercase tracking-wide shadow-[0_-4px_16px_rgba(0,0,0,0.15)] lg:hidden"
+                style={{
+                    backgroundColor: ctaBackground,
+                    color: ctaTextColor,
+                    padding: '0.875rem 1.25rem calc(0.875rem + env(safe-area-inset-bottom))',
+                }}
+            >
+                {ctaText}
+            </Link>
+        )}
         </>
     );
 }

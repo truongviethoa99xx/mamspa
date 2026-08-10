@@ -25,6 +25,8 @@ interface LanguageSwitcherProps {
     accentColor?: string;
     className?: string;
     onNavigate?: () => void;
+    /** Ẩn mũi tên chevron — dùng ở những chỗ chật (vd. hàng header mobile) muốn gọn hơn. */
+    hideChevron?: boolean;
 }
 
 function buildLocaleHref(url: string, locale: string): string {
@@ -35,7 +37,7 @@ function buildLocaleHref(url: string, locale: string): string {
     return `${path}?${params.toString()}`;
 }
 
-export function LanguageSwitcher({ color, accentColor = '#2F3E2E', className, onNavigate }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ color, accentColor = '#2F3E2E', className, onNavigate, hideChevron }: LanguageSwitcherProps) {
     const { props, url } = usePage<SharedProps>();
     const [open, setOpen] = useState(false);
     const rootRef = useRef<HTMLDivElement>(null);
@@ -76,7 +78,9 @@ export function LanguageSwitcher({ color, accentColor = '#2F3E2E', className, on
             >
                 <span className="text-base leading-none">{current.flag}</span>
                 <span>{props.locale}</span>
-                <ChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-200', open && 'rotate-180')} />
+                {!hideChevron && (
+                    <ChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-200', open && 'rotate-180')} />
+                )}
             </button>
 
             {open && (

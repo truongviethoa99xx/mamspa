@@ -103,7 +103,9 @@ export function ChatWidget() {
     }
 
     return (
-        <div className="fixed bottom-24 right-6 z-50 flex flex-col items-center gap-4">
+        // bottom-36 thay vì bottom-24 trên mobile — chừa chỗ cho thanh CTA "Đặt lịch" mới
+        // ghim cố định dưới đáy (xem Header.tsx), tránh 2 thứ chồng lên nhau.
+        <div className="fixed bottom-36 right-6 z-50 flex flex-col items-center gap-4 lg:bottom-24">
             {buttons.map((button, index) => {
                 return (
                     <a
