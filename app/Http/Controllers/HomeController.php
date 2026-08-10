@@ -58,6 +58,7 @@ class HomeController extends Controller
             'heading' => $content->hero_eyebrow ?: ['vi' => '<p>Hành trình chữa lành từ thiên nhiên</p>', 'en' => '<p>A healing journey from nature</p>'],
             'subtitle' => $content->hero_subtitle ?: ['vi' => '<p>Một khoảng lặng giữa nhịp sống thành phố.</p>', 'en' => '<p>A quiet pause amid the rhythm of city life.</p>'],
             'image' => $this->publicUrl($content->hero_image),
+            'image_mobile' => OptimizedImageUrl::resolveMobile($content->hero_image),
             'image_alt' => $content->hero_image_alt ?: ['vi' => 'Không gian trị liệu Mầm Spa', 'en' => 'Mầm Spa treatment space'],
             'cta' => [
                 'text' => $content->hero_cta_text ?: 'Đặt lịch ngay',

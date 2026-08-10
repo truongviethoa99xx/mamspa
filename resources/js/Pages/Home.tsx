@@ -60,7 +60,16 @@ export default function Home({
                     name="description"
                     content="Mầm Spa — spa trị liệu tại Đà Nẵng với 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng. Massage body, chăm sóc da mặt, head spa và các liệu trình chăm sóc sức khoẻ theo giá trị trị liệu Việt."
                 />
-                {hero.image && <link rel="preload" as="image" href={hero.image} fetchPriority="high" />}
+                {hero.image && (
+                    <link
+                        rel="preload"
+                        as="image"
+                        href={hero.image}
+                        imageSrcSet={hero.image_mobile ? `${hero.image_mobile} 800w, ${hero.image} 1920w` : undefined}
+                        imageSizes={hero.image_mobile ? '100vw' : undefined}
+                        fetchPriority="high"
+                    />
+                )}
             </Head>
             {sectionVisibility.hero && <Hero data={hero} />}
             {sectionVisibility.story && <Story data={story} />}

@@ -14,6 +14,9 @@ export interface HeroData {
     heading?: unknown;
     subtitle?: unknown;
     image?: string | null;
+    /** Bản .webp nhỏ hơn (800px) riêng cho mobile — xem HomeImageOptimizer::generateResponsivePair.
+     *  Không có thì <img> chỉ dùng `image` như trước, không đổi hành vi. */
+    image_mobile?: string | null;
     image_alt?: unknown;
     cta?: HeroCta;
     secondary_cta?: HeroCta;
@@ -36,6 +39,7 @@ export function Hero({ data, heightClassName, showDivider }: HeroProps) {
     const ctaText = tr(data.cta?.text, locale);
     const secondaryCtaText = tr(data.secondary_cta?.text, locale);
     const image = data.image;
+    const imageMobile = data.image_mobile;
     const imageAlt = tr(data.image_alt, locale);
     const isVideo = !!image && isVideoUrl(image);
     const hasImage = !!image;
@@ -55,6 +59,8 @@ export function Hero({ data, heightClassName, showDivider }: HeroProps) {
             {hasImage && !isVideo && (
                 <img
                     src={image}
+                    srcSet={imageMobile ? `${imageMobile} 800w, ${image} 1920w` : undefined}
+                    sizes={imageMobile ? '100vw' : undefined}
                     alt={imageAlt}
                     className="absolute inset-0 z-0 h-full w-full object-cover"
                     fetchPriority="high"

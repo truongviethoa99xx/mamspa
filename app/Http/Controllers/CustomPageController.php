@@ -34,6 +34,7 @@ class CustomPageController extends Controller
             'heading' => $page->banner_title,
             'subtitle' => $page->banner_subtitle,
             'image' => $this->publicUrl($page->banner_image),
+            'image_mobile' => OptimizedImageUrl::resolveMobile($page->banner_image),
             'image_alt' => $page->banner_image_alt,
             'cta' => [
                 'text' => $page->banner_cta_text,

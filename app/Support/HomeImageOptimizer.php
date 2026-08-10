@@ -23,9 +23,15 @@ class HomeImageOptimizer
 {
     private const QUALITY = 78;
 
-    /** field => chiều rộng tối đa (px) cho ảnh trang chủ. */
+    /** Ảnh hero/banner full-bleed — LCP element, cần thêm bản nhỏ riêng cho mobile
+     *  (xem generateResponsivePair()) vì Lighthouse mobile dùng mạng chậm giả lập,
+     *  ảnh 1920px dùng chung cho cả điện thoại từng khiến LCP mobile vọt lên >10s. */
+    private const HERO_DESKTOP_WIDTH = 1920;
+
+    private const HERO_MOBILE_WIDTH = 800;
+
+    /** field => chiều rộng tối đa (px) cho ảnh trang chủ (không phải hero). */
     private const HOME_PAGE_FIELD_WIDTHS = [
-        'hero_image' => 1920,
         'story_image' => 1600,
         'art_banner_image' => 1600,
         'final_cta_image' => 1600,
@@ -42,6 +48,8 @@ class HomeImageOptimizer
 
     public static function forHomePageContent(HomePageContent $content): void
     {
+        self::generateResponsivePair($content->hero_image);
+
         foreach (self::HOME_PAGE_FIELD_WIDTHS as $field => $maxWidth) {
             self::generate($content->{$field}, $maxWidth);
         }
@@ -69,23 +77,31 @@ class HomeImageOptimizer
     /** Banner của trang tuỳ biến dùng chung component Hero.tsx với hero trang chủ — cùng kích cỡ mục tiêu. */
     public static function forCustomPage(CustomPage $page): void
     {
-        self::generate($page->banner_image, 1920);
+        self::generateResponsivePair($page->banner_image);
+    }
+
+    /** Sinh cả bản desktop ({path}.webp) lẫn bản mobile ({path}-mobile.webp) cho ảnh
+     *  hero/banner — dùng với <img srcset> để trình duyệt tự chọn đúng size theo màn hình. */
+    private static function generateResponsivePair(?string $path): void
+    {
+        self::generate($path, self::HERO_DESKTOP_WIDTH);
+        self::generate($path, self::HERO_MOBILE_WIDTH, '-mobile');
     }
 
     /**
-     * Sinh {path}.webp resize theo $maxWidth nếu ảnh gốc tồn tại trên disk
-     * 'public' và chưa có bản .webp. Không bao giờ ném lỗi ra ngoài — hàm
+     * Sinh {path}{suffix}.webp resize theo $maxWidth nếu ảnh gốc tồn tại trên disk
+     * 'public' và chưa có bản .webp tương ứng. Không bao giờ ném lỗi ra ngoài — hàm
      * này chạy trong model event `saved`, không được phép làm hỏng thao tác
      * lưu dữ liệu chính của admin.
      */
-    public static function generate(?string $path, int $maxWidth): void
+    public static function generate(?string $path, int $maxWidth, string $suffix = ''): void
     {
         if (! $path || ! preg_match('/\.(png|jpe?g)$/i', $path)) {
             return;
         }
 
         $disk = Storage::disk('public');
-        $webpPath = preg_replace('/\.(png|jpe?g)$/i', '.webp', $path);
+        $webpPath = preg_replace('/\.(png|jpe?g)$/i', $suffix.'.webp', $path);
 
         if (! $disk->exists($path) || $disk->exists($webpPath)) {
             return;
@@ -100,6 +116,7 @@ class HomeImageOptimizer
         } catch (Throwable $e) {
             Log::warning('HomeImageOptimizer: failed to generate webp derivative', [
                 'path' => $path,
+                'suffix' => $suffix,
                 'error' => $e->getMessage(),
             ]);
         }
