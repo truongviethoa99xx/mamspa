@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-import { ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
 import { publicAssetUrl } from '@/Lib/utils';
 import { googleMapsSearchUrl } from '@/Lib/maps';
 import { trackContactClick } from '@/Lib/analytics';
@@ -60,14 +60,64 @@ function SocialIcon({ label }: { label: string }) {
     return <ExternalLink className="h-3.5 w-3.5" />;
 }
 
-function FooterColumn({ title, children }: { title: string; children: ReactNode }) {
+function FooterColumn({ title, children, className }: { title: string; children: ReactNode; className?: string }) {
     return (
-        <div>
+        <div className={className}>
             <h3 className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-maha-400">
                 <span className="h-px w-4 bg-maha-500/60" aria-hidden="true" />
                 {title}
             </h3>
             <ul className="mt-5 space-y-3">{children}</ul>
+        </div>
+    );
+}
+
+interface Branch {
+    name?: string;
+    address?: string;
+    phone?: string;
+    open_hours?: string;
+    map_link?: string;
+}
+
+/** Khối 1 chi nhánh — chỉ hiện ở footer mobile (thay cho 2 cột "Dịch vụ"/"Khám phá"), gộp
+    địa chỉ (kèm link bản đồ), hotline riêng và giờ mở cửa riêng của từng chi nhánh vào 1 chỗ. */
+function BranchBlock({ branch }: { branch: Branch }) {
+    return (
+        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+            <h3 className="font-serif text-base text-maha-50">{branch.name}</h3>
+            <ul className="mt-3 space-y-2.5">
+                {branch.address && (
+                    <li className="flex items-start gap-3 text-sm font-light leading-relaxed text-maha-50/80">
+                        <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-maha-400" />
+                        {branch.map_link ? (
+                            <a href={branch.map_link} target="_blank" rel="noreferrer" className="transition-colors hover:text-maha-400">
+                                {branch.address}
+                            </a>
+                        ) : (
+                            <span>{branch.address}</span>
+                        )}
+                    </li>
+                )}
+                {branch.phone && (
+                    <li className="flex items-center gap-3 text-sm font-light text-maha-50/80">
+                        <Phone className="h-4 w-4 shrink-0 text-maha-400" />
+                        <a
+                            href={`tel:${branch.phone.replace(/[^\d+]/g, '')}`}
+                            onClick={() => trackContactClick('phone', 'footer_branch')}
+                            className="transition-colors hover:text-maha-400"
+                        >
+                            {branch.phone}
+                        </a>
+                    </li>
+                )}
+                {branch.open_hours && (
+                    <li className="flex items-center gap-3 text-sm font-light text-maha-50/80">
+                        <Clock className="h-4 w-4 shrink-0 text-maha-400" />
+                        <span>{branch.open_hours}</span>
+                    </li>
+                )}
+            </ul>
         </div>
     );
 }
@@ -86,6 +136,7 @@ export function Footer() {
     const openHours = site.open_hours;
     const socials = site.social_links && site.social_links.length > 0 ? site.social_links : DEFAULT_SOCIALS;
     const serviceLinks = (site.service_menu ?? []).slice(0, 6);
+    const branches = site.branches ?? [];
     const year = new Date().getFullYear();
 
     const exploreLinks = [
@@ -155,8 +206,12 @@ export function Footer() {
                         </ul>
                     </div>
 
+                    {/* Trên mobile, nếu đã khai báo chi nhánh thì 2 cột link này nhường chỗ cho
+                        khối chi nhánh (địa chỉ/hotline/giờ mở cửa cụ thể hữu ích hơn) — vẫn
+                        hiện đầy đủ từ lg trở lên, và hiện lại trên mobile nếu chưa có chi nhánh
+                        nào được khai báo. */}
                     {serviceLinks.length > 0 && (
-                        <FooterColumn title={t('footer.servicesTitle')}>
+                        <FooterColumn title={t('footer.servicesTitle')} className={branches.length > 0 ? 'hidden lg:block' : undefined}>
                             {serviceLinks.map((item) => (
                                 <li key={item.href}>
                                     <Link
@@ -170,7 +225,10 @@ export function Footer() {
                         </FooterColumn>
                     )}
 
-                    <FooterColumn title={t('footer.exploreTitle')}>
+                    <FooterColumn
+                        title={t('footer.exploreTitle')}
+                        className={branches.length > 0 ? 'hidden lg:block' : undefined}
+                    >
                         {exploreLinks.map((item) => (
                             <li key={item.href}>
                                 <Link href={item.href} className="text-sm font-light text-maha-50/80 transition-colors hover:text-maha-400">
@@ -179,6 +237,14 @@ export function Footer() {
                             </li>
                         ))}
                     </FooterColumn>
+
+                    {branches.length > 0 && (
+                        <div className="space-y-5 lg:hidden">
+                            {branches.map((branch, index) => (
+                                <BranchBlock key={branch.name ?? index} branch={branch} />
+                            ))}
+                        </div>
+                    )}
 
                     <FooterColumn title={t('footer.contact')}>
                         {address && (

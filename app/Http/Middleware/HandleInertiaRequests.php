@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                 'address' => $site?->address,
                 'phone' => $site?->phone,
                 'open_hours' => $site?->open_hours,
+                'branches' => $site?->branches ?? [],
                 'lat' => $site?->lat,
                 'lng' => $site?->lng,
                 'header_background_color' => $site?->header_background_color ?: '#F6F3EF',

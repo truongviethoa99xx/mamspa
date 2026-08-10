@@ -25,6 +25,13 @@ export interface SiteSettings {
     address?: string | null;
     phone?: string | null;
     open_hours?: string | null;
+    branches?: {
+        name?: string;
+        address?: string;
+        phone?: string;
+        open_hours?: string;
+        map_link?: string;
+    }[];
     lat?: number | null;
     lng?: number | null;
     floating_contact_buttons?: {

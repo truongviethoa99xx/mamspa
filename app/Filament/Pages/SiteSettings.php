@@ -40,7 +40,7 @@ class SiteSettings extends Page implements HasForms
     {
         $this->form->fill(SiteSetting::current()->only([
             'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links',
-            'address', 'phone', 'open_hours', 'lat', 'lng', 'booking_notification_emails',
+            'address', 'phone', 'open_hours', 'branches', 'lat', 'lng', 'booking_notification_emails',
         ]));
     }
 
@@ -127,6 +127,40 @@ class SiteSettings extends Page implements HasForms
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
+
+                Forms\Components\Section::make('Chi nhánh')
+                    ->description('Hiển thị ở footer trên điện thoại (mỗi chi nhánh 1 khối riêng, kèm link bản đồ/hotline/giờ mở cửa) thay cho 2 cột "Dịch vụ"/"Khám phá". Để trống thì footer mobile giữ nguyên như trước.')
+                    ->icon('heroicon-o-building-storefront')
+                    ->schema([
+                        Forms\Components\Repeater::make('branches')
+                            ->label('')
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->label('Tên chi nhánh')
+                                    ->placeholder('vd. Mầm Spa Lê Văn Sỹ')
+                                    ->required(),
+                                Forms\Components\TextInput::make('phone')
+                                    ->label('Số điện thoại')
+                                    ->tel(),
+                                Forms\Components\TextInput::make('open_hours')
+                                    ->label('Giờ mở cửa')
+                                    ->placeholder('09:00 - 21:00'),
+                                Forms\Components\Textarea::make('address')
+                                    ->label('Địa chỉ')
+                                    ->rows(2)
+                                    ->columnSpanFull(),
+                                Forms\Components\TextInput::make('map_link')
+                                    ->label('Link Google Maps')
+                                    ->url()
+                                    ->columnSpanFull(),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                            ->addActionLabel('+ Thêm chi nhánh'),
+                    ]),
 
                 Forms\Components\Section::make('Mạng xã hội')
                     ->schema([
