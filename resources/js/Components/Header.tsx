@@ -115,27 +115,27 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                                         </Link>
 
                                         {/* Hover mở dropdown danh mục dịch vụ — group-hover/group-focus-within thuần CSS,
-                                            không cần state JS. Panel neo bằng pt-3 (không mt) để khoảng trống phía trên
-                                            vẫn nằm trong vùng hover của cả trigger lẫn panel, tránh dropdown tự đóng khi
-                                            di chuột từ link xuống panel. */}
-                                        <div className="invisible absolute left-1/2 top-full z-40 -translate-x-1/2 pt-3 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                                            <div className="flex gap-8 rounded-xl border border-black/5 bg-white p-6 shadow-xl">
+                                            không cần state JS. Panel nằm sát ngay dưới trigger (top-full, không pt/mt) —
+                                            khoảng đệm để tránh hover bị đứt quãng khi rê chuột từ link xuống panel chuyển
+                                            sang trước::before vô hình (before:-top-2) thay vì đẩy panel xuống bằng padding. */}
+                                        <div className="invisible absolute left-0 top-full z-40 opacity-0 transition-opacity duration-150 before:absolute before:-top-2 before:left-0 before:h-2 before:w-full group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                                            <ul className="min-w-[14rem] rounded-xl border border-black/5 bg-white py-2 shadow-xl">
                                                 {dropdown.map((category) => (
-                                                    <div key={category.href} className="min-w-[10rem]">
+                                                    <li key={category.href}>
                                                         <Link
                                                             href={category.href}
-                                                            className="text-sm font-semibold uppercase tracking-wide text-heading transition-colors hover:text-maha-600"
+                                                            className="block px-4 py-2 text-sm font-semibold uppercase tracking-wide text-heading transition-colors hover:bg-maha-50 hover:text-maha-600"
                                                         >
                                                             {category.label}
                                                         </Link>
 
                                                         {category.children && category.children.length > 0 && (
-                                                            <ul className="mt-3 flex flex-col gap-2 border-t border-black/5 pt-3">
+                                                            <ul>
                                                                 {category.children.map((child) => (
                                                                     <li key={child.href}>
                                                                         <Link
                                                                             href={child.href}
-                                                                            className="text-sm text-stone-600 transition-colors hover:text-heading"
+                                                                            className="block px-6 py-1.5 text-sm text-stone-600 transition-colors hover:bg-maha-50 hover:text-heading"
                                                                         >
                                                                             {child.label}
                                                                         </Link>
@@ -143,9 +143,9 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                                                                 ))}
                                                             </ul>
                                                         )}
-                                                    </div>
+                                                    </li>
                                                 ))}
-                                            </div>
+                                            </ul>
                                         </div>
                                     </div>
                                 );
