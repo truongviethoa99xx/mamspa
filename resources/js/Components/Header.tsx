@@ -100,7 +100,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                             const dropdown = item.href === '/dich-vu/' ? serviceMenu : null;
 
                             const linkClassName = cn(
-                                'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
+                                'text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
                                 active && 'border-b-2 opacity-100',
                             );
                             const linkStyle = active
