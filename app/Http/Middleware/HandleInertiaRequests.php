@@ -37,7 +37,9 @@ class HandleInertiaRequests extends Middleware
                 ] : null,
             ],
             'locale' => app()->getLocale(),
-            'availableLocales' => config('app.available_locales', ['vi', 'en']),
+            // Ngôn ngữ admin đã bật ở CMS (Thiết lập chung) — LanguageSwitcher chỉ hiện đúng
+            // các ngôn ngữ trong danh sách này, xem SiteSetting::getEnabledLocales().
+            'availableLocales' => $site?->getEnabledLocales() ?? config('app.available_locales', ['vi', 'en']),
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),

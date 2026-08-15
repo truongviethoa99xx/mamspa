@@ -17,8 +17,10 @@ const LOCALE_META: Record<string, LocaleMeta> = {
     zh: { label: '中文', flag: '🇨🇳' },
 };
 
-// Chỉ hiện Việt + Anh; các ngôn ngữ khác tạm ẩn dù server đã hỗ trợ sẵn.
-const VISIBLE_LOCALES = ['vi', 'en'];
+// Toàn bộ ngôn ngữ hệ thống hỗ trợ (khớp SiteSetting::SUPPORTED_LOCALES ở backend) — chỉ giữ
+// thứ tự hiển thị cố định; ngôn ngữ nào thực sự hiện ra do admin bật/tắt ở CMS quyết định qua
+// props.availableLocales (xem HandleInertiaRequests::share()).
+const ALL_LOCALES_ORDER = ['vi', 'en', 'ja', 'ko', 'zh'];
 
 interface LanguageSwitcherProps {
     color?: string;
@@ -42,7 +44,7 @@ export function LanguageSwitcher({ color, accentColor = '#2F3E2E', className, on
     const [open, setOpen] = useState(false);
     const rootRef = useRef<HTMLDivElement>(null);
 
-    const locales = VISIBLE_LOCALES.filter((locale) => props.availableLocales?.includes(locale));
+    const locales = ALL_LOCALES_ORDER.filter((locale) => props.availableLocales?.includes(locale));
 
     useEffect(() => {
         if (!open) {

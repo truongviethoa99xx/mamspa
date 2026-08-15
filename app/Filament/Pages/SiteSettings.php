@@ -38,10 +38,17 @@ class SiteSettings extends Page implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill(SiteSetting::current()->only([
-            'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links',
-            'address', 'phone', 'open_hours', 'branches', 'lat', 'lng', 'booking_notification_emails',
-        ]));
+        $site = SiteSetting::current();
+
+        $this->form->fill([
+            ...$site->only([
+                'brand_name', 'logo_path', 'tagline', 'meta_description', 'hotline', 'email', 'chat_url', 'floating_contact_buttons', 'social_links',
+                'address', 'phone', 'open_hours', 'branches', 'lat', 'lng', 'booking_notification_emails',
+            ]),
+            // getEnabledLocales() (không phải cột thô) để form luôn hiện đúng trạng thái hiệu
+            // lực hiện tại — kể cả khi cột chưa từng được lưu (null → mặc định vi+en).
+            'enabled_locales' => $site->getEnabledLocales(),
+        ]);
     }
 
     public function form(Form $form): Form
@@ -78,6 +85,25 @@ class SiteSettings extends Page implements HasForms
                         Forms\Components\TextInput::make('chat_url')->label('Link nút chat / Zalo')->url()->columnSpanFull(),
                     ])
                     ->columns(2),
+
+                Forms\Components\Section::make('Ngôn ngữ hiển thị')
+                    ->description('Tiếng Việt luôn bật (ngôn ngữ mặc định của site). Bật thêm ngôn ngữ nào thì khách mới đổi được sang ngôn ngữ đó ở nút chọn ngôn ngữ trên header — tắt thì nút chọn ngôn ngữ sẽ ẩn nó đi.')
+                    ->icon('heroicon-o-language')
+                    ->schema([
+                        Forms\Components\CheckboxList::make('enabled_locales')
+                            ->label('Ngôn ngữ đang bật')
+                            ->options([
+                                'vi' => '🇻🇳 Tiếng Việt (mặc định)',
+                                'en' => '🇬🇧 English',
+                                'ja' => '🇯🇵 日本語',
+                                'ko' => '🇰🇷 한국어',
+                                'zh' => '🇨🇳 中文',
+                            ])
+                            ->disableOptionWhen(fn (string $value): bool => $value === SiteSetting::DEFAULT_LOCALE)
+                            ->default(['vi', 'en'])
+                            ->columns(3)
+                            ->columnSpanFull(),
+                    ]),
 
                 Forms\Components\Section::make('Thông báo booking & liên hệ')
                     ->description('Ngoài chuông + modal trong CMS, hệ thống sẽ gửi thêm email tới các địa chỉ dưới đây mỗi khi có lịch đặt mới hoặc có người gửi form liên hệ.')
@@ -245,7 +271,16 @@ class SiteSettings extends Page implements HasForms
 
     public function save(): void
     {
-        SiteSetting::current()->update($this->form->getState());
+        $data = $this->form->getState();
+
+        // Ép luôn có DEFAULT_LOCALE dù ô "Tiếng Việt" bị disable trên UI (không cho bỏ chọn) —
+        // phòng khi trạng thái disabled không giữ được giá trị qua submit.
+        $data['enabled_locales'] = array_values(array_unique([
+            SiteSetting::DEFAULT_LOCALE,
+            ...($data['enabled_locales'] ?? []),
+        ]));
+
+        SiteSetting::current()->update($data);
 
         Notification::make()->success()->title('Đã lưu thiết lập chung')->send();
     }
