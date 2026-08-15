@@ -46,6 +46,7 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
     }, []);
 
     const site = props.site ?? {};
+    const serviceMenu = site.service_menu ?? [];
     const brandName = site.brand_name || 'Mầm Spa';
     const logoUrl = publicAssetUrl(site.logo_path);
     const isTransparent = !!site.header_transparent;
@@ -96,21 +97,62 @@ export function Header({ minimal = false }: { minimal?: boolean }) {
                     <nav className="hidden items-center gap-8 lg:flex">
                         {NAV_ITEMS.map((item) => {
                             const active = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+                            const dropdown = item.href === '/dich-vu/' ? serviceMenu : null;
+
+                            const linkClassName = cn(
+                                'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
+                                active && 'border-b-2 opacity-100',
+                            );
+                            const linkStyle = active
+                                ? { borderColor: effectiveTextColor, color: effectiveTextColor }
+                                : { color: effectiveTextColor };
+
+                            if (dropdown && dropdown.length > 0) {
+                                return (
+                                    <div key={item.href} className="group relative">
+                                        <Link href={item.href} className={linkClassName} style={linkStyle}>
+                                            {item.label}
+                                        </Link>
+
+                                        {/* Hover mở dropdown danh mục dịch vụ — group-hover/group-focus-within thuần CSS,
+                                            không cần state JS. Panel neo bằng pt-3 (không mt) để khoảng trống phía trên
+                                            vẫn nằm trong vùng hover của cả trigger lẫn panel, tránh dropdown tự đóng khi
+                                            di chuột từ link xuống panel. */}
+                                        <div className="invisible absolute left-1/2 top-full z-40 -translate-x-1/2 pt-3 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                                            <div className="flex gap-8 rounded-xl border border-black/5 bg-white p-6 shadow-xl">
+                                                {dropdown.map((category) => (
+                                                    <div key={category.href} className="min-w-[10rem]">
+                                                        <Link
+                                                            href={category.href}
+                                                            className="text-sm font-semibold uppercase tracking-wide text-heading transition-colors hover:text-maha-600"
+                                                        >
+                                                            {category.label}
+                                                        </Link>
+
+                                                        {category.children && category.children.length > 0 && (
+                                                            <ul className="mt-3 flex flex-col gap-2 border-t border-black/5 pt-3">
+                                                                {category.children.map((child) => (
+                                                                    <li key={child.href}>
+                                                                        <Link
+                                                                            href={child.href}
+                                                                            className="text-sm text-stone-600 transition-colors hover:text-heading"
+                                                                        >
+                                                                            {child.label}
+                                                                        </Link>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }
 
                             return (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={cn(
-                                        'pb-1 text-sm font-medium uppercase tracking-wide opacity-80 transition-opacity hover:opacity-100',
-                                        active && 'border-b-2 opacity-100',
-                                    )}
-                                    style={
-                                        active
-                                            ? { borderColor: effectiveTextColor, color: effectiveTextColor }
-                                            : { color: effectiveTextColor }
-                                    }
-                                >
+                                <Link key={item.href} href={item.href} className={linkClassName} style={linkStyle}>
                                     {item.label}
                                 </Link>
                             );
