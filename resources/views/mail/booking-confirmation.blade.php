@@ -40,15 +40,11 @@
                         <td style="color:#718255; vertical-align:top;">Dịch vụ</td>
                         <td>
                             @forelse($b->items as $item)
-                                {{ strip_tags($item->service->getTranslation('name', 'vi')) }} ({{ $item->service->duration }} phút)@if($item->gender) — {{ $item->gender === 'male' ? 'Khách Nam' : 'Khách Nữ' }}@endif — {{ number_format($item->price, 0, ',', '.') }} VND<br>
+                                {{ strip_tags($item->service->getTranslation('name', 'vi')) }} ({{ $item->service->duration }} phút)@if($item->gender) — {{ $item->gender === 'male' ? 'Khách Nam' : 'Khách Nữ' }}@endif<br>
                             @empty
                                 {{ strip_tags($b->service->getTranslation('name', 'vi')) }} ({{ $b->service->duration }} phút)
                             @endforelse
                         </td>
-                    </tr>
-                    <tr>
-                        <td style="color:#718255;">Tổng tiền</td>
-                        <td><strong>{{ number_format($b->total_price, 0, ',', '.') }} VND</strong></td>
                     </tr>
                     <tr>
                         <td style="color:#718255;">Trạng thái</td>
