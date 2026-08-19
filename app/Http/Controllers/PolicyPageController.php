@@ -8,9 +8,9 @@ use Inertia\Response;
 
 class PolicyPageController extends Controller
 {
-    public function show(PolicyPage $policyPage): Response
+    public function show(string $slug): Response
     {
-        abort_unless($policyPage->is_published, 404);
+        $policyPage = PolicyPage::published()->where('slug', $slug)->firstOrFail();
 
         $other = PolicyPage::published()
             ->whereKeyNot($policyPage->getKey())

@@ -16,7 +16,6 @@ use App\Http\Controllers\PolicyPageController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TranslationController;
 use App\Models\MenuPageContent;
-use App\Models\PolicyPage;
 use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -64,14 +63,15 @@ Route::get('/contact', fn () => redirect()->away(url('/lien-he').'/', 301));
 
 // 4 trang chính sách ở footer — mỗi trang một URL riêng ở cấp gốc (không còn tiền tố
 // /chinh-sach), nội dung chỉnh qua Filament › Nội dung › Trang chính sách (Quill editor).
-$policyPage = fn (string $slug) => fn (PolicyPageController $controller) => $controller->show(
-    PolicyPage::published()->where('slug', $slug)->firstOrFail()
-);
-
-Route::get('/chinh-sach-bao-mat', $policyPage('chinh-sach-bao-mat'))->name('policy.privacy');
-Route::get('/dieu-khoan-dich-vu', $policyPage('dieu-khoan-dich-vu'))->name('policy.terms');
-Route::get('/ho-tro-khach-hang', $policyPage('ho-tro-khach-hang'))->name('policy.support');
-Route::get('/luu-y-dich-vu', $policyPage('luu-y-dich-vu'))->name('service-guidelines');
+// Route::defaults() thay vì closure lồng nhau (fn($slug) => fn($controller) => ...) — pattern
+// cũ gây ArgumentCountError trên production sau `route:cache`: Laravel serialize closure được
+// TRẢ VỀ từ 1 closure khác (curry) mất đúng chữ ký tham số, deserialize xong gọi lại với 0
+// tham số thay vì 1 ("Too few arguments... exactly 1 expected"). Controller action + defaults
+// là pattern chuẩn, cache route bình thường không lỗi.
+Route::get('/chinh-sach-bao-mat', [PolicyPageController::class, 'show'])->defaults('slug', 'chinh-sach-bao-mat')->name('policy.privacy');
+Route::get('/dieu-khoan-dich-vu', [PolicyPageController::class, 'show'])->defaults('slug', 'dieu-khoan-dich-vu')->name('policy.terms');
+Route::get('/ho-tro-khach-hang', [PolicyPageController::class, 'show'])->defaults('slug', 'ho-tro-khach-hang')->name('policy.support');
+Route::get('/luu-y-dich-vu', [PolicyPageController::class, 'show'])->defaults('slug', 'luu-y-dich-vu')->name('service-guidelines');
 // Giữ URL cũ hoạt động (301) phòng khi đã chia sẻ.
 Route::get('/huong-dan-thanh-toan', fn () => redirect()->away(url('/luu-y-dich-vu').'/', 301));
 
