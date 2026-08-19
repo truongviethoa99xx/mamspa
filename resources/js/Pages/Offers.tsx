@@ -21,7 +21,12 @@ interface Props {
 export default function Offers({ hero, branches, note, closing, sectionVisibility }: Props) {
     return (
         <PublicLayout mainClassName="bg-[#f5f2ed]">
-            <Head title="Ưu đãi" />
+            <Head title="Ưu đãi">
+                <meta
+                    name="description"
+                    content="Cập nhật ưu đãi, khuyến mãi mới nhất tại Mầm Spa — tiết kiệm hơn khi trải nghiệm các liệu trình massage, chăm sóc da mặt, head spa tại 2 chi nhánh Hồ Chí Minh."
+                />
+            </Head>
             {sectionVisibility.hero && <OfferHero data={hero} />}
             {sectionVisibility.branches && <OfferBranches data={branches} />}
             {sectionVisibility.note && <OfferNote data={note} />}

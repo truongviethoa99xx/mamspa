@@ -30,7 +30,12 @@ interface Props {
 export default function CustomerExperience({ hero, stats, gallery, testimonials, reasons, instagram, closing, sectionVisibility }: Props) {
     return (
         <PublicLayout mainClassName="bg-[#f5f2ed]">
-            <Head title="Customer Experience" />
+            <Head title="Trải nghiệm khách hàng">
+                <meta
+                    name="description"
+                    content="Cảm nhận thật từ khách hàng đã trải nghiệm dịch vụ tại Mầm Spa — đánh giá, hình ảnh không gian và lý do khách hàng quay lại nhiều lần."
+                />
+            </Head>
             {sectionVisibility.hero && <CustomerExperienceHero data={hero} />}
             {sectionVisibility.stats && <StatsStrip data={stats} />}
             {sectionVisibility.gallery && <ExperienceGallery data={gallery} />}

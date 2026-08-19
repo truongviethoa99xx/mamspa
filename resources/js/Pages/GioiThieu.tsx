@@ -56,7 +56,12 @@ export default function GioiThieu({
 }: Props) {
     return (
         <PublicLayout mainClassName="bg-[#f5f2ed]">
-            <Head title="Về Mầm" />
+            <Head title="Về Mầm">
+                <meta
+                    name="description"
+                    content="Câu chuyện, triết lý trị liệu và không gian của Mầm Spa — nơi kết hợp giá trị chữa lành truyền thống Việt với trải nghiệm chăm sóc sức khoẻ hiện đại tại Hồ Chí Minh."
+                />
+            </Head>
             {sectionVisibility.hero && (
                 <Hero data={hero} heightClassName="h-[calc(85vh-100px)] min-h-[340px] sm:h-[calc(75vh-100px)]" />
             )}

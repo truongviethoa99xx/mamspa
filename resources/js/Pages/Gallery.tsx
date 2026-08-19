@@ -18,7 +18,12 @@ export default function Gallery({ images }: Props) {
 
     return (
         <PublicLayout>
-            <Head title="Thư viện ảnh" />
+            <Head title="Thư viện ảnh">
+                <meta
+                    name="description"
+                    content="Hình ảnh không gian trị liệu và khoảnh khắc trải nghiệm thực tế của khách hàng tại 2 chi nhánh Mầm Spa, Hồ Chí Minh."
+                />
+            </Head>
 
             <section className="bg-maha-50 px-5 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24">
                 <div className="mx-auto max-w-7xl">

@@ -37,7 +37,12 @@ export default function Contact({
 }: Props) {
     return (
         <PublicLayout>
-            <Head title="Liên hệ" />
+            <Head title="Liên hệ">
+                <meta
+                    name="description"
+                    content="Liên hệ Mầm Spa — 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng tại Hồ Chí Minh. Gọi hotline, gửi tin nhắn hoặc điền form để được tư vấn dịch vụ và đặt lịch."
+                />
+            </Head>
             {sectionVisibility.hero && (
                 <Hero
                     data={hero}

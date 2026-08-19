@@ -51,7 +51,12 @@ export default function BlogIndex({
 
     return (
         <PublicLayout mainClassName="bg-white">
-            <Head title="Blog" />
+            <Head title="Blog">
+                <meta
+                    name="description"
+                    content="Bài viết chia sẻ kiến thức chăm sóc sức khoẻ, làm đẹp và trị liệu truyền thống Việt từ Mầm Spa — mẹo chăm sóc da, massage, head spa và lối sống cân bằng."
+                />
+            </Head>
 
             {/* Cùng kiểu banner full-bleed với trang chi tiết dịch vụ (CategoryHero) — quản lý
                 tiêu đề/ảnh tại /admin/blog-page-settings. Blog không có CTA đặt lịch theo đúng
