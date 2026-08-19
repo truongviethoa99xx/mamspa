@@ -1,6 +1,6 @@
 # Mầm Spa — mamspa.vn
 
-Website spa booking + CMS (kiểu WordPress) cho Mầm Spa Đà Nẵng.
+Website spa booking + CMS (kiểu WordPress) cho Mầm Spa Hồ Chí Minh.
 
 **Stack:** Laravel 11 · Inertia.js · React 18 + TypeScript · TailwindCSS · Filament v3 · MySQL · Redis
 

@@ -74,7 +74,7 @@ class SiteSettings extends Page implements HasForms
                         Forms\Components\TextInput::make('tagline')->label('Tagline footer')->columnSpanFull(),
                         Forms\Components\Textarea::make('meta_description')
                             ->label('Mô tả SEO mặc định (meta description)')
-                            ->helperText('Dùng cho các trang chưa khai báo mô tả riêng. Nên viết 120-160 ký tự, chứa từ khóa chính (spa, massage, Đà Nẵng...).')
+                            ->helperText('Dùng cho các trang chưa khai báo mô tả riêng. Nên viết 120-160 ký tự, chứa từ khóa chính (spa, massage, Hồ Chí Minh...).')
                             ->rows(3)
                             ->maxLength(160)
                             ->live(onBlur: true)

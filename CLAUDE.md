@@ -5,7 +5,7 @@
 ## 📌 Tổng quan dự án
 - **Tên:** Mầm Spa — mamspa.vn
 - **Loại:** Website spa booking + CMS có dashboard chỉnh sửa nội dung (kiểu WordPress)
-- **Thành lập:** 2018 · Đà Nẵng, Việt Nam
+- **Thành lập:** 2018 · Hồ Chí Minh, Việt Nam
 - **Chi nhánh:**
   - Mầm Spa Lê Văn Sỹ · (+84) 934 743 026
   - Mầm Spa Lê Thị Riêng · (+84) 978 456 185
@@ -386,8 +386,8 @@ protected $translatable = ['title'];
 ## 📱 Social Media & External Integrations
 | Platform | Handle / ID |
 |----------|-------------|
-| Facebook | facebook.com/mamSpa.danang |
-| Instagram | @mamspa.danang |
+| Facebook | _(chưa xác nhận — cấu hình ở /admin khi có tài khoản thật)_ |
+| Instagram | _(chưa xác nhận — cấu hình ở /admin khi có tài khoản thật)_ |
 | Klook | Có listing — nhận voucher từ Klook |
 | Google Maps | 2 chi nhánh có pin riêng |
 | Google Tag Manager | GTM-W6NJ4P3S |

@@ -70,9 +70,9 @@ return new class extends Migration
             'hotline' => '(+84) 965 80 6166',
             'email' => 'info@mamspa.vn',
             'chat_url' => 'https://zalo.me/0865806166',
+            // Không seed sẵn URL Facebook/Instagram đoán mò — admin tự điền URL thật ở
+            // /admin (Thiết lập chung → Mạng xã hội) khi có tài khoản chính thức.
             'social_links' => json_encode([
-                ['label' => 'Facebook', 'href' => 'https://facebook.com/mamSpa.danang'],
-                ['label' => 'Instagram', 'href' => 'https://instagram.com/mamspa.danang'],
                 ['label' => 'Zalo OA', 'href' => 'https://zalo.me/0865806166'],
             ]),
             'service_menu' => json_encode([
@@ -88,7 +88,7 @@ return new class extends Migration
 
         DB::table('home_page_contents')->insert([
             'hero_title' => json_encode(['vi' => 'Hành trình cân bằng Thân – Tâm – Trí', 'en' => 'The Journey to Balance Body – Mind – Spirit']),
-            'hero_subtitle' => json_encode(['vi' => 'Mầm Spa — Trải nghiệm spa truyền thống Việt giữa lòng Đà Nẵng', 'en' => 'Traditional Vietnamese spa experience in Da Nang']),
+            'hero_subtitle' => json_encode(['vi' => 'Mầm Spa — Trải nghiệm spa truyền thống Việt giữa lòng Hồ Chí Minh', 'en' => 'Traditional Vietnamese spa experience in Ho Chi Minh City']),
             'hero_cta_text' => json_encode(['vi' => 'Đặt lịch ngay', 'en' => 'Book now']),
             'hero_cta_link' => '/dat-lich',
             'service_list_title' => json_encode(['vi' => 'Dịch vụ nổi bật', 'en' => 'Featured Services']),
@@ -100,7 +100,7 @@ return new class extends Migration
                 ['name' => '2201_Nguyễn Phi Lân', 'time' => '8 months ago', 'rating' => 5, 'content' => ['vi' => 'Tối đi làm về thấy bảng hiệu nên ghé thử vì muốn massage cổ vai do phải ngồi lâu. Liệu trình làm khá dễ chịu, thấy hiệu quả rõ rệt, tuy chưa đặt lịch trước mà vẫn được phục vụ chu đáo.']],
                 ['name' => 'Oanh Hoang', 'time' => '8 months ago', 'rating' => 5, 'content' => ['vi' => 'Lần đầu đi massage hơi bỡ ngỡ xíu kkkk. Mấy bạn ở đây tư vấn nhiệt tình mà đúng với nhu cầu của mình, hông có bị upsale, chạy KPI. Kỹ thuật viên tay nghề tốt, sẽ quay lại.']],
                 ['name' => 'Trần Mỹ Linh', 'time' => '6 months ago', 'rating' => 5, 'content' => ['vi' => 'Không gian yên tĩnh, thơm mùi thảo mộc rất dễ chịu. Head spa 21 bước thư giãn đỉnh cao, ngủ quên luôn. Nhân viên nhẹ nhàng, chuyên nghiệp.']],
-                ['name' => 'James P.', 'time' => '5 months ago', 'rating' => 5, 'content' => ['vi' => 'A hidden gem in Da Nang. The foot spa and shoulder massage were exactly what I needed after a long flight. Will definitely come back.']],
+                ['name' => 'James P.', 'time' => '5 months ago', 'rating' => 5, 'content' => ['vi' => 'A hidden gem in Ho Chi Minh City. The foot spa and shoulder massage were exactly what I needed after a long flight. Will definitely come back.']],
                 ['name' => 'Phạm Thu Hà', 'time' => '4 months ago', 'rating' => 5, 'content' => ['vi' => 'Giá hợp lý, chất lượng vượt mong đợi. Combo gội + massage làm mình thư giãn hoàn toàn. Sẽ giới thiệu cho bạn bè.']],
             ]),
             'created_at' => now(),

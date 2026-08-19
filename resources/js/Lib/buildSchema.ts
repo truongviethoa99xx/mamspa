@@ -111,14 +111,9 @@ export function localBusinessSchema(params: {
     ...(params.id && { '@id': window.location.origin + '/#' + params.id }),
     name: params.name,
     image: window.location.origin + '/images/banner.png',
-    sameAs: [
-      'https://www.facebook.com/mamSpa.danang',
-      'https://www.instagram.com/mamspa.danang',
-    ],
     address: {
       '@type': 'PostalAddress',
       streetAddress: params.address,
-      addressLocality: 'Đà Nẵng',
       addressCountry: 'VN',
     },
     telephone: params.phone,

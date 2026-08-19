@@ -15,7 +15,7 @@ class HomePageContentSeeder extends Seeder
     {
         $data = array (
           'hero_title' => '{"en": "A healing journey from nature", "ja": "自然からの癒やしの旅", "ko": "자연으로부터의 치유 여정", "vi": "Hành trình chữa lành từ thiên nhiên", "zh": "来自大自然的治愈之旅"}',
-          'hero_subtitle' => '{"en": "Traditional Vietnamese spa experience in Da Nang", "ja": null, "ko": null, "vi": "Gác lại những bộn bề của nhịp sống hối hả, mời bạn bước vào không gian Indochine tĩnh lặng để lắng nghe cơ thể và vỗ về tâm hồn.", "zh": null}',
+          'hero_subtitle' => '{"en": "Traditional Vietnamese spa experience in Ho Chi Minh City", "ja": null, "ko": null, "vi": "Gác lại những bộn bề của nhịp sống hối hả, mời bạn bước vào không gian Indochine tĩnh lặng để lắng nghe cơ thể và vỗ về tâm hồn.", "zh": null}',
           'hero_eyebrow' => '{"en": "Rooted in Vietnam\'s healing traditions", "ja": "ベトナムの伝統的な治療法に由来する", "ko": "베트남의 전통 치유에서 유래한", "vi": " Bắt nguồn từ truyền thống chữa bệnh của Việt Nam", "zh": "源自越南的传统疗法"}',
           'hero_cta_text' => '{"en": "Book now", "ja": "今すぐ予約", "ko": "지금 예약하기", "vi": "Đặt lịch ngay", "zh": "立即预约"}',
           'hero_cta_link' => '/dat-lich/',

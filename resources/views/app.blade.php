@@ -51,7 +51,6 @@
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@mamspa_danang">
     <meta name="twitter:image" content="{{ config('app.url') }}/images/banner.png">
 
     @php
@@ -96,6 +95,16 @@
     <link rel="stylesheet" href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.bunny.net/css?family=quicksand:400,500,600,700|playfair-display:400,500,600,700&display=swap"></noscript>
 
+    @php
+        // sameAs lấy thẳng từ social_links admin cấu hình ở /admin (Thiết lập chung → Mạng xã
+        // hội) — trước đây hardcode 2 URL "mamSpa.danang" không rõ có đúng tài khoản thật hay
+        // không; giờ không có dữ liệu thật thì để mảng rỗng thay vì đoán link.
+        $organizationSameAs = collect($siteProps['social_links'] ?? [])
+            ->pluck('href')
+            ->filter()
+            ->values()
+            ->all();
+    @endphp
     <script type="application/ld+json">{!! json_encode([
         '@context' => 'https://schema.org',
         '@graph' => [
@@ -105,10 +114,7 @@
                 'name' => $siteName,
                 'url' => config('app.url'),
                 'logo' => $siteLogoUrl,
-                'sameAs' => [
-                    'https://www.facebook.com/mamSpa.danang',
-                    'https://www.instagram.com/mamspa.danang',
-                ],
+                ...($organizationSameAs ? ['sameAs' => $organizationSameAs] : []),
                 'contactPoint' => [
                     ['@type' => 'ContactPoint', 'telephone' => '+84934743026', 'contactType' => 'customer service'],
                     ['@type' => 'ContactPoint', 'telephone' => '+84978456185', 'contactType' => 'customer service'],
@@ -131,14 +137,6 @@
                 '@id' => config('app.url') . '/#heritage',
                 'name' => 'Mầm Spa Lê Văn Sỹ',
                 'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
-                'address' => [
-                    '@type' => 'PostalAddress',
-                    'streetAddress' => '26 Nguyễn Văn Thoại',
-                    'addressLocality' => 'Đà Nẵng',
-                    'addressRegion' => 'Đà Nẵng',
-                    'addressCountry' => 'VN',
-                ],
-                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 16.0685, 'longitude' => 108.2127],
                 'telephone' => '+84934743026',
                 'url' => config('app.url') . '/chi-nhanh/heritage/',
                 'openingHoursSpecification' => [
@@ -153,14 +151,6 @@
                 '@id' => config('app.url') . '/#signature',
                 'name' => 'Mầm Spa Lê Thị Riêng',
                 'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
-                'address' => [
-                    '@type' => 'PostalAddress',
-                    'streetAddress' => '185 Hồ Nghinh',
-                    'addressLocality' => 'Đà Nẵng',
-                    'addressRegion' => 'Đà Nẵng',
-                    'addressCountry' => 'VN',
-                ],
-                'geo' => ['@type' => 'GeoCoordinates', 'latitude' => 16.0743, 'longitude' => 108.2208],
                 'telephone' => '+84978456185',
                 'url' => config('app.url') . '/chi-nhanh/signature/',
                 'openingHoursSpecification' => [

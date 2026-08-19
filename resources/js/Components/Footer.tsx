@@ -9,11 +9,9 @@ import type { SharedProps } from '@/types';
 
 const DEFAULT_HOTLINE = '(+84) 965 80 6166';
 const DEFAULT_EMAIL = 'info@mamspa.vn';
-const DEFAULT_SOCIALS = [
-    { label: 'Facebook', href: 'https://facebook.com/mamSpa.danang' },
-    { label: 'Instagram', href: 'https://instagram.com/mamspa.danang' },
-    { label: 'Zalo OA', href: 'https://zalo.me/0865806166' },
-];
+// Không hardcode URL mạng xã hội cụ thể ở đây — nếu /admin chưa cấu hình social_links,
+// ẩn hẳn khối này thay vì fallback về link đoán mò (dễ trỏ sai tài khoản).
+const DEFAULT_SOCIALS: { label: string; href: string }[] = [];
 
 function SocialIcon({ label }: { label: string }) {
     const key = label.toLowerCase();

@@ -58,7 +58,7 @@ export default function Home({
             <Head title="Trang chủ">
                 <meta
                     name="description"
-                    content="Mầm Spa — spa trị liệu tại Đà Nẵng với 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng. Massage body, chăm sóc da mặt, head spa và các liệu trình chăm sóc sức khoẻ theo giá trị trị liệu Việt."
+                    content="Mầm Spa — spa trị liệu tại Hồ Chí Minh với 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng. Massage body, chăm sóc da mặt, head spa và các liệu trình chăm sóc sức khoẻ theo giá trị trị liệu Việt."
                 />
                 {hero.image && (
                     <link
