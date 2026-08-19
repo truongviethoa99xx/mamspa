@@ -9,4 +9,4 @@ Disallow: /checkout
 Disallow: /payment/*
 Disallow: /_ignition
 
-Sitemap: https://mahaspa.vn/sitemap.xml
+Sitemap: https://mamspa.vn/sitemap.xml
