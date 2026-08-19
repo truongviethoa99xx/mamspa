@@ -1,7 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Breadcrumb, type BreadcrumbItem } from '@/Components/Breadcrumb';
-import { formatDate } from '@/Lib/utils';
+import { formatDate, stripTags, truncate } from '@/Lib/utils';
+import type { SharedProps } from '@/types';
 
 interface PolicyPageData {
     slug: string;
@@ -24,11 +25,15 @@ interface Props {
 const HOME_CRUMB: BreadcrumbItem = { name: 'Trang chủ', url: '/' };
 
 export default function ChinhSachShow({ page, other }: Props) {
+    const { props } = usePage<SharedProps>();
     const title = page.name;
+    // 4 trang chính sách dùng chung 1 mô tả SEO mặc định ở /admin → Thiết lập chung, không có
+    // ô riêng từng trang — nếu site chưa cấu hình thì tạm suy ra từ nội dung trang.
+    const description = truncate(props.site?.meta_description || stripTags(page.content ?? ''), 160);
 
     return (
         <PublicLayout minimalHeader>
-            <Head title={title} />
+            <Head title={title}>{description && <meta name="description" content={description} />}</Head>
 
             <header className="px-5 pb-8 pt-28 sm:px-10 sm:pt-32 lg:px-16 lg:pt-36">
                 <div className="mx-auto max-w-5xl">
