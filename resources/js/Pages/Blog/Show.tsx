@@ -1,8 +1,9 @@
 import { useMemo, useRef } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr, formatDate } from '@/Lib/utils';
+import type { SharedProps } from '@/types';
 import { extractToc } from '@/Lib/toc';
 import { Breadcrumb, type BreadcrumbItem } from '@/Components/Breadcrumb';
 import { BlogPostCard } from '@/Components/Blog/BlogPostCard';
@@ -42,6 +43,7 @@ const HOME_CRUMB: BreadcrumbItem = { name: 'Trang chủ', url: '/' };
 const BLOG_CRUMB: BreadcrumbItem = { name: 'Blog', url: '/tin-tuc/' };
 
 export default function BlogShow({ post, related, previous, next }: Props) {
+    const { props } = usePage<SharedProps>();
     const locale = useLocale();
     const title = tr(post.title, locale);
     const excerpt = tr(post.excerpt, locale);
@@ -50,7 +52,9 @@ export default function BlogShow({ post, related, previous, next }: Props) {
     const articleRef = useRef<HTMLDivElement>(null);
 
     const seoTitle = tr(post.seo.title, locale) || title;
-    const seoDescription = tr(post.seo.description, locale);
+    // Mô tả SEO riêng của bài viết (nếu admin đã điền) được ưu tiên trước — vẫn cho phép mỗi
+    // bài có mô tả riêng; để trống thì dùng mô tả mặc định ở Thiết lập chung.
+    const seoDescription = tr(post.seo.description, locale) || props.site?.meta_description || '';
 
     const { html: body, toc } = useMemo(() => extractToc(rawBody), [rawBody]);
 

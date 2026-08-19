@@ -1,7 +1,8 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Hero, type HeroData } from '@/Components/Hero';
 import { ContactBranches, type ContactBranchesData } from '@/Components/Contact/ContactBranches';
+import type { SharedProps } from '@/types';
 import { ContactAboutBanner, type ContactAboutBannerData } from '@/Components/Contact/ContactAboutBanner';
 import { ContactInfoForm, type ContactFormData, type ContactInfoData } from '@/Components/Contact/ContactInfoForm';
 import { ContactClosingBanner, type ContactClosingBannerData } from '@/Components/Contact/ContactClosingBanner';
@@ -35,13 +36,15 @@ export default function Contact({
     commitments,
     sectionVisibility,
 }: Props) {
+    const { props } = usePage<SharedProps>();
+    const description =
+        props.site?.meta_description ||
+        'Liên hệ Mầm Spa — 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng tại Hồ Chí Minh. Gọi hotline, gửi tin nhắn hoặc điền form để được tư vấn dịch vụ và đặt lịch.';
+
     return (
         <PublicLayout>
             <Head title="Liên hệ">
-                <meta
-                    name="description"
-                    content="Liên hệ Mầm Spa — 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng tại Hồ Chí Minh. Gọi hotline, gửi tin nhắn hoặc điền form để được tư vấn dịch vụ và đặt lịch."
-                />
+                <meta name="description" content={description} />
             </Head>
             {sectionVisibility.hero && (
                 <Hero

@@ -25,10 +25,9 @@ export default function Menu({ hero, intro, branches, contact, sectionVisibility
     const { props } = usePage<SharedProps>();
     const locale = useLocale();
     const title = stripTags(tr(hero.title, locale)) || 'Menu';
-    // Trang Menu do admin tạo qua CMS (nhiều instance khác nhau) nên không hardcode 1 mô tả cố
-    // định như các trang tĩnh khác — lấy từ subtitle của chính trang này, trống thì fallback
-    // về mô tả mặc định ở Thiết lập chung.
-    const description = truncate(stripTags(tr(hero.subtitle, locale)) || props.site?.meta_description || '', 160);
+    // Mô tả SEO mặc định ở Thiết lập chung được ưu tiên trước; subtitle của chính trang này chỉ
+    // dùng khi Thiết lập chung để trống — nhất quán với mọi trang khác trên site.
+    const description = truncate(props.site?.meta_description || stripTags(tr(hero.subtitle, locale)) || '', 160);
 
     return (
         <PublicLayout mainClassName="bg-[#f5f2ed]">

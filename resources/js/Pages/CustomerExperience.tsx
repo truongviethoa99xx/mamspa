@@ -1,6 +1,7 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { CustomerExperienceHero, type CustomerExperienceHeroData } from '@/Components/CustomerExperience/CustomerExperienceHero';
+import type { SharedProps } from '@/types';
 import { StatsStrip, type StatsStripData } from '@/Components/CustomerExperience/StatsStrip';
 import { ExperienceGallery, type ExperienceGalleryData } from '@/Components/CustomerExperience/ExperienceGallery';
 import { ExperienceTestimonials, type ExperienceTestimonialsData } from '@/Components/CustomerExperience/ExperienceTestimonials';
@@ -28,13 +29,15 @@ interface Props {
 }
 
 export default function CustomerExperience({ hero, stats, gallery, testimonials, reasons, instagram, closing, sectionVisibility }: Props) {
+    const { props } = usePage<SharedProps>();
+    const description =
+        props.site?.meta_description ||
+        'Cảm nhận thật từ khách hàng đã trải nghiệm dịch vụ tại Mầm Spa — đánh giá, hình ảnh không gian và lý do khách hàng quay lại nhiều lần.';
+
     return (
         <PublicLayout mainClassName="bg-[#f5f2ed]">
             <Head title="Trải nghiệm khách hàng">
-                <meta
-                    name="description"
-                    content="Cảm nhận thật từ khách hàng đã trải nghiệm dịch vụ tại Mầm Spa — đánh giá, hình ảnh không gian và lý do khách hàng quay lại nhiều lần."
-                />
+                <meta name="description" content={description} />
             </Head>
             {sectionVisibility.hero && <CustomerExperienceHero data={hero} />}
             {sectionVisibility.stats && <StatsStrip data={stats} />}

@@ -1,6 +1,7 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Hero, type HeroData } from '@/Components/Hero';
+import type { SharedProps } from '@/types';
 import { AboutStory, type AboutStoryData } from '@/Components/About/AboutStory';
 import { AboutPhilosophy, type AboutPhilosophyData } from '@/Components/About/AboutPhilosophy';
 import { AboutHealingJourneys, type AboutHealingJourneysData } from '@/Components/About/AboutHealingJourneys';
@@ -54,13 +55,15 @@ export default function GioiThieu({
     invitation,
     sectionVisibility,
 }: Props) {
+    const { props } = usePage<SharedProps>();
+    const description =
+        props.site?.meta_description ||
+        'Câu chuyện, triết lý trị liệu và không gian của Mầm Spa — nơi kết hợp giá trị chữa lành truyền thống Việt với trải nghiệm chăm sóc sức khoẻ hiện đại tại Hồ Chí Minh.';
+
     return (
         <PublicLayout mainClassName="bg-[#f5f2ed]">
             <Head title="Về Mầm">
-                <meta
-                    name="description"
-                    content="Câu chuyện, triết lý trị liệu và không gian của Mầm Spa — nơi kết hợp giá trị chữa lành truyền thống Việt với trải nghiệm chăm sóc sức khoẻ hiện đại tại Hồ Chí Minh."
-                />
+                <meta name="description" content={description} />
             </Head>
             {sectionVisibility.hero && (
                 <Hero data={hero} heightClassName="h-[calc(85vh-100px)] min-h-[340px] sm:h-[calc(75vh-100px)]" />

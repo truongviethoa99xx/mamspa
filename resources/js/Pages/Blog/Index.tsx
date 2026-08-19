@@ -1,6 +1,7 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { CategoryHero, type CategoryHeroData } from '@/Components/Services/CategoryHero';
+import type { SharedProps } from '@/types';
 import { type BreadcrumbItem } from '@/Components/Breadcrumb';
 import { BlogCategoryFilter, type BlogCategoryFilterItem } from '@/Components/Blog/BlogCategoryFilter';
 import { BlogFeatured } from '@/Components/Blog/BlogFeatured';
@@ -42,20 +43,21 @@ export default function BlogIndex({
     activeCategory,
     sectionVisibility,
 }: Props) {
+    const { props } = usePage<SharedProps>();
     const heroData: CategoryHeroData = {
         heading: hero.title,
         subtitle: hero.subtitle,
         image: hero.image,
         imageAlt: hero.image_alt,
     };
+    const description =
+        props.site?.meta_description ||
+        'Bài viết chia sẻ kiến thức chăm sóc sức khoẻ, làm đẹp và trị liệu truyền thống Việt từ Mầm Spa — mẹo chăm sóc da, massage, head spa và lối sống cân bằng.';
 
     return (
         <PublicLayout mainClassName="bg-white">
             <Head title="Blog">
-                <meta
-                    name="description"
-                    content="Bài viết chia sẻ kiến thức chăm sóc sức khoẻ, làm đẹp và trị liệu truyền thống Việt từ Mầm Spa — mẹo chăm sóc da, massage, head spa và lối sống cân bằng."
-                />
+                <meta name="description" content={description} />
             </Head>
 
             {/* Cùng kiểu banner full-bleed với trang chi tiết dịch vụ (CategoryHero) — quản lý

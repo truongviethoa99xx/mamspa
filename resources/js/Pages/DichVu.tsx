@@ -1,8 +1,9 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Hero, type HeroData } from '@/Components/Hero';
 import { ServicesShowcase, type ServicesShowcaseData } from '@/Components/Services/ServicesShowcase';
 import { ServicesClosing, type ServicesClosingData } from '@/Components/Services/ServicesClosing';
+import type { SharedProps } from '@/types';
 
 interface Props {
     hero: HeroData;
@@ -16,13 +17,15 @@ interface Props {
 }
 
 export default function DichVu({ hero, showcase, closing, sectionVisibility }: Props) {
+    const { props } = usePage<SharedProps>();
+    const description =
+        props.site?.meta_description ||
+        'Khám phá các liệu trình trị liệu tại Mầm Spa: massage body, chăm sóc da mặt, head spa và các gói combo — theo giá trị trị liệu Việt kết hợp chuyên môn hiện đại.';
+
     return (
         <PublicLayout>
             <Head title="Dịch vụ">
-                <meta
-                    name="description"
-                    content="Khám phá các liệu trình trị liệu tại Mầm Spa: massage body, chăm sóc da mặt, head spa và các gói combo — theo giá trị trị liệu Việt kết hợp chuyên môn hiện đại."
-                />
+                <meta name="description" content={description} />
             </Head>
             {sectionVisibility.hero && <Hero data={hero} />}
             {sectionVisibility.showcase && <ServicesShowcase data={showcase} />}

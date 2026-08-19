@@ -1,5 +1,6 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
+import type { SharedProps } from '@/types';
 import { Hero, type HeroData } from '@/Components/Hero';
 import { Story, type StoryData } from '@/Components/Story';
 import { Philosophy, type PhilosophyData } from '@/Components/Philosophy';
@@ -53,13 +54,17 @@ export default function Home({
     finalCta,
     sectionVisibility,
 }: Props) {
+    const { props } = usePage<SharedProps>();
+    // Mô tả SEO mặc định ở Thiết lập chung được ưu tiên trước — admin sửa 1 chỗ áp dụng toàn
+    // site; chuỗi cứng bên dưới chỉ dùng khi Thiết lập chung để trống.
+    const description =
+        props.site?.meta_description ||
+        'Mầm Spa — spa trị liệu tại Hồ Chí Minh với 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng. Massage body, chăm sóc da mặt, head spa và các liệu trình chăm sóc sức khoẻ theo giá trị trị liệu Việt.';
+
     return (
         <PublicLayout>
             <Head title="Trang chủ">
-                <meta
-                    name="description"
-                    content="Mầm Spa — spa trị liệu tại Hồ Chí Minh với 2 chi nhánh Lê Văn Sỹ và Lê Thị Riêng. Massage body, chăm sóc da mặt, head spa và các liệu trình chăm sóc sức khoẻ theo giá trị trị liệu Việt."
-                />
+                <meta name="description" content={description} />
                 {hero.image && (
                     <link
                         rel="preload"

@@ -1,7 +1,8 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr, stripTags, truncate } from '@/Lib/utils';
+import type { SharedProps } from '@/types';
 import { type BreadcrumbItem } from '@/Components/Breadcrumb';
 import { ServiceHero } from '@/Components/Services/ServiceHero';
 import { ServicePillars, type ServicePillar } from '@/Components/Services/ServicePillars';
@@ -43,9 +44,12 @@ const HOME_CRUMB: BreadcrumbItem = { name: 'Trang chủ', url: '/' };
 const SERVICES_CRUMB: BreadcrumbItem = { name: 'Dịch vụ', url: '/dich-vu/' };
 
 export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
+    const { props } = usePage<SharedProps>();
     const locale = useLocale();
     const serviceName = stripTags(tr(service.name, locale));
-    const serviceDescription = truncate(stripTags(tr(service.short_description, locale)), 160);
+    // Mô tả SEO mặc định ở Thiết lập chung được ưu tiên trước — admin sửa 1 chỗ áp dụng toàn
+    // site; mô tả riêng của dịch vụ chỉ dùng khi Thiết lập chung để trống.
+    const serviceDescription = truncate(props.site?.meta_description || stripTags(tr(service.short_description, locale)), 160);
 
     const breadcrumbItems: BreadcrumbItem[] = [
         HOME_CRUMB,

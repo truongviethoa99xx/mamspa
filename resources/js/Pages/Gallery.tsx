@@ -1,7 +1,8 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { useLocale } from '@/Hooks/useLocale';
 import { tr } from '@/Lib/utils';
+import type { SharedProps } from '@/types';
 
 interface GalleryImage {
     src: string;
@@ -14,15 +15,16 @@ interface Props {
 }
 
 export default function Gallery({ images }: Props) {
+    const { props } = usePage<SharedProps>();
     const locale = useLocale();
+    const description =
+        props.site?.meta_description ||
+        'Hình ảnh không gian trị liệu và khoảnh khắc trải nghiệm thực tế của khách hàng tại 2 chi nhánh Mầm Spa, Hồ Chí Minh.';
 
     return (
         <PublicLayout>
             <Head title="Thư viện ảnh">
-                <meta
-                    name="description"
-                    content="Hình ảnh không gian trị liệu và khoảnh khắc trải nghiệm thực tế của khách hàng tại 2 chi nhánh Mầm Spa, Hồ Chí Minh."
-                />
+                <meta name="description" content={description} />
             </Head>
 
             <section className="bg-maha-50 px-5 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24">
