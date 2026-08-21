@@ -16,25 +16,27 @@ use Illuminate\Console\Command;
  */
 class OptimizeHomeImages extends Command
 {
-    protected $signature = 'images:optimize-home';
+    protected $signature = 'images:optimize-home {--force : Sinh lại các bản .webp đã có sẵn (dùng sau khi đổi chiều rộng mục tiêu trong HomeImageOptimizer)}';
 
     protected $description = 'Sinh bản .webp đã resize cho ảnh trang chủ và danh mục dịch vụ (backfill, không đụng DB/ảnh gốc)';
 
     public function handle(): int
     {
+        $force = (bool) $this->option('force');
+
         $this->info('Đang sinh ảnh .webp cho nội dung trang chủ...');
-        HomeImageOptimizer::forHomePageContent(HomePageContent::current());
+        HomeImageOptimizer::forHomePageContent(HomePageContent::current(), $force);
 
         $categories = ServiceCategory::all();
         $this->info("Đang sinh ảnh .webp cho {$categories->count()} danh mục dịch vụ...");
-        $categories->each(fn (ServiceCategory $category) => HomeImageOptimizer::forServiceCategory($category));
+        $categories->each(fn (ServiceCategory $category) => HomeImageOptimizer::forServiceCategory($category, $force));
 
         $pages = CustomPage::all();
         $this->info("Đang sinh ảnh .webp cho {$pages->count()} trang tuỳ biến...");
-        $pages->each(fn (CustomPage $page) => HomeImageOptimizer::forCustomPage($page));
+        $pages->each(fn (CustomPage $page) => HomeImageOptimizer::forCustomPage($page, $force));
 
         $this->info('Đang sinh ảnh .webp cho logo và icon liên hệ...');
-        HomeImageOptimizer::forSiteSetting(SiteSetting::current());
+        HomeImageOptimizer::forSiteSetting(SiteSetting::current(), $force);
 
         $this->info('Hoàn tất.');
 

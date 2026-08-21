@@ -6,6 +6,9 @@ import { tr, cn } from '@/Lib/utils';
 
 export interface SpaceItem {
     image?: string | null;
+    /** Bản .webp nhỏ hơn dành cho mobile — xem HomeImageOptimizer::generateResponsivePair.
+     *  Không có thì <img> chỉ dùng `image` như trước, không đổi hành vi. */
+    image_mobile?: string | null;
     image_alt?: unknown;
     title?: unknown;
     description?: unknown;
@@ -65,6 +68,12 @@ export function Spaces({ data }: { data: SpacesData }) {
                                 {item.image && (
                                     <img
                                         src={item.image}
+                                        srcSet={
+                                            item.image_mobile
+                                                ? `${item.image_mobile} 750w, ${item.image} 1280w`
+                                                : undefined
+                                        }
+                                        sizes={item.image_mobile ? '(min-width: 640px) 50vw, 100vw' : undefined}
                                         alt={imageAlt}
                                         className="absolute inset-0 z-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         loading="lazy"

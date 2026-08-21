@@ -98,6 +98,51 @@ function QuoteCarousel({ quotes, ctaLink }: { quotes: QuoteData[]; ctaLink: stri
     );
 }
 
+/** Nhúng YouTube/Vimeo dạng "click-to-load": chỉ tải iframe (và script nặng của bên thứ 3) khi khách bấm play. */
+function EmbedFacade({ embedUrl, thumbnail }: { embedUrl: string; thumbnail?: string | null }) {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const youtubeId = embedUrl.match(/\/embed\/([\w-]{11})/)?.[1];
+    const fallbackThumbnail = youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : null;
+    const posterUrl = thumbnail ?? fallbackThumbnail;
+
+    if (isPlaying) {
+        return (
+            <iframe
+                src={`${embedUrl}${embedUrl.includes('?') ? '&' : '?'}autoplay=1`}
+                title="Video trải nghiệm khách hàng"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full"
+            />
+        );
+    }
+
+    return (
+        <button
+            type="button"
+            onClick={() => setIsPlaying(true)}
+            aria-label="Phát video trải nghiệm khách hàng"
+            className="group relative h-full min-h-[220px] w-full"
+        >
+            {posterUrl && (
+                <img
+                    src={posterUrl}
+                    alt="Video trải nghiệm khách hàng"
+                    className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                />
+            )}
+            <div className="absolute inset-0 bg-black/30" />
+            <span className="absolute inset-0 flex items-center justify-center">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-heading transition-transform group-hover:scale-110">
+                    <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
+                </span>
+            </span>
+        </button>
+    );
+}
+
 /** Đánh giá khách hàng — Google, TripAdvisor (nhập tay), trích dẫn nổi bật, và video. */
 export function Reviews({ data }: { data: ReviewsData }) {
     const video = data.video;
@@ -168,14 +213,7 @@ export function Reviews({ data }: { data: ReviewsData }) {
                                 className="h-full w-full object-cover"
                             />
                         ) : video.embed_url ? (
-                            <iframe
-                                src={video.embed_url}
-                                title="Video trải nghiệm khách hàng"
-                                loading="lazy"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                                className="h-full w-full"
-                            />
+                            <EmbedFacade embedUrl={video.embed_url} thumbnail={video.thumbnail} />
                         ) : (
                             <a
                                 href={video.url ?? '#'}

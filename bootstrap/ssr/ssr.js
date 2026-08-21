@@ -29315,7 +29315,14 @@ var implementation$1 = function bind(that) {
 };
 var implementation = implementation$1;
 var functionBind = Function.prototype.bind || implementation;
-var functionCall = Function.prototype.call;
+var functionCall;
+var hasRequiredFunctionCall;
+function requireFunctionCall() {
+  if (hasRequiredFunctionCall) return functionCall;
+  hasRequiredFunctionCall = 1;
+  functionCall = Function.prototype.call;
+  return functionCall;
+}
 var functionApply;
 var hasRequiredFunctionApply;
 function requireFunctionApply() {
@@ -29327,12 +29334,12 @@ function requireFunctionApply() {
 var reflectApply = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
 var bind$2 = functionBind;
 var $apply$1 = requireFunctionApply();
-var $call$2 = functionCall;
+var $call$2 = requireFunctionCall();
 var $reflectApply = reflectApply;
 var actualApply = $reflectApply || bind$2.call($call$2, $apply$1);
 var bind$1 = functionBind;
 var $TypeError$6 = type;
-var $call$1 = functionCall;
+var $call$1 = requireFunctionCall();
 var $actualApply = actualApply;
 var callBindApplyHelpers = function callBindBasic(args) {
   if (args.length < 1 || typeof args[0] !== "function") {
@@ -29447,7 +29454,7 @@ var getProto = requireGetProto();
 var $ObjectGPO = requireObject_getPrototypeOf();
 var $ReflectGPO = requireReflect_getPrototypeOf();
 var $apply = requireFunctionApply();
-var $call = functionCall;
+var $call = requireFunctionCall();
 var needsEval = {};
 var TypedArray = typeof Uint8Array === "undefined" || !getProto ? undefined$1 : getProto(Uint8Array);
 var INTRINSICS = {
@@ -43681,7 +43688,7 @@ async function main() {
     title: (title) => title ? `${title} — ${appName}` : appName,
     resolve: (name) => resolvePageComponent(
       `./Pages/${name}.tsx`,
-      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-3k9OmcKj.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-CU5dH1F-.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-CHZscfwM.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-BkR93HtS.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-CKqK1unF.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-UkBjoFCF.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-Begz8sFa.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu-B_tJ9cwB.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-7kn_PN3U.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-Bs4mDVPD.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-DY9hRol5.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-DRROkY4J.js"), "./Pages/Home.tsx": () => import("./assets/Home-Rl-mYrI4.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-C1Niwc2-.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-CUP1VpVd.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-DeiBcivd.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-BQCdnj7t.js") })
+      /* @__PURE__ */ Object.assign({ "./Pages/Blog/Index.tsx": () => import("./assets/Index-3k9OmcKj.js"), "./Pages/Blog/Show.tsx": () => import("./assets/Show-CU5dH1F-.js"), "./Pages/Booking.tsx": () => import("./assets/Booking-CHZscfwM.js"), "./Pages/ChinhSach/Show.tsx": () => import("./assets/Show-BkR93HtS.js"), "./Pages/Contact.tsx": () => import("./assets/Contact-CKqK1unF.js"), "./Pages/CustomPage/Show.tsx": () => import("./assets/Show-UkBjoFCF.js"), "./Pages/CustomerExperience.tsx": () => import("./assets/CustomerExperience-Begz8sFa.js"), "./Pages/DichVu.tsx": () => import("./assets/DichVu-B_tJ9cwB.js"), "./Pages/DichVuCategory.tsx": () => import("./assets/DichVuCategory-7kn_PN3U.js"), "./Pages/DichVuDetail.tsx": () => import("./assets/DichVuDetail-Bs4mDVPD.js"), "./Pages/Gallery.tsx": () => import("./assets/Gallery-DY9hRol5.js"), "./Pages/GioiThieu.tsx": () => import("./assets/GioiThieu-DRROkY4J.js"), "./Pages/Home.tsx": () => import("./assets/Home-DlL-VfOt.js"), "./Pages/Menu.tsx": () => import("./assets/Menu-C1Niwc2-.js"), "./Pages/MyBookings.tsx": () => import("./assets/MyBookings-CUP1VpVd.js"), "./Pages/NotFound.tsx": () => import("./assets/NotFound-DeiBcivd.js"), "./Pages/Offers.tsx": () => import("./assets/Offers-BQCdnj7t.js") })
     ),
     setup: ({ App, props }) => /* @__PURE__ */ jsxRuntimeExports.jsx(App, { ...props })
   });

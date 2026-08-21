@@ -39,10 +39,22 @@ class HomeImageOptimizer
      */
     private const HERO_MOBILE_WIDTH = 1280;
 
-    /** field => chiều rộng tối đa (px) cho ảnh trang chủ (không phải hero). */
+    /** Ảnh "Nghệ thuật trị liệu" (ArtBanner) — full-bleed nửa màn hình, không giới hạn
+     *  max-width, nên cũng cần cặp desktop/mobile như hero thay vì 1 cỡ cố định. */
+    private const ART_BANNER_DESKTOP_WIDTH = 1600;
+
+    private const ART_BANNER_MOBILE_WIDTH = 900;
+
+    /** Ảnh thẻ "Our Spaces" (Lê Văn Sỹ / Lê Thị Riêng) — nằm trong lưới 2 cột bọc
+     *  max-w-7xl, cỡ hiển thị lớn nhất ~628px CSS (desktop) hoặc full viewport (mobile). */
+    private const SPACES_ITEM_DESKTOP_WIDTH = 1280;
+
+    private const SPACES_ITEM_MOBILE_WIDTH = 750;
+
+    /** field => chiều rộng tối đa (px) cho ảnh trang chủ (không phải hero/art banner/spaces —
+     *  các field này dùng cặp desktop/mobile riêng, xem generateResponsivePair()). */
     private const HOME_PAGE_FIELD_WIDTHS = [
         'story_image' => 1600,
-        'art_banner_image' => 1600,
         'final_cta_image' => 1600,
         'testimonial_video_thumbnail' => 960,
     ];
@@ -56,69 +68,73 @@ class HomeImageOptimizer
     ];
 
     /** Logo và icon nút liên hệ nổi thường được admin tải lên nguyên bản (vài trăm KB,
-     *  nghìn px) dù hiển thị rất nhỏ — PageSpeed từng báo lãng phí >700KB vì việc này. */
-    private const LOGO_WIDTH = 256;
+     *  nghìn px) dù hiển thị rất nhỏ (logo: cao tối đa ~160px trên màn hình retina;
+     *  icon: khung nút chỉ 48px CSS) — PageSpeed từng báo lãng phí >700KB vì việc này. */
+    private const LOGO_WIDTH = 128;
 
-    private const CONTACT_ICON_WIDTH = 200;
+    private const CONTACT_ICON_WIDTH = 128;
 
-    public static function forHomePageContent(HomePageContent $content): void
+    public static function forHomePageContent(HomePageContent $content, bool $force = false): void
     {
-        self::generateResponsivePair($content->hero_image);
+        self::generateResponsivePair($content->hero_image, self::HERO_DESKTOP_WIDTH, self::HERO_MOBILE_WIDTH, $force);
+        self::generateResponsivePair($content->art_banner_image, self::ART_BANNER_DESKTOP_WIDTH, self::ART_BANNER_MOBILE_WIDTH, $force);
 
         foreach (self::HOME_PAGE_FIELD_WIDTHS as $field => $maxWidth) {
-            self::generate($content->{$field}, $maxWidth);
+            self::generate($content->{$field}, $maxWidth, '', $force);
         }
 
         foreach ((array) $content->spaces_items as $item) {
-            self::generate($item['image'] ?? null, 960);
+            self::generateResponsivePair($item['image'] ?? null, self::SPACES_ITEM_DESKTOP_WIDTH, self::SPACES_ITEM_MOBILE_WIDTH, $force);
         }
 
         foreach ((array) $content->customer_gallery_images as $item) {
-            self::generate($item['image'] ?? null, 800);
+            self::generate($item['image'] ?? null, 800, '', $force);
         }
     }
 
-    public static function forServiceCategory(ServiceCategory $category): void
+    public static function forServiceCategory(ServiceCategory $category, bool $force = false): void
     {
         foreach (self::SERVICE_CATEGORY_FIELD_WIDTHS as $field => $maxWidth) {
-            self::generate($category->{$field}, $maxWidth);
+            self::generate($category->{$field}, $maxWidth, '', $force);
         }
 
         foreach ((array) $category->experience_images as $item) {
-            self::generate($item['image'] ?? null, 900);
+            self::generate($item['image'] ?? null, 900, '', $force);
         }
     }
 
     /** Banner của trang tuỳ biến dùng chung component Hero.tsx với hero trang chủ — cùng kích cỡ mục tiêu. */
-    public static function forCustomPage(CustomPage $page): void
+    public static function forCustomPage(CustomPage $page, bool $force = false): void
     {
-        self::generateResponsivePair($page->banner_image);
+        self::generateResponsivePair($page->banner_image, self::HERO_DESKTOP_WIDTH, self::HERO_MOBILE_WIDTH, $force);
     }
 
-    public static function forSiteSetting(SiteSetting $site): void
+    public static function forSiteSetting(SiteSetting $site, bool $force = false): void
     {
-        self::generate($site->logo_path, self::LOGO_WIDTH);
+        self::generate($site->logo_path, self::LOGO_WIDTH, '', $force);
 
         foreach ((array) $site->floating_contact_buttons as $button) {
-            self::generate($button['icon'] ?? null, self::CONTACT_ICON_WIDTH);
+            self::generate($button['icon'] ?? null, self::CONTACT_ICON_WIDTH, '', $force);
         }
     }
 
     /** Sinh cả bản desktop ({path}.webp) lẫn bản mobile ({path}-mobile.webp) cho ảnh
-     *  hero/banner — dùng với <img srcset> để trình duyệt tự chọn đúng size theo màn hình. */
-    private static function generateResponsivePair(?string $path): void
+     *  banner full-bleed/gần-full-bleed — dùng với <img srcset> để trình duyệt tự
+     *  chọn đúng size theo màn hình thay vì phát 1 cỡ cố định cho mọi viewport. */
+    private static function generateResponsivePair(?string $path, int $desktopWidth, int $mobileWidth, bool $force = false): void
     {
-        self::generate($path, self::HERO_DESKTOP_WIDTH);
-        self::generate($path, self::HERO_MOBILE_WIDTH, '-mobile');
+        self::generate($path, $desktopWidth, '', $force);
+        self::generate($path, $mobileWidth, '-mobile', $force);
     }
 
     /**
      * Sinh {path}{suffix}.webp resize theo $maxWidth nếu ảnh gốc tồn tại trên disk
-     * 'public' và chưa có bản .webp tương ứng. Không bao giờ ném lỗi ra ngoài — hàm
-     * này chạy trong model event `saved`, không được phép làm hỏng thao tác
-     * lưu dữ liệu chính của admin.
+     * 'public'. Bỏ qua nếu đã có bản .webp tương ứng, trừ khi $force=true (dùng khi
+     * backfill lại sau khi đổi $maxWidth mục tiêu — xem lệnh `images:optimize-home
+     * --force`). Không bao giờ ném lỗi ra ngoài — hàm này chạy trong model event
+     * `saved`, không được phép làm hỏng thao tác lưu dữ liệu chính của admin.
      */
-    public static function generate(?string $path, int $maxWidth, string $suffix = ''): void
+    public static function generate(?string $path, int $maxWidth, string $suffix = '', bool $force = false): void
     {
         if (! $path || ! preg_match('/\.(png|jpe?g)$/i', $path)) {
             return;
@@ -127,7 +143,7 @@ class HomeImageOptimizer
         $disk = Storage::disk('public');
         $webpPath = preg_replace('/\.(png|jpe?g)$/i', $suffix.'.webp', $path);
 
-        if (! $disk->exists($path) || $disk->exists($webpPath)) {
+        if (! $disk->exists($path) || (! $force && $disk->exists($webpPath))) {
             return;
         }
 

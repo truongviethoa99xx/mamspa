@@ -121,6 +121,7 @@ class HomeController extends Controller
                 'en' => '<p>Nurtured by Vietnamese therapeutic heritage,<br>refined with modern expertise<br>and carried through every attentive hand.</p>',
             ],
             'image' => $this->publicUrl($content->art_banner_image),
+            'image_mobile' => OptimizedImageUrl::resolveMobile($content->art_banner_image),
             'image_alt' => $content->art_banner_image_alt ?: ['vi' => 'Nghệ thuật trị liệu Việt', 'en' => 'The art of Vietnamese healing'],
             'cta' => [
                 'text' => $content->art_banner_cta_text ?: ['vi' => 'Tìm hiểu thêm', 'en' => 'Learn more'],
@@ -139,6 +140,7 @@ class HomeController extends Controller
         $items = collect($content->spaces_items ?: [])
             ->map(fn (array $item) => [
                 'image' => $this->publicUrl($item['image'] ?? null),
+                'image_mobile' => OptimizedImageUrl::resolveMobile($item['image'] ?? null),
                 'image_alt' => $item['image_alt'] ?? $item['title'] ?? null,
                 'title' => $item['title'] ?? null,
                 'description' => $item['description'] ?? null,

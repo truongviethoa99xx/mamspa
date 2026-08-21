@@ -14,6 +14,9 @@ export interface ArtBannerData {
     eyebrow?: unknown;
     body?: unknown;
     image?: string | null;
+    /** Bản .webp nhỏ hơn dành cho mobile — xem HomeImageOptimizer::generateResponsivePair.
+     *  Không có thì <img> chỉ dùng `image` như trước, không đổi hành vi. */
+    image_mobile?: string | null;
     image_alt?: unknown;
     cta?: ArtBannerCta;
 }
@@ -25,6 +28,7 @@ export function ArtBanner({ data }: { data: ArtBannerData }) {
     const body = tr(data.body, locale);
     const ctaText = tr(data.cta?.text, locale);
     const imageAlt = tr(data.image_alt, locale);
+    const imageMobile = data.image_mobile;
 
     const { ref, className } = useReveal<HTMLElement>();
 
@@ -35,6 +39,8 @@ export function ArtBanner({ data }: { data: ArtBannerData }) {
                     {data.image && (
                         <img
                             src={data.image}
+                            srcSet={imageMobile ? `${imageMobile} 900w, ${data.image} 1600w` : undefined}
+                            sizes={imageMobile ? '(min-width: 768px) 50vw, 100vw' : undefined}
                             alt={imageAlt}
                             className="absolute inset-0 h-full w-full object-cover"
                             loading="lazy"
