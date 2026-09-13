@@ -67,6 +67,14 @@ class HomeImageOptimizer
         'closing_image' => 1600,
     ];
 
+    /** `ServiceCategory::image` dùng chung cho 2 nơi rất khác cỡ: thẻ nhỏ trong lưới (900px
+     *  ở trên) và banner full-bleed đầu trang danh mục (CategoryHero.tsx, giống Hero.tsx trang
+     *  chủ) — nếu chỉ có bản 900px, banner phóng to hết cỡ sẽ vỡ nét. Sinh thêm cặp riêng
+     *  "-hero"/"-hero-mobile" to hơn hẳn, không đụng tới bản nhỏ dùng cho thẻ. */
+    private const CATEGORY_HERO_DESKTOP_WIDTH = 1920;
+
+    private const CATEGORY_HERO_MOBILE_WIDTH = 1280;
+
     /** Logo và icon nút liên hệ nổi thường được admin tải lên nguyên bản (vài trăm KB,
      *  nghìn px) dù hiển thị rất nhỏ (logo: cao tối đa ~160px trên màn hình retina;
      *  icon: khung nút chỉ 48px CSS) — PageSpeed từng báo lãng phí >700KB vì việc này. */
@@ -97,6 +105,9 @@ class HomeImageOptimizer
         foreach (self::SERVICE_CATEGORY_FIELD_WIDTHS as $field => $maxWidth) {
             self::generate($category->{$field}, $maxWidth, '', $force);
         }
+
+        self::generate($category->image, self::CATEGORY_HERO_DESKTOP_WIDTH, '-hero', $force);
+        self::generate($category->image, self::CATEGORY_HERO_MOBILE_WIDTH, '-hero-mobile', $force);
 
         foreach ((array) $category->experience_images as $item) {
             self::generate($item['image'] ?? null, 900, '', $force);

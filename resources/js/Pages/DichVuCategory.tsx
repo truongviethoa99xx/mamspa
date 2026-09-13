@@ -15,6 +15,7 @@ interface CategoryData {
     name: unknown;
     description?: unknown;
     image?: string | null;
+    image_mobile?: string | null;
     image_alt?: unknown;
     intro_heading?: unknown;
     intro_body?: unknown;
@@ -71,6 +72,7 @@ export default function DichVuCategory({ category, breadcrumb, services, closing
                     heading: category.name,
                     subtitle: category.description,
                     image: category.image,
+                    imageMobile: category.image_mobile,
                     imageAlt: category.image_alt,
                 }}
             />

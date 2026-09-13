@@ -335,7 +335,10 @@ class DichVuController extends Controller
                 'slug' => $category->slug,
                 'name' => $category->getTranslations('name'),
                 'description' => $category->getTranslations('description'),
-                'image' => $this->publicUrl($category->image),
+                // Banner đầu trang cần bản to hơn hẳn ảnh thẻ (900px) kẻo vỡ nét khi phóng
+                // full-bleed — ưu tiên bản "-hero" riêng, chưa backfill thì tạm dùng bản mặc định.
+                'image' => OptimizedImageUrl::resolveVariant($category->image, '-hero') ?? $this->publicUrl($category->image),
+                'image_mobile' => OptimizedImageUrl::resolveVariant($category->image, '-hero-mobile'),
                 'image_alt' => $category->image_alt,
                 'url' => $category->url,
                 'benefits' => $category->benefits ?? [],

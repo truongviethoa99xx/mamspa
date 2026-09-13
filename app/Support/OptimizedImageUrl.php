@@ -34,16 +34,28 @@ class OptimizedImageUrl
      */
     public static function resolveMobile(?string $path): ?string
     {
+        return self::resolveVariant($path, '-mobile');
+    }
+
+    /**
+     * URL một bản .webp phái sinh cụ thể (theo $suffix), khi cùng 1 field ảnh gốc cần nhiều
+     * cỡ khác nhau cho nhiều nơi hiển thị khác nhau (vd. ServiceCategory::image vừa dùng làm
+     * ảnh thẻ nhỏ trong lưới, vừa dùng làm banner full-bleed ở CategoryHero — xem
+     * HomeImageOptimizer::CATEGORY_HERO_DESKTOP_WIDTH). Trả null nếu chưa sinh — nơi gọi tự
+     * fallback về bản mặc định (resolve()).
+     */
+    public static function resolveVariant(?string $path, string $suffix): ?string
+    {
         if (! $path || str_starts_with($path, '/') || str_starts_with($path, 'http')) {
             return null;
         }
 
-        $mobileWebpPath = preg_replace('/\.(png|jpe?g)$/i', '-mobile.webp', $path);
+        $variantPath = preg_replace('/\.(png|jpe?g)$/i', $suffix.'.webp', $path);
 
-        if ($mobileWebpPath === $path || ! Storage::disk('public')->exists($mobileWebpPath)) {
+        if ($variantPath === $path || ! Storage::disk('public')->exists($variantPath)) {
             return null;
         }
 
-        return Storage::disk('public')->url($mobileWebpPath);
+        return Storage::disk('public')->url($variantPath);
     }
 }
