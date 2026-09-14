@@ -8,6 +8,9 @@ export interface ServiceHeroData {
     heading?: unknown;
     subtitle?: unknown;
     image?: string | null;
+    /** Bản .webp nhỏ hơn dành cho mobile — xem Service::getHeroImageMobileUrlAttribute().
+     *  Không có thì <img> chỉ dùng `image` như trước, không đổi hành vi. */
+    imageMobile?: string | null;
     imageAlt?: unknown;
 }
 
@@ -31,6 +34,8 @@ export function ServiceHero({ data, breadcrumb }: { data: ServiceHeroData; bread
             {hasImage && (
                 <img
                     src={data.image ?? undefined}
+                    srcSet={data.imageMobile ? `${data.imageMobile} 1280w, ${data.image} 1920w` : undefined}
+                    sizes={data.imageMobile ? '100vw' : undefined}
                     alt={imageAlt || stripTags(heading)}
                     className="absolute inset-0 z-0 h-full w-full object-cover"
                 />

@@ -57,9 +57,15 @@ class Service extends Model implements HasMedia
     }
 
     /**
-     * Ảnh đại diện được crop sẵn 2 kích thước: 'card' cho thẻ dịch vụ, 'hero' cho banner trang
-     * chi tiết. Xuất .webp (không giữ định dạng gốc JPG/PNG) — nhẹ hơn đáng kể ở cùng chất
+     * Ảnh đại diện được crop sẵn 2 kích thước: 'card' cho thẻ dịch vụ, 'hero'/'hero-mobile' cho
+     * banner full-bleed trang chi tiết (ServiceHero.tsx — cùng kiểu banner với CategoryHero/Hero
+     * trang chủ). Xuất .webp (không giữ định dạng gốc JPG/PNG) — nhẹ hơn đáng kể ở cùng chất
      * lượng, đây là phần lớn "Improve image delivery" mà Lighthouse/PageSpeed hay báo.
+     *
+     * 'hero' dùng Fit::Max (giữ nguyên tỉ lệ gốc, chỉ giới hạn cạnh dài nhất) thay vì crop cứng
+     * 1920x960 (2:1) như trước — banner cao tới 85vh nên trên màn hình dọc (mobile, hoặc cửa sổ
+     * hẹp) tỉ lệ hiển thị thực tế cao hơn 2:1 nhiều, ảnh 2:1 bị object-cover phóng to vượt cả độ
+     * phân giải gốc để phủ hết chiều cao → vỡ nét. Giữ nguyên tỉ lệ gốc thì luôn đủ cao.
      */
     public function registerMediaConversions(?Media $media = null): void
     {
@@ -71,7 +77,14 @@ class Service extends Model implements HasMedia
             ->performOnCollections('thumbnail');
 
         $this->addMediaConversion('hero')
-            ->fit(Fit::Crop, 1920, 960)
+            ->fit(Fit::Max, 1920, 1920)
+            ->format('webp')
+            ->quality(78)
+            ->nonQueued()
+            ->performOnCollections('thumbnail');
+
+        $this->addMediaConversion('hero-mobile')
+            ->fit(Fit::Max, 1280, 1280)
             ->format('webp')
             ->quality(78)
             ->nonQueued()
@@ -87,10 +100,16 @@ class Service extends Model implements HasMedia
         return array_values(array_filter([$thumbnail, ...$gallery]));
     }
 
-    /** URL ảnh banner (ngang, tối ưu ~1920×960) cho hero trang chi tiết dịch vụ. */
+    /** URL ảnh banner (giữ tỉ lệ gốc, tối đa 1920px) cho hero trang chi tiết dịch vụ. */
     public function getHeroImageUrlAttribute(): ?string
     {
         return $this->getFirstMediaUrl('thumbnail', 'hero') ?: null;
+    }
+
+    /** Bản nhỏ hơn (tối đa 1280px) cho mobile — dùng với <img srcset>, xem ServiceHero.tsx. */
+    public function getHeroImageMobileUrlAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('thumbnail', 'hero-mobile') ?: null;
     }
 
     public function category(): BelongsTo

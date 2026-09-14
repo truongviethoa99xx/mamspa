@@ -16,6 +16,7 @@ interface ServiceDetailData {
     thumbnail_alt?: unknown;
     images?: string[];
     hero_image?: string | null;
+    hero_image_mobile?: string | null;
     pillars_heading?: unknown;
     pillars?: ServicePillar[];
     pillars_image?: string | null;
@@ -69,6 +70,7 @@ export default function DichVuDetail({ service, breadcrumb, closing }: Props) {
                     heading: service.name,
                     subtitle: service.short_description,
                     image: service.hero_image ?? null,
+                    imageMobile: service.hero_image_mobile ?? null,
                     imageAlt: service.thumbnail_alt,
                 }}
             />

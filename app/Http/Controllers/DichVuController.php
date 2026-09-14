@@ -53,6 +53,7 @@ class DichVuController extends Controller
     {
         return array_merge($this->map($s), [
             'hero_image' => $s->hero_image_url,
+            'hero_image_mobile' => $s->hero_image_mobile_url,
             'pillars_heading' => $s->pillars_heading,
             'pillars' => $s->pillars ?? [],
             'pillars_image' => $this->publicUrl($s->pillars_image),
