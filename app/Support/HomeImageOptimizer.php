@@ -8,6 +8,7 @@ use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Image\Enums\Constraint;
 use Spatie\Image\Image;
 use Throwable;
 
@@ -159,8 +160,13 @@ class HomeImageOptimizer
         }
 
         try {
+            // DoNotUpsize là mấu chốt: nếu ảnh gốc nhỏ hơn $maxWidth (rất thường gặp — nhiều ảnh
+            // admin tải lên trước giờ chỉ ~1000-1200px), thiếu cờ này Spatie\Image sẽ PHÓNG TO
+            // ảnh gốc cho khớp $maxWidth thay vì giữ nguyên — tạo ra bản .webp "to nhưng rỗng
+            // nét" (upscale), nhìn còn mờ hơn cả khi chưa resize. Có cờ này thì ảnh gốc nhỏ hơn
+            // mục tiêu sẽ giữ nguyên kích thước gốc — nét tối đa những gì ảnh gốc cho phép.
             Image::load($disk->path($path))
-                ->width($maxWidth)
+                ->width($maxWidth, [Constraint::PreserveAspectRatio, Constraint::DoNotUpsize])
                 ->format('webp')
                 ->quality(self::QUALITY)
                 ->save($disk->path($webpPath));

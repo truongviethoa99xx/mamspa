@@ -85,7 +85,7 @@ class ServiceCategoryResource extends Resource
                 ->schema([
                     Forms\Components\FileUpload::make('image')
                         ->label('')
-                        ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
+                        ->helperText('Ảnh này dùng chung cho cả banner full-bleed đầu trang danh mục lẫn ảnh thẻ nhỏ trong lưới "Bốn hành trình" — nên tải ảnh ngang tỷ lệ 4:3, tối thiểu 1920×1440px. Ảnh nhỏ hơn vẫn dùng được nhưng banner sẽ không nét khi phóng full màn hình (hệ thống không tự "vẽ thêm nét" cho ảnh gốc nhỏ).')
                         ->image()
                         ->disk('public')
                         ->directory('service-categories')

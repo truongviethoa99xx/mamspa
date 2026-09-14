@@ -168,7 +168,7 @@ class HomePageSettings extends Page implements HasForms
                         TranslatableField::group('art_banner_eyebrow', as: 'quill', label: 'Nhãn nhỏ phía trên'),
                         TranslatableField::group('art_banner_body', as: 'quill', label: 'Đoạn giới thiệu'),
                         Forms\Components\FileUpload::make('art_banner_image')->label('Ảnh minh hoạ')
-                            ->helperText('Chiếm 1/2 chiều rộng banner (full-bleed, sát mép trái). Tỉ lệ ngang ~4:3, khuyến nghị tối thiểu 1200×900px.')
+                            ->helperText('Chiếm 1/2 chiều rộng banner (full-bleed, sát mép trái, không giới hạn max-width) — trên màn hình rộng cần ảnh gốc đủ lớn mới nét. Tỉ lệ ngang ~4:3, khuyến nghị tối thiểu 1600×1200px.')
                             ->image()->disk('public')->directory('home')
                             ->columnSpanFull(),
                         TranslatableField::group('art_banner_image_alt', label: 'Alt text ảnh (mô tả ảnh cho SEO/accessibility)', example: 'Nghệ thuật trị liệu Việt'),
@@ -194,7 +194,7 @@ class HomePageSettings extends Page implements HasForms
                             ->label('Danh sách không gian')
                             ->schema([
                                 Forms\Components\FileUpload::make('image')->label('Ảnh')
-                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1200×900px.')
+                                    ->helperText('Tỉ lệ ngang 4:3, khuyến nghị tối thiểu 1280×960px.')
                                     ->image()->disk('public')->directory('home')
                                     ->columnSpanFull(),
                                 TranslatableField::group('image_alt', label: 'Alt text ảnh (mô tả ảnh cho SEO/accessibility)', example: 'Không gian Mầm Spa'),
