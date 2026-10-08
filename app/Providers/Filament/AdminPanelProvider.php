@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Http\Middleware\EnsureAdminEnabled;
 use App\Http\Middleware\NoIndex;
 use App\Models\SiteSetting;
 use Filament\Http\Middleware\Authenticate;
@@ -140,6 +141,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->middleware([
+                EnsureAdminEnabled::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
