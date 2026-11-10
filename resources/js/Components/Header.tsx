@@ -14,6 +14,7 @@ const NAV_ITEMS = [
     { label: 'Trang chủ', href: '/' },
     { label: 'Về Mầm', href: '/gioi-thieu/' },
     { label: 'Dịch vụ', href: '/dich-vu/' },
+    { label: 'Menu', href: '/menu/' },
     { label: 'Ưu đãi', href: '/uu-dai/' },
     { label: 'Blog', href: '/tin-tuc/' },
     { label: 'Khách hàng', href: '/trai-nghiem-khach-hang/' },

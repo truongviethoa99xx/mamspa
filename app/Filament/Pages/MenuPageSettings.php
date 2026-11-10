@@ -62,18 +62,9 @@ class MenuPageSettings extends Page implements HasForms
             'slug', 'is_published',
             'hero_kicker', 'hero_title', 'hero_subtitle', 'hero_image', 'hero_image_alt', 'hero_visible',
             'intro_title', 'intro_note', 'intro_visible',
-            'branches', 'branches_visible',
+            'branches_visible',
             'contact_title', 'contact_text', 'contact_image', 'contact_image_alt', 'contact_visible',
         ]));
-    }
-
-    private static function pdfField(string $locale, string $label): Forms\Components\FileUpload
-    {
-        return Forms\Components\FileUpload::make("pdf_{$locale}")
-            ->label($label)
-            ->acceptedFileTypes(['application/pdf'])
-            ->maxSize(20480)
-            ->disk('public')->directory('menu/pdf');
     }
 
     public function form(Form $form): Form
@@ -124,43 +115,13 @@ class MenuPageSettings extends Page implements HasForms
                     ]),
 
                 Forms\Components\Section::make('3 · Chi nhánh & Menu dịch vụ (PDF)')
-                    ->description('Mỗi chi nhánh có ảnh, thông tin giới thiệu và bộ 5 file PDF menu dịch vụ theo ngôn ngữ (Việt, Anh, Trung, Hàn, Nhật).')
+                    ->description('Mỗi chi nhánh giờ có trang riêng (/menu/{slug}/) để dễ chia sẻ link/QR — quản lý ở mục "Chi nhánh menu PDF" riêng (Nội dung → Chi nhánh menu PDF), không còn nhập trực tiếp ở đây.')
                     ->icon('heroicon-o-map-pin')
                     ->schema([
                         Forms\Components\Toggle::make('branches_visible')
-                            ->label('Hiển thị khối này trên trang Menu')
+                            ->label('Hiển thị khối danh sách chi nhánh trên trang Menu')
                             ->default(true)
-                            ->columnSpanFull(),
-                        Forms\Components\Repeater::make('branches')
-                            ->label('Danh sách chi nhánh')
-                            ->schema([
-                                Forms\Components\FileUpload::make('image')->label('Ảnh chi nhánh')
-                                    ->helperText('Ảnh dọc, khuyến nghị tối thiểu 900×1000px.')
-                                    ->image()->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])->maxSize(5120)->disk('public')->directory('menu/branches')->imageEditor()
-                                    ->columnSpanFull(),
-                                TranslatableField::group('image_alt', label: 'Alt text ảnh'),
-                                TranslatableField::group('name', label: 'Tên chi nhánh', example: 'PHÚ NHUẬN'),
-                                TranslatableField::group('street', label: 'Tên đường', example: 'LÊ VĂN SỸ'),
-                                TranslatableField::group('desc', as: 'quill', label: 'Mô tả ngắn'),
-                                Forms\Components\Section::make('Menu PDF theo ngôn ngữ')
-                                    ->description('Tải lên tối đa 5 file PDF — thiếu ngôn ngữ nào sẽ không hiện nút ngôn ngữ đó trên trang công khai.')
-                                    ->schema([
-                                        self::pdfField('vi', 'PDF · Tiếng Việt'),
-                                        self::pdfField('en', 'PDF · Tiếng Anh'),
-                                        self::pdfField('zh', 'PDF · Tiếng Trung'),
-                                        self::pdfField('ko', 'PDF · Tiếng Hàn'),
-                                        self::pdfField('ja', 'PDF · Tiếng Nhật'),
-                                    ])
-                                    ->columns(2)
-                                    ->columnSpanFull(),
-                            ])
-                            ->columns(2)
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible()
-                            ->itemLabel(fn (array $state): ?string => $state['name']['vi'] ?? null)
-                            ->addActionLabel('+ Thêm chi nhánh')
-                            ->columnSpanFull(),
+                            ->helperText('Bật/tắt khối thẻ chi nhánh (ảnh + tên + nút "Xem Menu") ở trang Menu chính — nội dung từng chi nhánh quản lý ở "Chi nhánh menu PDF".'),
                     ]),
 
                 Forms\Components\Section::make('4 · Dải liên hệ')

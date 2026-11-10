@@ -10,7 +10,7 @@ class MenuPageContent extends Model
         'slug', 'is_published',
         'hero_kicker', 'hero_title', 'hero_subtitle', 'hero_image', 'hero_image_alt', 'hero_visible',
         'intro_title', 'intro_note', 'intro_visible',
-        'branches', 'branches_visible',
+        'branches_visible',
         'contact_title', 'contact_text', 'contact_image', 'contact_image_alt', 'contact_visible',
     ];
 
@@ -24,7 +24,6 @@ class MenuPageContent extends Model
         'intro_title' => 'array',
         'intro_note' => 'array',
         'intro_visible' => 'boolean',
-        'branches' => 'array',
         'branches_visible' => 'boolean',
         'contact_title' => 'array',
         'contact_text' => 'array',
@@ -33,14 +32,14 @@ class MenuPageContent extends Model
     ];
 
     /**
-     * Nội dung trang Menu là singleton — luôn thao tác trên bản ghi đầu tiên.
+     * Nội dung trang Menu là singleton — luôn thao tác trên bản ghi đầu tiên. Danh sách chi
+     * nhánh không còn nằm ở đây — mỗi chi nhánh là 1 trang riêng, xem App\Models\MenuBranchPage.
      */
     public static function current(): self
     {
         return static::first() ?? static::create([
             'slug' => 'menu',
             'is_published' => true,
-            'branches' => [],
         ]);
     }
 

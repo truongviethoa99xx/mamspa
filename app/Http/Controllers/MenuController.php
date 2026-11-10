@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MenuBranchPage;
 use App\Models\MenuPageContent;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Trang "Menu" — hero + giới thiệu + chi nhánh (mỗi chi nhánh có bộ 5 file PDF menu dịch
- * vụ theo ngôn ngữ: vi/en/zh/ko/ja) + dải liên hệ. Quản lý ở /admin/menu-page-settings,
- * slug công khai tự do (xem routes/web.php). Field trống ở CMS fallback về nội dung mặc
- * định khớp bản thiết kế gốc (service-menu-web/), để trang luôn đầy đủ ngay cả khi admin
- * chưa nhập liệu.
+ * Trang "Menu" — hero + giới thiệu + danh sách link chi nhánh + dải liên hệ. Mỗi chi nhánh
+ * giờ là 1 trang riêng (App\Models\MenuBranchPage, URL /menu/{slug}/) với bộ 5 file PDF menu
+ * dịch vụ theo ngôn ngữ (vi/en/zh/ko/ja) — xem renderBranch(). Quản lý trang chính ở
+ * /admin/menu-page-settings, chi nhánh ở resource riêng (MenuBranchPageResource). Field trống
+ * ở CMS fallback về nội dung mặc định khớp bản thiết kế gốc (service-menu-web/), để trang
+ * luôn đầy đủ ngay cả khi admin chưa nhập liệu.
  */
 class MenuController extends Controller
 {
@@ -24,13 +26,38 @@ class MenuController extends Controller
         return Inertia::render('Menu', [
             'hero' => $this->hero($content),
             'intro' => $this->intro($content),
-            'branches' => $this->branches($content),
+            'branches' => $this->branches(),
             'contact' => $this->contact($content),
             'sectionVisibility' => [
                 'hero' => (bool) $content->hero_visible,
                 'intro' => (bool) $content->intro_visible,
                 'branches' => (bool) $content->branches_visible,
                 'contact' => (bool) $content->contact_visible,
+            ],
+        ]);
+    }
+
+    /** Trang riêng của 1 chi nhánh (/menu/{slug}/) — thông tin + 5 nút PDF theo ngôn ngữ. */
+    public function renderBranch(MenuBranchPage $branch): Response
+    {
+        $menu = MenuPageContent::current();
+
+        return Inertia::render('MenuBranch', [
+            'branch' => [
+                'slug' => $branch->slug,
+                'url' => '/'.trim($branch->slug, '/').'/',
+                'image' => $this->publicUrl($branch->image),
+                'image_alt' => $branch->image_alt ?: null,
+                'name' => $branch->name ?: null,
+                'street' => $branch->street ?: null,
+                'desc' => $branch->desc ?: null,
+                'pdfs' => collect(self::PDF_LOCALES)
+                    ->mapWithKeys(fn (string $locale) => [$locale => $this->publicUrl($branch->{"pdf_{$locale}"})])
+                    ->all(),
+            ],
+            'contact' => $this->contact($menu),
+            'sectionVisibility' => [
+                'contact' => (bool) $menu->contact_visible,
             ],
         ]);
     }
@@ -63,19 +90,22 @@ class MenuController extends Controller
         ];
     }
 
-    protected function branches(MenuPageContent $content): array
+    /** Danh sách thẻ link sang từng trang chi nhánh riêng — không còn mang theo PDF ở đây nữa. */
+    protected function branches(): array
     {
-        $items = $content->branches ?: [];
-
         return [
-            'items' => array_map(function (array $branch) {
-                $branch['image'] = $this->publicUrl($branch['image'] ?? null);
-                $branch['pdfs'] = collect(self::PDF_LOCALES)
-                    ->mapWithKeys(fn (string $locale) => [$locale => $this->publicUrl($branch["pdf_{$locale}"] ?? null)])
-                    ->all();
-
-                return $branch;
-            }, $items),
+            'items' => MenuBranchPage::published()
+                ->orderBy('order')
+                ->get()
+                ->map(fn (MenuBranchPage $branch) => [
+                    'slug' => $branch->slug,
+                    'url' => '/'.trim($branch->slug, '/').'/',
+                    'image' => $this->publicUrl($branch->image),
+                    'image_alt' => $branch->image_alt ?: null,
+                    'name' => $branch->name ?: null,
+                    'street' => $branch->street ?: null,
+                ])
+                ->all(),
         ];
     }
 

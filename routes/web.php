@@ -15,6 +15,7 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PolicyPageController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TranslationController;
+use App\Models\MenuBranchPage;
 use App\Models\MenuPageContent;
 use App\Models\Service;
 use Illuminate\Support\Facades\Route;
@@ -85,10 +86,18 @@ require __DIR__.'/auth.php';
 // mất trước). CustomPageController::show() tự abort(404) nếu không tìm thấy slug
 // tương ứng, rơi về đúng trang NotFound như route không tồn tại.
 Route::get('/{slug}', function (string $slug) {
-    $menu = MenuPageContent::published()->where('slug', trim($slug, '/'))->first();
+    $trimmed = trim($slug, '/');
+
+    $menu = MenuPageContent::published()->where('slug', $trimmed)->first();
 
     if ($menu) {
         return app(MenuController::class)->render($menu);
+    }
+
+    $menuBranch = MenuBranchPage::published()->where('slug', $trimmed)->first();
+
+    if ($menuBranch) {
+        return app(MenuController::class)->renderBranch($menuBranch);
     }
 
     return app(CustomPageController::class)->show($slug);
