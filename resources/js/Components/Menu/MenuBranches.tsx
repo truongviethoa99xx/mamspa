@@ -1,8 +1,8 @@
-import { Link } from '@inertiajs/react';
-import { ArrowRight, Leaf } from 'lucide-react';
+import { Leaf } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
 import { cn, tr } from '@/Lib/utils';
+import { PDF_LOCALE_ORDER, PDF_LOCALE_LABELS, type MenuBranchPdfs } from '@/Lib/menuPdf';
 
 interface MenuBranchItem {
     slug: string;
@@ -11,14 +11,16 @@ interface MenuBranchItem {
     image_alt?: unknown;
     name?: unknown;
     street?: unknown;
+    pdfs?: MenuBranchPdfs;
 }
 
 export interface MenuBranchesData {
     items: MenuBranchItem[];
 }
 
-/** Danh sách thẻ chi nhánh — mỗi thẻ dẫn sang trang riêng của chi nhánh đó (/menu/{slug}/),
- *  nơi hiển thị đầy đủ thông tin + menu PDF theo ngôn ngữ (xem MenuBranch.tsx). */
+/** Danh sách thẻ chi nhánh — mỗi thẻ có sẵn các nút "Xem Menu" theo ngôn ngữ, mở thẳng file
+ *  PDF tương ứng trong tab mới (không cần qua trang chi tiết). Trang riêng /menu/{slug}/
+ *  (xem MenuBranch.tsx) vẫn tồn tại song song để dễ chia sẻ link/QR riêng cho từng chi nhánh. */
 export function MenuBranches({ data }: { data: MenuBranchesData }) {
     const locale = useLocale();
     const items = data.items ?? [];
@@ -34,19 +36,20 @@ export function MenuBranches({ data }: { data: MenuBranchesData }) {
                     const street = tr(branch.street, locale);
                     const imageAlt = tr(branch.image_alt, locale) || name;
                     const hasImage = !!branch.image;
+                    const pdfs = branch.pdfs ?? {};
+                    const availablePdfs = PDF_LOCALE_ORDER.filter((code) => pdfs[code]);
 
                     return (
-                        <Link
+                        <div
                             key={branch.slug}
-                            href={branch.url}
-                            className="group flex flex-col overflow-hidden rounded-2xl border border-maha-200 bg-maha-50 transition-colors hover:border-subheading"
+                            className="flex flex-col overflow-hidden rounded-2xl border border-maha-200 bg-maha-50"
                         >
                             <div className="h-64 w-full shrink-0 bg-maha-200 sm:h-72 md:h-80">
                                 {hasImage && (
                                     <img
                                         src={branch.image ?? undefined}
                                         alt={imageAlt}
-                                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        className="h-full w-full object-cover"
                                         loading="lazy"
                                     />
                                 )}
@@ -63,12 +66,24 @@ export function MenuBranches({ data }: { data: MenuBranchesData }) {
                                     <p className="mt-1.5 text-xs tracking-[0.2em] text-ink/50">{street}</p>
                                 )}
                                 <span className="mt-5 h-px w-10 bg-maha-300" />
-                                <span className="mt-7 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-heading">
-                                    Xem Menu
-                                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                                </span>
+
+                                {availablePdfs.length > 0 && (
+                                    <div className="mt-7 flex flex-wrap items-center justify-center gap-2.5">
+                                        {availablePdfs.map((code) => (
+                                            <a
+                                                key={code}
+                                                href={pdfs[code] ?? undefined}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center rounded-full border border-maha-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-heading transition-colors hover:border-subheading hover:bg-maha-100"
+                                            >
+                                                {PDF_LOCALE_LABELS[code] ?? code.toUpperCase()}
+                                            </a>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        </Link>
+                        </div>
                     );
                 })}
             </div>

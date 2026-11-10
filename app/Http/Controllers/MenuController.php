@@ -90,7 +90,8 @@ class MenuController extends Controller
         ];
     }
 
-    /** Danh sách thẻ link sang từng trang chi nhánh riêng — không còn mang theo PDF ở đây nữa. */
+    /** Danh sách thẻ chi nhánh — mỗi thẻ có sẵn nút PDF theo từng ngôn ngữ (mở trực tiếp,
+     *  không cần qua trang chi tiết). Trang riêng /menu/{slug}/ vẫn tồn tại để chia sẻ link/QR. */
     protected function branches(): array
     {
         return [
@@ -104,6 +105,9 @@ class MenuController extends Controller
                     'image_alt' => $branch->image_alt ?: null,
                     'name' => $branch->name ?: null,
                     'street' => $branch->street ?: null,
+                    'pdfs' => collect(self::PDF_LOCALES)
+                        ->mapWithKeys(fn (string $locale) => [$locale => $this->publicUrl($branch->{"pdf_{$locale}"})])
+                        ->all(),
                 ])
                 ->all(),
         ];
