@@ -1,5 +1,7 @@
 # SPRINTS.md — Mầm Spa Roadmap
 
+> ⚠️ **Chỉ còn giá trị lịch sử.** Đây là kế hoạch ban đầu — kiến trúc "CMS block" (`Page`/`Block`, `BlockRenderer.tsx`) mô tả trong các sprint dưới đây **đã bị thay thế** trong quá trình làm thực tế bằng model/trang cài đặt riêng cho từng trang công khai. Xem kiến trúc thật tại [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
+
 > Kế hoạch phát triển Mầm Spa website theo 6 sprint (mỗi sprint ~1 tuần, ~6 tuần MVP).
 > Stack: **Laravel 11 + Inertia + React + TypeScript + Filament v3 + MySQL**.
 > Xem chi tiết stack & convention tại [`CLAUDE.md`](./CLAUDE.md).

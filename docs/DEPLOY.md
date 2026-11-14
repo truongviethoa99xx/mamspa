@@ -1,4 +1,10 @@
-# Deployment — Mầm Spa
+# ⚠️ SUPERSEDED — không dùng file này
+
+Tài liệu này mô tả hạ tầng **Ubuntu + Nginx + Redis + systemd**, nhưng **production thực tế chạy trên Tino cPanel shared hosting** và chưa từng dùng hạ tầng mô tả ở đây (xem `DEPLOY-CPANEL.md` ở thư mục gốc repo — quy trình đó mới đúng và đã được kiểm chứng). Giữ lại file này chỉ để tham khảo lịch sử/trong trường hợp sau này thật sự chuyển sang VPS riêng. **Không làm theo các bước dưới đây cho production hiện tại.**
+
+---
+
+# Deployment — Mầm Spa (kế hoạch cũ, chưa triển khai thật)
 
 ## Yêu cầu server
 
