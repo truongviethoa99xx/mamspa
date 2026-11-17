@@ -155,7 +155,7 @@ class SiteSettings extends Page implements HasForms
                     ->columns(2),
 
                 Forms\Components\Section::make('Chi nhánh')
-                    ->description('Hiển thị ở footer trên điện thoại (mỗi chi nhánh 1 khối riêng, kèm link bản đồ/hotline/giờ mở cửa) thay cho 2 cột "Dịch vụ"/"Khám phá". Để trống thì footer mobile giữ nguyên như trước.')
+                    ->description('Nơi DUY NHẤT đặt số điện thoại chi nhánh — bấm "+ Thêm chi nhánh" để thêm mới. Số này được dùng cho nút gọi điện nổi (popup chọn chi nhánh), footer, dữ liệu SEO (schema.org) và email xác nhận. Footer mobile hiển thị mỗi chi nhánh 1 khối riêng.')
                     ->icon('heroicon-o-building-storefront')
                     ->schema([
                         Forms\Components\Repeater::make('branches')

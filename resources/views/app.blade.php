@@ -104,6 +104,24 @@
             ->filter()
             ->values()
             ->all();
+
+        // Số điện thoại lấy từ CMS → Thiết lập chung → Chi nhánh (nguồn duy nhất), chuẩn hoá
+        // về dạng +84... cho schema.org.
+        $toE164 = function (?string $phone): ?string {
+            $digits = preg_replace('/[^\d+]/', '', (string) $phone);
+            if ($digits === '' || $digits === null) {
+                return null;
+            }
+            if (str_starts_with($digits, '+')) {
+                return $digits;
+            }
+
+            return str_starts_with($digits, '0') ? '+84'.substr($digits, 1) : '+'.$digits;
+        };
+        $branchPhones = collect($siteProps['branches'] ?? [])
+            ->map(fn ($branch) => ['name' => $branch['name'] ?? null, 'phone' => $toE164($branch['phone'] ?? null)])
+            ->filter(fn ($branch) => $branch['phone'])
+            ->values();
     @endphp
     <script type="application/ld+json">{!! json_encode([
         '@context' => 'https://schema.org',
@@ -115,10 +133,9 @@
                 'url' => config('app.url'),
                 'logo' => $siteLogoUrl,
                 ...($organizationSameAs ? ['sameAs' => $organizationSameAs] : []),
-                'contactPoint' => [
-                    ['@type' => 'ContactPoint', 'telephone' => '+84934743026', 'contactType' => 'customer service'],
-                    ['@type' => 'ContactPoint', 'telephone' => '+84978456185', 'contactType' => 'customer service'],
-                ],
+                ...($branchPhones->isNotEmpty() ? ['contactPoint' => $branchPhones->map(fn ($branch) => [
+                    '@type' => 'ContactPoint', 'telephone' => $branch['phone'], 'contactType' => 'customer service',
+                ])->all()] : []),
             ],
             [
                 '@type' => 'WebSite',
@@ -137,7 +154,7 @@
                 '@id' => config('app.url') . '/#heritage',
                 'name' => 'Mầm Spa Lê Văn Sỹ',
                 'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
-                'telephone' => '+84934743026',
+                ...($branchPhones->get(0) ? ['telephone' => $branchPhones->get(0)['phone']] : []),
                 'url' => config('app.url') . '/chi-nhanh/heritage/',
                 'openingHoursSpecification' => [
                     ['@type' => 'OpeningHoursSpecification', 'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens' => '09:00', 'closes' => '21:00'],
@@ -151,7 +168,7 @@
                 '@id' => config('app.url') . '/#signature',
                 'name' => 'Mầm Spa Lê Thị Riêng',
                 'parentOrganization' => ['@id' => config('app.url') . '/#organization'],
-                'telephone' => '+84978456185',
+                ...($branchPhones->get(1) ? ['telephone' => $branchPhones->get(1)['phone']] : []),
                 'url' => config('app.url') . '/chi-nhanh/signature/',
                 'openingHoursSpecification' => [
                     ['@type' => 'OpeningHoursSpecification', 'dayOfWeek' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], 'opens' => '09:00', 'closes' => '21:00'],

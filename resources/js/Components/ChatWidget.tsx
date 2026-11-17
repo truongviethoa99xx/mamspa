@@ -1,5 +1,5 @@
 import { MapPin, MessageCircle, Phone } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePage } from '@inertiajs/react';
 import type { SharedProps } from '@/types';
@@ -89,6 +89,112 @@ function ButtonIcon({ button }: { button: ContactButton }) {
     return <MessageCircle className="h-6 w-6" strokeWidth={2.4} />;
 }
 
+const ROUND_BUTTON =
+    'flex items-center justify-center overflow-hidden rounded-full border border-black/10 shadow-[0_4px_14px_rgba(15,23,42,0.22)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgba(15,23,42,0.28)] h-12 w-12';
+
+const toTelHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`;
+
+type BranchPhone = { name?: string; phone: string };
+
+const usesBranchPhones = (button: ContactButton) => button.type === 'phone';
+
+/**
+ * Nút điện thoại khi có từ 2 chi nhánh trở lên: bấm mở popup bên trái nút, mỗi dòng 1 chi
+ * nhánh (link tel:). Bấm lại nút, bấm ra ngoài hoặc nhấn Esc thì đóng.
+ */
+function PhonePopupButton({
+    button,
+    branches,
+    visible,
+    delay,
+    onNavigate,
+}: {
+    button: ContactButton;
+    branches: BranchPhone[];
+    visible: boolean;
+    delay: string;
+    onNavigate: () => void;
+}) {
+    const [open, setOpen] = useState(false);
+    const rootRef = useRef<HTMLDivElement>(null);
+    const isOpen = open && visible;
+
+    useEffect(() => {
+        if (!isOpen) {
+            return;
+        }
+        const onPointerDown = (event: PointerEvent) => {
+            if (!rootRef.current?.contains(event.target as Node)) {
+                setOpen(false);
+            }
+        };
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setOpen(false);
+            }
+        };
+        document.addEventListener('pointerdown', onPointerDown);
+        document.addEventListener('keydown', onKeyDown);
+
+        return () => {
+            document.removeEventListener('pointerdown', onPointerDown);
+            document.removeEventListener('keydown', onKeyDown);
+        };
+    }, [isOpen]);
+
+    return (
+        <div ref={rootRef} className="relative">
+            <button
+                type="button"
+                onClick={() => setOpen((value) => !value)}
+                className={cn(
+                    ROUND_BUTTON,
+                    visible ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-4 scale-90 opacity-0',
+                )}
+                style={{
+                    backgroundColor: button.background || '#ffffff',
+                    color: button.color || '#0d8bff',
+                    transitionDelay: delay,
+                }}
+                aria-label={button.label}
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+                title={button.label}
+                tabIndex={visible ? 0 : -1}
+            >
+                <ButtonIcon button={button} />
+            </button>
+            {isOpen && (
+                <ul
+                    role="menu"
+                    className="absolute right-full top-1/2 mr-4 w-max max-w-[calc(100vw-7rem)] -translate-y-1/2 space-y-1 rounded-2xl border border-black/10 bg-white p-2 shadow-[0_8px_28px_rgba(15,23,42,0.25)]"
+                >
+                    {branches.map((branch, index) => (
+                        <li key={`${branch.name}-${index}`} role="none">
+                            <a
+                                role="menuitem"
+                                href={toTelHref(branch.phone)}
+                                onClick={() => {
+                                    trackContactClick('phone', 'chat_widget');
+                                    setOpen(false);
+                                    onNavigate();
+                                }}
+                                className="flex items-start gap-2 rounded-xl px-3 py-2 text-sm text-[#2F3E2E] transition-colors hover:bg-[#556B3F]/10"
+                            >
+                                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#556B3F]" />
+                                <span className="min-w-0">
+                                    {branch.name && <span className="block font-semibold">{branch.name}</span>}
+                                    <span className="block whitespace-nowrap">{branch.phone}</span>
+                                </span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+}
+
 export function ChatWidget() {
     const { t } = useTranslation();
     const { props } = usePage<SharedProps>();
@@ -96,7 +202,18 @@ export function ChatWidget() {
     const configuredButtons = props.site?.floating_contact_buttons?.length
         ? props.site.floating_contact_buttons
         : DEFAULT_BUTTONS;
-    const buttons = configuredButtons.filter((button) => button.enabled !== false && button.href);
+    // Số điện thoại lấy từ CMS → Thiết lập chung → Chi nhánh (nguồn duy nhất).
+    const branchPhones: BranchPhone[] = (props.site?.branches ?? [])
+        .filter((branch): branch is { name?: string; phone: string } => Boolean(branch.phone?.trim()))
+        .map((branch) => ({ name: branch.name, phone: branch.phone.trim() }));
+    const buttons = configuredButtons
+        .map((button) =>
+            // Đúng 1 chi nhánh có số → gọi thẳng số đó, bỏ href cũ hardcode trong cấu hình nút.
+            usesBranchPhones(button) && branchPhones.length === 1
+                ? { ...button, href: toTelHref(branchPhones[0].phone) }
+                : button,
+        )
+        .filter((button) => button.enabled !== false && button.href);
 
     if (!buttons.length) {
         return null;
@@ -108,6 +225,19 @@ export function ChatWidget() {
         // bottom-24, tránh 3 thứ chồng lên nhau.
         <div className="fixed bottom-44 right-6 z-50 flex flex-col items-center gap-4 lg:bottom-24">
             {buttons.map((button, index) => {
+                if (usesBranchPhones(button) && branchPhones.length > 1) {
+                    return (
+                        <PhonePopupButton
+                            key={`${button.label}-${index}`}
+                            button={button}
+                            branches={branchPhones}
+                            visible={isOpen}
+                            delay={isOpen ? `${Math.max(0, buttons.length - index - 1) * 25}ms` : '0ms'}
+                            onNavigate={() => setIsOpen(false)}
+                        />
+                    );
+                }
+
                 return (
                     <a
                         key={`${button.label}-${index}`}

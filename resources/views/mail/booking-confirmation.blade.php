@@ -66,7 +66,7 @@
                 </div>
 
                 <p style="font-size:13px; color:#8C9A6B; margin-top:24px;">
-                    Nếu cần hỗ trợ, vui lòng gọi hotline {{ $site->hotline ?: '(+84) 934 743 026' }}.
+                    Nếu cần hỗ trợ, vui lòng gọi hotline {{ $site->hotline ?: collect($site->branches ?? [])->pluck('phone')->filter()->first() }}.
                 </p>
             </td>
         </tr>
