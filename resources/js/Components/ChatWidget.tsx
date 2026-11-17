@@ -5,6 +5,7 @@ import { usePage } from '@inertiajs/react';
 import type { SharedProps } from '@/types';
 import { cn, publicAssetUrl } from '@/Lib/utils';
 import { trackContactClick } from '@/Lib/analytics';
+import { getBranchPhones, toTelHref, type BranchPhone } from '@/Lib/branchPhones';
 
 type ContactButton = NonNullable<NonNullable<SharedProps['site']>['floating_contact_buttons']>[number];
 
@@ -92,11 +93,11 @@ function ButtonIcon({ button }: { button: ContactButton }) {
 const ROUND_BUTTON =
     'flex items-center justify-center overflow-hidden rounded-full border border-black/10 shadow-[0_4px_14px_rgba(15,23,42,0.22)] ring-4 ring-white transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgba(15,23,42,0.28)] h-12 w-12';
 
-const toTelHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`;
+const usesBranchPhones = (button: ContactButton) => button.type === 'phone' || button.type === 'zalo';
 
-type BranchPhone = { name?: string; phone: string };
-
-const usesBranchPhones = (button: ContactButton) => button.type === 'phone';
+/** Gọi điện → tel:, Zalo → zalo.me/<số chi nhánh>. */
+const branchHref = (type: ContactButton['type'], phone: string) =>
+    type === 'zalo' ? `https://zalo.me/${phone.replace(/\D/g, '')}` : toTelHref(phone);
 
 /**
  * Nút điện thoại khi có từ 2 chi nhánh trở lên: bấm mở popup bên trái nút, mỗi dòng 1 chi
@@ -173,9 +174,11 @@ function PhonePopupButton({
                         <li key={`${branch.name}-${index}`} role="none">
                             <a
                                 role="menuitem"
-                                href={toTelHref(branch.phone)}
+                                href={branchHref(button.type, branch.phone)}
+                                target={button.type === 'zalo' ? '_blank' : undefined}
+                                rel={button.type === 'zalo' ? 'noreferrer' : undefined}
                                 onClick={() => {
-                                    trackContactClick('phone', 'chat_widget');
+                                    trackContactClick(button.type || 'phone', 'chat_widget');
                                     setOpen(false);
                                     onNavigate();
                                 }}
@@ -203,14 +206,12 @@ export function ChatWidget() {
         ? props.site.floating_contact_buttons
         : DEFAULT_BUTTONS;
     // Số điện thoại lấy từ CMS → Thiết lập chung → Chi nhánh (nguồn duy nhất).
-    const branchPhones: BranchPhone[] = (props.site?.branches ?? [])
-        .filter((branch): branch is { name?: string; phone: string } => Boolean(branch.phone?.trim()))
-        .map((branch) => ({ name: branch.name, phone: branch.phone.trim() }));
+    const branchPhones = getBranchPhones(props.site);
     const buttons = configuredButtons
         .map((button) =>
             // Đúng 1 chi nhánh có số → gọi thẳng số đó, bỏ href cũ hardcode trong cấu hình nút.
             usesBranchPhones(button) && branchPhones.length === 1
-                ? { ...button, href: toTelHref(branchPhones[0].phone) }
+                ? { ...button, href: branchHref(button.type, branchPhones[0].phone) }
                 : button,
         )
         .filter((button) => button.enabled !== false && button.href);

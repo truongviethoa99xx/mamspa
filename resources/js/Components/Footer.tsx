@@ -5,6 +5,7 @@ import { Clock, ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
 import { publicAssetUrl } from '@/Lib/utils';
 import { googleMapsSearchUrl } from '@/Lib/maps';
 import { trackContactClick } from '@/Lib/analytics';
+import { getBranchPhones, toTelHref } from '@/Lib/branchPhones';
 import type { SharedProps } from '@/types';
 
 const DEFAULT_HOTLINE = '(+84) 965 80 6166';
@@ -135,6 +136,7 @@ export function Footer() {
     const socials = site.social_links && site.social_links.length > 0 ? site.social_links : DEFAULT_SOCIALS;
     const serviceLinks = (site.service_menu ?? []).slice(0, 6);
     const branches = site.branches ?? [];
+    const branchPhones = getBranchPhones(site);
     const year = new Date().getFullYear();
 
     const exploreLinks = [
@@ -156,21 +158,48 @@ export function Footer() {
                         <br />
                         <em className="not-italic text-maha-300">{t('footer.ctaLine2')}</em>
                     </h2>
-                    <a
-                        href={`tel:${hotline.replace(/[^\d+]/g, '')}`}
-                        onClick={() => trackContactClick('phone', 'footer_cta')}
-                        className="flex h-16 items-center gap-3 rounded-full border border-maha-400/30 bg-maha-800 pl-4 pr-6 transition-colors hover:border-maha-400"
-                    >
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-maha-400/15 text-maha-400">
-                            <Phone className="h-4 w-4" />
-                        </span>
-                        <span>
-                            <span className="block text-[10px] uppercase tracking-[0.18em] text-maha-300">
-                                {t('footer.hotline')}
+                    {branchPhones.length > 0 ? (
+                        <div className="flex items-center gap-3 rounded-[2rem] border border-maha-400/30 bg-maha-800 py-3 pl-4 pr-6">
+                            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-maha-400/15 text-maha-400">
+                                <Phone className="h-4 w-4" />
                             </span>
-                            <span className="font-sans text-base font-semibold tracking-wide sm:text-lg">{hotline}</span>
-                        </span>
-                    </a>
+                            <div>
+                                <span className="block text-[10px] uppercase tracking-[0.18em] text-maha-300">
+                                    {t('footer.hotline')}
+                                </span>
+                                <ul className="mt-1 space-y-1">
+                                    {branchPhones.map((branch, index) => (
+                                        <li key={`${branch.name}-${index}`}>
+                                            <a
+                                                href={toTelHref(branch.phone)}
+                                                onClick={() => trackContactClick('phone', 'footer_cta')}
+                                                className="flex flex-wrap items-baseline gap-x-2 transition-colors hover:text-maha-300"
+                                            >
+                                                {branch.name && <span className="text-xs text-maha-300">{branch.name}</span>}
+                                                <span className="font-sans text-base font-semibold tracking-wide sm:text-lg">{branch.phone}</span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    ) : (
+                        <a
+                            href={`tel:${hotline.replace(/[^\d+]/g, '')}`}
+                            onClick={() => trackContactClick('phone', 'footer_cta')}
+                            className="flex h-16 items-center gap-3 rounded-full border border-maha-400/30 bg-maha-800 pl-4 pr-6 transition-colors hover:border-maha-400"
+                        >
+                            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-maha-400/15 text-maha-400">
+                                <Phone className="h-4 w-4" />
+                            </span>
+                            <span>
+                                <span className="block text-[10px] uppercase tracking-[0.18em] text-maha-300">
+                                    {t('footer.hotline')}
+                                </span>
+                                <span className="font-sans text-base font-semibold tracking-wide sm:text-lg">{hotline}</span>
+                            </span>
+                        </a>
+                    )}
                 </div>
 
                 {/* Columns */}

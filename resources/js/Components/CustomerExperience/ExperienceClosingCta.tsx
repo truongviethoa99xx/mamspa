@@ -3,6 +3,7 @@ import { Phone } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
+import { getBranchPhones, toTelHref } from '@/Lib/branchPhones';
 import type { SharedProps } from '@/types';
 
 export interface ExperienceClosingCtaData {
@@ -21,6 +22,7 @@ export function ExperienceClosingCta({ data }: { data: ExperienceClosingCtaData 
     const imageAlt = tr(data.image_alt, locale);
     const buttonText = tr(data.buttonText, locale);
     const hotline = props.site?.hotline;
+    const branchPhones = getBranchPhones(props.site);
     const hasImage = !!data.image;
     const { ref, className } = useReveal<HTMLElement>();
 
@@ -64,11 +66,25 @@ export function ExperienceClosingCta({ data }: { data: ExperienceClosingCtaData 
                             {buttonText}
                         </Link>
                     )}
-                    {hotline && (
-                        <a href={`tel:${hotline.replace(/\s+/g, '')}`} className="flex items-center gap-2 text-sm font-medium text-white/90 hover:text-white">
-                            <Phone className="h-4 w-4" strokeWidth={1.5} />
-                            {hotline}
-                        </a>
+                    {branchPhones.length > 0 ? (
+                        <ul className="space-y-1">
+                            {branchPhones.map((branch, index) => (
+                                <li key={`${branch.name}-${index}`}>
+                                    <a href={toTelHref(branch.phone)} className="flex items-center gap-2 text-sm font-medium text-white/90 hover:text-white">
+                                        <Phone className="h-4 w-4 shrink-0" strokeWidth={1.5} />
+                                        {branch.name ? `${branch.name} – ` : ''}
+                                        {branch.phone}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        hotline && (
+                            <a href={toTelHref(hotline)} className="flex items-center gap-2 text-sm font-medium text-white/90 hover:text-white">
+                                <Phone className="h-4 w-4" strokeWidth={1.5} />
+                                {hotline}
+                            </a>
+                        )
                     )}
                 </div>
             </div>
