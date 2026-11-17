@@ -70,7 +70,7 @@ export interface SharedProps {
     availableLocales: string[];
     flash: { success?: string; error?: string; booking_code?: string };
     site?: SiteSettings;
-    promo_popups?: PromoPopupData[];
+    promo_popup?: PromoPopupData | null;
     gtm: { id?: string };
 }
 

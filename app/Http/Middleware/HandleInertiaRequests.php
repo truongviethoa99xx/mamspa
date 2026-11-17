@@ -78,10 +78,10 @@ class HandleInertiaRequests extends Middleware
                 'social_links' => $site?->social_links ?? [],
                 'service_menu' => fn () => Schema::hasTable('service_categories') ? $this->serviceMenu() : [],
             ],
-            // Popup quảng cáo đang bật và trong khung thời gian hiển thị (CMS → Popup quảng cáo).
-            'promo_popups' => fn () => Schema::hasTable('promo_popups')
-                ? PromoPopup::active()->orderBy('order')->orderByDesc('id')->get()->map->toFrontend()->all()
-                : [],
+            // Popup quảng cáo duy nhất — chỉ gửi khi đang bật và trong khung thời gian hiển thị.
+            'promo_popup' => fn () => Schema::hasTable('promo_popups')
+                ? PromoPopup::active()->first()?->toFrontend()
+                : null,
             'gtm' => [
                 'id' => config('services.gtm.id'),
             ],

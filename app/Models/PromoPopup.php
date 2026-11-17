@@ -5,16 +5,13 @@ namespace App\Models;
 use App\Support\OptimizedImageUrl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
 
 /**
- * Popup quảng cáo hiện trên website công khai — nội dung, vị trí và khung thời gian hiển
- * thị đều chỉnh trong CMS (Nội dung → Popup quảng cáo).
+ * Popup quảng cáo duy nhất của website — singleton, luôn thao tác trên bản ghi đầu tiên.
+ * Nội dung, vị trí và khung thời gian hiển thị chỉnh trong CMS (Nội dung → Popup quảng cáo).
  */
 class PromoPopup extends Model
 {
-    use HasTranslations;
-
     public const POSITIONS = [
         'center' => 'Giữa màn hình',
         'top-left' => 'Góc trên bên trái',
@@ -23,8 +20,6 @@ class PromoPopup extends Model
         'bottom-right' => 'Góc dưới bên phải',
     ];
 
-    public array $translatable = ['title', 'description', 'button_text'];
-
     protected $fillable = [
         'name', 'title', 'description', 'button_text', 'button_url',
         'button_background', 'button_text_color', 'image', 'position',
@@ -32,12 +27,21 @@ class PromoPopup extends Model
     ];
 
     protected $casts = [
+        'title' => 'array',
+        'description' => 'array',
+        'button_text' => 'array',
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
         'is_active' => 'boolean',
         'delay_seconds' => 'integer',
         'order' => 'integer',
     ];
+
+    /** Mặc định TẮT để chưa cấu hình xong thì không hiện gì ra site. */
+    public static function current(): self
+    {
+        return static::first() ?? static::create(['name' => 'Popup quảng cáo', 'is_active' => false]);
+    }
 
     /** Đang bật và nằm trong khung thời gian hiển thị (đầu/cuối để trống = không giới hạn). */
     public function scopeActive(Builder $query): Builder
@@ -57,9 +61,9 @@ class PromoPopup extends Model
             'id' => $this->id,
             // Đổi khi admin sửa popup → FE dùng để hiện lại popup đã đóng trước đó.
             'version' => $this->updated_at?->timestamp,
-            'title' => $this->getTranslations('title'),
-            'description' => $this->getTranslations('description'),
-            'button_text' => $this->getTranslations('button_text'),
+            'title' => $this->title,
+            'description' => $this->description,
+            'button_text' => $this->button_text,
             'button_url' => $this->button_url,
             'button_background' => $this->button_background,
             'button_text_color' => $this->button_text_color,

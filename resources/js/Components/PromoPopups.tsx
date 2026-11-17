@@ -124,39 +124,30 @@ function PopupCard({ popup, onClose }: { popup: PromoPopupData; onClose: () => v
     return <div className={cn('fixed z-[60] w-[calc(100vw-2rem)] max-w-sm', CORNER_CLASSES[popup.position])}>{card}</div>;
 }
 
-/** Popup quảng cáo cấu hình ở CMS → Popup quảng cáo (nội dung, vị trí, khung thời gian). */
+/** Popup quảng cáo duy nhất, cấu hình ở CMS → Popup quảng cáo (nội dung, vị trí, khung thời gian). */
 export function PromoPopups() {
     const { props } = usePage<SharedProps>();
-    const popups = props.promo_popups ?? [];
-    const [openIds, setOpenIds] = useState<number[]>([]);
+    const popup = props.promo_popup ?? null;
+    const [isOpen, setIsOpen] = useState(false);
     // Khoá theo nội dung popup (id + version + delay) để chỉ đặt lại timer khi thật sự có thay đổi.
-    const signature = popups.map((popup) => `${popup.id}:${popup.version}:${popup.delay_seconds}`).join('|');
+    const signature = popup ? `${popup.id}:${popup.version}:${popup.delay_seconds}` : '';
 
     useEffect(() => {
-        const timers = popups
-            .filter((popup) => !wasSeen(popup))
-            .map((popup) =>
-                window.setTimeout(() => {
-                    markSeen(popup);
-                    setOpenIds((ids) => (ids.includes(popup.id) ? ids : [...ids, popup.id]));
-                }, Math.max(0, popup.delay_seconds) * 1000),
-            );
+        if (!popup || wasSeen(popup)) {
+            return;
+        }
+        const timer = window.setTimeout(() => {
+            markSeen(popup);
+            setIsOpen(true);
+        }, Math.max(0, popup.delay_seconds) * 1000);
 
-        return () => timers.forEach((timer) => window.clearTimeout(timer));
+        return () => window.clearTimeout(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [signature]);
 
-    return (
-        <>
-            {popups
-                .filter((popup) => openIds.includes(popup.id))
-                .map((popup) => (
-                    <PopupCard
-                        key={popup.id}
-                        popup={popup}
-                        onClose={() => setOpenIds((ids) => ids.filter((id) => id !== popup.id))}
-                    />
-                ))}
-        </>
-    );
+    if (!popup || !isOpen) {
+        return null;
+    }
+
+    return <PopupCard popup={popup} onClose={() => setIsOpen(false)} />;
 }
