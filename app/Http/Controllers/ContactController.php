@@ -10,6 +10,7 @@ use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,7 +21,7 @@ class ContactController extends Controller
         $content = ContactPageContent::current();
         $site = SiteSetting::current();
 
-        $branchItems = $this->branchItems($content);
+        $branchItems = $this->withSitePhones($this->branchItems($content), $site);
 
         return Inertia::render('Contact', [
             'content' => [
@@ -125,6 +126,33 @@ class ContactController extends Controller
     }
 
     /**
+     * Số điện thoại thẻ chi nhánh lấy từ CMS → Thiết lập chung → Chi nhánh (nguồn duy nhất).
+     * Ghép theo tên (khớp chứa nhau, bỏ dấu/HTML); không khớp tên thì ghép theo thứ tự.
+     * Không có số bên Thiết lập chung thì giữ số nhập riêng ở thẻ (nếu có).
+     *
+     * @param  array<int, array<string, mixed>>  $items
+     * @return array<int, array<string, mixed>>
+     */
+    protected function withSitePhones(array $items, SiteSetting $site): array
+    {
+        $siteBranches = collect($site->branches ?? [])->values();
+        $normalize = fn ($value) => Str::of(Str::ascii(strip_tags(is_array($value) ? ($value['vi'] ?? reset($value) ?: '') : (string) $value)))
+            ->lower()->replaceMatches('/[^a-z0-9]+/', ' ')->trim()->toString();
+
+        return collect($items)->values()->map(function (array $item, int $index) use ($siteBranches, $normalize) {
+            $name = $normalize($item['name'] ?? '');
+            $match = $siteBranches->first(function ($branch) use ($name, $normalize) {
+                $other = $normalize($branch['name'] ?? '');
+
+                return $name !== '' && $other !== '' && (str_contains($name, $other) || str_contains($other, $name));
+            }) ?? $siteBranches->get($index);
+            $phone = trim((string) ($match['phone'] ?? ''));
+
+            return $phone !== '' ? [...$item, 'phone' => $phone] : $item;
+        })->all();
+    }
+
+    /**
      * Danh sách thẻ chi nhánh trên trang Liên hệ — nhập tay riêng trong CMS (không còn lấy
      * từ hệ thống chi nhánh/Branch cũ). "Xem đường đi"/"Tìm hiểu thêm" là link nhập tay,
      * có thể trỏ sang bài blog giới thiệu chi nhánh khi được tạo sau này.
@@ -137,7 +165,7 @@ class ContactController extends Controller
                 'image_alt' => ['vi' => 'Mầm Spa Phú Nhuận', 'en' => 'Mầm Spa Phú Nhuận'],
                 'name' => ['vi' => '<p>Mầm Spa Phú Nhuận</p>', 'en' => '<p>Mầm Spa Phú Nhuận</p>'],
                 'address' => ['vi' => '<p>12 Lê Văn Sỹ, Phường Phú Nhuận, TP. Hồ Chí Minh</p>', 'en' => '<p>12 Lê Văn Sỹ, Phú Nhuận Ward, Ho Chi Minh City</p>'],
-                'phone' => '(+84) 965 80 6166',
+                'phone' => null,
                 'open_hours' => '09:00 - 21:00',
                 'hours_note' => ['vi' => '(Last booking 21:00)', 'en' => '(Last booking 21:00)'],
                 'directions_url' => 'https://maps.google.com/?q='.urlencode('12 Lê Văn Sỹ, Phường Phú Nhuận, TP. Hồ Chí Minh'),
@@ -148,7 +176,7 @@ class ContactController extends Controller
                 'image_alt' => ['vi' => 'Mầm Spa Bến Thành', 'en' => 'Mầm Spa Bến Thành'],
                 'name' => ['vi' => '<p>Mầm Spa Bến Thành</p>', 'en' => '<p>Mầm Spa Bến Thành</p>'],
                 'address' => ['vi' => '<p>45 Phạm Ngũ Lão, Phường Bến Thành, TP. Hồ Chí Minh</p>', 'en' => '<p>45 Phạm Ngũ Lão, Bến Thành Ward, Ho Chi Minh City</p>'],
-                'phone' => '(+84) 965 80 6166',
+                'phone' => null,
                 'open_hours' => '09:00 - 21:00',
                 'hours_note' => ['vi' => '(Last booking 21:00)', 'en' => '(Last booking 21:00)'],
                 'directions_url' => 'https://maps.google.com/?q='.urlencode('45 Phạm Ngũ Lão, Phường Bến Thành, TP. Hồ Chí Minh'),

@@ -1,9 +1,11 @@
-import { useForm } from '@inertiajs/react';
-import { FormEvent, useState } from 'react';
+import { useForm, usePage } from '@inertiajs/react';
+import { FormEvent, ReactNode, useState } from 'react';
 import { AlertTriangle, CheckCircle2, Instagram, Lock, Mail, MessageCircle, Phone, X } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
 import { tr, cn } from '@/Lib/utils';
+import { getBranchPhones, toTelHref } from '@/Lib/branchPhones';
+import type { SharedProps } from '@/types';
 
 export interface ContactInfoData {
     title?: unknown;
@@ -65,11 +67,26 @@ export function ContactInfoForm({ info, form: formContent }: { info: ContactInfo
         });
     };
 
-    const rows = [
+    const branchPhones = getBranchPhones(usePage<SharedProps>().props.site);
+    const hotlineValue: ReactNode =
+        branchPhones.length > 0 ? (
+            <span className="block space-y-1">
+                {branchPhones.map((branch, index) => (
+                    <a key={`${branch.name}-${index}`} href={toTelHref(branch.phone)} className="block hover:text-subheading">
+                        {branch.name && <span className="block font-sans text-xs text-ink/60">{branch.name}</span>}
+                        {branch.phone}
+                    </a>
+                ))}
+            </span>
+        ) : (
+            info.hotline
+        );
+
+    const rows: { icon: typeof Phone; label: string; value: ReactNode; note: string }[] = [
         {
             icon: Phone,
             label: 'HOTLINE',
-            value: info.hotline,
+            value: hotlineValue,
             note: tr(info.hotline_note, locale),
         },
         {

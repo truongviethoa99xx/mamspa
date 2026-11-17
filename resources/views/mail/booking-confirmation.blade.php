@@ -66,7 +66,15 @@
                 </div>
 
                 <p style="font-size:13px; color:#8C9A6B; margin-top:24px;">
-                    Nếu cần hỗ trợ, vui lòng gọi hotline {{ $site->hotline ?: collect($site->branches ?? [])->pluck('phone')->filter()->first() }}.
+                    @php($branchPhones = $site->branchPhones())
+                    @if($branchPhones->isNotEmpty())
+                        Nếu cần hỗ trợ, vui lòng gọi:
+                        @foreach($branchPhones as $branch)
+                            <br>{{ $branch['name'] ? $branch['name'].': ' : '' }}<strong>{{ $branch['phone'] }}</strong>
+                        @endforeach
+                    @elseif($site->hotline)
+                        Nếu cần hỗ trợ, vui lòng gọi hotline {{ $site->hotline }}.
+                    @endif
                 </p>
             </td>
         </tr>

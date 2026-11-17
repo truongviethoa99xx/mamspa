@@ -47,12 +47,30 @@ export interface SiteSettings {
     service_menu?: { label: string; href: string; children?: { label: string; href: string }[] }[];
 }
 
+export type PromoPopupPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
+export interface PromoPopupData {
+    id: number;
+    /** Đổi khi admin sửa popup → hiện lại popup mà khách đã đóng trước đó. */
+    version: number | null;
+    title: Record<string, string> | null;
+    description: Record<string, string> | null;
+    button_text: Record<string, string> | null;
+    button_url: string | null;
+    button_background: string;
+    button_text_color: string;
+    image: string | null;
+    position: PromoPopupPosition;
+    delay_seconds: number;
+}
+
 export interface SharedProps {
     auth: { user: User | null };
     locale: 'vi' | 'en' | 'ja' | 'ko' | 'zh';
     availableLocales: string[];
     flash: { success?: string; error?: string; booking_code?: string };
     site?: SiteSettings;
+    promo_popups?: PromoPopupData[];
     gtm: { id?: string };
 }
 

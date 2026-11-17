@@ -54,6 +54,23 @@ class SiteSetting extends Model
         'lng' => 'float',
     ];
 
+    /**
+     * Chi nhánh có số điện thoại (CMS → Thiết lập chung → Chi nhánh) — nguồn duy nhất cho
+     * mọi chỗ hiển thị/gọi số điện thoại.
+     *
+     * @return \Illuminate\Support\Collection<int, array{name: ?string, phone: string}>
+     */
+    public function branchPhones(): \Illuminate\Support\Collection
+    {
+        return collect($this->branches ?? [])
+            ->map(fn ($branch) => [
+                'name' => filled($branch['name'] ?? null) ? trim($branch['name']) : null,
+                'phone' => trim((string) ($branch['phone'] ?? '')),
+            ])
+            ->filter(fn ($branch) => $branch['phone'] !== '')
+            ->values();
+    }
+
     public static function current(): self
     {
         return static::first() ?? static::create([

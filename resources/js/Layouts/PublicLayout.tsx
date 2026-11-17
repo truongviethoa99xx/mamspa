@@ -3,6 +3,7 @@ import { Header } from '@/Components/Header';
 import { Footer } from '@/Components/Footer';
 import { ChatWidget } from '@/Components/ChatWidget';
 import { BackToTop } from '@/Components/BackToTop';
+import { PromoPopups } from '@/Components/PromoPopups';
 import { useLocale } from '@/Hooks/useLocale';
 import { cn } from '@/Lib/utils';
 
@@ -31,6 +32,7 @@ export default function PublicLayout({ children, mainClassName, minimalHeader }:
             <Footer />
             <ChatWidget />
             <BackToTop />
+            <PromoPopups />
         </div>
     );
 }

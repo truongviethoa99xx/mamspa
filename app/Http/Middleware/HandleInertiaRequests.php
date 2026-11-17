@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\PromoPopup;
 use App\Models\ServiceCategory;
 use App\Models\SiteSetting;
 use App\Models\User;
@@ -77,6 +78,10 @@ class HandleInertiaRequests extends Middleware
                 'social_links' => $site?->social_links ?? [],
                 'service_menu' => fn () => Schema::hasTable('service_categories') ? $this->serviceMenu() : [],
             ],
+            // Popup quảng cáo đang bật và trong khung thời gian hiển thị (CMS → Popup quảng cáo).
+            'promo_popups' => fn () => Schema::hasTable('promo_popups')
+                ? PromoPopup::active()->orderBy('order')->orderByDesc('id')->get()->map->toFrontend()->all()
+                : [],
             'gtm' => [
                 'id' => config('services.gtm.id'),
             ],

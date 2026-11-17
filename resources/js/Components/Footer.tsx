@@ -8,7 +8,6 @@ import { trackContactClick } from '@/Lib/analytics';
 import { getBranchPhones, toTelHref } from '@/Lib/branchPhones';
 import type { SharedProps } from '@/types';
 
-const DEFAULT_HOTLINE = '(+84) 965 80 6166';
 const DEFAULT_EMAIL = 'info@mamspa.vn';
 // Không hardcode URL mạng xã hội cụ thể ở đây — nếu /admin chưa cấu hình social_links,
 // ẩn hẳn khối này thay vì fallback về link đoán mò (dễ trỏ sai tài khoản).
@@ -129,7 +128,7 @@ export function Footer() {
     const logoUrl = publicAssetUrl(site.logo_path);
     const tagline = site.tagline || t('footer.tagline');
     const description = t('footer.description');
-    const hotline = site.hotline || DEFAULT_HOTLINE;
+    const hotline = site.hotline ?? '';
     const email = site.email || DEFAULT_EMAIL;
     const address = site.address;
     const openHours = site.open_hours;
@@ -183,7 +182,7 @@ export function Footer() {
                                 </ul>
                             </div>
                         </div>
-                    ) : (
+                    ) : hotline ? (
                         <a
                             href={`tel:${hotline.replace(/[^\d+]/g, '')}`}
                             onClick={() => trackContactClick('phone', 'footer_cta')}
@@ -199,7 +198,7 @@ export function Footer() {
                                 <span className="font-sans text-base font-semibold tracking-wide sm:text-lg">{hotline}</span>
                             </span>
                         </a>
-                    )}
+                    ) : null}
                 </div>
 
                 {/* Columns */}

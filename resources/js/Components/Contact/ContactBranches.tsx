@@ -1,3 +1,4 @@
+import { toTelHref } from '@/Lib/branchPhones';
 import { ArrowRight, Clock, MapPin, Phone } from 'lucide-react';
 import { useLocale } from '@/Hooks/useLocale';
 import { useReveal } from '@/Hooks/useReveal';
@@ -122,10 +123,13 @@ export function ContactBranches({ data }: { data: ContactBranchesData }) {
                                                 </span>
                                             )}
                                             {branch.phone && (
-                                                <span className="flex items-center justify-center gap-2 px-3 text-sm text-ink/80">
+                                                <a
+                                                    href={toTelHref(branch.phone)}
+                                                    className="flex items-center justify-center gap-2 px-3 text-sm text-ink/80 hover:text-subheading"
+                                                >
                                                     <Phone className="h-5 w-5 shrink-0 text-subheading" strokeWidth={1.5} />
                                                     {branch.phone}
-                                                </span>
+                                                </a>
                                             )}
                                         </div>
                                     )}
