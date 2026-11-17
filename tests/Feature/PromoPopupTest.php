@@ -114,3 +114,22 @@ it('rejects an end time earlier than the start time', function () {
         ->call('create')
         ->assertHasFormErrors(['ends_at']);
 });
+
+it('requires a button link when the button has text', function () {
+    $this->seed(RolePermissionSeeder::class);
+    $admin = User::create(['name' => 'Admin', 'email' => 'popup-form3@example.test', 'password' => 'password']);
+    $admin->assignRole(User::ROLE_ADMIN);
+    $this->actingAs($admin);
+
+    Livewire\Livewire::test(PromoPopupResource\Pages\CreatePromoPopup::class)
+        ->fillForm([
+            'name' => 'Thiếu link',
+            'title' => ['vi' => 'X'],
+            'button_text' => ['vi' => 'Đặt lịch ngay'],
+            'button_url' => null,
+            'position' => 'center',
+            'delay_seconds' => 0,
+        ])
+        ->call('create')
+        ->assertHasFormErrors(['button_url' => 'required']);
+});

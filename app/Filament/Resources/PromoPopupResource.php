@@ -67,7 +67,18 @@ class PromoPopupResource extends Resource
                             TranslatableField::group('button_text', label: 'Chữ trên nút', example: 'Đặt lịch ngay'),
                             Forms\Components\TextInput::make('button_url')
                                 ->label('Link khi bấm nút')
-                                ->placeholder('/booking hoặc https://...')
+                                ->helperText('Chọn gợi ý bên dưới hoặc tự nhập (trang trong site bắt đầu bằng /, link ngoài bắt đầu bằng https://). Bắt buộc khi đã nhập chữ trên nút.')
+                                ->placeholder('/dat-lich')
+                                ->datalist([
+                                    '/dat-lich' => 'Đặt lịch',
+                                    '/dich-vu' => 'Dịch vụ',
+                                    '/uu-dai' => 'Ưu đãi',
+                                    '/tin-tuc' => 'Tin tức',
+                                    '/trai-nghiem-khach-hang' => 'Trải nghiệm khách hàng',
+                                    '/lien-he' => 'Liên hệ',
+                                    '/gioi-thieu' => 'Giới thiệu',
+                                ])
+                                ->required(fn (Forms\Get $get): bool => collect($get('button_text') ?? [])->filter(fn ($text) => filled($text))->isNotEmpty())
                                 ->rules(['nullable', 'regex:/\A(#|\/|https?:\/\/|tel:|mailto:)/i'])
                                 ->validationMessages(['regex' => 'Link phải bắt đầu bằng /, #, http(s)://, tel: hoặc mailto:.']),
                             Forms\Components\ColorPicker::make('button_background')
