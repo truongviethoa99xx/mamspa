@@ -62,6 +62,7 @@ export interface PromoPopupData {
     image: string | null;
     position: PromoPopupPosition;
     delay_seconds: number;
+    reshow_after_hours: number;
 }
 
 export interface SharedProps {

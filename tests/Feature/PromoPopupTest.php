@@ -71,7 +71,8 @@ it('shares the popup with the public site only while it is live', function () {
         ->where('promo_popup.button_url', '/dat-lich')
         ->where('promo_popup.button_background', '#112233')
         ->where('promo_popup.position', 'bottom-left')
-        ->where('promo_popup.delay_seconds', 5));
+        ->where('promo_popup.delay_seconds', 5)
+        ->where('promo_popup.reshow_after_hours', 24));
 
     $popup->update(['is_active' => false]);
 
@@ -100,6 +101,7 @@ it('saves position, time window and button settings from the CMS form', function
             'button_text_color' => '#FFFFFF',
             'position' => 'top-right',
             'delay_seconds' => 4,
+            'reshow_after_hours' => 72,
             'starts_at' => '2026-12-01 08:00:00',
             'ends_at' => '2026-12-31 23:00:00',
         ])
@@ -111,8 +113,20 @@ it('saves position, time window and button settings from the CMS form', function
         ->and($popup->is_active)->toBeTrue()
         ->and($popup->position)->toBe('top-right')
         ->and($popup->delay_seconds)->toBe(4)
+        ->and($popup->reshow_after_hours)->toBe(72)
         ->and($popup->title['en'])->toBe('December offer')
         ->and($popup->ends_at->format('Y-m-d H:i'))->toBe('2026-12-31 23:00');
+});
+
+it('fills sensible defaults the first time the settings page loads, so saving immediately does not fail validation', function () {
+    $this->actingAs(popupAdmin('popup-form4@example.test'));
+
+    Livewire::test(PromoPopupSettings::class)
+        ->fillForm(['title' => ['vi' => 'X']])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect(PromoPopup::firstOrFail()->reshow_after_hours)->toBe(24);
 });
 
 it('rejects an end time earlier than the start time', function () {

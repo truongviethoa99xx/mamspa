@@ -23,7 +23,7 @@ class PromoPopup extends Model
     protected $fillable = [
         'name', 'title', 'description', 'button_text', 'button_url',
         'button_background', 'button_text_color', 'image', 'position',
-        'delay_seconds', 'starts_at', 'ends_at', 'is_active', 'order',
+        'delay_seconds', 'reshow_after_hours', 'starts_at', 'ends_at', 'is_active', 'order',
     ];
 
     protected $casts = [
@@ -34,13 +34,26 @@ class PromoPopup extends Model
         'ends_at' => 'datetime',
         'is_active' => 'boolean',
         'delay_seconds' => 'integer',
+        'reshow_after_hours' => 'integer',
         'order' => 'integer',
     ];
 
-    /** Mặc định TẮT để chưa cấu hình xong thì không hiện gì ra site. */
+    /**
+     * Mặc định TẮT để chưa cấu hình xong thì không hiện gì ra site. Khai báo tường minh mọi
+     * field required/có default ở form — `create()` không tự nạp lại default cột DB vào model
+     * trong bộ nhớ, nên `mount()` đọc qua `only()` sẽ ra null nếu không set ở đây.
+     */
     public static function current(): self
     {
-        return static::first() ?? static::create(['name' => 'Popup quảng cáo', 'is_active' => false]);
+        return static::first() ?? static::create([
+            'name' => 'Popup quảng cáo',
+            'is_active' => false,
+            'position' => 'center',
+            'delay_seconds' => 3,
+            'reshow_after_hours' => 24,
+            'button_background' => '#556B3F',
+            'button_text_color' => '#FFFFFF',
+        ]);
     }
 
     /** Đang bật và nằm trong khung thời gian hiển thị (đầu/cuối để trống = không giới hạn). */
@@ -70,6 +83,7 @@ class PromoPopup extends Model
             'image' => OptimizedImageUrl::resolve($this->image),
             'position' => $this->position,
             'delay_seconds' => $this->delay_seconds,
+            'reshow_after_hours' => $this->reshow_after_hours,
         ];
     }
 }

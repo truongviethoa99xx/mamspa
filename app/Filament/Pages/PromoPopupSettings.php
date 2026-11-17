@@ -45,7 +45,7 @@ class PromoPopupSettings extends Page implements HasForms
         $this->form->fill(PromoPopup::current()->only([
             'is_active', 'title', 'description', 'image',
             'button_text', 'button_url', 'button_background', 'button_text_color',
-            'position', 'delay_seconds', 'starts_at', 'ends_at',
+            'position', 'delay_seconds', 'reshow_after_hours', 'starts_at', 'ends_at',
         ]));
     }
 
@@ -67,12 +67,21 @@ class PromoPopupSettings extends Page implements HasForms
                             ->native(false),
                         Forms\Components\TextInput::make('delay_seconds')
                             ->label('Hiện sau (giây)')
-                            ->helperText('Số giây chờ sau khi khách mở trang. Mỗi khách chỉ thấy 1 lần mỗi phiên truy cập; sửa popup ở đây thì popup hiện lại cho khách.')
+                            ->helperText('Số giây chờ sau khi khách mở trang, tính từ lần khách được thấy popup gần nhất (xem "Hiện lại sau khi đóng" bên dưới). Sửa nội dung popup ở đây thì popup hiện lại ngay cho mọi khách.')
                             ->numeric()
                             ->integer()
                             ->minValue(0)
                             ->maxValue(600)
                             ->default(3)
+                            ->required(),
+                        Forms\Components\TextInput::make('reshow_after_hours')
+                            ->label('Hiện lại sau khi đóng (giờ)')
+                            ->helperText('Khách đã bấm đóng popup thì sau bao nhiêu giờ mới thấy lại. 0 = hiện lại ngay ở lượt truy cập kế tiếp.')
+                            ->numeric()
+                            ->integer()
+                            ->minValue(0)
+                            ->maxValue(8760)
+                            ->default(24)
                             ->required(),
                         Forms\Components\DateTimePicker::make('starts_at')
                             ->label('Bắt đầu từ')
@@ -88,8 +97,8 @@ class PromoPopupSettings extends Page implements HasForms
 
                 Forms\Components\Section::make('Nội dung popup')
                     ->schema([
-                        TranslatableField::group('title', label: 'Tiêu đề', required: true, example: 'Ưu đãi tháng 12'),
-                        TranslatableField::group('description', as: 'textarea', label: 'Mô tả', example: 'Giảm 20% liệu trình Head Spa cho khách đặt lịch trước ngày 31/12.'),
+                        TranslatableField::group('title', as: 'quill', label: 'Tiêu đề', required: true, example: 'Ưu đãi tháng 12'),
+                        TranslatableField::group('description', as: 'quill', label: 'Mô tả', example: 'Giảm 20% liệu trình Head Spa cho khách đặt lịch trước ngày 31/12.'),
                         Forms\Components\FileUpload::make('image')
                             ->label('Ảnh (tuỳ chọn)')
                             ->helperText('Hiện phía trên tiêu đề. Ảnh ngang tỉ lệ 16:9, tối thiểu 800px.')

@@ -6,25 +6,40 @@ import { useLocale } from '@/Hooks/useLocale';
 import { cn, tr } from '@/Lib/utils';
 import type { PromoPopupData, PromoPopupPosition, SharedProps } from '@/types';
 
-const SEEN_PREFIX = 'promo-popup:';
+const DISMISS_PREFIX = 'promo-popup:';
 
-/** Mỗi phiên truy cập chỉ hiện 1 lần; sửa popup trong CMS (version đổi) thì hiện lại. */
-const seenKey = (popup: PromoPopupData) => `${SEEN_PREFIX}${popup.id}:${popup.version ?? 0}`;
+/** Lưu theo id + version (đổi khi admin sửa nội dung) → sửa popup thì hết thời gian chờ cũ. */
+const dismissKey = (popup: PromoPopupData) => `${DISMISS_PREFIX}${popup.id}:${popup.version ?? 0}`;
 
-function wasSeen(popup: PromoPopupData): boolean {
+/** Thời điểm (ms) khách bấm đóng popup lần gần nhất — null nếu chưa từng đóng. */
+function getDismissedAt(popup: PromoPopupData): number | null {
     try {
-        return window.sessionStorage.getItem(seenKey(popup)) === '1';
+        const raw = window.localStorage.getItem(dismissKey(popup));
+
+        return raw ? Number(raw) : null;
     } catch {
-        return false;
+        return null;
     }
 }
 
-function markSeen(popup: PromoPopupData): void {
+function markDismissed(popup: PromoPopupData): void {
     try {
-        window.sessionStorage.setItem(seenKey(popup), '1');
+        window.localStorage.setItem(dismissKey(popup), String(Date.now()));
     } catch {
-        // sessionStorage bị chặn (chế độ riêng tư…) — chấp nhận popup có thể hiện lại.
+        // localStorage bị chặn (chế độ riêng tư…) — chấp nhận popup có thể hiện lại sớm hơn dự kiến.
     }
+}
+
+/** Còn trong thời gian chờ (cấu hình "Hiện lại sau khi đóng") kể từ lần khách đóng gần nhất. */
+function isInCooldown(popup: PromoPopupData): boolean {
+    const dismissedAt = getDismissedAt(popup);
+    if (dismissedAt === null) {
+        return false;
+    }
+
+    const cooldownMs = Math.max(0, popup.reshow_after_hours) * 60 * 60 * 1000;
+
+    return Date.now() - dismissedAt < cooldownMs;
 }
 
 /**
@@ -85,10 +100,17 @@ function PopupCard({ popup, onClose }: { popup: PromoPopupData; onClose: () => v
                 <img src={popup.image} alt="" className="aspect-video w-full object-cover" loading="lazy" />
             )}
             <div className="p-5 sm:p-6">
-                <h2 id={`promo-popup-title-${popup.id}`} className="pr-8 font-serif text-xl leading-snug text-[#2F3E2E] sm:text-2xl">
-                    {title}
-                </h2>
-                {description && <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-[#2F3E2E]/75">{description}</p>}
+                <div
+                    id={`promo-popup-title-${popup.id}`}
+                    className="rich-content pr-8 font-serif text-xl leading-snug text-[#2F3E2E] sm:text-2xl"
+                    dangerouslySetInnerHTML={{ __html: title }}
+                />
+                {description && (
+                    <div
+                        className="rich-content mt-2 text-sm leading-relaxed text-[#2F3E2E]/75"
+                        dangerouslySetInnerHTML={{ __html: description }}
+                    />
+                )}
                 {buttonText && popup.button_url && (
                     <a
                         href={popup.button_url}
@@ -124,7 +146,11 @@ function PopupCard({ popup, onClose }: { popup: PromoPopupData; onClose: () => v
     return <div className={cn('fixed z-[60] w-[calc(100vw-2rem)] max-w-sm', CORNER_CLASSES[popup.position])}>{card}</div>;
 }
 
-/** Popup quảng cáo duy nhất, cấu hình ở CMS → Popup quảng cáo (nội dung, vị trí, khung thời gian). */
+/**
+ * Popup quảng cáo duy nhất, cấu hình ở CMS → Popup quảng cáo (nội dung, vị trí, khung thời gian).
+ * Sau khi khách đóng (hoặc bấm nút trong popup), không hiện lại cho tới khi hết thời gian chờ
+ * "Hiện lại sau khi đóng" (reshow_after_hours) — lưu localStorage nên tính cả giữa các phiên.
+ */
 export function PromoPopups() {
     const { props } = usePage<SharedProps>();
     const popup = props.promo_popup ?? null;
@@ -133,11 +159,10 @@ export function PromoPopups() {
     const signature = popup ? `${popup.id}:${popup.version}:${popup.delay_seconds}` : '';
 
     useEffect(() => {
-        if (!popup || wasSeen(popup)) {
+        if (!popup || isInCooldown(popup)) {
             return;
         }
         const timer = window.setTimeout(() => {
-            markSeen(popup);
             setIsOpen(true);
         }, Math.max(0, popup.delay_seconds) * 1000);
 
@@ -149,5 +174,13 @@ export function PromoPopups() {
         return null;
     }
 
-    return <PopupCard popup={popup} onClose={() => setIsOpen(false)} />;
+    return (
+        <PopupCard
+            popup={popup}
+            onClose={() => {
+                markDismissed(popup);
+                setIsOpen(false);
+            }}
+        />
+    );
 }
